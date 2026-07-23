@@ -1,0 +1,161 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts taxes API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: taxes
+paths:
+  /taxes:
+    get:
+      operationId: list-taxes
+      summary: List Taxes
+      description: 'Lists tax rates configured for your company. Use these IDs when assigning taxes to quotes, invoices, and other financial documents.
+
+        The company is implied by the API key; `companyId` is not returned on each item.
+
+        '
+      tags:
+      - taxes
+      parameters:
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of company taxes (paginated)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyTax'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTaxesRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTaxesRequestUnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTaxesRequestInternalServerError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTaxesRequestBadGatewayError'
+components:
+  schemas:
+    ListTaxesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListTaxesRequestBadRequestError
+    ListTaxesRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListTaxesRequestBadGatewayError
+    TaxesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: TaxesGetResponsesContentApplicationJsonSchemaCode
+    CompanyTax:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Tax identifier (use as `taxId` on quotes and invoices where supported)
+        name:
+          type: string
+          description: Display name of the tax
+        rate:
+          type: string
+          description: Tax rate as a percentage decimal string (e.g. "7.2500" for 7.25%)
+        isArchived:
+          type: boolean
+          description: Whether this tax is archived and hidden from default listings
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - rate
+      - isArchived
+      - createdAt
+      - updatedAt
+      description: A tax rate configured for the company.
+      title: CompanyTax
+    ListTaxesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListTaxesRequestUnauthorizedError
+    ListTaxesRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListTaxesRequestInternalServerError
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

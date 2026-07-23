@@ -1,0 +1,1021 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts forms API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: forms
+paths:
+  /projects/{projectId}/forms:
+    get:
+      operationId: list-project-forms
+      summary: List Project Forms
+      description: 'Retrieve all forms associated with a project.
+
+
+        Supports:
+
+        - Status filtering (`status` query parameter)
+
+        '
+      tags:
+      - forms
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: status
+        in: query
+        description: Filter forms by status
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProjectsProjectIdFormsGetParametersStatus'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of forms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Form'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProjectFormsRequestUnauthorizedError'
+    post:
+      operationId: create-project-form
+      summary: Create Project Form
+      description: 'Create a new form instance in a project.
+
+
+        Notes:
+
+        - `templateId` is required.
+
+        - `phaseInstanceId` is optional, but if provided the referenced phase must be started (active) for creation to succeed.
+
+        '
+      tags:
+      - forms
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Form created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forms_createProjectForm_Response_201'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectFormRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectFormRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectFormRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                templateId:
+                  type: integer
+                  description: Template to use for the form
+                phaseInstanceId:
+                  type: integer
+                  description: Optional. Phase instance id where the form will be created (phase must be started). You can gather phase instance ids from the Get Project endpoint.
+              required:
+              - templateId
+  /opportunities/{opportunityId}/forms:
+    get:
+      operationId: list-opportunity-forms
+      summary: List Opportunity Forms
+      description: 'Retrieve all forms associated with an opportunity.
+
+
+        Supports:
+
+        - Status filtering (`status` query parameter)
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - forms
+      parameters:
+      - name: opportunityId
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: status
+        in: query
+        description: Filter forms by status
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFormsGetParametersStatus'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of forms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OpportunityForm'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOpportunityFormsRequestUnauthorizedError'
+  /forms/{formId}:
+    get:
+      operationId: get-form
+      summary: Get Form
+      description: Retrieve a specific form by ID with detailed layout information
+      tags:
+      - forms
+      parameters:
+      - name: formId
+        in: path
+        description: Form identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Form details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormDetail'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFormRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFormRequestNotFoundError'
+    patch:
+      operationId: update-form
+      summary: Update Form
+      description: 'Update an existing form, including core fields (status, due dates, assignee, collaborators)
+
+        and individual field responses.
+
+        '
+      tags:
+      - forms
+      parameters:
+      - name: formId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Updated form details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormDetail'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFormRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFormRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFormRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormUpdate'
+  /forms/{formId}/fields/file-from-url:
+    post:
+      operationId: attach-file-to-form-field-from-url
+      summary: Attach file to form field from URL
+      description: 'Uploads a file from a public URL into Coperniq and attaches it to a specific FILE-type field on the form.
+
+        '
+      tags:
+      - forms
+      parameters:
+      - name: formId
+        in: path
+        description: Form identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File uploaded and attached successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forms_attachFileToFormFieldFromUrl_Response_200'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachFileToFormFieldFromUrlRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachFileToFormFieldFromUrlRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachFileToFormFieldFromUrlRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                columnId:
+                  type: integer
+                  description: ID of the FILE-type field to attach the uploaded file to.
+                url:
+                  type: string
+                  format: uri
+                  description: Public URL of the file to upload.
+                name:
+                  type: string
+                  description: Optional display name for the uploaded file.
+                projectId:
+                  type: integer
+                  description: Optional project ID to associate with the file. This will add the file to the project's 'Docs' section at the root level.
+                action:
+                  $ref: '#/components/schemas/FormsFormIdFieldsFileFromUrlPostRequestBodyContentApplicationJsonSchemaAction'
+                  description: Whether to append to existing files (add) or replace them entirely (replace). Defaults to add.
+              required:
+              - columnId
+              - url
+components:
+  schemas:
+    FormUpdateStatus:
+      type: string
+      enum:
+      - UNASSIGNED
+      - ASSIGNED
+      - REVIEW
+      - CHANGES_REQUESTED
+      - COMPLETED
+      - CANCELLED
+      description: Form status
+      title: FormUpdateStatus
+    AttachFileToFormFieldFromUrlRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormsFormIdFieldsFileFromUrlPostResponsesContentApplicationJsonSchemaCode'
+      title: AttachFileToFormFieldFromUrlRequestUnauthorizedError
+    FormUpdateArrayValueItems:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      title: FormUpdateArrayValueItems
+    GetFormRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormsFormIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetFormRequestUnauthorizedError
+    ProjectsProjectIdFormsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdFormsPostResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdFormsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ProjectsProjectIdFormsGetResponsesContentApplicationJsonSchemaCode
+    FormFile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        downloadUrl:
+          type: string
+        metaData:
+          type: object
+          additionalProperties:
+            description: Any type
+      title: FormFile
+    OpportunityForm:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Form identifier
+        name:
+          type: string
+          description: Form name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Form description
+        isCompleted:
+          type: boolean
+          description: Whether the form is completed
+        createdBy:
+          type: integer
+          description: ID of user who created the form
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        templateId:
+          type:
+          - integer
+          - 'null'
+          description: Template ID
+        status:
+          $ref: '#/components/schemas/OpportunityFormStatus'
+          description: Form status
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Due date
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Completion timestamp
+        assignee:
+          $ref: '#/components/schemas/UserSummary'
+        requestId:
+          type: integer
+          description: Associated opportunity ID
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSummary'
+          description: Additional users collaborating on the form
+      title: OpportunityForm
+    FormsFormIdFieldsFileFromUrlPostRequestBodyContentApplicationJsonSchemaAction:
+      type: string
+      enum:
+      - add
+      - replace
+      description: Whether to append to existing files (add) or replace them entirely (replace). Defaults to add.
+      title: FormsFormIdFieldsFileFromUrlPostRequestBodyContentApplicationJsonSchemaAction
+    Form:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Form identifier
+        name:
+          type: string
+          description: Form name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Form description
+        isCompleted:
+          type: boolean
+          description: Whether the form is completed
+        createdBy:
+          type: integer
+          description: ID of user who created the form
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        templateId:
+          type:
+          - integer
+          - 'null'
+          description: Template ID
+        status:
+          $ref: '#/components/schemas/FormStatus'
+          description: Form status
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Due date
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Completion timestamp
+        assignee:
+          $ref: '#/components/schemas/UserSummary'
+        projectId:
+          type: integer
+          description: Associated project ID
+        phaseId:
+          type:
+          - integer
+          - 'null'
+          description: Phase template ID (if available)
+        phaseName:
+          type:
+          - string
+          - 'null'
+          description: Phase template name (if available)
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSummary'
+          description: Additional users collaborating on the form
+      title: Form
+    FormUpdateFieldsItems:
+      type: object
+      properties:
+        columnId:
+          type: integer
+          description: Column identifier on the form
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/FormUpdateFieldsItemsValue'
+          - type: 'null'
+          description: New value for the field
+      required:
+      - columnId
+      title: FormUpdateFieldsItems
+    FormUpdateItems:
+      type: object
+      properties:
+        columnId:
+          type: integer
+          description: Column identifier on the form
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/FormUpdateItemsValue'
+          - type: 'null'
+          description: New value for the field
+        description:
+          type: string
+          description: Field description when action is update-description
+      required:
+      - columnId
+      title: FormUpdateItems
+    ProjectsProjectIdFormsPostResponsesContentApplicationJsonSchemaForm:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      description: Optional. Form record when returned by project-service.
+      title: ProjectsProjectIdFormsPostResponsesContentApplicationJsonSchemaForm
+    OpportunitiesOpportunityIdFormsGetParametersStatus:
+      type: string
+      enum:
+      - UNASSIGNED
+      - ASSIGNED
+      - REVIEW
+      - CHANGES_REQUESTED
+      - COMPLETED
+      - CANCELLED
+      title: OpportunitiesOpportunityIdFormsGetParametersStatus
+    AttachFileToFormFieldFromUrlRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormsFormIdFieldsFileFromUrlPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: AttachFileToFormFieldFromUrlRequestBadRequestError
+    FormLayoutGroupId:
+      oneOf:
+      - type: integer
+      - type: string
+      description: Group identifier ("default" for ungrouped properties)
+      title: FormLayoutGroupId
+    GetFormRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormsFormIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetFormRequestNotFoundError
+    FormUpdateItemsValue:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      - $ref: '#/components/schemas/FormUpdateArrayValue'
+      description: New value for the field
+      title: FormUpdateItemsValue
+    FormFieldValue3:
+      type: array
+      items:
+        $ref: '#/components/schemas/FormFile'
+      description: Array of file objects
+      title: FormFieldValue3
+    FormUpdateFieldsItemsValue:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      - $ref: '#/components/schemas/FormUpdateArrayValue'
+      description: New value for the field
+      title: FormUpdateFieldsItemsValue
+    UpdateFormRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormsFormIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateFormRequestNotFoundError
+    CreateProjectFormRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFormsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateProjectFormRequestBadRequestError
+    CreateProjectFormRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFormsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectFormRequestNotFoundError
+    FormsFormIdFieldsFileFromUrlPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: FormsFormIdFieldsFileFromUrlPostResponsesContentApplicationJsonSchemaCode
+    FormField:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Child form layout identifier
+        columnId:
+          type: integer
+          description: Column identifier on the form layout
+        name:
+          type: string
+          description: Field label
+        type:
+          type: string
+          description: Field type
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/FormFieldValue'
+          - type: 'null'
+          description: Normalized field value
+      title: FormField
+    UpdateFormRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormsFormIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateFormRequestUnauthorizedError
+    OpportunitiesOpportunityIdFormsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesOpportunityIdFormsGetResponsesContentApplicationJsonSchemaCode
+    FormDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Form identifier
+        name:
+          type: string
+          description: Form name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Form description
+        templateId:
+          type:
+          - integer
+          - 'null'
+          description: Template ID
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        status:
+          $ref: '#/components/schemas/FormDetailStatus'
+          description: Form status
+        isCompleted:
+          type: boolean
+          description: Whether the form is completed
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Completion timestamp
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        createdByUser:
+          $ref: '#/components/schemas/UserSummary'
+        assignee:
+          $ref: '#/components/schemas/UserSummary'
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Due date
+        projectId:
+          type: integer
+          description: Associated project ID
+        phaseId:
+          type:
+          - integer
+          - 'null'
+          description: Phase template ID (if available)
+        phaseName:
+          type:
+          - string
+          - 'null'
+          description: Phase template name (if available)
+        formLayouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormLayoutGroup'
+          description: Form layout sections
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSummary'
+          description: Additional users collaborating on the form
+      title: FormDetail
+    AttachFileToFormFieldFromUrlRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormsFormIdFieldsFileFromUrlPostResponsesContentApplicationJsonSchemaCode'
+      title: AttachFileToFormFieldFromUrlRequestNotFoundError
+    UpdateFormRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormsFormIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateFormRequestBadRequestError
+    FormFieldValue:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - $ref: '#/components/schemas/UserSummary'
+      - $ref: '#/components/schemas/FormFieldValue3'
+      - type: array
+        items:
+          type: string
+      description: Normalized field value
+      title: FormFieldValue
+    FormUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Form name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Form description
+        assigneeId:
+          type: integer
+          description: Primary assignee user ID
+        dueDate:
+          type: string
+          format: date-time
+          description: Absolute due date (ISO 8601)
+        status:
+          $ref: '#/components/schemas/FormUpdateStatus'
+          description: Form status
+        labels:
+          type: array
+          items:
+            type: integer
+          description: Label IDs applied to the form
+        collaborators:
+          type: array
+          items:
+            type: integer
+          description: Collaborator user IDs
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormUpdateItems'
+          description: Individual field/column updates.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormUpdateFieldsItems'
+          description: Deprecated alias for properties. Accepted for backwards compatibility — new integrations should use properties.
+      description: Payload for updating a form via the public API.
+      title: FormUpdate
+    FormUpdateArrayValue:
+      type: array
+      items:
+        $ref: '#/components/schemas/FormUpdateArrayValueItems'
+      description: Array value for the field, used when the field is a dropdown or file field (requires file IDs)
+      title: FormUpdateArrayValue
+    ListProjectFormsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFormsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectFormsRequestUnauthorizedError
+    CreateProjectFormRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFormsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectFormRequestUnauthorizedError
+    ListOpportunityFormsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFormsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListOpportunityFormsRequestUnauthorizedError
+    FormsFormIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: FormsFormIdGetResponsesContentApplicationJsonSchemaCode
+    FormsFormIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: FormsFormIdPatchResponsesContentApplicationJsonSchemaCode
+    OpportunityFormStatus:
+      type: string
+      enum:
+      - UNASSIGNED
+      - ASSIGNED
+      - REVIEW
+      - CHANGES_REQUESTED
+      - COMPLETED
+      - CANCELLED
+      description: Form status
+      title: OpportunityFormStatus
+    Forms_attachFileToFormFieldFromUrl_Response_200:
+      type: object
+      properties:
+        success:
+          type: boolean
+        fileId:
+          type: integer
+        formId:
+          type: integer
+        columnId:
+          type: integer
+        projectId:
+          type:
+          - integer
+          - 'null'
+        action:
+          type: string
+      title: Forms_attachFileToFormFieldFromUrl_Response_200
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      description: Minimal user representation used in responses
+      title: UserSummary
+    ProjectsProjectIdFormsGetParametersStatus:
+      type: string
+      enum:
+      - UNASSIGNED
+      - ASSIGNED
+      - REVIEW
+      - CHANGES_REQUESTED
+      - COMPLETED
+      - CANCELLED
+      title: ProjectsProjectIdFormsGetParametersStatus
+    FormStatus:
+      type: string
+      enum:
+      - UNASSIGNED
+      - ASSIGNED
+      - REVIEW
+      - CHANGES_REQUESTED
+      - COMPLETED
+      - CANCELLED
+      description: Form status
+      title: FormStatus
+    FormDetailStatus:
+      type: string
+      enum:
+      - UNASSIGNED
+      - ASSIGNED
+      - REVIEW
+      - CHANGES_REQUESTED
+      - COMPLETED
+      - CANCELLED
+      description: Form status
+      title: FormDetailStatus
+    Forms_createProjectForm_Response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Created element instance identifier
+        phaseInstanceId:
+          type: integer
+        projectId:
+          type: integer
+        type:
+          type: string
+        status:
+          type: string
+        form:
+          $ref: '#/components/schemas/ProjectsProjectIdFormsPostResponsesContentApplicationJsonSchemaForm'
+          description: Optional. Form record when returned by project-service.
+      title: Forms_createProjectForm_Response_201
+    FormLayoutGroup:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/FormLayoutGroupId'
+          description: Group identifier ("default" for ungrouped properties)
+        type:
+          $ref: '#/components/schemas/FormLayoutGroupType'
+        name:
+          type: string
+          description: Group name
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormField'
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormField'
+          description: Alias for properties. Both keys are returned in responses for backwards compatibility.
+      title: FormLayoutGroup
+    FormLayoutGroupType:
+      type: string
+      enum:
+      - GROUP
+      title: FormLayoutGroupType
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,151 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts properties API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: properties
+paths:
+  /properties:
+    get:
+      operationId: list-properties
+      summary: List Properties
+      description: 'Retrieve list of properties organized by record type.
+
+
+        When `record_type` is **omitted**, the response includes all keys: `account`, `opportunity`,
+
+        `project`, `vendor`, and `ahj` — plus the deprecated alias keys `client` and `request`.
+
+
+        When `record_type` is **provided**, the response contains only the requested key(s). Filtering
+
+        by `account` or `client` returns both `account` and `client` (identical data); filtering by
+
+        `opportunity` or `request` returns both `opportunity` and `request` (identical data).
+
+
+        > **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They will continue to be returned until all users have migrated.
+
+
+        > **AHJ:** The `ahj` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in AHJ fields are not included here — they are exposed directly on the AHJ object instead, and are not updatable via the public API.
+
+        '
+      tags:
+      - properties
+      parameters:
+      - name: record_type
+        in: query
+        description: 'Filter by record type. Can also be supplied as a comma-separated list
+
+          (`?record_type=project,vendor`) or repeated (`?record_type=project&record_type=vendor`)
+
+          to request multiple types in one call.
+
+
+          When omitted, the response includes every record-type key. When supplied, the response
+
+          includes only the requested key(s) — plus the matching deprecated alias key where
+
+          applicable (`account` ↔ `client`, `opportunity` ↔ `request`).
+
+
+          > **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They are still accepted as input.
+
+          '
+        required: false
+        schema:
+          $ref: '#/components/schemas/PropertiesGetParametersRecordType'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Properties_listProperties_Response_200'
+components:
+  schemas:
+    Property:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Property name
+        type:
+          type: string
+          description: Property type
+        keyName:
+          type: string
+          description: Property key name
+        isMultiple:
+          type: boolean
+          description: Whether the property is a multiple value property
+        options:
+          type: array
+          items:
+            type: string
+          description: Property options
+        defaultValue:
+          type: array
+          items:
+            description: Any type
+          description: Default value
+        isCustom:
+          type: boolean
+          description: True for customer-defined custom columns, false for built-in standard properties.
+      title: Property
+    Properties_listProperties_Response_200:
+      type: object
+      properties:
+        account:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        opportunity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        project:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        vendor:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        ahj:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+          description: 'Customer-defined custom AHJ properties only (`isCustom: true`). Standard built-in AHJ fields are not included.'
+        client:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+          description: Deprecated alias for `account`. Contains identical data.
+        request:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+          description: Deprecated alias for `opportunity`. Contains identical data.
+      title: Properties_listProperties_Response_200
+    PropertiesGetParametersRecordType:
+      type: string
+      enum:
+      - account
+      - opportunity
+      - project
+      - vendor
+      - ahj
+      title: PropertiesGetParametersRecordType
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

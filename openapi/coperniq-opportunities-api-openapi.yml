@@ -1,0 +1,1112 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts opportunities API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: opportunities
+paths:
+  /opportunities:
+    get:
+      operationId: list-opportunities
+      summary: List Opportunities
+      description: 'Retrieve a paginated list of opportunities.
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Date filtering (`updated_after`, `updated_before`)
+
+        - Sorting (`order_by`, default: desc)
+
+        - Field search (`title`, `address`, `primaryName`, `primaryPhone`, `primaryEmail`)
+
+        - Full text search (`q`)
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+
+        **Note:** If an opportunity has no `title` (empty or whitespace-only), the response returns the parent account''s `title` instead. The stored value is not modified — this is a read-time fallback only.
+
+        '
+      tags:
+      - opportunities
+      parameters:
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: updated_after
+        in: query
+        description: Filter items updated after this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_before
+        in: query
+        description: Filter items updated before this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesGetParametersOrderBy'
+      - name: include_virtual_properties
+        in: query
+        description: Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: q
+        in: query
+        description: Full text search query
+        required: false
+        schema:
+          type: string
+      - name: title
+        in: query
+        description: Title search query
+        required: false
+        schema:
+          type: string
+      - name: address
+        in: query
+        description: Address search query
+        required: false
+        schema:
+          type: string
+      - name: primaryName
+        in: query
+        description: Contact name search query
+        required: false
+        schema:
+          type: string
+      - name: primaryPhone
+        in: query
+        description: Contact phone search query
+        required: false
+        schema:
+          type: string
+      - name: primaryEmail
+        in: query
+        description: Contact email search query
+        required: false
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of opportunities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Opportunity'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOpportunitiesRequestUnauthorizedError'
+    post:
+      operationId: create-opportunity
+      summary: Create Opportunity
+      description: 'Create a new opportunity with required and optional fields.
+
+
+        Required fields:
+
+        - `title`: Opportunity title/name
+
+        - `address`: Opportunity location
+
+        - `trades`: Array of trade types
+
+
+        Optional fields:
+
+        - `accountId`: Link to existing account
+
+        - `workflowId`: Link to workflow
+
+        - `phaseId`: Link to phase
+
+        - `value`: Opportunity value
+
+        - `size`: Opportunity size
+
+        - `confidence`: Confidence score (0-100)
+
+        - `primaryEmail`/`primaryPhone`: Contact information
+
+        - `contacts`: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+
+        - `custom`: Custom fields object
+
+
+        Note: If primaryEmail or primaryPhone is provided, a contact will be automatically created or matched.
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - opportunities
+      parameters:
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: match_by
+        in: query
+        description: Field to use for matching existing records
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesPostParametersMatchBy'
+      - name: match_found_strategy
+        in: query
+        description: Strategy to use when a match is found
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesPostParametersMatchFoundStrategy'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching opportunity found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOpportunityRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOpportunityRequestUnauthorizedError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpportunityUpsert'
+  /opportunities/search:
+    get:
+      operationId: search-opportunities
+      summary: Search Opportunities
+      description: "Search opportunities using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `status`, `title`, `city`, `type`, `accountId`, etc.) or a custom property key name.\n- Use the `property key` from your company settings.\n- Filter by parent account with `accountId`. `clientId` is accepted as a deprecated alias for backwards compatibility.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Numeric/datetime comparisons: `gt`, `gte`, `lt`, `lte`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)\n- Ranges: `between` (use `valueX` as `from,to`)\n- Existence: `exists` is not supported for custom properties due to performance limitations. Use `eq` or `neq` instead.\n\nValue formats:\n- `in`/`nin`: lists can be provided as:\n  - Plain CSV: `value1=OPEN,ACTIVE`\n  - Quoted CSV (to include commas inside a value): `value1=\"Last, First\",Other`\n  - JSON array: `value1=[\"Last, First\",\"Other\"]`\n- `between`: `from,to` (e.g., `value1=2025-01-01,2025-12-31` or `value1=10,20`)\n- Dates should be ISO 8601 strings; numeric-like values on custom properties are matched against both numeric and text representations.\n\nExamples:\n- status equals ACTIVE: `?prop1=status&op1=eq&value1=ACTIVE`\n- custom id equals 1234: `?prop1=legacy_tool_project_id&op1=eq&value1=1234`\n- title contains \"Solar\": `?prop1=name&op1=contains&value1=Solar`\n- status IN (ACTIVE, ON_HOLD) AND city = Austin: `?prop1=status&op1=in&value1=ACTIVE,ON_HOLD&logic=and&prop2=city&op2=eq&value2=Austin`\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n\n**Note:** If an opportunity has no `title` (empty or whitespace-only), the response returns the parent account's `title` instead. The stored value is not modified — this is a read-time fallback only.\n"
+      tags:
+      - opportunities
+      parameters:
+      - name: prop1
+        in: query
+        description: First field to filter (standard or custom keyName)
+        required: true
+        schema:
+          type: string
+      - name: op1
+        in: query
+        description: Operator for prop1
+        required: true
+        schema:
+          $ref: '#/components/schemas/OpportunitiesSearchGetParametersOp1'
+      - name: value1
+        in: query
+        description: Value for prop1 (comma-separated values for in/nin or between)
+        required: true
+        schema:
+          type: string
+      - name: logic
+        in: query
+        description: Logical combination when both prop1 and prop2 are provided
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesSearchGetParametersLogic'
+      - name: prop2
+        in: query
+        description: Optional second field to filter
+        required: false
+        schema:
+          type: string
+      - name: op2
+        in: query
+        description: Operator for prop2
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesSearchGetParametersOp2'
+      - name: value2
+        in: query
+        description: Value for prop2 (comma-separated values for in/nin or between)
+        required: false
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesSearchGetParametersOrderBy'
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of opportunities matching filters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Opportunity'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchOpportunitiesRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchOpportunitiesRequestUnauthorizedError'
+  /opportunities/{opportunityId}:
+    get:
+      operationId: get-opportunity
+      summary: Get Opportunity
+      description: 'Retrieve a specific opportunity by ID
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+
+        **Note:** If the opportunity has no `title` (empty or whitespace-only), the response returns the parent account''s `title` instead. The stored value is not modified — this is a read-time fallback only.
+
+        '
+      tags:
+      - opportunities
+      parameters:
+      - name: opportunityId
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: include_virtual_properties
+        in: query
+        description: Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Opportunity details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOpportunityRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOpportunityRequestNotFoundError'
+    patch:
+      operationId: update-opportunity
+      summary: Update Opportunity
+      description: 'Update an existing opportunity. Supports partial updates.
+
+
+        Updatable fields:
+
+        - Standard fields (value, size, status, confidence, etc.)
+
+        - Workflow fields (workflowId, phaseId)
+
+        - Contact information (primaryEmail, primaryPhone)
+
+        - Contacts (contact IDs only, no name, email, phone, etc.)
+
+        - Custom fields (through custom object)
+
+
+        Note: Updates are atomic - either all fields update or none do.
+
+
+        > **Changing account association is not supported via update.** To move an opportunity to a different account, delete and re-create it under the new account.
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - opportunities
+      parameters:
+      - name: opportunityId
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Opportunity updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateOpportunityRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateOpportunityRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateOpportunityRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpportunityUpsert'
+    delete:
+      operationId: delete-opportunity
+      summary: Delete Opportunity
+      description: 'Delete a specific opportunity by ID
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - opportunities
+      parameters:
+      - name: opportunityId
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteOpportunityRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteOpportunityRequestNotFoundError'
+components:
+  schemas:
+    OpportunityProjectManager:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunityProjectManager
+    OpportunitiesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesPostResponsesContentApplicationJsonSchemaCode
+    GetOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityRequestUnauthorizedError
+    OpportunitiesSearchGetParametersOp1:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: OpportunitiesSearchGetParametersOp1
+    DeleteOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteOpportunityRequestUnauthorizedError
+    OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode
+    OpportunitiesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesGetResponsesContentApplicationJsonSchemaCode
+    ProjectStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - ON_HOLD
+      - CANCELLED
+      - COMPLETED
+      description: 'Status of the project:
+
+        * `ACTIVE` - Project is active and in progress
+
+        * `ON_HOLD` - Project is temporarily paused
+
+        * `CANCELLED` - Project has been cancelled
+
+        * `COMPLETED` - Project has been completed
+
+        '
+      title: ProjectStatus
+    CreateOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityRequestUnauthorizedError
+    DeleteOpportunityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteOpportunityRequestNotFoundError
+    OpportunitiesSearchGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesSearchGetParametersOrderBy
+    OpportunitiesPostParametersMatchBy:
+      type: string
+      enum:
+      - title
+      - primaryEmail
+      - primaryPhone
+      - address
+      default: title
+      title: OpportunitiesPostParametersMatchBy
+    UpdateOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateOpportunityRequestUnauthorizedError
+    Opportunity:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        title:
+          type: string
+          description: Record title/name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Record description
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the full opportunity location/address.
+        isActive:
+          type: boolean
+          description: Whether the record is active
+        primaryEmail:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type:
+          - string
+          - 'null'
+          description: Primary contact phone
+        number:
+          type: integer
+          description: Sequential opportunity number
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/UserSummary'
+          - type: 'null'
+          description: User who created the record. Null when the record was created by a non-user actor (e.g. automation or a contact).
+        updatedBy:
+          oneOf:
+          - $ref: '#/components/schemas/UserSummary'
+          - type: 'null'
+          description: User who last edited a field on the record, derived from the changelog. Null when the record has never been edited or the last edit was made by a non-user actor.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+        trades:
+          type: array
+          items:
+            type: string
+          description: Array of trade types
+        value:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Deal value
+        size:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Deal size
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Deal confidence score (0-100)
+        workflowId:
+          type:
+          - integer
+          - 'null'
+          description: Associated workflow ID
+        accountId:
+          type:
+          - integer
+          - 'null'
+          description: Associated account ID
+        geoLocation:
+          type: array
+          items:
+            type: string
+          description: Latitude/Longitude in "lat,lon" format
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: Image URL for the opportunity
+        streetViewUrl:
+          type:
+          - string
+          - 'null'
+          description: Street view image URL
+        city:
+          type: string
+        zipcode:
+          type: string
+        state:
+          type: string
+        street:
+          type: string
+        phase:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityPhase'
+          - type: 'null'
+        phaseInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhaseInstance'
+          description: Ordered list of phase instances for the opportunity
+        owner:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityOwner'
+          - type: 'null'
+        salesRep:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunitySalesRep'
+          - type: 'null'
+        projectManager:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityProjectManager'
+          - type: 'null'
+        jurisdiction:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityJurisdiction'
+          - type: 'null'
+        lastActivity:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        phaseId:
+          type:
+          - integer
+          - 'null'
+        workflowName:
+          type: string
+          description: 'Name of the associated workflow.
+
+            '
+      title: Opportunity
+    OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode
+    OpportunityPhase:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+      title: OpportunityPhase
+    UpdateOpportunityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateOpportunityRequestNotFoundError
+    ListOpportunitiesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListOpportunitiesRequestUnauthorizedError
+    PhaseTemplateSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+        redSla:
+          type:
+          - integer
+          - 'null'
+        yellowSla:
+          type:
+          - integer
+          - 'null'
+      title: PhaseTemplateSummary
+    GetOpportunityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityRequestNotFoundError
+    OpportunitiesSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: OpportunitiesSearchGetParametersOp2
+    OpportunitiesSearchGetParametersLogic:
+      type: string
+      enum:
+      - and
+      - or
+      default: and
+      title: OpportunitiesSearchGetParametersLogic
+    OpportunitiesPostParametersMatchFoundStrategy:
+      type: string
+      enum:
+      - skip
+      - replace
+      - enrich
+      default: skip
+      description: '- skip: Return existing record without changes
+
+        - replace: Replace existing record with new data
+
+        - enrich: Update only empty fields in existing record
+
+        '
+      title: OpportunitiesPostParametersMatchFoundStrategy
+    OpportunitiesGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesGetParametersOrderBy
+    PhaseInstanceStatus:
+      type: string
+      enum:
+      - NOT_STARTED
+      - IN_PROGRESS
+      - COMPLETED
+      title: PhaseInstanceStatus
+    PhaseInstance:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/PhaseInstanceStatus'
+        position:
+          type: integer
+        type:
+          type: string
+        phaseTemplateId:
+          type: integer
+        phaseTemplate:
+          $ref: '#/components/schemas/PhaseTemplateSummary'
+      title: PhaseInstance
+    UpdateOpportunityRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateOpportunityRequestBadRequestError
+    OpportunityJurisdiction:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        uuid:
+          type: string
+      title: OpportunityJurisdiction
+    SearchOpportunitiesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchOpportunitiesRequestUnauthorizedError
+    CreateOpportunityRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateOpportunityRequestBadRequestError
+    OpportunityOwner:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunityOwner
+    OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      description: Minimal user representation used in responses
+      title: UserSummary
+    OpportunityUpsert:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Opportunity title/name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Opportunity description
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the full opportunity location/address.
+        trades:
+          type: array
+          items:
+            type: string
+          description: Array of trade types
+        workflowId:
+          type:
+          - integer
+          - 'null'
+          description: ID of associated workflow
+        value:
+          type: number
+          format: double
+          description: Project value
+        size:
+          type: number
+          format: double
+          description: Project size
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        primaryEmail:
+          type: string
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type: string
+          description: Primary contact phone
+        contacts:
+          type: array
+          items:
+            type: integer
+          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      required:
+      - title
+      - address
+      - trades
+      description: 'Used for both create and update. `accountId` is only accepted on create — passing it on a PATCH update will return a 400 error.
+
+        '
+      title: OpportunityUpsert
+    OpportunitySalesRep:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunitySalesRep
+    SearchOpportunitiesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: SearchOpportunitiesRequestBadRequestError
+    OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

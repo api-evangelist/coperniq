@@ -1,0 +1,944 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: accounts
+paths:
+  /accounts:
+    get:
+      operationId: list-accounts
+      summary: List Accounts
+      description: 'Retrieve a paginated list of accounts.
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Date filtering (`updated_after`, `updated_before`)
+
+        - Sorting (`order_by`, default: desc)
+
+        - Field search (`title`, `address`, `primaryName`, `primaryPhone`, `primaryEmail`)
+
+        - Full text search (`q`)
+
+
+        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - accounts
+      parameters:
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: updated_after
+        in: query
+        description: Filter items updated after this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_before
+        in: query
+        description: Filter items updated before this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/AccountsGetParametersOrderBy'
+      - name: include_virtual_properties
+        in: query
+        description: Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_contacts
+        in: query
+        description: Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: q
+        in: query
+        description: Full text search query
+        required: false
+        schema:
+          type: string
+      - name: title
+        in: query
+        description: Title search query
+        required: false
+        schema:
+          type: string
+      - name: address
+        in: query
+        description: Address search query
+        required: false
+        schema:
+          type: string
+      - name: primaryName
+        in: query
+        description: Contact name search query
+        required: false
+        schema:
+          type: string
+      - name: primaryPhone
+        in: query
+        description: Contact phone search query
+        required: false
+        schema:
+          type: string
+      - name: primaryEmail
+        in: query
+        description: Contact email search query
+        required: false
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAccountsRequestUnauthorizedError'
+    post:
+      operationId: create-account
+      summary: Create Account
+      description: 'Create a new account with required and optional fields.
+
+
+        Required fields:
+
+        - `title`: Account name
+
+        - `address`: Account location
+
+
+        Optional fields:
+
+        - `accountType`: Account type (RESIDENTIAL/COMMERCIAL)
+
+        - `value`: Account value
+
+        - `size`: Account size
+
+        - `primaryEmail`/`primaryPhone`: Contact information
+
+        - `contacts`: Contact IDs only (no name, email, phone, etc.). **The contacts must be created first via POST /contacts.**
+
+        - `custom`: Custom fields object
+
+
+        Note: If primaryEmail or primaryPhone is provided and no contacts are provided, a contact will be automatically created or matched.
+
+
+        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - accounts
+      parameters:
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: match_by
+        in: query
+        description: Field to use for matching existing records
+        required: false
+        schema:
+          $ref: '#/components/schemas/AccountsPostParametersMatchBy'
+      - name: match_found_strategy
+        in: query
+        description: Strategy to use when a match is found
+        required: false
+        schema:
+          $ref: '#/components/schemas/AccountsPostParametersMatchFoundStrategy'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching account found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountRequestUnauthorizedError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpsert'
+  /accounts/search:
+    get:
+      operationId: search-accounts
+      summary: Search Accounts
+      description: "Search accounts using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `status`, `title`, `city`, `type`, `accountId`, etc.) or a custom property key name.\n- Use the `property key` from your company settings.\n- Filter by parent account with `accountId`. `clientId` is accepted as a deprecated alias for backwards compatibility.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Numeric/datetime comparisons: `gt`, `gte`, `lt`, `lte`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)\n- Ranges: `between` (use `valueX` as `from,to`)\n- Existence: `exists` is not supported for custom properties due to performance limitations. Use `eq` or `neq` instead.\n\nValue formats:\n- `in`/`nin`: lists can be provided as:\n  - Plain CSV: `value1=OPEN,ACTIVE`\n  - Quoted CSV (to include commas inside a value): `value1=\"Last, First\",Other`\n  - JSON array: `value1=[\"Last, First\",\"Other\"]`\n- `between`: `from,to` (e.g., `value1=2025-01-01,2025-12-31` or `value1=10,20`)\n- Dates should be ISO 8601 strings; numeric-like values on custom properties are matched against both numeric and text representations.\n\nExamples:\n- status equals ACTIVE: `?prop1=status&op1=eq&value1=ACTIVE`\n- custom id equals 1234: `?prop1=legacy_tool_project_id&op1=eq&value1=1234`\n- title contains \"Solar\": `?prop1=name&op1=contains&value1=Solar`\n- status IN (ACTIVE, ON_HOLD) AND city = Austin: `?prop1=status&op1=in&value1=ACTIVE,ON_HOLD&logic=and&prop2=city&op2=eq&value2=Austin`\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n"
+      tags:
+      - accounts
+      parameters:
+      - name: prop1
+        in: query
+        description: First field to filter (standard or custom keyName)
+        required: true
+        schema:
+          type: string
+      - name: op1
+        in: query
+        description: Operator for prop1
+        required: true
+        schema:
+          $ref: '#/components/schemas/AccountsSearchGetParametersOp1'
+      - name: value1
+        in: query
+        description: Value for prop1 (comma-separated values for in/nin or between)
+        required: true
+        schema:
+          type: string
+      - name: logic
+        in: query
+        description: Logical combination when both prop1 and prop2 are provided
+        required: false
+        schema:
+          $ref: '#/components/schemas/AccountsSearchGetParametersLogic'
+      - name: prop2
+        in: query
+        description: Optional second field to filter
+        required: false
+        schema:
+          type: string
+      - name: op2
+        in: query
+        description: Operator for prop2
+        required: false
+        schema:
+          $ref: '#/components/schemas/AccountsSearchGetParametersOp2'
+      - name: value2
+        in: query
+        description: Value for prop2 (comma-separated values for in/nin or between)
+        required: false
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/AccountsSearchGetParametersOrderBy'
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of accounts matching filters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAccountsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAccountsRequestUnauthorizedError'
+  /accounts/{accountId}:
+    get:
+      operationId: get-account
+      summary: Get Account
+      description: 'Retrieve a specific account by ID
+
+
+        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - accounts
+      parameters:
+      - name: accountId
+        in: path
+        description: Account identifier
+        required: true
+        schema:
+          type: integer
+      - name: include_virtual_properties
+        in: query
+        description: Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_contacts
+        in: query
+        description: Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountRequestNotFoundError'
+    patch:
+      operationId: update-account
+      summary: Update Account
+      description: 'Update an existing account. Supports partial updates.
+
+
+        Updatable fields:
+
+        - Standard fields (title, description, address, accountType, isActive)
+
+        - Contact information (primaryEmail, primaryPhone)
+
+        - `contacts`: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+
+        - Custom fields (through custom object)
+
+
+        Note: Updates are atomic - either all fields update or none do.
+
+
+        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - accounts
+      parameters:
+      - name: accountId
+        in: path
+        description: Account identifier
+        required: true
+        schema:
+          type: integer
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAccountRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAccountRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAccountRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdate'
+    delete:
+      operationId: delete-account
+      summary: Delete Account
+      description: 'Delete a specific account by ID
+
+
+        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - accounts
+      parameters:
+      - name: accountId
+        in: path
+        description: Account identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAccountRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAccountRequestNotFoundError'
+components:
+  schemas:
+    AccountsSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AccountsSearchGetResponsesContentApplicationJsonSchemaCode
+    GetAccountRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAccountRequestNotFoundError
+    UpdateAccountRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateAccountRequestBadRequestError
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        title:
+          type: string
+          description: Record title/name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Record description
+        address:
+          type: array
+          items:
+            type: string
+          description: Record location/address
+        isActive:
+          type: boolean
+          description: Whether the record is active
+        primaryEmail:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type:
+          - string
+          - 'null'
+          description: Primary contact phone
+        number:
+          type: integer
+          description: Record number (e.g., 1234)
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/UserSummary'
+          - type: 'null'
+          description: User who created the record. Null when the record was created by a non-user actor (e.g. automation or a contact).
+        updatedBy:
+          oneOf:
+          - $ref: '#/components/schemas/UserSummary'
+          - type: 'null'
+          description: User who last edited a field on the record, derived from the changelog. Null when the record has never been edited or the last edit was made by a non-user actor.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+        accountType:
+          oneOf:
+          - $ref: '#/components/schemas/AccountAccountType'
+          - type: 'null'
+          description: Type of account (residential or commercial)
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountContactsItems'
+      title: Account
+    AccountUpdateAccountType:
+      type: string
+      enum:
+      - RESIDENTIAL
+      - COMMERCIAL
+      description: Account type
+      title: AccountUpdateAccountType
+    AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode
+    DeleteAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAccountRequestUnauthorizedError
+    UpdateAccountRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAccountRequestNotFoundError
+    AccountsSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: AccountsSearchGetParametersOp2
+    CreateAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateAccountRequestUnauthorizedError
+    AccountUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Account name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Account description
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the primary account location/address.
+        accountType:
+          oneOf:
+          - $ref: '#/components/schemas/AccountUpdateAccountType'
+          - type: 'null'
+          description: Account type
+        primaryEmail:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type:
+          - string
+          - 'null'
+          description: Primary contact phone
+        contacts:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          description: Contact IDs to associate with this account. The contacts must be created first via POST /contacts.
+        isActive:
+          type: boolean
+          description: Whether the account is active
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      description: Partial update payload for an account. All fields are optional.
+      title: AccountUpdate
+    SearchAccountsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsSearchGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: SearchAccountsRequestBadRequestError
+    AccountUpsert:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Account name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Account description
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the primary account location/address.
+        accountType:
+          $ref: '#/components/schemas/AccountUpsertAccountType'
+          description: Account type
+        primaryEmail:
+          type: string
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type: string
+          description: Primary contact phone
+        contacts:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      required:
+      - title
+      - address
+      title: AccountUpsert
+    AccountsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AccountsGetResponsesContentApplicationJsonSchemaCode
+    CreateAccountRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateAccountRequestBadRequestError
+    AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode
+    AccountsSearchGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: AccountsSearchGetParametersOrderBy
+    AccountsPostParametersMatchBy:
+      type: string
+      enum:
+      - title
+      - primaryEmail
+      - primaryPhone
+      - address
+      default: title
+      title: AccountsPostParametersMatchBy
+    AccountsPostParametersMatchFoundStrategy:
+      type: string
+      enum:
+      - skip
+      - replace
+      - enrich
+      default: skip
+      description: '- skip: Return existing record without changes
+
+        - replace: Replace existing record with new data
+
+        - enrich: Update only empty fields in existing record
+
+        '
+      title: AccountsPostParametersMatchFoundStrategy
+    AccountUpsertAccountType:
+      type: string
+      enum:
+      - RESIDENTIAL
+      - COMMERCIAL
+      description: Account type
+      title: AccountUpsertAccountType
+    SearchAccountsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchAccountsRequestUnauthorizedError
+    DeleteAccountRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAccountRequestNotFoundError
+    AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode
+    AccountsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: AccountsGetParametersOrderBy
+    AccountsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AccountsPostResponsesContentApplicationJsonSchemaCode
+    AccountAccountType:
+      type: string
+      enum:
+      - RESIDENTIAL
+      - COMMERCIAL
+      description: Type of account (residential or commercial)
+      title: AccountAccountType
+    GetAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAccountRequestUnauthorizedError
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      description: Minimal user representation used in responses
+      title: UserSummary
+    UpdateAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAccountRequestUnauthorizedError
+    AccountsSearchGetParametersLogic:
+      type: string
+      enum:
+      - and
+      - or
+      default: and
+      title: AccountsSearchGetParametersLogic
+    ListAccountsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListAccountsRequestUnauthorizedError
+    AccountsSearchGetParametersOp1:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: AccountsSearchGetParametersOp1
+    AccountContactsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        emails:
+          type: array
+          items:
+            type: string
+        phones:
+          type: array
+          items:
+            type: string
+      title: AccountContactsItems
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

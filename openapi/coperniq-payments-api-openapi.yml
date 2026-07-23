@@ -1,0 +1,734 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts payments API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: payments
+paths:
+  /invoices/{invoiceId}/payments:
+    get:
+      operationId: list-invoice-payments
+      summary: List Invoice Payments
+      description: 'Retrieve all payment records for an invoice.
+
+
+        Amounts are returned in **dollars** (internal storage uses cents).
+
+        '
+      tags:
+      - payments
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of payments for the invoice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentListResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInvoicePaymentsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInvoicePaymentsRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInvoicePaymentsRequestNotFoundError'
+    post:
+      operationId: create-invoice-payment
+      summary: Create Invoice Payment
+      description: 'Record a manual payment against an invoice.
+
+
+        **Request body**
+
+        - `amount`: Positive number in **dollars**
+
+        - `paymentDate`: ISO 8601 datetime string
+
+        - `paymentMethod`: One of `CASH`, `ACH`, `CREDIT_CARD`, `KLARNA`, `AFFIRM`, `CHECK`
+
+        - `notes` (optional)
+
+        - `paymentReference` (optional)
+
+        '
+      tags:
+      - payments
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Payment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateInvoicePaymentRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateInvoicePaymentRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateInvoicePaymentRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentCreate'
+  /invoices/{invoiceId}/payments/{paymentId}:
+    get:
+      operationId: get-invoice-payment
+      summary: Get Invoice Payment
+      description: 'Retrieve a single payment record on an invoice by payment id.
+
+
+        Core does not expose a standalone payment-record GET; this resolves the payment from the invoice''s nested payment records.
+
+        '
+      tags:
+      - payments
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice identifier
+        required: true
+        schema:
+          type: integer
+      - name: paymentId
+        in: path
+        description: Payment record identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Payment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInvoicePaymentRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInvoicePaymentRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInvoicePaymentRequestNotFoundError'
+  /bills/{billId}/payments:
+    get:
+      operationId: list-bill-payments
+      summary: List Bill Payments
+      description: 'Retrieve all payment records for a bill.
+
+
+        Amounts are returned in **dollars** (internal storage uses cents).
+
+        '
+      tags:
+      - payments
+      parameters:
+      - name: billId
+        in: path
+        description: Bill identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of payments for the bill
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillPaymentListResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBillPaymentsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBillPaymentsRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBillPaymentsRequestNotFoundError'
+    post:
+      operationId: create-bill-payment
+      summary: Create Bill Payment
+      description: 'Record a manual payment against a bill.
+
+
+        **Request body**
+
+        - `amount`: Positive number in **dollars**
+
+        - `paymentDate`: ISO 8601 datetime string
+
+        - `paymentMethod`: One of `CASH`, `ACH`, `CREDIT_CARD`, `KLARNA`, `AFFIRM`, `CHECK`
+
+        - `notes` (optional)
+
+        - `paymentReference` (optional)
+
+        '
+      tags:
+      - payments
+      parameters:
+      - name: billId
+        in: path
+        description: Bill identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Payment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillPayment'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBillPaymentRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBillPaymentRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBillPaymentRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentCreate'
+  /bills/{billId}/payments/{paymentId}:
+    get:
+      operationId: get-bill-payment
+      summary: Get Bill Payment
+      description: 'Retrieve a single payment record on a bill by payment id.
+
+
+        Core does not expose a standalone payment-record GET; this resolves the payment from the bill''s nested payment records.
+
+        '
+      tags:
+      - payments
+      parameters:
+      - name: billId
+        in: path
+        description: Bill identifier
+        required: true
+        schema:
+          type: integer
+      - name: paymentId
+        in: path
+        description: Payment record identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Payment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillPayment'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBillPaymentRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBillPaymentRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBillPaymentRequestNotFoundError'
+components:
+  schemas:
+    GetBillPaymentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetBillPaymentRequestNotFoundError
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Payment record identifier
+        invoiceNumber:
+          type:
+          - integer
+          - 'null'
+          description: Payment display number (when present)
+        amount:
+          type: number
+          format: double
+          description: Payment amount in dollars
+        status:
+          type: string
+          description: Payment status
+        paymentMethod:
+          type: string
+          description: Payment method (e.g. CASH, ACH, CREDIT_CARD, CHECK)
+        paymentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the payment was recorded (ISO 8601); null if absent from upstream
+        paymentReference:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        isExternal:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the payment originated from an external processor (e.g. Stripe)
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentCreatedBy'
+          - type: 'null'
+      required:
+      - id
+      - amount
+      - status
+      - paymentMethod
+      title: Payment
+    CreateBillPaymentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateBillPaymentRequestUnauthorizedError
+    InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode
+    PaymentListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Payment'
+      title: PaymentListResponse
+    InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode
+    ListInvoicePaymentsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListInvoicePaymentsRequestNotFoundError
+    BillPayment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Payment record identifier
+        billNumber:
+          type:
+          - integer
+          - 'null'
+          description: Payment display number (when present)
+        amount:
+          type: number
+          format: double
+          description: Payment amount in dollars
+        status:
+          type: string
+          description: Payment status
+        paymentMethod:
+          type: string
+          description: Payment method (e.g. CASH, ACH, CREDIT_CARD, CHECK)
+        paymentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the payment was recorded (ISO 8601); null if absent from upstream
+        paymentReference:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        isExternal:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the payment originated from an external processor (e.g. Stripe)
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/BillPaymentCreatedBy'
+          - type: 'null'
+      required:
+      - id
+      - amount
+      - status
+      - paymentMethod
+      title: BillPayment
+    PaymentCreatedBy:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+      title: PaymentCreatedBy
+    GetInvoicePaymentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetInvoicePaymentRequestUnauthorizedError
+    GetBillPaymentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetBillPaymentRequestUnauthorizedError
+    CreateBillPaymentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateBillPaymentRequestNotFoundError
+    GetInvoicePaymentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetInvoicePaymentRequestBadRequestError
+    CreateBillPaymentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateBillPaymentRequestBadRequestError
+    GetBillPaymentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetBillPaymentRequestBadRequestError
+    CreateInvoicePaymentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateInvoicePaymentRequestNotFoundError
+    BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode
+    ListBillPaymentsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListBillPaymentsRequestBadRequestError
+    BillPaymentListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/BillPayment'
+      title: BillPaymentListResponse
+    CreateInvoicePaymentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateInvoicePaymentRequestBadRequestError
+    CreateInvoicePaymentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateInvoicePaymentRequestUnauthorizedError
+    PaymentCreatePaymentMethod:
+      type: string
+      enum:
+      - CASH
+      - ACH
+      - CREDIT_CARD
+      - KLARNA
+      - AFFIRM
+      - CHECK
+      title: PaymentCreatePaymentMethod
+    PaymentCreate:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Payment amount in dollars
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentCreatePaymentMethod'
+        paymentDate:
+          type: string
+          format: date-time
+        notes:
+          type: string
+          description: Optional notes about the payment
+        paymentReference:
+          type:
+          - string
+          - 'null'
+      required:
+      - amount
+      - paymentMethod
+      - paymentDate
+      title: PaymentCreate
+    BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode
+    InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode
+    ListBillPaymentsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListBillPaymentsRequestUnauthorizedError
+    BillPaymentCreatedBy:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+      title: BillPaymentCreatedBy
+    BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode
+    ListInvoicePaymentsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListInvoicePaymentsRequestUnauthorizedError
+    ListBillPaymentsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListBillPaymentsRequestNotFoundError
+    ListInvoicePaymentsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListInvoicePaymentsRequestBadRequestError
+    GetInvoicePaymentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetInvoicePaymentRequestNotFoundError
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

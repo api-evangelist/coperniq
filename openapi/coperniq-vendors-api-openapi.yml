@@ -1,0 +1,953 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts vendors API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: vendors
+paths:
+  /vendors:
+    get:
+      operationId: list-vendors
+      summary: List Vendors
+      description: 'Retrieve a paginated list of vendors.
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Date filtering (`updated_after`, `updated_before`)
+
+        - Sorting (`order_by`, default: desc)
+
+        - Vendor type filter (`vendor_type`)
+
+        '
+      tags:
+      - vendors
+      parameters:
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: updated_after
+        in: query
+        description: Filter items updated after this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_before
+        in: query
+        description: Filter items updated before this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/VendorsGetParametersOrderBy'
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_contacts
+        in: query
+        description: Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: vendor_type
+        in: query
+        description: Filter by vendor type
+        required: false
+        schema:
+          $ref: '#/components/schemas/VendorsGetParametersVendorType'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of vendors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vendor'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListVendorsRequestUnauthorizedError'
+    post:
+      operationId: create-vendor
+      summary: Create Vendor
+      description: 'Create a new vendor.
+
+
+        Required fields:
+
+        - `name`: Vendor name
+
+        - `vendorType`: One of `CONSULTANT`, `FINANCING`, `LOGISTICS`, `MANUFACTURER`, `SUBCONTRACTOR`, `SUPPLIER`
+
+
+        Optional fields:
+
+        - `address`: Array containing a single string for the full vendor location/address
+
+        - `website`: Vendor website URL (max 2048 chars)
+
+        - `description`: Vendor description
+
+        - `isActive`: Whether the vendor is active (default: true)
+
+        - `contacts`: Array of contact IDs to associate
+
+        - `projectIds`: Array of project IDs to link this vendor to
+
+        - `custom`: Custom fields object
+
+        '
+      tags:
+      - vendors
+      parameters:
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching vendor found (upsert)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVendorRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVendorRequestUnauthorizedError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorCreate'
+  /vendors/search:
+    get:
+      operationId: search-vendors
+      summary: Search Vendors
+      description: 'Search vendors using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).
+
+
+        Properties:
+
+        - `propX` can be a standard field (e.g., `name`, `website`, `vendorType`) or a custom property key name.
+
+
+        Operators (`opX`):
+
+        - Equality: `eq`, `neq`
+
+        - Text/string matching: `contains` (case-insensitive)
+
+        - Lists: `in`, `nin` (CSV list in `valueX`)
+
+        '
+      tags:
+      - vendors
+      parameters:
+      - name: prop1
+        in: query
+        description: First field to filter (e.g. `name`, `vendorType`, `website` or custom keyName)
+        required: true
+        schema:
+          type: string
+      - name: op1
+        in: query
+        description: Operator for prop1
+        required: true
+        schema:
+          $ref: '#/components/schemas/VendorsSearchGetParametersOp1'
+      - name: value1
+        in: query
+        description: Value for prop1 (comma-separated values for in/nin or between)
+        required: true
+        schema:
+          type: string
+      - name: logic
+        in: query
+        description: Logical combination when both prop1 and prop2 are provided
+        required: false
+        schema:
+          $ref: '#/components/schemas/VendorsSearchGetParametersLogic'
+      - name: prop2
+        in: query
+        description: Optional second field to filter
+        required: false
+        schema:
+          type: string
+      - name: op2
+        in: query
+        description: Operator for prop2
+        required: false
+        schema:
+          $ref: '#/components/schemas/VendorsSearchGetParametersOp2'
+      - name: value2
+        in: query
+        description: Value for prop2 (comma-separated values for in/nin or between)
+        required: false
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching vendors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vendor'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchVendorsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchVendorsRequestUnauthorizedError'
+  /vendors/{vendorId}:
+    get:
+      operationId: get-vendor
+      summary: Get Vendor
+      description: Retrieve a specific vendor by ID.
+      tags:
+      - vendors
+      parameters:
+      - name: vendorId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include_contacts
+        in: query
+        description: Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vendor details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVendorRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVendorRequestNotFoundError'
+    patch:
+      operationId: update-vendor
+      summary: Update Vendor
+      description: 'Update an existing vendor. All fields are optional — only include what you want to change.
+
+
+        Pass `null` to clear a nullable field (e.g. `website`, `description`).
+
+        '
+      tags:
+      - vendors
+      parameters:
+      - name: vendorId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vendor updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateVendorRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateVendorRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateVendorRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorUpdate'
+    delete:
+      operationId: delete-vendor
+      summary: Delete Vendor
+      description: Permanently delete a vendor by ID.
+      tags:
+      - vendors
+      parameters:
+      - name: vendorId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteVendorRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteVendorRequestNotFoundError'
+  /projects/{projectId}/vendors/{vendorId}:
+    post:
+      operationId: create-vendor-project-link
+      summary: Create Vendor-Project Link
+      description: 'Associate a vendor with a project (many-to-many relationship).
+
+
+        A vendor can be linked to multiple projects and a project can have multiple vendors.
+
+        '
+      tags:
+      - vendors
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vendorId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vendor linked successfully to project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendors_createVendorProjectLink_Response_200'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVendorProjectLinkRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVendorProjectLinkRequestNotFoundError'
+    delete:
+      operationId: delete-vendor-project-link
+      summary: Delete Vendor-Project Link
+      description: Remove the association between a vendor and a project.
+      tags:
+      - vendors
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vendorId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vendor-Project link deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendors_deleteVendorProjectLink_Response_200'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteVendorProjectLinkRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteVendorProjectLinkRequestNotFoundError'
+components:
+  schemas:
+    VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode
+    VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode
+    VendorCreateVendorType:
+      type: string
+      enum:
+      - CONSULTANT
+      - FINANCING
+      - LOGISTICS
+      - MANUFACTURER
+      - SUBCONTRACTOR
+      - SUPPLIER
+      description: The type of vendor
+      title: VendorCreateVendorType
+    GetVendorRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetVendorRequestUnauthorizedError
+    ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode
+    VendorCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Vendor name
+        vendorType:
+          $ref: '#/components/schemas/VendorCreateVendorType'
+          description: The type of vendor
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the full vendor location/address.
+        website:
+          type:
+          - string
+          - 'null'
+          description: Vendor website URL
+        description:
+          type:
+          - string
+          - 'null'
+          description: Vendor description
+        isActive:
+          type: boolean
+          default: true
+          description: Whether the vendor is active
+        contacts:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          description: Contact IDs to associate with this vendor
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          description: Project IDs to link this vendor to
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      required:
+      - name
+      - vendorType
+      title: VendorCreate
+    VendorsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: VendorsPostResponsesContentApplicationJsonSchemaCode
+    VendorVendorType:
+      type: string
+      enum:
+      - CONSULTANT
+      - FINANCING
+      - LOGISTICS
+      - MANUFACTURER
+      - SUBCONTRACTOR
+      - SUPPLIER
+      description: The type of vendor
+      title: VendorVendorType
+    UpdateVendorRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateVendorRequestBadRequestError
+    VendorsSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: VendorsSearchGetParametersOp2
+    GetVendorRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetVendorRequestNotFoundError
+    VendorsGetParametersVendorType:
+      type: string
+      enum:
+      - CONSULTANT
+      - FINANCING
+      - LOGISTICS
+      - MANUFACTURER
+      - SUBCONTRACTOR
+      - SUPPLIER
+      title: VendorsGetParametersVendorType
+    DeleteVendorRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteVendorRequestUnauthorizedError
+    SearchVendorsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsSearchGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: SearchVendorsRequestBadRequestError
+    UpdateVendorRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateVendorRequestUnauthorizedError
+    VendorUpdateVendorType:
+      type: string
+      enum:
+      - CONSULTANT
+      - FINANCING
+      - LOGISTICS
+      - MANUFACTURER
+      - SUBCONTRACTOR
+      - SUPPLIER
+      description: The type of vendor
+      title: VendorUpdateVendorType
+    Vendor:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        name:
+          type: string
+          description: Vendor name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Vendor description
+        address:
+          type: array
+          items:
+            type: string
+          description: Vendor location/address
+        isActive:
+          type: boolean
+          description: Whether the vendor is active
+        primaryEmail:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type:
+          - string
+          - 'null'
+          description: Primary contact phone
+        number:
+          type: integer
+          description: Vendor number (e.g., 1234)
+        vendorType:
+          oneOf:
+          - $ref: '#/components/schemas/VendorVendorType'
+          - type: 'null'
+          description: The type of vendor
+        website:
+          type:
+          - string
+          - 'null'
+          description: Vendor website URL
+        projectIds:
+          type: array
+          items:
+            type: integer
+          description: IDs of projects this vendor is linked to
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      title: Vendor
+    UpdateVendorRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateVendorRequestNotFoundError
+    DeleteVendorProjectLinkRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteVendorProjectLinkRequestUnauthorizedError
+    Vendors_createVendorProjectLink_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Vendors_createVendorProjectLink_Response_200
+    CreateVendorProjectLinkRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateVendorProjectLinkRequestUnauthorizedError
+    DeleteVendorRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteVendorRequestNotFoundError
+    CreateVendorRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateVendorRequestBadRequestError
+    VendorsSearchGetParametersLogic:
+      type: string
+      enum:
+      - and
+      - or
+      default: and
+      title: VendorsSearchGetParametersLogic
+    DeleteVendorProjectLinkRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteVendorProjectLinkRequestNotFoundError
+    Vendors_deleteVendorProjectLink_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Vendors_deleteVendorProjectLink_Response_200
+    SearchVendorsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchVendorsRequestUnauthorizedError
+    VendorsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: VendorsGetParametersOrderBy
+    ListVendorsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListVendorsRequestUnauthorizedError
+    CreateVendorRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateVendorRequestUnauthorizedError
+    ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode
+    CreateVendorProjectLinkRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateVendorProjectLinkRequestNotFoundError
+    VendorsSearchGetParametersOp1:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: VendorsSearchGetParametersOp1
+    VendorsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: VendorsGetResponsesContentApplicationJsonSchemaCode
+    VendorUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Vendor name
+        vendorType:
+          $ref: '#/components/schemas/VendorUpdateVendorType'
+          description: The type of vendor
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the full vendor location/address.
+        website:
+          type:
+          - string
+          - 'null'
+          description: Vendor website URL
+        description:
+          type:
+          - string
+          - 'null'
+          description: Vendor description
+        isActive:
+          type: boolean
+          description: Whether the vendor is active
+        contacts:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          description: Contact IDs to associate with this vendor
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          description: Project IDs to link this vendor to
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      title: VendorUpdate
+    VendorsSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: VendorsSearchGetResponsesContentApplicationJsonSchemaCode
+    VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

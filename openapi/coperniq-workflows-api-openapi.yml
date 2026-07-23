@@ -1,0 +1,192 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts workflows API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: workflows
+paths:
+  /workflows:
+    get:
+      operationId: list-workflows
+      summary: List Workflows
+      description: 'Retrieve a paginated list of workflows.
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Sorting (`order_by`, default: asc)
+
+        '
+      tags:
+      - workflows
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of workflows
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workflow'
+  /workflows/{workflowId}:
+    get:
+      operationId: get-workflow
+      summary: Get Workflow
+      description: Retrieve details of a specific workflow
+      tags:
+      - workflows
+      parameters:
+      - name: workflowId
+        in: path
+        description: Workflow identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Workflow details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWorkflowRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWorkflowRequestNotFoundError'
+components:
+  schemas:
+    WorkflowCreatedBy:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User identifier
+        firstName:
+          type: string
+          description: User first name
+        lastName:
+          type: string
+          description: User last name
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to user avatar image
+      title: WorkflowCreatedBy
+    Workflow:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Workflow identifier
+        name:
+          type: string
+          description: Workflow name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Workflow description
+        type:
+          $ref: '#/components/schemas/WorkflowType'
+          description: Workflow type
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/WorkflowCreatedBy'
+          - type: 'null'
+        phases:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPhasesItems'
+      title: Workflow
+    WorkflowType:
+      type: string
+      enum:
+      - PROJECT
+      description: Workflow type
+      title: WorkflowType
+    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
+    WorkflowPhasesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Phase identifier
+        name:
+          type: string
+          description: Phase name
+        type:
+          type: string
+          description: Phase type
+        description:
+          type:
+          - string
+          - 'null'
+          description: Phase description
+        redSla:
+          type:
+          - integer
+          - 'null'
+          description: Red SLA (Service Level Agreement) in days
+        yellowSla:
+          type:
+          - integer
+          - 'null'
+          description: Yellow SLA (Service Level Agreement) in days
+      title: WorkflowPhasesItems
+    GetWorkflowRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetWorkflowRequestUnauthorizedError
+    GetWorkflowRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetWorkflowRequestNotFoundError
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,1071 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts files API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: files
+paths:
+  /projects/{projectId}/files:
+    get:
+      operationId: get-project-files
+      summary: Get Project Files
+      description: Retrieve all files associated with a project
+      tags:
+      - files
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFilesRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFilesRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFilesRequestInternalServerError'
+    post:
+      operationId: upload-project-file-from-url
+      summary: Create Project File (from URL)
+      description: Upload a file to a project by providing its URL
+      tags:
+      - files
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadProjectFileFromUrlRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadProjectFileFromUrlRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadProjectFileFromUrlRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: URL of the file to upload
+                name:
+                  type: string
+                  description: Name of the file
+                isArchived:
+                  type: boolean
+                  default: false
+                  description: Whether the file is archived
+                phaseInstanceId:
+                  type: integer
+                  description: Optional. The ID of the phase instance to use. If provided, the phase does not need to be started to upload a file. You can gather phase instance ids from the get project endpoint.
+              required:
+              - url
+  /opportunities/{opportunityId}/files:
+    get:
+      operationId: get-request-files
+      summary: Get Opportunity Files
+      description: 'Retrieve all files associated with an opportunity
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - files
+      parameters:
+      - name: opportunityId
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRequestFilesRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRequestFilesRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRequestFilesRequestInternalServerError'
+    post:
+      operationId: upload-request-file-from-url
+      summary: Create Opportunity File (from URL)
+      description: 'Upload a file to an opportunity by providing its URL
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - files
+      parameters:
+      - name: opportunityId
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestFileFromUrlRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestFileFromUrlRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestFileFromUrlRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: URL of the file to upload
+                name:
+                  type: string
+                  description: Name of the file
+                isArchived:
+                  type: boolean
+                  default: false
+                  description: Whether the file is archived
+                phaseInstanceId:
+                  type: integer
+                  description: Optional. The ID of the phase instance to use. If provided, the phase does not need to be started to upload a file. You can gather phase instance ids from the get opportunity endpoint.
+              required:
+              - url
+  /projects/{projectId}/files/{fileId}:
+    get:
+      operationId: get-project-file
+      summary: Get Project File
+      description: Retrieve a specific file associated with a project
+      tags:
+      - files
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: fileId
+        in: path
+        description: File identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFileRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFileRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFileRequestInternalServerError'
+    delete:
+      operationId: delete-project-file
+      summary: Delete Project File
+      description: Delete a file from a project
+      tags:
+      - files
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: fileId
+        in: path
+        description: File identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Files_deleteProjectFile_Response_200'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteProjectFileRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteProjectFileRequestNotFoundError'
+  /opportunities/{opportunityId}/files/{fileId}:
+    get:
+      operationId: get-request-file
+      summary: Get Opportunity File
+      description: 'Retrieve a specific file associated with an opportunity
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - files
+      parameters:
+      - name: opportunityId
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: fileId
+        in: path
+        description: File identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRequestFileRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRequestFileRequestNotFoundError'
+    delete:
+      operationId: delete-request-file
+      summary: Delete Opportunity File
+      description: 'Delete a file from an opportunity
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - files
+      parameters:
+      - name: opportunityId
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: fileId
+        in: path
+        description: File identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Files_deleteRequestFile_Response_200'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteRequestFileRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteRequestFileRequestNotFoundError'
+  /projects/{projectId}/files/upload:
+    post:
+      operationId: upload-project-file
+      summary: Create Project File (stream)
+      description: Upload a file to a project using multipart/form-data
+      tags:
+      - files
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Optional file name to store
+        required: false
+        schema:
+          type: string
+      - name: content_type
+        in: query
+        description: Optional MIME type to associate with the file
+        required: false
+        schema:
+          type: string
+      - name: phase_instance_id
+        in: query
+        description: Optional phase instance id to associate with the file
+        required: false
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadProjectFileRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadProjectFileRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadProjectFileRequestInternalServerError'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+  /opportunities/{opportunityId}/files/upload:
+    post:
+      operationId: upload-request-file
+      summary: Create Opportunity File (stream)
+      description: 'Upload a file to an opportunity using multipart/form-data
+
+
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
+
+        '
+      tags:
+      - files
+      parameters:
+      - name: opportunityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Optional file name to store
+        required: false
+        schema:
+          type: string
+      - name: content_type
+        in: query
+        description: Optional MIME type to associate with the file
+        required: false
+        schema:
+          type: string
+      - name: phase_instance_id
+        in: query
+        description: Optional phase instance id to associate with the file
+        required: false
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestFileRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestFileRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestFileRequestInternalServerError'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+components:
+  schemas:
+    OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode
+    GetRequestFilesRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetRequestFilesRequestInternalServerError
+    ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode
+    FileUploadResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: File identifier
+        name:
+          type: string
+          description: File name
+        downloadUrl:
+          type: string
+          description: URL to download the file
+        metaData:
+          $ref: '#/components/schemas/FileUploadResponseMetaData'
+      required:
+      - id
+      - name
+      - downloadUrl
+      - metaData
+      description: Response returned after a successful file upload.
+      title: FileUploadResponse
+    ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode
+    DeleteRequestFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: DeleteRequestFileRequestBadRequestError
+    OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode
+    OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode
+    DeleteProjectFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: DeleteProjectFileRequestBadRequestError
+    OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode
+    GetRequestFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetRequestFileRequestNotFoundError
+    GetProjectFilesRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFilesRequestInternalServerError
+    GetProjectFilesRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFilesRequestNotFoundError
+    ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode
+    Files_deleteRequestFile_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Files_deleteRequestFile_Response_200
+    UploadRequestFileFromUrlRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadRequestFileFromUrlRequestNotFoundError
+    FileUploadResponseMetaDataGps:
+      type: object
+      properties: {}
+      description: GPS coordinates if applicable
+      title: FileUploadResponseMetaDataGps
+    UploadRequestFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadRequestFileRequestNotFoundError
+    FileUploadResponseMetaData:
+      type: object
+      properties:
+        acl:
+          type: string
+          description: Access control level
+        gps:
+          $ref: '#/components/schemas/FileUploadResponseMetaDataGps'
+          description: GPS coordinates if applicable
+        size:
+          type: integer
+          description: File size in bytes
+        userId:
+          type: integer
+          description: User who uploaded the file
+        mimeType:
+          type: string
+          description: MIME type of the file
+        extention:
+          type: string
+          description: File extension
+        originalName:
+          type: string
+          description: Original file name
+        thumbnailUrl:
+          type: string
+          description: URL to the thumbnail version
+        generatedName:
+          type: string
+          description: Generated unique file name
+        thumbnailName:
+          type: string
+          description: Generated thumbnail file name
+        requestFileName:
+          type: string
+          description: Original request file name
+      required:
+      - acl
+      - size
+      - userId
+      - mimeType
+      - extention
+      - originalName
+      - generatedName
+      title: FileUploadResponseMetaData
+    GetRequestFilesRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetRequestFilesRequestNotFoundError
+    OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode
+    UploadProjectFileFromUrlRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UploadProjectFileFromUrlRequestBadRequestError
+    DeleteProjectFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteProjectFileRequestNotFoundError
+    UploadRequestFileRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadRequestFileRequestInternalServerError
+    GetRequestFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetRequestFileRequestBadRequestError
+    FileMetaDataGps:
+      type: object
+      properties: {}
+      description: GPS coordinates if applicable
+      title: FileMetaDataGps
+    ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode
+    UploadProjectFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UploadProjectFileRequestBadRequestError
+    UploadProjectFileFromUrlRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadProjectFileFromUrlRequestInternalServerError
+    UploadProjectFileRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadProjectFileRequestInternalServerError
+    GetProjectFileRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFileRequestInternalServerError
+    DeleteRequestFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteRequestFileRequestNotFoundError
+    UploadProjectFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadProjectFileRequestNotFoundError
+    GetProjectFilesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetProjectFilesRequestBadRequestError
+    Files_deleteProjectFile_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Files_deleteProjectFile_Response_200
+    GetProjectFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetProjectFileRequestBadRequestError
+    UploadRequestFileFromUrlRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadRequestFileFromUrlRequestInternalServerError
+    GetProjectFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFileRequestNotFoundError
+    FileCreatedByUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User identifier
+        firstName:
+          type: string
+          description: User's first name
+        lastName:
+          type: string
+          description: User's last name
+      title: FileCreatedByUser
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: File identifier
+        name:
+          type: string
+          description: File name
+        downloadUrl:
+          type: string
+          description: URL to download the file
+        type:
+          type: string
+          description: File type
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        isArchived:
+          type: boolean
+          description: Whether the file is archived
+        metaData:
+          $ref: '#/components/schemas/FileMetaData'
+        source:
+          type: string
+          description: File source (e.g., INTERNAL)
+        createdByUser:
+          $ref: '#/components/schemas/FileCreatedByUser'
+      required:
+      - id
+      - name
+      - downloadUrl
+      - type
+      - updatedAt
+      - createdAt
+      - metaData
+      - source
+      - createdByUser
+      title: File
+    FileMetaData:
+      type: object
+      properties:
+        acl:
+          type: string
+          description: Access control level
+        gps:
+          $ref: '#/components/schemas/FileMetaDataGps'
+          description: GPS coordinates if applicable
+        size:
+          type: integer
+          description: File size in bytes
+        userId:
+          type: integer
+          description: User who uploaded the file
+        mimeType:
+          type: string
+          description: MIME type of the file
+        extention:
+          type: string
+          description: File extension
+        originalName:
+          type: string
+          description: Original file name
+        thumbnailUrl:
+          type: string
+          description: URL to the thumbnail version
+        generatedName:
+          type: string
+          description: Generated unique file name
+        thumbnailName:
+          type: string
+          description: Generated thumbnail file name
+        requestFileName:
+          type: string
+          description: Original request file name
+      required:
+      - acl
+      - size
+      - userId
+      - mimeType
+      - extention
+      - originalName
+      - generatedName
+      title: FileMetaData
+    GetRequestFilesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetRequestFilesRequestBadRequestError
+    UploadProjectFileFromUrlRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadProjectFileFromUrlRequestNotFoundError
+    UploadRequestFileFromUrlRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UploadRequestFileFromUrlRequestBadRequestError
+    UploadRequestFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UploadRequestFileRequestBadRequestError
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

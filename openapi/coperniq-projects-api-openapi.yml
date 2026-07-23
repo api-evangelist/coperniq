@@ -1,0 +1,1281 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts projects API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: projects
+paths:
+  /projects:
+    get:
+      operationId: list-projects
+      summary: List Projects
+      description: 'Retrieve a paginated list of projects.
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Date filtering (`updated_after`, `updated_before`)
+
+        - Sorting (`order_by`)
+
+        - Field search (`title`, `address`, `primaryName`, `primaryPhone`, `primaryEmail`)
+
+        - Full text search (`q`)
+
+
+        **Note:** If a project has no `title` (empty or whitespace-only), the response returns the parent account''s `title` instead. The stored value is not modified — this is a read-time fallback only. Title-based search (`title` query param, full-text `q`, or the `/projects/search` endpoint with `prop=title&op=contains`) also matches projects whose own title is null/empty when the parent account''s title matches the search term.
+
+        '
+      tags:
+      - projects
+      parameters:
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: updated_after
+        in: query
+        description: Filter items updated after this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_before
+        in: query
+        description: Filter items updated before this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProjectsGetParametersOrderBy'
+      - name: include_virtual_properties
+        in: query
+        description: Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: q
+        in: query
+        description: Full text search query
+        required: false
+        schema:
+          type: string
+      - name: title
+        in: query
+        description: Title search query
+        required: false
+        schema:
+          type: string
+      - name: address
+        in: query
+        description: Address search query
+        required: false
+        schema:
+          type: string
+      - name: primaryName
+        in: query
+        description: Contact name search query
+        required: false
+        schema:
+          type: string
+      - name: primaryPhone
+        in: query
+        description: Contact phone search query
+        required: false
+        schema:
+          type: string
+      - name: primaryEmail
+        in: query
+        description: Contact email search query
+        required: false
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProjectsRequestUnauthorizedError'
+    post:
+      operationId: create-project
+      summary: Create Project
+      description: 'Create a new project with required and optional fields.
+
+
+        Required fields:
+
+        - `title`: Project title/name
+
+        - `address`: An array containing a single string, which represents the full project location/address.
+
+
+        Optional fields:
+
+        - `trades`: Array of trade types
+
+        - `accountId`: Link to existing account
+
+        - `workflowId`: Link to workflow
+
+        - `phaseId`: Link to phase
+
+        - `primaryEmail`/`primaryPhone`: Contact information
+
+        - `contacts`: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+
+        - `custom`: Custom fields object
+
+
+        Note: If primaryEmail or primaryPhone is provided, a contact will be automatically created or matched.
+
+        '
+      tags:
+      - projects
+      parameters:
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: match_by
+        in: query
+        description: Field to use for matching existing records
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProjectsPostParametersMatchBy'
+      - name: match_found_strategy
+        in: query
+        description: Strategy to use when a match is found
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProjectsPostParametersMatchFoundStrategy'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching project found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectRequestUnauthorizedError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+  /projects/search:
+    get:
+      operationId: search-projects
+      summary: Search Projects
+      description: "Search projects using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `status`, `title`, `city`, `type`, `accountId`, etc.) or a custom property key name.\n- Use the `property key` from your company settings.\n- Filter by parent account with `accountId`. `clientId` is accepted as a deprecated alias for backwards compatibility.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Numeric/datetime comparisons: `gt`, `gte`, `lt`, `lte`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)\n- Ranges: `between` (use `valueX` as `from,to`)\n- Existence: `exists` is not supported for custom properties due to performance limitations. Use `eq` or `neq` instead.\n\nValue formats:\n- `in`/`nin`: lists can be provided as:\n  - Plain CSV: `value1=OPEN,ACTIVE`\n  - Quoted CSV (to include commas inside a value): `value1=\"Last, First\",Other`\n  - JSON array: `value1=[\"Last, First\",\"Other\"]`\n- `between`: `from,to` (e.g., `value1=2025-01-01,2025-12-31` or `value1=10,20`)\n- Dates should be ISO 8601 strings; numeric-like values on custom properties are matched against both numeric and text representations.\n\nExamples:\n- status equals ACTIVE: `?prop1=status&op1=eq&value1=ACTIVE`\n- custom id equals 1234: `?prop1=legacy_tool_project_id&op1=eq&value1=1234`\n- title contains \"Solar\": `?prop1=name&op1=contains&value1=Solar`\n- status IN (ACTIVE, ON_HOLD) AND city = Austin: `?prop1=status&op1=in&value1=ACTIVE,ON_HOLD&logic=and&prop2=city&op2=eq&value2=Austin`\n\n**Note:** If a project has no `title` (empty or whitespace-only), the response returns the parent account's `title` instead. The stored value is not modified — this is a read-time fallback only. Title-based search (`title` query param, full-text `q`, or the `/projects/search` endpoint with `prop=title&op=contains`) also matches projects whose own title is null/empty when the parent account's title matches the search term.\n"
+      tags:
+      - projects
+      parameters:
+      - name: prop1
+        in: query
+        description: First field to filter (standard or custom keyName)
+        required: true
+        schema:
+          type: string
+      - name: op1
+        in: query
+        description: Operator for prop1
+        required: true
+        schema:
+          $ref: '#/components/schemas/ProjectsSearchGetParametersOp1'
+      - name: value1
+        in: query
+        description: Value for prop1 (comma-separated values for in/nin or between)
+        required: true
+        schema:
+          type: string
+      - name: logic
+        in: query
+        description: Logical combination when both prop1 and prop2 are provided
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProjectsSearchGetParametersLogic'
+      - name: prop2
+        in: query
+        description: Optional second field to filter
+        required: false
+        schema:
+          type: string
+      - name: op2
+        in: query
+        description: Operator for prop2
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProjectsSearchGetParametersOp2'
+      - name: value2
+        in: query
+        description: Value for prop2 (comma-separated values for in/nin or between)
+        required: false
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProjectsSearchGetParametersOrderBy'
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of projects matching filters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchProjectsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchProjectsRequestUnauthorizedError'
+  /projects/{projectId}:
+    get:
+      operationId: get-project
+      summary: Get Project
+      description: 'Retrieve a specific project by ID.
+
+
+        **Note:** If the project has no `title` (empty or whitespace-only), the response returns the parent account''s `title` instead. The stored value is not modified — this is a read-time fallback only.
+
+        '
+      tags:
+      - projects
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: include_virtual_properties
+        in: query
+        description: Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectWithPhaseInstances'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectRequestNotFoundError'
+    patch:
+      operationId: update-project
+      summary: Update Project
+      description: 'Update an existing project. Supports partial updates.
+
+
+        Updatable fields:
+
+        - Standard fields (value, size, status, etc.)
+
+        - Workflow fields (workflowId, phaseId)
+
+        - Contact information (primaryEmail, primaryPhone)
+
+        - Contacts (contact IDs only, no name, email, phone, etc.)
+
+        - Custom fields (through custom object)
+
+
+        Note: Updates are atomic - either all fields update or none do.
+
+
+        > **Changing account association is not supported via update.** To move a project to a different account, delete and re-create it under the new account.
+
+        '
+      tags:
+      - projects
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Project updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProjectRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProjectRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProjectRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdate'
+    delete:
+      operationId: delete-project
+      summary: Delete Project
+      description: Delete a specific project by ID
+      tags:
+      - projects
+      parameters:
+      - name: projectId
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteProjectRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteProjectRequestNotFoundError'
+components:
+  schemas:
+    ProjectsSearchGetParametersOp1:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: ProjectsSearchGetParametersOp1
+    ProjectsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ProjectsPostResponsesContentApplicationJsonSchemaCode
+    CreateProjectRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateProjectRequestBadRequestError
+    ProjectsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ProjectsGetResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode
+    ProjectUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Project title/name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Project description
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the full project location/address.
+        trades:
+          type: array
+          items:
+            type: string
+          description: Array of trade types
+        workflowId:
+          type: string
+          description: ID of associated workflow
+        value:
+          type: number
+          format: double
+          description: Project value
+        size:
+          type: number
+          format: double
+          description: Project size
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        primaryEmail:
+          type: string
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type: string
+          description: Primary contact phone
+        contacts:
+          type: array
+          items:
+            type: integer
+          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      description: 'All fields are optional. Changing account association is not supported via update — delete and re-create the project under the new account.
+
+        '
+      title: ProjectUpdate
+    ProjectStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - ON_HOLD
+      - CANCELLED
+      - COMPLETED
+      description: 'Status of the project:
+
+        * `ACTIVE` - Project is active and in progress
+
+        * `ON_HOLD` - Project is temporarily paused
+
+        * `CANCELLED` - Project has been cancelled
+
+        * `COMPLETED` - Project has been completed
+
+        '
+      title: ProjectStatus
+    SearchProjectsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsSearchGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: SearchProjectsRequestBadRequestError
+    SearchProjectsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchProjectsRequestUnauthorizedError
+    UpdateProjectRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateProjectRequestNotFoundError
+    ProjectWithPhaseInstancesStage:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Stage identifier
+        name:
+          type: string
+          description: Stage name
+        type:
+          type: string
+          description: Stage type
+        scope:
+          type: string
+          description: Stage scope
+        redSla:
+          type: integer
+          description: Red SLA threshold in days
+        yellowSla:
+          type: integer
+          description: Yellow SLA threshold in days
+        timeInStageDays:
+          type: integer
+          description: Number of days in current stage
+        slaStatus:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesStageSlaStatus'
+          description: Current SLA violation status
+      description: 'Current stage information (Workflows 1.0).
+
+
+        This object is present only for records still using the original Stage-based workflow engine.
+
+        When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
+
+        related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
+
+        '
+      title: ProjectWithPhaseInstancesStage
+    ProjectsSearchGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: ProjectsSearchGetParametersOrderBy
+    ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode
+    UpdateProjectRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateProjectRequestUnauthorizedError
+    ProjectsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: ProjectsGetParametersOrderBy
+    ProjectsSearchGetParametersLogic:
+      type: string
+      enum:
+      - and
+      - or
+      default: and
+      title: ProjectsSearchGetParametersLogic
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        title:
+          type: string
+          description: Record title/name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Record description
+        address:
+          type: array
+          items:
+            type: string
+          description: Record location/address
+        isActive:
+          type: boolean
+          description: Whether the record is active
+        primaryEmail:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type:
+          - string
+          - 'null'
+          description: Primary contact phone
+        number:
+          type: integer
+          description: Record number (e.g., 1234)
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/UserSummary'
+          - type: 'null'
+          description: User who created the record. Null when the record was created by a non-user actor (e.g. automation or a contact).
+        updatedBy:
+          oneOf:
+          - $ref: '#/components/schemas/UserSummary'
+          - type: 'null'
+          description: User who last edited a field on the record, derived from the changelog. Null when the record has never been edited or the last edit was made by a non-user actor.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+        trades:
+          type: array
+          items:
+            type: string
+          description: Array of trade types
+        value:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Project value
+        size:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Project size
+        workflowId:
+          type:
+          - integer
+          - 'null'
+          description: Associated workflow ID
+        accountId:
+          type:
+          - integer
+          - 'null'
+          description: Associated account ID
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        stage:
+          $ref: '#/components/schemas/ProjectStage'
+          description: 'Current stage information (Workflows 1.0).
+
+
+            This object is present only for records still using the original Stage-based workflow engine.
+
+            When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
+
+            related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
+
+            '
+        phase:
+          $ref: '#/components/schemas/ProjectPhase'
+          description: 'Current phase information (Workflows 2.0).
+
+
+            This object replaces `stage` when a project is attached to the Phase-based workflow engine.
+
+            If the project is still on Workflows 1.0 this object will be omitted.
+
+            '
+        workflowName:
+          type: string
+          description: 'Name of the associated workflow.
+
+            '
+      title: Project
+    PhaseTemplateSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+        redSla:
+          type:
+          - integer
+          - 'null'
+        yellowSla:
+          type:
+          - integer
+          - 'null'
+      title: PhaseTemplateSummary
+    ProjectStageSlaStatus:
+      type: string
+      enum:
+      - VIOLATED
+      - NON_VIOLATED
+      description: Current SLA violation status
+      title: ProjectStageSlaStatus
+    ProjectWithPhaseInstancesPhaseInstancesItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseInstancesItemsStatus'
+        position:
+          type: integer
+        type:
+          type: string
+        phaseTemplateId:
+          type: integer
+        phaseTemplate:
+          $ref: '#/components/schemas/PhaseTemplateSummary'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the phase instance started (get project by id only)
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the phase instance completed (get project by id only)
+      title: ProjectWithPhaseInstancesPhaseInstancesItems
+    DeleteProjectRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteProjectRequestUnauthorizedError
+    ProjectWithPhaseInstancesStageSlaStatus:
+      type: string
+      enum:
+      - VIOLATED
+      - NON_VIOLATED
+      description: Current SLA violation status
+      title: ProjectWithPhaseInstancesStageSlaStatus
+    ProjectsPostParametersMatchFoundStrategy:
+      type: string
+      enum:
+      - skip
+      - replace
+      - enrich
+      default: skip
+      description: '- skip: Return existing record without changes
+
+        - replace: Replace existing record with new data
+
+        - enrich: Update only empty fields in existing record
+
+        '
+      title: ProjectsPostParametersMatchFoundStrategy
+    ProjectStage:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Stage identifier
+        name:
+          type: string
+          description: Stage name
+        type:
+          type: string
+          description: Stage type
+        scope:
+          type: string
+          description: Stage scope
+        redSla:
+          type: integer
+          description: Red SLA threshold in days
+        yellowSla:
+          type: integer
+          description: Yellow SLA threshold in days
+        timeInStageDays:
+          type: integer
+          description: Number of days in current stage
+        slaStatus:
+          $ref: '#/components/schemas/ProjectStageSlaStatus'
+          description: Current SLA violation status
+      description: 'Current stage information (Workflows 1.0).
+
+
+        This object is present only for records still using the original Stage-based workflow engine.
+
+        When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
+
+        related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
+
+        '
+      title: ProjectStage
+    ProjectWithPhaseInstancesPhaseSlaStatus:
+      type: string
+      enum:
+      - VIOLATED
+      - NON_VIOLATED
+      description: Current SLA violation status for the phase
+      title: ProjectWithPhaseInstancesPhaseSlaStatus
+    ProjectsPostParametersMatchBy:
+      type: string
+      enum:
+      - title
+      - primaryEmail
+      - primaryPhone
+      - address
+      default: title
+      title: ProjectsPostParametersMatchBy
+    GetProjectRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectRequestUnauthorizedError
+    ListProjectsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectsRequestUnauthorizedError
+    DeleteProjectRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteProjectRequestNotFoundError
+    ProjectCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Project title/name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Project description
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the full project location/address.
+        trades:
+          type: array
+          items:
+            type: string
+          description: Array of trade types, defaults to 'Solar'
+        accountId:
+          type: string
+          description: ID of associated account
+        workflowId:
+          type: string
+          description: ID of associated workflow
+        value:
+          type: number
+          format: double
+          description: Project value
+        size:
+          type: number
+          format: double
+          description: Project size
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        primaryEmail:
+          type: string
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type: string
+          description: Primary contact phone
+        contacts:
+          type: array
+          items:
+            type: integer
+          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      required:
+      - title
+      - address
+      title: ProjectCreate
+    ProjectPhase:
+      type: object
+      properties:
+        instanceId:
+          type: integer
+          description: Phase instance identifier
+        templateId:
+          type: integer
+          description: Phase template identifier
+        name:
+          type: string
+          description: Phase name
+        status:
+          type: string
+          description: Current phase status
+        type:
+          type: string
+          description: Phase type
+        redSla:
+          type: integer
+          description: Red SLA threshold in days (from template)
+        yellowSla:
+          type: integer
+          description: Yellow SLA threshold in days (from template)
+        timeInStageDays:
+          type: integer
+          description: Number of days in current phase (mirrors `timeInStageDays` metric)
+        slaStatus:
+          $ref: '#/components/schemas/ProjectPhaseSlaStatus'
+          description: Current SLA violation status for the phase
+      description: 'Current phase information (Workflows 2.0).
+
+
+        This object replaces `stage` when a project is attached to the Phase-based workflow engine.
+
+        If the project is still on Workflows 1.0 this object will be omitted.
+
+        '
+      title: ProjectPhase
+    ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      description: Minimal user representation used in responses
+      title: UserSummary
+    ProjectWithPhaseInstances:
+      type: object
+      properties:
+        trades:
+          type: array
+          items:
+            type: string
+          description: Array of trade types
+        value:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Project value
+        size:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Project size
+        workflowId:
+          type:
+          - integer
+          - 'null'
+          description: Associated workflow ID
+        accountId:
+          type:
+          - integer
+          - 'null'
+          description: Associated account ID
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        stage:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesStage'
+          description: 'Current stage information (Workflows 1.0).
+
+
+            This object is present only for records still using the original Stage-based workflow engine.
+
+            When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
+
+            related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
+
+            '
+        phase:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhase'
+          description: 'Current phase information (Workflows 2.0).
+
+
+            This object replaces `stage` when a project is attached to the Phase-based workflow engine.
+
+            If the project is still on Workflows 1.0 this object will be omitted.
+
+            '
+        workflowName:
+          type: string
+          description: 'Name of the associated workflow.
+
+            '
+        phaseInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseInstancesItems'
+          description: Ordered list of phase instances for the project
+      title: ProjectWithPhaseInstances
+    ProjectPhaseSlaStatus:
+      type: string
+      enum:
+      - VIOLATED
+      - NON_VIOLATED
+      description: Current SLA violation status for the phase
+      title: ProjectPhaseSlaStatus
+    ProjectsSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: ProjectsSearchGetParametersOp2
+    GetProjectRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectRequestNotFoundError
+    ProjectWithPhaseInstancesPhaseInstancesItemsStatus:
+      type: string
+      enum:
+      - NOT_STARTED
+      - IN_PROGRESS
+      - COMPLETED
+      title: ProjectWithPhaseInstancesPhaseInstancesItemsStatus
+    ProjectWithPhaseInstancesPhase:
+      type: object
+      properties:
+        instanceId:
+          type: integer
+          description: Phase instance identifier
+        templateId:
+          type: integer
+          description: Phase template identifier
+        name:
+          type: string
+          description: Phase name
+        status:
+          type: string
+          description: Current phase status
+        type:
+          type: string
+          description: Phase type
+        redSla:
+          type: integer
+          description: Red SLA threshold in days (from template)
+        yellowSla:
+          type: integer
+          description: Yellow SLA threshold in days (from template)
+        timeInStageDays:
+          type: integer
+          description: Number of days in current phase (mirrors `timeInStageDays` metric)
+        slaStatus:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseSlaStatus'
+          description: Current SLA violation status for the phase
+      description: 'Current phase information (Workflows 2.0).
+
+
+        This object replaces `stage` when a project is attached to the Phase-based workflow engine.
+
+        If the project is still on Workflows 1.0 this object will be omitted.
+
+        '
+      title: ProjectWithPhaseInstancesPhase
+    ProjectsSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ProjectsSearchGetResponsesContentApplicationJsonSchemaCode
+    CreateProjectRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectRequestUnauthorizedError
+    UpdateProjectRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateProjectRequestBadRequestError
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,262 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts users API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: users
+paths:
+  /users:
+    get:
+      operationId: list-users
+      summary: List Users
+      description: Retrieve a list of users
+      tags:
+      - users
+      parameters:
+      - name: email
+        in: query
+        description: Email of the user to search for
+        required: false
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: ID of the user to search for
+        required: false
+        schema:
+          type: integer
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      operationId: invite-user
+      summary: Invite User
+      description: Invite a new user to the organization
+      tags:
+      - users
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: User invited successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users_inviteUser_Response_201'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInvite'
+  /roles:
+    get:
+      operationId: list-roles
+      summary: List Roles
+      description: Retrieve available user roles
+      tags:
+      - users
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+  /teams:
+    get:
+      operationId: list-teams
+      summary: List Teams
+      description: Retrieve available teams
+      tags:
+      - users
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of teams
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+components:
+  schemas:
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        workers:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMember'
+      title: Team
+    UserRole:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Role identifier
+        name:
+          type: string
+          description: Role name
+      title: UserRole
+    Role:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier
+        name:
+          type: string
+          description: Role name
+        active:
+          type: boolean
+          description: Whether the role is active
+      required:
+      - id
+      - name
+      - active
+      title: Role
+    UserInvite:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of user to invite
+        firstName:
+          type: string
+          description: User's first name
+        lastName:
+          type: string
+          description: User's last name
+        roleIds:
+          type: array
+          items:
+            type: integer
+          description: Role IDs to assign to the user
+        phone:
+          type: string
+          description: User's phone number
+      required:
+      - email
+      - firstName
+      - lastName
+      - roleIds
+      title: UserInvite
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        firstName:
+          type: string
+          description: First name
+        lastName:
+          type: string
+          description: Last name
+        email:
+          type: string
+          format: email
+          description: Email address
+        phone:
+          type: string
+          description: Phone number
+        role:
+          $ref: '#/components/schemas/UserRole'
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - role
+      title: User
+    Users_inviteUser_Response_201:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+      title: Users_inviteUser_Response_201
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        firstName:
+          type: string
+          description: First name
+        lastName:
+          type: string
+          description: Last name
+        email:
+          type: string
+          format: email
+          description: Email address
+        phone:
+          type: string
+          description: Phone number
+        role:
+          $ref: '#/components/schemas/TeamMemberRole'
+        isTeamLead:
+          type: boolean
+          description: Indicates whether this user is the lead for the team.
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - role
+      title: TeamMember
+    TeamMemberRole:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Role identifier
+        name:
+          type: string
+          description: Role name
+      title: TeamMemberRole
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

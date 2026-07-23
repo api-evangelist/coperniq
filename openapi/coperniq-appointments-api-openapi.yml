@@ -1,0 +1,480 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts appointments API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: appointments
+paths:
+  /opportunities/{opportunityId}/appointments:
+    get:
+      operationId: get-opportunity-appointments
+      summary: Get Opportunity Appointments
+      description: 'Retrieve appointments for a specific opportunity.
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Date filtering (`updated_after`, `updated_before`)
+
+        - Sorting (`order_by`)
+
+        '
+      tags:
+      - appointments
+      parameters:
+      - name: opportunityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsGetParametersOrderBy'
+      - name: updated_after
+        in: query
+        description: Filter items updated after this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_before
+        in: query
+        description: Filter items updated before this timestamp (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of appointments for the opportunity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentListResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOpportunityAppointmentsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOpportunityAppointmentsRequestUnauthorizedError'
+    post:
+      operationId: create-opportunity-appointment
+      summary: Create Opportunity Appointment
+      description: Create a new appointment associated with an opportunity.
+      tags:
+      - appointments
+      parameters:
+      - name: opportunityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Appointment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOpportunityAppointmentRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOpportunityAppointmentRequestUnauthorizedError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppointmentCreate'
+  /appointments/{appointmentId}:
+    get:
+      operationId: get-appointment
+      summary: Get Appointment
+      description: Retrieve a specific appointment by ID.
+      tags:
+      - appointments
+      parameters:
+      - name: appointmentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Appointment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAppointmentRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAppointmentRequestNotFoundError'
+    patch:
+      operationId: update-appointment
+      summary: Update Appointment
+      description: Update an existing appointment.
+      tags:
+      - appointments
+      parameters:
+      - name: appointmentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Appointment updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAppointmentRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAppointmentRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAppointmentRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppointmentUpdate'
+    delete:
+      operationId: delete-appointment
+      summary: Delete Appointment
+      description: Delete a specific appointment by ID.
+      tags:
+      - appointments
+      parameters:
+      - name: appointmentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAppointmentRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAppointmentRequestNotFoundError'
+components:
+  schemas:
+    Appointment:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isCompleted:
+          type: boolean
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        assigneeId:
+          type:
+          - integer
+          - 'null'
+        opportunityId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the parent opportunity.
+        createdBy:
+          type:
+          - integer
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      title: Appointment
+    OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode
+    CreateOpportunityAppointmentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateOpportunityAppointmentRequestBadRequestError
+    OpportunitiesOpportunityIdAppointmentsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesOpportunityIdAppointmentsGetParametersOrderBy
+    DeleteAppointmentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAppointmentRequestUnauthorizedError
+    AppointmentUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        assigneeId:
+          type: integer
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        description:
+          type:
+          - string
+          - 'null'
+        isCompleted:
+          type: boolean
+      title: AppointmentUpdate
+    OpportunitiesOpportunityIdAppointmentsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesOpportunityIdAppointmentsGetResponsesContentApplicationJsonSchemaCode
+    AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode
+    GetAppointmentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAppointmentRequestNotFoundError
+    CreateOpportunityAppointmentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityAppointmentRequestUnauthorizedError
+    GetOpportunityAppointmentsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetOpportunityAppointmentsRequestBadRequestError
+    AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode
+    AppointmentCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Appointment title
+        assigneeId:
+          type: integer
+          description: ID of the user assigned to this appointment
+        dueDate:
+          type: string
+          format: date-time
+          description: ISO 8601 scheduled date/time
+        description:
+          type: string
+          description: Optional description
+      required:
+      - title
+      - assigneeId
+      - dueDate
+      title: AppointmentCreate
+    GetAppointmentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAppointmentRequestUnauthorizedError
+    DeleteAppointmentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAppointmentRequestNotFoundError
+    UpdateAppointmentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateAppointmentRequestBadRequestError
+    AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode
+    UpdateAppointmentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAppointmentRequestNotFoundError
+    UpdateAppointmentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAppointmentRequestUnauthorizedError
+    GetOpportunityAppointmentsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityAppointmentsRequestUnauthorizedError
+    AppointmentListResponse:
+      type: object
+      properties:
+        appointments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Appointment'
+        totalCount:
+          type: integer
+      required:
+      - appointments
+      - totalCount
+      title: AppointmentListResponse
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

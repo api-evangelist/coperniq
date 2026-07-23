@@ -1,0 +1,618 @@
+openapi: 3.1.0
+info:
+  title: API Key accounts ahJs API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: ahJs
+paths:
+  /ahjs:
+    get:
+      operationId: list-ahjs
+      summary: List AHJs
+      description: 'Retrieve a paginated list of Authorities Having Jurisdiction (AHJs).
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Sorting by name (`order_by`, default: asc)
+
+        - Search by name or state code (`q`) — when `q` is exactly two characters it also matches the two-letter state code
+
+        - Filter by `state` (two-letter code), `type`, and `country` (default: `US`)
+
+        - Geo mode: pass `lat`+`lng` (together) to return every AHJ whose boundary covers the point — e.g. city, county, and state — ordered most-specific-first. Name/state/type filters are ignored, and an empty array is returned if none cover the point.
+
+
+        Only active jurisdictions are returned. AHJs are seeded globally from the US Census TIGER catalog plus per-company private records. Most fields are read-only; only custom fields can be updated (see PATCH /ahjs/{id}).
+
+        '
+      tags:
+      - ahJs
+      parameters:
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: q
+        in: query
+        description: Search by AHJ name (case-insensitive). If exactly two characters, also matches the state code.
+        required: false
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: Filter by two-letter state code (e.g. "CA").
+        required: false
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Filter by jurisdiction type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/AhjsGetParametersType'
+      - name: country
+        in: query
+        description: Filter by country code.
+        required: false
+        schema:
+          type: string
+          default: US
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/AhjsGetParametersOrderBy'
+      - name: lat
+        in: query
+        description: Latitude in decimal degrees. Must be used together with `lng`.
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: lng
+        in: query
+        description: Longitude in decimal degrees. Must be used together with `lat`.
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of AHJs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AHJ'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-ahjsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-ahjsRequestUnauthorizedError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-ahjsRequestBadGatewayError'
+  /ahjs/{id}:
+    get:
+      operationId: get-ahj
+      summary: Get AHJ
+      description: Retrieve a specific AHJ by ID, including catalog metadata and custom field values.
+      tags:
+      - ahJs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: AHJ details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AHJ'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAhjRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAhjRequestNotFoundError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAhjRequestBadGatewayError'
+    patch:
+      operationId: update-ahj
+      summary: Update AHJ
+      description: 'Update custom property values on an AHJ. The body `custom` map is keyed by property `keyName` — fetch the available keys via `GET /properties?record_type=ahj`.
+
+
+        Built-in AHJ fields (under `Community Data` in the UI) are read-only and cannot be updated through this endpoint.
+
+
+        Pass `null` to clear a value.
+
+        '
+      tags:
+      - ahJs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: AHJ updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AHJ'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAhjRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAhjRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAhjRequestNotFoundError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAhjRequestBadGatewayError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AHJUpdate'
+components:
+  schemas:
+    List-ahjsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
+      title: List-ahjsRequestBadGatewayError
+    UpdateAhjRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAhjRequestUnauthorizedError
+    UpdateAhjRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAhjRequestBadGatewayError
+    GetAhjRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAhjRequestNotFoundError
+    List-ahjsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: List-ahjsRequestBadRequestError
+    UpdateAhjRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateAhjRequestBadRequestError
+    GetAhjRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAhjRequestBadGatewayError
+    AhjsGetParametersType:
+      type: string
+      enum:
+      - STATE
+      - COUNTY
+      - CITY
+      - MUNICIPALITY
+      - TOWNSHIP
+      - TRIBAL
+      title: AhjsGetParametersType
+    AHJ:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier.
+        uuid:
+          type:
+          - string
+          - 'null'
+          description: AHJID UUID (when known).
+        name:
+          type: string
+          description: Full AHJ name (e.g. "City of San Francisco").
+        type:
+          oneOf:
+          - $ref: '#/components/schemas/AhjType'
+          - type: 'null'
+          description: Jurisdiction type.
+        country:
+          type: string
+          description: Two-letter country code (e.g. "US").
+        state:
+          type:
+          - string
+          - 'null'
+          description: Two-letter state code (e.g. "CA").
+        stateName:
+          type:
+          - string
+          - 'null'
+          description: Full state name (e.g. "California").
+        parentCounty:
+          type:
+          - string
+          - 'null'
+          description: For sub-county jurisdictions, the containing county name.
+        geoId:
+          type:
+          - string
+          - 'null'
+          description: US Census TIGER GEOID for the boundary.
+        ahjRegistryCode:
+          type:
+          - string
+          - 'null'
+          description: AHJ Registry composite code (e.g. "TX-4805000").
+        isActive:
+          type: boolean
+          description: Whether this AHJ is currently active in the catalog.
+        isPrivate:
+          type:
+          - boolean
+          - 'null'
+          description: True for company-private jurisdictions, false for global catalog entries.
+        pointOfContact:
+          type:
+          - string
+          - 'null'
+        submissionMethod:
+          type:
+          - string
+          - 'null'
+          description: How permit submissions are accepted (online, in-person, etc.).
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        phones:
+          type: array
+          items:
+            type: string
+        address:
+          type:
+          - string
+          - 'null'
+        website:
+          type:
+          - string
+          - 'null'
+        portal:
+          type:
+          - string
+          - 'null'
+          description: Permit portal URL.
+        turnaround:
+          type:
+          - integer
+          - 'null'
+          description: Typical permit turnaround in days.
+        fees:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        permitSubmissionNotes:
+          type:
+          - string
+          - 'null'
+        buildingCodeModel:
+          type:
+          - string
+          - 'null'
+        buildingCodeLocal:
+          type:
+          - string
+          - 'null'
+        residentialCodeModel:
+          type:
+          - string
+          - 'null'
+        residentialCodeLocal:
+          type:
+          - string
+          - 'null'
+        fireCodeModel:
+          type:
+          - string
+          - 'null'
+        fireCodeLocal:
+          type:
+          - string
+          - 'null'
+        electricalCodeModel:
+          type:
+          - string
+          - 'null'
+        electricalCodeLocal:
+          type:
+          - string
+          - 'null'
+        windCodeModel:
+          type:
+          - string
+          - 'null'
+        windCodeLocal:
+          type:
+          - string
+          - 'null'
+        codesOther:
+          type:
+          - string
+          - 'null'
+        firePathwaysEnforced:
+          type:
+          - boolean
+          - 'null'
+        electricalEngineerStampRequired:
+          type:
+          - boolean
+          - 'null'
+        structuralStampRequired:
+          type:
+          - boolean
+          - 'null'
+        climateZone:
+          type:
+          - string
+          - 'null'
+        ashraeMinTempC:
+          type:
+          - number
+          - 'null'
+          format: double
+        ashraeMaxTempC:
+          type:
+          - number
+          - 'null'
+          format: double
+        ashraeMinTempF:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Auto-computed from ashraeMinTempC. Used for NEC 690.7 max-Voc string sizing.
+        ashraeMaxTempF:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Auto-computed from ashraeMaxTempC. Used for thermal derating in PV performance modeling.
+        centroidLatitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        centroidLongitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        landAreaSqMiles:
+          type:
+          - number
+          - 'null'
+          format: double
+        specialZones:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        buildingDeptHours:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        tigerYear:
+          type:
+          - integer
+          - 'null'
+        funcstat:
+          type:
+          - string
+          - 'null'
+          description: US Census functional status code.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom field values keyed by property keyName. This includes only customer-defined custom columns (see GET /properties?record_type=ahj). Built-in catalog AHJ fields (turnaround, website, fees, notes, etc.) are exposed as top-level fields on the AHJ object and are read-only.
+      description: An Authority Having Jurisdiction (AHJ). Most fields are read-only catalog data sourced from the US Census TIGER dataset; only fields under `custom` are user-editable.
+      title: AHJ
+    AhjType:
+      type: string
+      enum:
+      - STATE
+      - COUNTY
+      - CITY
+      - MUNICIPALITY
+      - TOWNSHIP
+      - TRIBAL
+      description: Jurisdiction type.
+      title: AhjType
+    AhjsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: AhjsGetParametersOrderBy
+    List-ahjsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
+      title: List-ahjsRequestUnauthorizedError
+    AHJUpdate:
+      type: object
+      properties:
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom field values keyed by property keyName. Pass `null` to clear a value. Unknown keyNames are rejected with a 400 — fetch valid keys via GET /properties?record_type=ahj.
+      required:
+      - custom
+      title: AHJUpdate
+    AhjsIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: AhjsIdGetResponsesContentApplicationJsonSchemaCode
+    GetAhjRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAhjRequestUnauthorizedError
+    UpdateAhjRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAhjRequestNotFoundError
+    AhjsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: AhjsGetResponsesContentApplicationJsonSchemaCode
+    AhjsIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: AhjsIdPatchResponsesContentApplicationJsonSchemaCode
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
