@@ -1,0 +1,44 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coperniq-openapi.yml + https://docs.coperniq.io/coperniq-api/authentication
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: API is published as an OpenAPI 3.1.0 document.
+  - id: api-key-auth
+    conforms: true
+    evidence: securityScheme ApiKeyAuth (apiKey, in header, name x-api-key).
+  - id: http-basic-auth
+    conforms: true
+    evidence: Key generation (POST /api-keys) uses HTTP Basic authentication.
+  - id: oauth2
+    conforms: false
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a plain JSON envelope { message, code, field }, not application/problem+json.
+  - id: pagination
+    conforms: true
+    evidence: Page-number pagination (page, page_size) with date filters and order_by across list endpoints.
+  - id: rate-limit-headers
+    conforms: true
+    evidence: Responses carry X-RateLimit-Limit / X-RateLimit-Remaining; throttling returns 429.
+  - id: rfc-8594-sunset
+    conforms: false
+    evidence: No Sunset/Deprecation header policy documented; deprecation handled by name migration notice.
+  - id: fhir
+    conforms: false
+  - id: fapi
+    conforms: false
+  - id: scim
+    conforms: false
+  - id: json-api
+    conforms: false
+  - id: well-known-api-catalog
+    conforms: true
+    evidence: /.well-known/api-catalog (RFC 9727 linkset) published on docs host.
+compliance_certifications: []
+compliance_note: >-
+  No published SOC 2 / ISO 27001 / HIPAA / PCI / FedRAMP trust center or compliance program was
+  found during this pass; no Compliance pointer is emitted.

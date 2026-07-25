@@ -1,0 +1,158 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coperniq-openapi.yml (path structure + tags)
+note: Entity graph derived from resource tags and nested-resource path segments. id-reference fields (accountId,
+  projectId, opportunityId, workOrderId, vendorId, billId, invoiceId) connect records across endpoints.
+entities:
+- accounts
+- ahJs
+- appointments
+- assets
+- bills
+- calls
+- catalogItems
+- contacts
+- files
+- formTemplates
+- forms
+- invoices
+- labels
+- lineItems
+- notes
+- opportunities
+- payments
+- projects
+- properties
+- quotes
+- reminders
+- sites
+- taxes
+- users
+- vendors
+- workOrders
+- workflows
+relationships:
+- from: sites
+  to: move
+  type: has_many
+  via: path
+- from: projects
+  to: vendors
+  type: has_many
+  via: path
+- from: projects
+  to: notes
+  type: has_many
+  via: path
+- from: opportunities
+  to: notes
+  type: has_many
+  via: path
+- from: accounts
+  to: notes
+  type: has_many
+  via: path
+- from: work-orders
+  to: notes
+  type: has_many
+  via: path
+- from: projects
+  to: work-orders
+  type: has_many
+  via: path
+- from: opportunities
+  to: work-orders
+  type: has_many
+  via: path
+- from: accounts
+  to: work-orders
+  type: has_many
+  via: path
+- from: projects
+  to: files
+  type: has_many
+  via: path
+- from: opportunities
+  to: files
+  type: has_many
+  via: path
+- from: projects
+  to: line-items
+  type: has_many
+  via: path
+- from: work-orders
+  to: line-items
+  type: has_many
+  via: path
+- from: projects
+  to: forms
+  type: has_many
+  via: path
+- from: opportunities
+  to: forms
+  type: has_many
+  via: path
+- from: forms
+  to: fields
+  type: has_many
+  via: path
+- from: opportunities
+  to: quotes
+  type: has_many
+  via: path
+- from: quotes
+  to: pdf
+  type: has_many
+  via: path
+- from: quotes
+  to: send
+  type: has_many
+  via: path
+- from: projects
+  to: invoices
+  type: has_many
+  via: path
+- from: accounts
+  to: invoices
+  type: has_many
+  via: path
+- from: invoices
+  to: payments
+  type: has_many
+  via: path
+- from: bills
+  to: payments
+  type: has_many
+  via: path
+- from: projects
+  to: bills
+  type: has_many
+  via: path
+- from: projects
+  to: reminders
+  type: has_many
+  via: path
+- from: opportunities
+  to: reminders
+  type: has_many
+  via: path
+- from: accounts
+  to: reminders
+  type: has_many
+  via: path
+- from: opportunities
+  to: appointments
+  type: has_many
+  via: path
+- from: projects
+  to: calls
+  type: has_many
+  via: path
+- from: opportunities
+  to: calls
+  type: has_many
+  via: path
+- from: accounts
+  to: calls
+  type: has_many
+  via: path

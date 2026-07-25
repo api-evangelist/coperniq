@@ -1,0 +1,38 @@
+generated: '2026-07-18'
+method: searched
+source: live probes of Coperniq hosts
+hosts:
+  - host: https://docs.coperniq.io
+    documents:
+      - path: /.well-known/api-catalog
+        status: 200
+        file: coperniq-api-catalog.json
+        note: RFC 9727 linkset pointing at the api-key and api-reference OpenAPI documents.
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://api.coperniq.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+  - host: https://www.coperniq.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404

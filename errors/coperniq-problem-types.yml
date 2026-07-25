@@ -1,0 +1,58 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coperniq-openapi.yml + https://docs.coperniq.io/coperniq-api/authentication
+format: json
+envelope:
+  description: Errors return a JSON object with a machine-readable code and message; validation errors
+    add the offending field.
+  fields:
+  - name: message
+    type: string
+    description: Human-readable error message
+  - name: code
+    type: string
+    description: Machine-readable error code (enum, per operation)
+  - name: field
+    type: string
+    description: Field that caused the validation error (400 responses only, when applicable)
+problems:
+- status: 400
+  title: Bad Request
+  description: Invalid request
+  occurrences: 90
+  remediation: Validation failed. Inspect the `field` property in the error body and correct the offending
+    request parameter or payload field.
+- status: 401
+  title: Unauthorized
+  description: Authentication failed
+  occurrences: 132
+  remediation: API key is missing or invalid. Send a valid key in the `x-api-key` header (generate one
+    via POST /api-keys with Basic auth).
+- status: 403
+  title: Forbidden
+  description: API key valid but does not have access to this resource
+  occurrences: 3
+  remediation: The authenticated user lacks permission for this resource. Keys inherit the creating user’s
+    role and data scope.
+- status: 404
+  title: Not Found
+  description: Resource not found
+  occurrences: 94
+  remediation: The referenced record does not exist or is not visible to the authenticated user. Verify
+    the path id.
+- status: 429
+  title: Too Many Requests
+  description: Rate limit exceeded
+  occurrences: 1
+  remediation: Rate limit exceeded (100 req/s or 5,000 req/day per key). Back off using X-RateLimit-Remaining
+    and retry.
+- status: 500
+  title: Internal Server Error
+  description: Internal server error
+  occurrences: 12
+  remediation: Unexpected server error. Retry with backoff; contact support@coperniq.io if it persists.
+- status: 502
+  title: Bad Gateway
+  description: Bad gateway — an upstream service request failed
+  occurrences: 6
+  remediation: Upstream/gateway error. Retry with backoff.

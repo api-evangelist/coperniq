@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: API Key
+  version: 1.0.0
+paths:
+  /api-keys:
+    post:
+      operationId: get-api-key
+      summary: Get API Key
+      description: Obtain an API key using Basic Authentication. This key will be used for all other API requests.
+      tags:
+        - authentication
+      parameters:
+        - name: Authorization
+          in: header
+          description: Basic authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: API key generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyResponse'
+        '401':
+          description: Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiKeyRequestUnauthorizedError'
+servers:
+  - url: https://api.coperniq.io/v1
+    description: Production server
+components:
+  schemas:
+    ApiKeyResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: API key (token) for authenticating future requests
+        companyId:
+          type: integer
+          description: Company identifier
+        description:
+          type: string
+          description: Description of the API key
+        name:
+          type: string
+          description: Name of the API key
+        email:
+          type: string
+          format: email
+          description: Email address of the user who created the API key
+        id:
+          type: integer
+          description: API user identifier
+      title: ApiKeyResponse
+    GetApiKeyRequestUnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+      title: GetApiKeyRequestUnauthorizedError
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

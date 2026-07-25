@@ -1,0 +1,37 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: Coperniq
+providerId: coperniq
+generated: '2026-07-18'
+method: searched
+created: '2026-07-18'
+modified: '2026-07-18'
+tags:
+  - Rate Limiting
+  - Climate
+description: >-
+  Coperniq API rate limits are enforced per API key. Every authenticated response carries
+  X-RateLimit-Limit and X-RateLimit-Remaining headers; exceeding a limit returns 429 Too Many
+  Requests. Key generation (POST /api-keys) is not counted against the limits.
+sources:
+  - https://docs.coperniq.io/coperniq-api/authentication
+headers:
+  limit: X-RateLimit-Limit
+  remaining: X-RateLimit-Remaining
+responseCodes:
+  throttled: 429
+notes: >-
+  X-RateLimit-Remaining is approximate (AWS usage data may lag several minutes and is cached up to
+  60s per key); treat it as a near-term estimate, not a real-time counter. Request a temporary
+  increase via support@coperniq.io.
+limits:
+  - name: Per-second requests
+    scope: api_key
+    metric: requests_per_second
+    limit: 100
+    timeFrame: second
+  - name: Per-day requests
+    scope: api_key
+    metric: requests_per_day
+    limit: 5000
+    timeFrame: day

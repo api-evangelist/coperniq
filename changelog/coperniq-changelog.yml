@@ -1,0 +1,48 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.coperniq.io/release-notes
+changelog_url: https://coperniq.canny.io/changelog
+scheme: rolling-release-notes
+current_version: v1
+note: >-
+  Coperniq publishes dated changes on Canny (coperniq.canny.io/changelog) and endpoint/schema
+  highlights in the API release notes. Entries below are the recent highlights; they are undated in
+  the release-notes summary — see the Canny changelog for exact dates.
+entries:
+  - highlight: Bill payments
+    kind: addition
+    detail: >-
+      POST /bills/{billId}/payments, GET /bills/{billId}/payments, and
+      GET /bills/{billId}/payments/{paymentId}, mirroring invoice payments. Responses use
+      billNumber for the payment display number.
+  - highlight: AHJs
+    kind: addition
+    detail: >-
+      GET /ahjs (search, filter, and lat+lng geo lookup), GET /ahjs/{id}, and PATCH /ahjs/{id} to
+      update custom property values.
+  - highlight: Properties record type + isCustom
+    kind: addition
+    detail: >-
+      GET /properties now documents the ahj record type and adds an isCustom boolean to every
+      property to distinguish custom columns from built-in standard ones.
+  - highlight: Sections on line items
+    kind: addition
+    detail: >-
+      Line items on projects, invoices, and bills can be grouped into named sections (matching
+      quotes and work orders); read responses expose sectionName per line item.
+  - highlight: Vendors
+    kind: addition
+    detail: >-
+      Full CRUD via GET/POST /vendors, GET/PATCH/DELETE /vendors/{vendorId}, GET /vendors/search,
+      and many-to-many project linking via POST/DELETE /projects/{projectId}/vendors/{vendorId}.
+  - highlight: Labels
+    kind: addition
+    detail: 'GET /labels (filter by type), POST /labels, GET /labels/{labelId}. type is WORK or ASSET.'
+  - highlight: Assets
+    kind: addition
+    detail: >-
+      GET /assets (filter by account_id), POST /assets, GET/PATCH /assets/{assetId} (set
+      isArchived: true via PATCH to archive).
+  - highlight: 'Naming changes (deprecation)'
+    kind: change
+    detail: 'Requests -> Opportunities, Clients -> Accounts, Comments -> Notes. Old endpoints remain supported.'

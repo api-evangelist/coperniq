@@ -1,0 +1,56 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.coperniq.io/coperniq-api/authentication + openapi/coperniq-openapi.yml
+summary: >-
+  Cross-cutting request/response semantics for the Coperniq API: API-key header auth, URI-path
+  versioning, page-based pagination with date filtering and full-text search, and per-key rate-limit
+  signaling. Coperniq does not document an idempotency-key contract.
+authentication:
+  style: api-key
+  header: x-api-key
+  key_generation: POST /api-keys (HTTP Basic auth)
+  scope: Keys inherit the creating user's role and data visibility; keys do not expire.
+  docs: https://docs.coperniq.io/coperniq-api/authentication
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.coperniq.io/v1
+pagination:
+  style: page-number
+  params:
+    - name: page
+      description: Page number
+    - name: page_size
+      description: Number of records per page
+  filtering:
+    - updated_after
+    - updated_before
+  sorting:
+    - order_by
+  search:
+    full_text_param: q
+    dedicated_endpoints:
+      - /projects/search
+      - /opportunities/search
+      - /accounts/search
+      - /vendors/search
+rate_limiting:
+  per_second: 100
+  per_day: 5000
+  scope: api_key
+  headers:
+    - X-RateLimit-Limit
+    - X-RateLimit-Remaining
+  throttled_status: 429
+  see: rate-limits/coperniq-rate-limits.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header or parameter is documented in the Coperniq API.
+error_envelope:
+  shape: '{ message: string, code: string, field?: string }'
+  see: errors/coperniq-problem-types.yml
+webhooks:
+  supported: true
+  direction: outbound
+  configured_in: Coperniq UI (Company Settings -> Process Studio -> Automations)
+  see: asyncapi/coperniq-webhooks.yml

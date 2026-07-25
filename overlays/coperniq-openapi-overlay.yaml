@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Coperniq API
+  version: 1.0.0
+extends: openapi/coperniq-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: coperniq
+      x-apievangelist-sector: climate
+      x-apievangelist-auth: api-key (x-api-key header); keys generated via POST /api-keys (Basic auth)
+      x-apievangelist-base-url: https://api.coperniq.io/v1
+      x-apievangelist-rate-limits: 100 req/s and 5,000 req/day per API key
+      x-apievangelist-webhooks: outbound automation webhooks (see asyncapi/coperniq-webhooks.yml)
+      x-apievangelist-docs: https://docs.coperniq.io/
+  - target: $.servers
+    update:
+      - url: https://api.coperniq.io/v1
+        description: Production server

@@ -1,0 +1,81 @@
+generated: '2026-07-18'
+method: searched
+type: Webhooks
+source: https://docs.coperniq.io/coperniq-api/webhooks
+spec_type: WebhookCatalog
+summary: >-
+  Coperniq sends outbound webhooks (POST application/json) to a subscriber URL when events occur,
+  powered by its Automation engine. Webhooks are configured in the Coperniq UI (Company Settings ->
+  Process Studio -> Automations), not via the API. Endpoints require no authentication and must
+  return any 2xx to acknowledge; any other status triggers a retry.
+delivery:
+  method: POST
+  content_type: application/json
+  authentication: none
+  acknowledgement: return 2xx; non-2xx triggers retry
+  retroactive: false
+payload:
+  top_level_keys:
+    - key: event
+      when: always
+      description: Metadata about what triggered the webhook (eventId, recordId, triggerKey, triggerName, firedAt).
+    - key: record
+      when: trigger associated with a Project, Request (Opportunity), or Account
+      description: The affected record (id, uid, type, title, status, stage, address, geoLocation, dealValue, owner, primary contact, timestamps).
+    - key: workOrder
+      when: work order triggers only
+      description: The work order (id, uid, title, status, priority, assigneeId, isField, start/end dates, completionDate, timestamps).
+triggers:
+  work_order:
+    - key: TASK_CREATED
+      description: A work order was created
+      extra_fields: [workOrderId, currentStatus, previousStatus]
+    - key: TASK_COMPLETED
+      description: A work order was completed
+      extra_fields: [workOrderId]
+    - key: TASK_STATUS_MOVEMENT
+      description: A work order moved to a new status
+      extra_fields: [workOrderId, currentStatus, previousStatus]
+  record:
+    - key: PROJECT_CREATED
+      description: A project was created
+    - key: REQUEST_CREATED
+      description: A request (opportunity) was created
+    - key: PROJECT_STATUS_MOVEMENT
+      description: A project moved to a new status
+    - key: DEAL_STATUS_MOVEMENT
+      description: A request moved to a new status
+    - key: PROJECT_PROPERTY_UPDATED
+      description: A project custom property was updated
+    - key: DEAL_PROPERTY_UPDATED
+      description: A request custom property was updated
+    - key: CALL_UPSERTED
+      description: A call was logged or updated
+  phase:
+    - key: PROJECT_PHASE_STARTED
+      description: A project entered a new phase
+      extra_fields: [phaseInstanceId, phaseTemplateId, phaseType, status]
+    - key: PROJECT_PHASE_COMPLETED
+      description: A project phase was completed
+      extra_fields: [phaseInstanceId, phaseTemplateId, phaseType, status]
+    - key: REQUEST_PHASE_STARTED
+      description: A request entered a new phase
+      extra_fields: [phaseInstanceId, phaseTemplateId, phaseType, status]
+    - key: REQUEST_PHASE_COMPLETED
+      description: A request phase was completed
+      extra_fields: [phaseInstanceId, phaseTemplateId, phaseType, status]
+  sla:
+    - key: PROJECT_PHASE_SLA_VIOLATION
+      description: A project phase exceeded its SLA
+      extra_fields: [overdueAt, slaType, phaseTemplateId]
+    - key: DEAL_PHASE_SLA_VIOLATION
+      description: A request phase exceeded its SLA
+      extra_fields: [overdueAt, slaType, phaseTemplateId]
+  appointment:
+    - key: APPOINTMENT_CREATED
+      description: An appointment was scheduled
+      extra_fields: [appointmentId, dueDate]
+    - key: APPOINTMENT_RESCHEDULED
+      description: An appointment was rescheduled
+      extra_fields: [appointmentId, dueDate, previousDueDate]
+setup_docs: https://support.coperniq.io/articles/7599634208-how-to-setup-outboudn-webhooks-with-coperniq-automations
