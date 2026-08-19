@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts ahJs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ahJs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List AHJs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/ahjs",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search by AHJ name (case-insensitive). If exactly two characters, also matches the state code."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by two-letter state code (e.g. \"CA\")."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by jurisdiction type."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "Filter by country code."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees. Must be used together with `lng`."
+              },
+              {
+                "name": "lng",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees. Must be used together with `lat`."
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of Authorities Having Jurisdiction (AHJs).\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Sorting by name (`order_by`, default: asc)\n- Search by name or state code (`q`) — when `q` is exactly two characters it also matches the two-letter state code\n- Filter by `state` (two-letter code), `type`, and `country` (default: `US`)\n- Geo mode: pass `lat`+`lng` (together) to return every AHJ whose boundary covers the point — e.g. city, county, and state — ordered most-specific-"
+        },
+        {
+          "info": {
+            "name": "Get AHJ",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/ahjs/:id",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific AHJ by ID, including catalog metadata and custom field values."
+        },
+        {
+          "info": {
+            "name": "Update AHJ",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/ahjs/:id",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "allow_new_options",
+                "value": "",
+                "type": "query",
+                "description": "Whether to allow creation of new dropdown options during record creation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update custom property values on an AHJ. The body `custom` map is keyed by property `keyName` — fetch the available keys via `GET /properties?record_type=ahj`.\n\nBuilt-in AHJ fields (under `Community Data` in the UI) are read-only and cannot be updated through this endpoint.\n\nPass `null` to clear a value.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

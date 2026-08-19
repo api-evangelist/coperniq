@@ -1,0 +1,717 @@
+{
+  "item": [
+    {
+      "id": "a27065d7-b75f-4dd9-8d29-6a90fc9870d9",
+      "name": "formTemplates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04e0ccde-e69e-40a1-9880-7ae80b61644f",
+          "name": "List Form Templates",
+          "request": {
+            "name": "List Form Templates",
+            "description": {
+              "content": "Retrieve all form templates for the company. Form templates are reusable form definitions\nthat define the layout, fields, assignees, and labels for forms created on projects/workflows.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "form-templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeArchived",
+                  "value": "false",
+                  "description": "Include archived form templates in results"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75a0a50d-0f32-478c-a1d9-582fe274d1ab",
+              "name": "List of form templates",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeArchived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 6021,\n    \"name\": \"string\",\n    \"fileId\": 2243,\n    \"isArchived\": true,\n    \"createdAt\": \"1991-05-31T13:36:22.243Z\",\n    \"updatedAt\": \"1961-08-05T00:14:23.444Z\",\n    \"createdBy\": {\n      \"id\": 7019,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\"\n    },\n    \"parentWorkOrderTemplateId\": 4769\n  },\n  {\n    \"id\": 6352,\n    \"name\": \"string\",\n    \"fileId\": 5275,\n    \"isArchived\": false,\n    \"createdAt\": \"2015-06-24T01:35:02.608Z\",\n    \"updatedAt\": \"2016-08-23T04:46:22.138Z\",\n    \"createdBy\": {\n      \"id\": 9007,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\"\n    },\n    \"parentWorkOrderTemplateId\": 1816\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5574cae2-79c4-498f-a4e0-ccf77b198b13",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeArchived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1bedc464-09e9-4ea3-b443-57cd392f099e",
+          "name": "Get Form Template",
+          "request": {
+            "name": "Get Form Template",
+            "description": {
+              "content": "Retrieve a specific form template by ID, including its full field layout.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "form-templates",
+                ":formTemplateId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "formTemplateId",
+                  "description": "(Required) Form template identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "299de39f-7ed3-4d87-89e9-f2de3845606c",
+              "name": "Form template details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates",
+                    ":formTemplateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "formTemplateId",
+                      "description": "(Required) Form template identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4329,\n  \"name\": \"string\",\n  \"createdAt\": \"2004-09-08T09:32:00.323Z\",\n  \"updatedAt\": \"2004-06-06T09:43:59.175Z\",\n  \"assignee\": {\n    \"id\": 9147,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\"\n  },\n  \"assigneeProperty\": \"string\",\n  \"collaborators\": [\n    {\n      \"id\": 7745,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\"\n    },\n    {\n      \"id\": 3026,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\"\n    }\n  ],\n  \"collaboratorProperties\": [\n    \"string\",\n    \"string\"\n  ],\n  \"labels\": [\n    {\n      \"id\": 4912,\n      \"label\": \"string\",\n      \"color\": \"string\"\n    },\n    {\n      \"id\": 673,\n      \"label\": \"string\",\n      \"color\": \"string\"\n    }\n  ],\n  \"dueDateXDaysAfter\": 6185,\n  \"formLayouts\": [\n    {\n      \"id\": 5319,\n      \"name\": \"string\",\n      \"type\": \"COLUMN\",\n      \"columnId\": 7942,\n      \"column\": {\n        \"id\": 9708,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"multiple\": false,\n        \"isRequired\": true,\n        \"isReadOnly\": true\n      },\n      \"properties\": [\n        {\n          \"id\": 8008,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 4558,\n          \"column\": {\n            \"id\": 9646,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": false,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        },\n        {\n          \"id\": 2341,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 6787,\n          \"column\": {\n            \"id\": 9610,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": true,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        }\n      ],\n      \"fields\": [\n        {\n          \"id\": 2567,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 3417,\n          \"column\": {\n            \"id\": 903,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": false,\n            \"isRequired\": false,\n            \"isReadOnly\": true\n          }\n        },\n        {\n          \"id\": 7853,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 4643,\n          \"column\": {\n            \"id\": 769,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": false,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        }\n      ]\n    },\n    {\n      \"id\": 6131,\n      \"name\": \"string\",\n      \"type\": \"GROUP\",\n      \"columnId\": 8400,\n      \"column\": {\n        \"id\": 3441,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"multiple\": false,\n        \"isRequired\": false,\n        \"isReadOnly\": false\n      },\n      \"properties\": [\n        {\n          \"id\": 2012,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 6548,\n          \"column\": {\n            \"id\": 7306,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": false,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        },\n        {\n          \"id\": 1046,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 422,\n          \"column\": {\n            \"id\": 6169,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": true,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        }\n      ],\n      \"fields\": [\n        {\n          \"id\": 5478,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 7860,\n          \"column\": {\n            \"id\": 4696,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": true,\n            \"isRequired\": true,\n            \"isReadOnly\": true\n          }\n        },\n        {\n          \"id\": 6746,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 8031,\n          \"column\": {\n            \"id\": 9283,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": true,\n            \"isRequired\": true,\n            \"isReadOnly\": true\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3999ae1f-6b96-403a-8cbe-a2bfed8b8a18",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates",
+                    ":formTemplateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "formTemplateId",
+                      "description": "(Required) Form template identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c95636c1-8d2a-4a58-8d63-98743f4b32ff",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates",
+                    ":formTemplateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "formTemplateId",
+                      "description": "(Required) Form template identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "564a8756-54cf-4f8e-bd6f-49b4c339e89f",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates",
+                    ":formTemplateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "formTemplateId",
+                      "description": "(Required) Form template identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65af7cbf-c4a3-41e6-903f-9b2fe32836dd",
+          "name": "Update Form Template",
+          "request": {
+            "name": "Update Form Template",
+            "description": {
+              "content": "Update an existing form template. All fields are optional — only provided fields are updated. `formLayouts` is optional — omit it to leave the existing layout untouched.\n\n**formLayouts replacement:** When provided, the `formLayouts` array **fully replaces** all layout groups and their fields on the template. Position is determined by array order.\n\n**IDs are not stable across updates.** Every update internally deletes all existing layout rows and inserts new ones, so every group and field receives a new auto-generated ID after each PATCH. The IDs returned in a GET response are only valid until the next PATCH. Do not store or rely on layout IDs across updates.\n\n**Using `id` in the request:** You can pass `{ \"id\": <id from a recent GET> }` for a group or field to reference its current data without repeating all attributes — the API will look up the existing name, type, isRequired, etc. and carry them forward. This is a convenience shortcut for the current request only; the ID will be different in the response.\n\n**Assignee (mutually exclusive — use at most one):**\n- `assigneeId` — assign a specific user by ID.\n- `assigneeProperty` — assign by project property key: `OWNER`, `SALES_REP`, `PROJECT_MANAGER`, `CREATED_BY`, or a custom PERSON property `keyName`.\n- `assigneeTeamId` — assign a team: the team lead becomes the assignee and all other team members are added as collaborators.\n\n**Collaborators:**\n- `collaborators` — replaces the list of direct user collaborator IDs.\n- `collaboratorProperties` — replaces the list of property-based collaborators. Each value is a standard key (`OWNER`, `SALES_REP`, `PROJECT_MANAGER`, `CREATED_BY`) or a custom PERSON property `keyName`.\n- `collaboratorTeamIds` — team IDs whose members are resolved to user IDs and merged (deduplicated) into collaborators alongside any direct `collaborators` and members from `assigneeTeamId`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "form-templates",
+                ":formTemplateId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "formTemplateId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c701c719-e7c4-4148-874a-918065c33de1",
+              "name": "Form template updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates",
+                    ":formTemplateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "formTemplateId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": 3326,\n      \"name\": \"string\",\n      \"properties\": [\n        {\n          \"id\": 6674,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"TEXT\",\n          \"isRequired\": true,\n          \"isReadOnly\": false,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            2089,\n            9154\n          ]\n        },\n        {\n          \"id\": 5128,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"NUMERIC\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            9653,\n            7078\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": 4394,\n      \"name\": \"string\",\n      \"properties\": [\n        {\n          \"id\": 5557,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            6942,\n            3682\n          ]\n        },\n        {\n          \"id\": 8969,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": false,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            6602,\n            9915\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4329,\n  \"name\": \"string\",\n  \"createdAt\": \"2004-09-08T09:32:00.323Z\",\n  \"updatedAt\": \"2004-06-06T09:43:59.175Z\",\n  \"assignee\": {\n    \"id\": 9147,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\"\n  },\n  \"assigneeProperty\": \"string\",\n  \"collaborators\": [\n    {\n      \"id\": 7745,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\"\n    },\n    {\n      \"id\": 3026,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\"\n    }\n  ],\n  \"collaboratorProperties\": [\n    \"string\",\n    \"string\"\n  ],\n  \"labels\": [\n    {\n      \"id\": 4912,\n      \"label\": \"string\",\n      \"color\": \"string\"\n    },\n    {\n      \"id\": 673,\n      \"label\": \"string\",\n      \"color\": \"string\"\n    }\n  ],\n  \"dueDateXDaysAfter\": 6185,\n  \"formLayouts\": [\n    {\n      \"id\": 5319,\n      \"name\": \"string\",\n      \"type\": \"COLUMN\",\n      \"columnId\": 7942,\n      \"column\": {\n        \"id\": 9708,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"multiple\": false,\n        \"isRequired\": true,\n        \"isReadOnly\": true\n      },\n      \"properties\": [\n        {\n          \"id\": 8008,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 4558,\n          \"column\": {\n            \"id\": 9646,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": false,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        },\n        {\n          \"id\": 2341,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 6787,\n          \"column\": {\n            \"id\": 9610,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": true,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        }\n      ],\n      \"fields\": [\n        {\n          \"id\": 2567,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 3417,\n          \"column\": {\n            \"id\": 903,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": false,\n            \"isRequired\": false,\n            \"isReadOnly\": true\n          }\n        },\n        {\n          \"id\": 7853,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 4643,\n          \"column\": {\n            \"id\": 769,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": false,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        }\n      ]\n    },\n    {\n      \"id\": 6131,\n      \"name\": \"string\",\n      \"type\": \"GROUP\",\n      \"columnId\": 8400,\n      \"column\": {\n        \"id\": 3441,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"multiple\": false,\n        \"isRequired\": false,\n        \"isReadOnly\": false\n      },\n      \"properties\": [\n        {\n          \"id\": 2012,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 6548,\n          \"column\": {\n            \"id\": 7306,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": false,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        },\n        {\n          \"id\": 1046,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 422,\n          \"column\": {\n            \"id\": 6169,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": true,\n            \"isRequired\": false,\n            \"isReadOnly\": false\n          }\n        }\n      ],\n      \"fields\": [\n        {\n          \"id\": 5478,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 7860,\n          \"column\": {\n            \"id\": 4696,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": true,\n            \"isRequired\": true,\n            \"isReadOnly\": true\n          }\n        },\n        {\n          \"id\": 6746,\n          \"name\": \"string\",\n          \"type\": \"COLUMN\",\n          \"columnId\": 8031,\n          \"column\": {\n            \"id\": 9283,\n            \"name\": \"string\",\n            \"type\": \"string\",\n            \"multiple\": true,\n            \"isRequired\": true,\n            \"isReadOnly\": true\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "378565f9-26b2-4b38-a96a-6f73ec9d24b8",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates",
+                    ":formTemplateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "formTemplateId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": 3326,\n      \"name\": \"string\",\n      \"properties\": [\n        {\n          \"id\": 6674,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"TEXT\",\n          \"isRequired\": true,\n          \"isReadOnly\": false,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            2089,\n            9154\n          ]\n        },\n        {\n          \"id\": 5128,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"NUMERIC\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            9653,\n            7078\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": 4394,\n      \"name\": \"string\",\n      \"properties\": [\n        {\n          \"id\": 5557,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            6942,\n            3682\n          ]\n        },\n        {\n          \"id\": 8969,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": false,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            6602,\n            9915\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a4b36d8-0b03-4b86-a979-8b19e20a5c46",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates",
+                    ":formTemplateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "formTemplateId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": 3326,\n      \"name\": \"string\",\n      \"properties\": [\n        {\n          \"id\": 6674,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"TEXT\",\n          \"isRequired\": true,\n          \"isReadOnly\": false,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            2089,\n            9154\n          ]\n        },\n        {\n          \"id\": 5128,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"NUMERIC\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            9653,\n            7078\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": 4394,\n      \"name\": \"string\",\n      \"properties\": [\n        {\n          \"id\": 5557,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            6942,\n            3682\n          ]\n        },\n        {\n          \"id\": 8969,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": false,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            6602,\n            9915\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36cfe45f-10b5-40bc-820c-d51e917e1dce",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "form-templates",
+                    ":formTemplateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "formTemplateId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": 3326,\n      \"name\": \"string\",\n      \"properties\": [\n        {\n          \"id\": 6674,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"TEXT\",\n          \"isRequired\": true,\n          \"isReadOnly\": false,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            2089,\n            9154\n          ]\n        },\n        {\n          \"id\": 5128,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"NUMERIC\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            9653,\n            7078\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": 4394,\n      \"name\": \"string\",\n      \"properties\": [\n        {\n          \"id\": 5557,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": true,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            6942,\n            3682\n          ]\n        },\n        {\n          \"id\": 8969,\n          \"projectPropertyKey\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": true,\n          \"isReadOnly\": true,\n          \"multiple\": false,\n          \"notes\": \"string\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            6602,\n            9915\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coperniq.io/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2895baf6-3ed0-49fb-899e-c4ebb0cf539f",
+    "name": "API Key accounts formTemplates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts catalogItems API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "catalogItems",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Catalog Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/catalog-items",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Lists catalog items (products and services).\n"
+        },
+        {
+          "info": {
+            "name": "Create Catalog Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/catalog-items",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new catalog item."
+        },
+        {
+          "info": {
+            "name": "Get Catalog Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/catalog-items/:catalogItemId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "catalogItemId",
+                "value": "",
+                "type": "path",
+                "description": "Catalog item identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific catalog item by ID."
+        },
+        {
+          "info": {
+            "name": "Update Catalog Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/catalog-items/:catalogItemId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "catalogItemId",
+                "value": "",
+                "type": "path",
+                "description": "Catalog item identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing catalog item.\n"
+        },
+        {
+          "info": {
+            "name": "Delete Catalog Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/catalog-items/:catalogItemId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "catalogItemId",
+                "value": "",
+                "type": "path",
+                "description": "Catalog item identifier"
+              }
+            ]
+          },
+          "docs": "Archives the catalog item (soft delete). The item is marked as archived and will no longer appear in list or lookup responses, but is not permanently removed.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts taxes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "taxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Taxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/taxes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Lists tax rates configured for your company. Use these IDs when assigning taxes to quotes, invoices, and other financial documents.\nThe company is implied by the API key; `companyId` is not returned on each item.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

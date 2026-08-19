@@ -1,0 +1,199 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts sites API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/sites",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account ID."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by state, case-insensitive (e.g. `ca` or `CA`)."
+              },
+              {
+                "name": "city",
+                "value": "",
+                "type": "query",
+                "description": "Filter by city, case-insensitive substring match (e.g. `francisco` matches `San Francisco`)."
+              },
+              {
+                "name": "zipcode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by zip code, case-insensitive."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of sites. Results can be filtered by account, state, city, or zipcode.\n"
+        },
+        {
+          "info": {
+            "name": "Create Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/sites",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new site record belonging to an account.\n\nRequired fields:\n- `accountId`: The account this site belongs to.\n- `fullAddress` or `geoLocation`: At least one must be provided. The backend geocodes `fullAddress` to derive coordinates.\n\nIf a site with the same address already exists for the same account, the existing site is returned instead of creating a duplicate (`200` instead of `201`).\n"
+        },
+        {
+          "info": {
+            "name": "Get Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/sites/:siteId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "siteId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific site by ID. Returns 404 if not found or if the site belongs to a different company."
+        },
+        {
+          "info": {
+            "name": "Update Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/sites/:siteId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "siteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing site. All fields are optional — only provided fields are changed.\n\n> **Moving a site to a different account:** Use `POST /sites/{siteId}/move` instead. `accountId` cannot be changed on a site update.\n\n> **Note on `geoLocation` and `fullAddress`:** Sending either field on update triggers geocoding — the backend may overwrite the stored coordinates with what Google Maps snaps to for the nearest address, so the values you send may not be stored as-is. There is currently no way to"
+        },
+        {
+          "info": {
+            "name": "Delete Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/sites/:siteId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "siteId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a specific site by ID. Returns 404 if not found."
+        },
+        {
+          "info": {
+            "name": "Move Site to Another Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/sites/:siteId/move",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "siteId",
+                "value": "",
+                "type": "path",
+                "description": "Site identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move a site and all its associated records to a different account.\n\n**A new site is created with a new ID.** The original site (`siteId` in the path) is permanently\ndeleted. The response contains the new site object — update any stored site IDs accordingly.\n\nThe `fullAddress` and `title` are copied from the original site to the new one. The backend geocodes the address on the new site, so all address components (street, city, state, zipcode) are derived from geocoding.\n\n**Migrated records:** opp"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

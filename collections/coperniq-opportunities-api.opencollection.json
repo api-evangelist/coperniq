@@ -1,0 +1,338 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts opportunities API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "opportunities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Opportunities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/opportunities",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated after this timestamp (ISO 8601)"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated before this timestamp (ISO 8601)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              },
+              {
+                "name": "include_virtual_properties",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true."
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Full text search query"
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "Title search query"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "query",
+                "description": "Address search query"
+              },
+              {
+                "name": "primaryName",
+                "value": "",
+                "type": "query",
+                "description": "Contact name search query"
+              },
+              {
+                "name": "primaryPhone",
+                "value": "",
+                "type": "query",
+                "description": "Contact phone search query"
+              },
+              {
+                "name": "primaryEmail",
+                "value": "",
+                "type": "query",
+                "description": "Contact email search query"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of opportunities.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`, default: desc)\n- Field search (`title`, `address`, `primaryName`, `primaryPhone`, `primaryEmail`)\n- Full text search (`q`)\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n\n**Note:** If an opportunity has no `title` (empty or whitespace-onl"
+        },
+        {
+          "info": {
+            "name": "Create Opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/opportunities",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "allow_new_options",
+                "value": "",
+                "type": "query",
+                "description": "Whether to allow creation of new dropdown options during record creation"
+              },
+              {
+                "name": "match_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to use for matching existing records"
+              },
+              {
+                "name": "match_found_strategy",
+                "value": "",
+                "type": "query",
+                "description": "Strategy to use when a match is found"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new opportunity with required and optional fields.\n\nRequired fields:\n- `title`: Opportunity title/name\n- `address`: Opportunity location\n- `trades`: Array of trade types\n\nOptional fields:\n- `accountId`: Link to existing account\n- `workflowId`: Link to workflow\n- `phaseId`: Link to phase\n- `value`: Opportunity value\n- `size`: Opportunity size\n- `confidence`: Confidence score (0-100)\n- `primaryEmail`/`primaryPhone`: Contact information\n- `contacts`: Contact IDs only (no name, email, phone"
+        },
+        {
+          "info": {
+            "name": "Search Opportunities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/opportunities/search",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "prop1",
+                "value": "",
+                "type": "query",
+                "description": "First field to filter (standard or custom keyName)"
+              },
+              {
+                "name": "op1",
+                "value": "",
+                "type": "query",
+                "description": "Operator for prop1"
+              },
+              {
+                "name": "value1",
+                "value": "",
+                "type": "query",
+                "description": "Value for prop1 (comma-separated values for in/nin or between)"
+              },
+              {
+                "name": "logic",
+                "value": "",
+                "type": "query",
+                "description": "Logical combination when both prop1 and prop2 are provided"
+              },
+              {
+                "name": "prop2",
+                "value": "",
+                "type": "query",
+                "description": "Optional second field to filter"
+              },
+              {
+                "name": "op2",
+                "value": "",
+                "type": "query",
+                "description": "Operator for prop2"
+              },
+              {
+                "name": "value2",
+                "value": "",
+                "type": "query",
+                "description": "Value for prop2 (comma-separated values for in/nin or between)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+              }
+            ]
+          },
+          "docs": "Search opportunities using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `status`, `title`, `city`, `type`, `accountId`, etc.) or a custom property key name.\n- Use the `property key` from your company settings.\n- Filter by parent account with `accountId`. `clientId` is accepted as a deprecated alias for backwards compatibility.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Numeric/dateti"
+        },
+        {
+          "info": {
+            "name": "Get Opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              },
+              {
+                "name": "include_virtual_properties",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true."
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+              }
+            ]
+          },
+          "docs": "Retrieve a specific opportunity by ID\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n\n**Note:** If the opportunity has no `title` (empty or whitespace-only), the response returns the parent account's `title` instead. The stored value is not modified — this is a read-time fallback only.\n"
+        },
+        {
+          "info": {
+            "name": "Update Opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              },
+              {
+                "name": "allow_new_options",
+                "value": "",
+                "type": "query",
+                "description": "Whether to allow creation of new dropdown options during record creation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing opportunity. Supports partial updates.\n\nUpdatable fields:\n- Standard fields (value, size, status, confidence, etc.)\n- Workflow fields (workflowId, phaseId)\n- Contact information (primaryEmail, primaryPhone)\n- Contacts (contact IDs only, no name, email, phone, etc.)\n- Custom fields (through custom object)\n\nNote: Updates are atomic - either all fields update or none do.\n\n> **Changing account association is not supported via update.** To move an opportunity to a different account"
+        },
+        {
+          "info": {
+            "name": "Delete Opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              }
+            ]
+          },
+          "docs": "Delete a specific opportunity by ID\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

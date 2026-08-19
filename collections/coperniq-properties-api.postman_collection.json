@@ -1,0 +1,126 @@
+{
+  "item": [
+    {
+      "id": "6d4c3428-4dd4-4743-9c22-83981607808a",
+      "name": "properties",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a4491189-4dbb-4546-bec1-2286ba7842aa",
+          "name": "List Properties",
+          "request": {
+            "name": "List Properties",
+            "description": {
+              "content": "Retrieve list of properties organized by record type.\n\nWhen `record_type` is **omitted**, the response includes all keys: `account`, `opportunity`,\n`project`, `vendor`, and `ahj` — plus the deprecated alias keys `client` and `request`.\n\nWhen `record_type` is **provided**, the response contains only the requested key(s). Filtering\nby `account` or `client` returns both `account` and `client` (identical data); filtering by\n`opportunity` or `request` returns both `opportunity` and `request` (identical data).\n\n> **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They will continue to be returned until all users have migrated.\n\n> **AHJ:** The `ahj` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in AHJ fields are not included here — they are exposed directly on the AHJ object instead, and are not updatable via the public API.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "properties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "record_type",
+                  "value": "<string>",
+                  "description": "Filter by record type. Can also be supplied as a comma-separated list\n(`?record_type=project,vendor`) or repeated (`?record_type=project&record_type=vendor`)\nto request multiple types in one call.\n\nWhen omitted, the response includes every record-type key. When supplied, the response\nincludes only the requested key(s) — plus the matching deprecated alias key where\napplicable (`account` ↔ `client`, `opportunity` ↔ `request`).\n\n> **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They are still accepted as input.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a2c226d-0b50-493a-943a-81bc054a0e17",
+              "name": "List of properties",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "record_type",
+                      "value": "ahj"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    }\n  ],\n  \"opportunity\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    }\n  ],\n  \"project\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    }\n  ],\n  \"vendor\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    }\n  ],\n  \"ahj\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    }\n  ],\n  \"client\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    }\n  ],\n  \"request\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coperniq.io/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "157788f8-2029-43e8-bb0c-8265f33b25e4",
+    "name": "API Key accounts properties API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

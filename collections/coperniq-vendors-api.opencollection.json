@@ -1,0 +1,339 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts vendors API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "vendors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Vendors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/vendors",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated after this timestamp (ISO 8601)"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated before this timestamp (ISO 8601)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+              },
+              {
+                "name": "include_contacts",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true."
+              },
+              {
+                "name": "vendor_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by vendor type"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of vendors.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`, default: desc)\n- Vendor type filter (`vendor_type`)\n"
+        },
+        {
+          "info": {
+            "name": "Create Vendor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/vendors",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "allow_new_options",
+                "value": "",
+                "type": "query",
+                "description": "Whether to allow creation of new dropdown options during record creation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new vendor.\n\nRequired fields:\n- `name`: Vendor name\n- `vendorType`: One of `CONSULTANT`, `FINANCING`, `LOGISTICS`, `MANUFACTURER`, `SUBCONTRACTOR`, `SUPPLIER`\n\nOptional fields:\n- `address`: Array containing a single string for the full vendor location/address\n- `website`: Vendor website URL (max 2048 chars)\n- `description`: Vendor description\n- `isActive`: Whether the vendor is active (default: true)\n- `contacts`: Array of contact IDs to associate\n- `projectIds`: Array of project IDs to"
+        },
+        {
+          "info": {
+            "name": "Search Vendors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/vendors/search",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "prop1",
+                "value": "",
+                "type": "query",
+                "description": "First field to filter (e.g. `name`, `vendorType`, `website` or custom keyName)"
+              },
+              {
+                "name": "op1",
+                "value": "",
+                "type": "query",
+                "description": "Operator for prop1"
+              },
+              {
+                "name": "value1",
+                "value": "",
+                "type": "query",
+                "description": "Value for prop1 (comma-separated values for in/nin or between)"
+              },
+              {
+                "name": "logic",
+                "value": "",
+                "type": "query",
+                "description": "Logical combination when both prop1 and prop2 are provided"
+              },
+              {
+                "name": "prop2",
+                "value": "",
+                "type": "query",
+                "description": "Optional second field to filter"
+              },
+              {
+                "name": "op2",
+                "value": "",
+                "type": "query",
+                "description": "Operator for prop2"
+              },
+              {
+                "name": "value2",
+                "value": "",
+                "type": "query",
+                "description": "Value for prop2 (comma-separated values for in/nin or between)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+              }
+            ]
+          },
+          "docs": "Search vendors using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `name`, `website`, `vendorType`) or a custom property key name.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)\n"
+        },
+        {
+          "info": {
+            "name": "Get Vendor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/vendors/:vendorId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "vendorId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include_contacts",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true."
+              }
+            ]
+          },
+          "docs": "Retrieve a specific vendor by ID."
+        },
+        {
+          "info": {
+            "name": "Update Vendor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/vendors/:vendorId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "vendorId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "allow_new_options",
+                "value": "",
+                "type": "query",
+                "description": "Whether to allow creation of new dropdown options during record creation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing vendor. All fields are optional — only include what you want to change.\n\nPass `null` to clear a nullable field (e.g. `website`, `description`).\n"
+        },
+        {
+          "info": {
+            "name": "Delete Vendor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/vendors/:vendorId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "vendorId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permanently delete a vendor by ID."
+        },
+        {
+          "info": {
+            "name": "Create Vendor-Project Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/vendors/:vendorId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vendorId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Associate a vendor with a project (many-to-many relationship).\n\nA vendor can be linked to multiple projects and a project can have multiple vendors.\n"
+        },
+        {
+          "info": {
+            "name": "Delete Vendor-Project Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/vendors/:vendorId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vendorId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove the association between a vendor and a project."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

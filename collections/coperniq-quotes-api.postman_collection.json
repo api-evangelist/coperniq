@@ -1,0 +1,1885 @@
+{
+  "item": [
+    {
+      "id": "d0227d5c-5dbd-4848-90e2-887f4a0d6b53",
+      "name": "quotes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "88b51a56-63f4-4063-ab7a-357f010f5157",
+          "name": "List Quotes",
+          "request": {
+            "name": "List Quotes",
+            "description": {
+              "content": "Retrieve a paginated list of quotes.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Status filtering (`status`)\n- Sorting (`order_by`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Number of items per page (max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (1-based)"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "asc",
+                  "description": "Sort order for results"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "<dateTime>",
+                  "description": "Filter items updated after this timestamp (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_before",
+                  "value": "<dateTime>",
+                  "description": "Filter items updated before this timestamp (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter quotes by status"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e9112303-15aa-427f-abee-2316fb67c120",
+              "name": "List of quotes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CHANGES_REQUESTED"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 869,\n    \"status\": \"DECLINED\",\n    \"amount\": 6277.131013772868,\n    \"createdAt\": \"1995-08-11T18:15:06.685Z\",\n    \"updatedAt\": \"2019-06-18T09:13:57.878Z\",\n    \"quoteNumber\": 3887,\n    \"description\": \"string\",\n    \"discountType\": \"PERCENTAGE\",\n    \"discountValue\": 8629.213093801343,\n    \"taxId\": 1936,\n    \"issueDate\": \"1963-04-21T08:47:01.339Z\",\n    \"subtotal\": 979.5263611190741,\n    \"taxRate\": 2185.370940181868,\n    \"isArchived\": false,\n    \"sharedWithPortal\": true,\n    \"account\": {\n      \"id\": 5427,\n      \"title\": \"string\"\n    },\n    \"record\": {\n      \"id\": 8290,\n      \"title\": \"string\",\n      \"type\": \"string\"\n    },\n    \"lineItems\": [\n      {\n        \"id\": 7844,\n        \"quantity\": 5456,\n        \"unitCost\": 9985.866197008372,\n        \"unitPrice\": 9899.799758965497,\n        \"description\": \"string\",\n        \"totalCost\": 7703.494231436325,\n        \"totalPrice\": 9836.661320892948,\n        \"sectionName\": \"string\",\n        \"catalogItem\": {\n          \"id\": 9960,\n          \"name\": \"string\",\n          \"sku\": \"string\",\n          \"type\": \"string\",\n          \"manufacturer\": \"string\"\n        }\n      },\n      {\n        \"id\": 8214,\n        \"quantity\": 7819,\n        \"unitCost\": 1533.5811669854193,\n        \"unitPrice\": 396.61370449115554,\n        \"description\": \"string\",\n        \"totalCost\": 5167.306564773584,\n        \"totalPrice\": 3857.9290900119645,\n        \"sectionName\": \"string\",\n        \"catalogItem\": {\n          \"id\": 6079,\n          \"name\": \"string\",\n          \"sku\": \"string\",\n          \"type\": \"string\",\n          \"manufacturer\": \"string\"\n        }\n      }\n    ]\n  },\n  {\n    \"id\": 928,\n    \"status\": \"APPROVED\",\n    \"amount\": 7291.913314084948,\n    \"createdAt\": \"1957-12-06T11:13:28.768Z\",\n    \"updatedAt\": \"1963-10-15T23:13:46.771Z\",\n    \"quoteNumber\": 7491,\n    \"description\": \"string\",\n    \"discountType\": \"FIXED\",\n    \"discountValue\": 5382.357002644049,\n    \"taxId\": 4460,\n    \"issueDate\": \"2026-08-01T17:02:15.201Z\",\n    \"subtotal\": 1925.76693368123,\n    \"taxRate\": 882.553273516975,\n    \"isArchived\": false,\n    \"sharedWithPortal\": true,\n    \"account\": {\n      \"id\": 6707,\n      \"title\": \"string\"\n    },\n    \"record\": {\n      \"id\": 6636,\n      \"title\": \"string\",\n      \"type\": \"string\"\n    },\n    \"lineItems\": [\n      {\n        \"id\": 9570,\n        \"quantity\": 4065,\n        \"unitCost\": 2705.179729844407,\n        \"unitPrice\": 4964.648231813403,\n        \"description\": \"string\",\n        \"totalCost\": 9906.431871173798,\n        \"totalPrice\": 6870.809912855754,\n        \"sectionName\": \"string\",\n        \"catalogItem\": {\n          \"id\": 9742,\n          \"name\": \"string\",\n          \"sku\": \"string\",\n          \"type\": \"string\",\n          \"manufacturer\": \"string\"\n        }\n      },\n      {\n        \"id\": 5264,\n        \"quantity\": 6930,\n        \"unitCost\": 1306.909137678548,\n        \"unitPrice\": 2042.0118231362983,\n        \"description\": \"string\",\n        \"totalCost\": 703.4550830646114,\n        \"totalPrice\": 7570.543682322145,\n        \"sectionName\": \"string\",\n        \"catalogItem\": {\n          \"id\": 465,\n          \"name\": \"string\",\n          \"sku\": \"string\",\n          \"type\": \"string\",\n          \"manufacturer\": \"string\"\n        }\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbdb07c8-3efd-444a-b93a-d3ebb0850355",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CHANGES_REQUESTED"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c78042b6-8049-46df-89fd-63abac99aaf2",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CHANGES_REQUESTED"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00cf87b2-f572-476d-91b5-2eb036d4f7b1",
+          "name": "Create Quote",
+          "request": {
+            "name": "Create Quote",
+            "description": {
+              "content": "Create a new quote on an opportunity (project/deal/account record).\n\n- `opportunityId`: Required — record ID used by the payment service.\n- `sections` or `lineItems`: At least one item required\n- `discountType` / `discountValue`: Optional discount\n- `taxId`: Optional tax\n- `issueDate` / `status`: `issueDate` only allowed with `status` of `SENT` or `APPROVED`\n\nTo add or replace line items on a **work order**, use `PUT /work-orders/{workOrderId}/line-items` instead.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"opportunityId\": \"<integer>\",\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"discountType\": \"<string>\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"title\": \"<string>\",\n  \"servicePlanInstanceId\": \"<integer>\",\n  \"siteId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4b81429d-efba-40b3-85cf-fa0a2a3d7dae",
+              "name": "Quote created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"opportunityId\": \"<integer>\",\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 4134,\n          \"quantity\": 5778,\n          \"unitCost\": 8038.531093700481,\n          \"unitPrice\": 5900.408468830082,\n          \"id\": 9421,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 8635,\n          \"quantity\": 5843,\n          \"unitCost\": 333.01770689354026,\n          \"unitPrice\": 903.5617706209808,\n          \"id\": 2152,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 9108,\n      \"name\": \"string\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 6288,\n          \"quantity\": 390,\n          \"unitCost\": 3733.0113010031196,\n          \"unitPrice\": 1796.930287520675,\n          \"id\": 8106,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 8487,\n          \"quantity\": 4018,\n          \"unitCost\": 4740.647804443728,\n          \"unitPrice\": 1625.1012140567912,\n          \"id\": 2494,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 7361,\n      \"name\": \"string\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": 899,\n      \"quantity\": 5912,\n      \"unitCost\": 1061.254792884171,\n      \"unitPrice\": 1621.987364460916,\n      \"id\": 6799,\n      \"description\": \"string\"\n    },\n    {\n      \"catalogItemId\": 124,\n      \"quantity\": 8104,\n      \"unitCost\": 2586.254390259953,\n      \"unitPrice\": 3935.4691023304545,\n      \"id\": 6958,\n      \"description\": \"string\"\n    }\n  ],\n  \"discountType\": \"PERCENTAGE\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"SENT\",\n  \"description\": \"<string,null>\",\n  \"title\": \"<string>\",\n  \"servicePlanInstanceId\": \"<integer>\",\n  \"siteId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4878,\n  \"status\": \"DRAFT\",\n  \"amount\": 4591.116415875656,\n  \"createdAt\": \"1967-09-14T06:17:37.787Z\",\n  \"updatedAt\": \"1974-06-03T22:01:03.933Z\",\n  \"quoteNumber\": 227,\n  \"description\": \"string\",\n  \"discountType\": \"PERCENTAGE\",\n  \"discountValue\": 3582.926287177205,\n  \"taxId\": 9850,\n  \"issueDate\": \"2002-06-25T13:04:53.990Z\",\n  \"subtotal\": 6882.271517859899,\n  \"taxRate\": 3001.654369644836,\n  \"isArchived\": false,\n  \"sharedWithPortal\": false,\n  \"account\": {\n    \"id\": 2042,\n    \"title\": \"string\"\n  },\n  \"record\": {\n    \"id\": 5072,\n    \"title\": \"string\",\n    \"type\": \"string\"\n  },\n  \"lineItems\": [\n    {\n      \"id\": 3513,\n      \"quantity\": 6469,\n      \"unitCost\": 8140.697348976026,\n      \"unitPrice\": 9191.203869725687,\n      \"description\": \"string\",\n      \"totalCost\": 2038.1599267445815,\n      \"totalPrice\": 3641.4789521990797,\n      \"sectionName\": \"string\",\n      \"catalogItem\": {\n        \"id\": 6854,\n        \"name\": \"string\",\n        \"sku\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\"\n      }\n    },\n    {\n      \"id\": 2764,\n      \"quantity\": 9795,\n      \"unitCost\": 2981.2816675185504,\n      \"unitPrice\": 2529.1719262399683,\n      \"description\": \"string\",\n      \"totalCost\": 4581.163872120795,\n      \"totalPrice\": 5968.506842635977,\n      \"sectionName\": \"string\",\n      \"catalogItem\": {\n        \"id\": 964,\n        \"name\": \"string\",\n        \"sku\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fa03a23-30a3-442a-9173-ebcefb4491dd",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"opportunityId\": \"<integer>\",\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 4134,\n          \"quantity\": 5778,\n          \"unitCost\": 8038.531093700481,\n          \"unitPrice\": 5900.408468830082,\n          \"id\": 9421,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 8635,\n          \"quantity\": 5843,\n          \"unitCost\": 333.01770689354026,\n          \"unitPrice\": 903.5617706209808,\n          \"id\": 2152,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 9108,\n      \"name\": \"string\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 6288,\n          \"quantity\": 390,\n          \"unitCost\": 3733.0113010031196,\n          \"unitPrice\": 1796.930287520675,\n          \"id\": 8106,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 8487,\n          \"quantity\": 4018,\n          \"unitCost\": 4740.647804443728,\n          \"unitPrice\": 1625.1012140567912,\n          \"id\": 2494,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 7361,\n      \"name\": \"string\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": 899,\n      \"quantity\": 5912,\n      \"unitCost\": 1061.254792884171,\n      \"unitPrice\": 1621.987364460916,\n      \"id\": 6799,\n      \"description\": \"string\"\n    },\n    {\n      \"catalogItemId\": 124,\n      \"quantity\": 8104,\n      \"unitCost\": 2586.254390259953,\n      \"unitPrice\": 3935.4691023304545,\n      \"id\": 6958,\n      \"description\": \"string\"\n    }\n  ],\n  \"discountType\": \"PERCENTAGE\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"SENT\",\n  \"description\": \"<string,null>\",\n  \"title\": \"<string>\",\n  \"servicePlanInstanceId\": \"<integer>\",\n  \"siteId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7650bf40-4a33-459b-94ce-a4048409f845",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"opportunityId\": \"<integer>\",\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 4134,\n          \"quantity\": 5778,\n          \"unitCost\": 8038.531093700481,\n          \"unitPrice\": 5900.408468830082,\n          \"id\": 9421,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 8635,\n          \"quantity\": 5843,\n          \"unitCost\": 333.01770689354026,\n          \"unitPrice\": 903.5617706209808,\n          \"id\": 2152,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 9108,\n      \"name\": \"string\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 6288,\n          \"quantity\": 390,\n          \"unitCost\": 3733.0113010031196,\n          \"unitPrice\": 1796.930287520675,\n          \"id\": 8106,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 8487,\n          \"quantity\": 4018,\n          \"unitCost\": 4740.647804443728,\n          \"unitPrice\": 1625.1012140567912,\n          \"id\": 2494,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 7361,\n      \"name\": \"string\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": 899,\n      \"quantity\": 5912,\n      \"unitCost\": 1061.254792884171,\n      \"unitPrice\": 1621.987364460916,\n      \"id\": 6799,\n      \"description\": \"string\"\n    },\n    {\n      \"catalogItemId\": 124,\n      \"quantity\": 8104,\n      \"unitCost\": 2586.254390259953,\n      \"unitPrice\": 3935.4691023304545,\n      \"id\": 6958,\n      \"description\": \"string\"\n    }\n  ],\n  \"discountType\": \"PERCENTAGE\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"SENT\",\n  \"description\": \"<string,null>\",\n  \"title\": \"<string>\",\n  \"servicePlanInstanceId\": \"<integer>\",\n  \"siteId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3ab592a6-a928-472a-b9c4-a96ad4109f09",
+          "name": "Get Opportunity Quotes",
+          "request": {
+            "name": "Get Opportunity Quotes",
+            "description": {
+              "content": "Retrieve quotes for a specific opportunity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities",
+                ":opportunityId",
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Number of items per page (max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (1-based)"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "asc",
+                  "description": "Sort order for results"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "<dateTime>",
+                  "description": "Filter items updated after this timestamp (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_before",
+                  "value": "<dateTime>",
+                  "description": "Filter items updated before this timestamp (ISO 8601)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "opportunityId",
+                  "description": "(Required) Opportunity ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c509361-816c-4053-9ef4-5a1356d30797",
+              "name": "List of quotes for the opportunity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 869,\n    \"status\": \"DECLINED\",\n    \"amount\": 6277.131013772868,\n    \"createdAt\": \"1995-08-11T18:15:06.685Z\",\n    \"updatedAt\": \"2019-06-18T09:13:57.878Z\",\n    \"quoteNumber\": 3887,\n    \"description\": \"string\",\n    \"discountType\": \"PERCENTAGE\",\n    \"discountValue\": 8629.213093801343,\n    \"taxId\": 1936,\n    \"issueDate\": \"1963-04-21T08:47:01.339Z\",\n    \"subtotal\": 979.5263611190741,\n    \"taxRate\": 2185.370940181868,\n    \"isArchived\": false,\n    \"sharedWithPortal\": true,\n    \"account\": {\n      \"id\": 5427,\n      \"title\": \"string\"\n    },\n    \"record\": {\n      \"id\": 8290,\n      \"title\": \"string\",\n      \"type\": \"string\"\n    },\n    \"lineItems\": [\n      {\n        \"id\": 7844,\n        \"quantity\": 5456,\n        \"unitCost\": 9985.866197008372,\n        \"unitPrice\": 9899.799758965497,\n        \"description\": \"string\",\n        \"totalCost\": 7703.494231436325,\n        \"totalPrice\": 9836.661320892948,\n        \"sectionName\": \"string\",\n        \"catalogItem\": {\n          \"id\": 9960,\n          \"name\": \"string\",\n          \"sku\": \"string\",\n          \"type\": \"string\",\n          \"manufacturer\": \"string\"\n        }\n      },\n      {\n        \"id\": 8214,\n        \"quantity\": 7819,\n        \"unitCost\": 1533.5811669854193,\n        \"unitPrice\": 396.61370449115554,\n        \"description\": \"string\",\n        \"totalCost\": 5167.306564773584,\n        \"totalPrice\": 3857.9290900119645,\n        \"sectionName\": \"string\",\n        \"catalogItem\": {\n          \"id\": 6079,\n          \"name\": \"string\",\n          \"sku\": \"string\",\n          \"type\": \"string\",\n          \"manufacturer\": \"string\"\n        }\n      }\n    ]\n  },\n  {\n    \"id\": 928,\n    \"status\": \"APPROVED\",\n    \"amount\": 7291.913314084948,\n    \"createdAt\": \"1957-12-06T11:13:28.768Z\",\n    \"updatedAt\": \"1963-10-15T23:13:46.771Z\",\n    \"quoteNumber\": 7491,\n    \"description\": \"string\",\n    \"discountType\": \"FIXED\",\n    \"discountValue\": 5382.357002644049,\n    \"taxId\": 4460,\n    \"issueDate\": \"2026-08-01T17:02:15.201Z\",\n    \"subtotal\": 1925.76693368123,\n    \"taxRate\": 882.553273516975,\n    \"isArchived\": false,\n    \"sharedWithPortal\": true,\n    \"account\": {\n      \"id\": 6707,\n      \"title\": \"string\"\n    },\n    \"record\": {\n      \"id\": 6636,\n      \"title\": \"string\",\n      \"type\": \"string\"\n    },\n    \"lineItems\": [\n      {\n        \"id\": 9570,\n        \"quantity\": 4065,\n        \"unitCost\": 2705.179729844407,\n        \"unitPrice\": 4964.648231813403,\n        \"description\": \"string\",\n        \"totalCost\": 9906.431871173798,\n        \"totalPrice\": 6870.809912855754,\n        \"sectionName\": \"string\",\n        \"catalogItem\": {\n          \"id\": 9742,\n          \"name\": \"string\",\n          \"sku\": \"string\",\n          \"type\": \"string\",\n          \"manufacturer\": \"string\"\n        }\n      },\n      {\n        \"id\": 5264,\n        \"quantity\": 6930,\n        \"unitCost\": 1306.909137678548,\n        \"unitPrice\": 2042.0118231362983,\n        \"description\": \"string\",\n        \"totalCost\": 703.4550830646114,\n        \"totalPrice\": 7570.543682322145,\n        \"sectionName\": \"string\",\n        \"catalogItem\": {\n          \"id\": 465,\n          \"name\": \"string\",\n          \"sku\": \"string\",\n          \"type\": \"string\",\n          \"manufacturer\": \"string\"\n        }\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b6bc769-2af2-4945-a40f-b95c54dfb574",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6b1f0de-80b7-401f-91e7-f38bf8653ee5",
+          "name": "Get Quote",
+          "request": {
+            "name": "Get Quote",
+            "description": {
+              "content": "Retrieve a specific quote by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                ":quoteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quoteId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab7300b9-e7cc-4b2a-b972-aab33369e7ca",
+              "name": "Quote details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4878,\n  \"status\": \"DRAFT\",\n  \"amount\": 4591.116415875656,\n  \"createdAt\": \"1967-09-14T06:17:37.787Z\",\n  \"updatedAt\": \"1974-06-03T22:01:03.933Z\",\n  \"quoteNumber\": 227,\n  \"description\": \"string\",\n  \"discountType\": \"PERCENTAGE\",\n  \"discountValue\": 3582.926287177205,\n  \"taxId\": 9850,\n  \"issueDate\": \"2002-06-25T13:04:53.990Z\",\n  \"subtotal\": 6882.271517859899,\n  \"taxRate\": 3001.654369644836,\n  \"isArchived\": false,\n  \"sharedWithPortal\": false,\n  \"account\": {\n    \"id\": 2042,\n    \"title\": \"string\"\n  },\n  \"record\": {\n    \"id\": 5072,\n    \"title\": \"string\",\n    \"type\": \"string\"\n  },\n  \"lineItems\": [\n    {\n      \"id\": 3513,\n      \"quantity\": 6469,\n      \"unitCost\": 8140.697348976026,\n      \"unitPrice\": 9191.203869725687,\n      \"description\": \"string\",\n      \"totalCost\": 2038.1599267445815,\n      \"totalPrice\": 3641.4789521990797,\n      \"sectionName\": \"string\",\n      \"catalogItem\": {\n        \"id\": 6854,\n        \"name\": \"string\",\n        \"sku\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\"\n      }\n    },\n    {\n      \"id\": 2764,\n      \"quantity\": 9795,\n      \"unitCost\": 2981.2816675185504,\n      \"unitPrice\": 2529.1719262399683,\n      \"description\": \"string\",\n      \"totalCost\": 4581.163872120795,\n      \"totalPrice\": 5968.506842635977,\n      \"sectionName\": \"string\",\n      \"catalogItem\": {\n        \"id\": 964,\n        \"name\": \"string\",\n        \"sku\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5df51f42-0897-4c02-bf3e-8f23bceaccbd",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a74d597c-821a-4e59-b369-223f1f785aa3",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe00cb3c-e7f7-42f0-80f8-536bd2452f44",
+          "name": "Update Quote",
+          "request": {
+            "name": "Update Quote",
+            "description": {
+              "content": "Update an existing quote. Supports partial updates.\n\n**`isArchived`**: pass `true` to archive or `false` to unarchive.\n\nWhen setting **`status`** to anything other than **`DRAFT`**, you must supply **`issueDate`** unless the quote already has one.\n\n**`sharedWithPortal`**: pass `true` or `false` to show or hide the quote on the client portal.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                ":quoteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quoteId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"discountType\": \"<string>\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer,null>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"sharedWithPortal\": \"<boolean>\",\n  \"isArchived\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b00c682c-73ed-49fd-8a64-233be4048271",
+              "name": "Quote updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 8059,\n          \"quantity\": 1434,\n          \"unitCost\": 9013.337068050554,\n          \"unitPrice\": 4001.4495605178035,\n          \"id\": 9990,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 716,\n          \"quantity\": 1720,\n          \"unitCost\": 7654.542436139283,\n          \"unitPrice\": 3016.4459639470056,\n          \"id\": 4417,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 1915,\n      \"name\": \"string\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 6126,\n          \"quantity\": 8112,\n          \"unitCost\": 6513.410434871402,\n          \"unitPrice\": 6153.6443199407195,\n          \"id\": 3143,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 7782,\n          \"quantity\": 7357,\n          \"unitCost\": 1029.3093840991462,\n          \"unitPrice\": 2670.1490222970247,\n          \"id\": 8834,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 3737,\n      \"name\": \"string\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": 8163,\n      \"quantity\": 7020,\n      \"unitCost\": 3657.380683253142,\n      \"unitPrice\": 1447.6317802863991,\n      \"id\": 6077,\n      \"description\": \"string\"\n    },\n    {\n      \"catalogItemId\": 1113,\n      \"quantity\": 5515,\n      \"unitCost\": 1448.3788326465108,\n      \"unitPrice\": 8307.55345836799,\n      \"id\": 7102,\n      \"description\": \"string\"\n    }\n  ],\n  \"discountType\": \"FIXED\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer,null>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"CHANGES_REQUESTED\",\n  \"description\": \"<string,null>\",\n  \"sharedWithPortal\": \"<boolean>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4878,\n  \"status\": \"DRAFT\",\n  \"amount\": 4591.116415875656,\n  \"createdAt\": \"1967-09-14T06:17:37.787Z\",\n  \"updatedAt\": \"1974-06-03T22:01:03.933Z\",\n  \"quoteNumber\": 227,\n  \"description\": \"string\",\n  \"discountType\": \"PERCENTAGE\",\n  \"discountValue\": 3582.926287177205,\n  \"taxId\": 9850,\n  \"issueDate\": \"2002-06-25T13:04:53.990Z\",\n  \"subtotal\": 6882.271517859899,\n  \"taxRate\": 3001.654369644836,\n  \"isArchived\": false,\n  \"sharedWithPortal\": false,\n  \"account\": {\n    \"id\": 2042,\n    \"title\": \"string\"\n  },\n  \"record\": {\n    \"id\": 5072,\n    \"title\": \"string\",\n    \"type\": \"string\"\n  },\n  \"lineItems\": [\n    {\n      \"id\": 3513,\n      \"quantity\": 6469,\n      \"unitCost\": 8140.697348976026,\n      \"unitPrice\": 9191.203869725687,\n      \"description\": \"string\",\n      \"totalCost\": 2038.1599267445815,\n      \"totalPrice\": 3641.4789521990797,\n      \"sectionName\": \"string\",\n      \"catalogItem\": {\n        \"id\": 6854,\n        \"name\": \"string\",\n        \"sku\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\"\n      }\n    },\n    {\n      \"id\": 2764,\n      \"quantity\": 9795,\n      \"unitCost\": 2981.2816675185504,\n      \"unitPrice\": 2529.1719262399683,\n      \"description\": \"string\",\n      \"totalCost\": 4581.163872120795,\n      \"totalPrice\": 5968.506842635977,\n      \"sectionName\": \"string\",\n      \"catalogItem\": {\n        \"id\": 964,\n        \"name\": \"string\",\n        \"sku\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fdeff74-c415-4248-9ad6-fde421f0a8b1",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 8059,\n          \"quantity\": 1434,\n          \"unitCost\": 9013.337068050554,\n          \"unitPrice\": 4001.4495605178035,\n          \"id\": 9990,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 716,\n          \"quantity\": 1720,\n          \"unitCost\": 7654.542436139283,\n          \"unitPrice\": 3016.4459639470056,\n          \"id\": 4417,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 1915,\n      \"name\": \"string\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 6126,\n          \"quantity\": 8112,\n          \"unitCost\": 6513.410434871402,\n          \"unitPrice\": 6153.6443199407195,\n          \"id\": 3143,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 7782,\n          \"quantity\": 7357,\n          \"unitCost\": 1029.3093840991462,\n          \"unitPrice\": 2670.1490222970247,\n          \"id\": 8834,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 3737,\n      \"name\": \"string\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": 8163,\n      \"quantity\": 7020,\n      \"unitCost\": 3657.380683253142,\n      \"unitPrice\": 1447.6317802863991,\n      \"id\": 6077,\n      \"description\": \"string\"\n    },\n    {\n      \"catalogItemId\": 1113,\n      \"quantity\": 5515,\n      \"unitCost\": 1448.3788326465108,\n      \"unitPrice\": 8307.55345836799,\n      \"id\": 7102,\n      \"description\": \"string\"\n    }\n  ],\n  \"discountType\": \"FIXED\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer,null>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"CHANGES_REQUESTED\",\n  \"description\": \"<string,null>\",\n  \"sharedWithPortal\": \"<boolean>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7eaa2a7e-491c-4453-a625-6c8a47b6b882",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 8059,\n          \"quantity\": 1434,\n          \"unitCost\": 9013.337068050554,\n          \"unitPrice\": 4001.4495605178035,\n          \"id\": 9990,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 716,\n          \"quantity\": 1720,\n          \"unitCost\": 7654.542436139283,\n          \"unitPrice\": 3016.4459639470056,\n          \"id\": 4417,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 1915,\n      \"name\": \"string\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 6126,\n          \"quantity\": 8112,\n          \"unitCost\": 6513.410434871402,\n          \"unitPrice\": 6153.6443199407195,\n          \"id\": 3143,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 7782,\n          \"quantity\": 7357,\n          \"unitCost\": 1029.3093840991462,\n          \"unitPrice\": 2670.1490222970247,\n          \"id\": 8834,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 3737,\n      \"name\": \"string\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": 8163,\n      \"quantity\": 7020,\n      \"unitCost\": 3657.380683253142,\n      \"unitPrice\": 1447.6317802863991,\n      \"id\": 6077,\n      \"description\": \"string\"\n    },\n    {\n      \"catalogItemId\": 1113,\n      \"quantity\": 5515,\n      \"unitCost\": 1448.3788326465108,\n      \"unitPrice\": 8307.55345836799,\n      \"id\": 7102,\n      \"description\": \"string\"\n    }\n  ],\n  \"discountType\": \"FIXED\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer,null>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"CHANGES_REQUESTED\",\n  \"description\": \"<string,null>\",\n  \"sharedWithPortal\": \"<boolean>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a9a25c6-29e1-4686-8b49-cfaf2a57ff43",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 8059,\n          \"quantity\": 1434,\n          \"unitCost\": 9013.337068050554,\n          \"unitPrice\": 4001.4495605178035,\n          \"id\": 9990,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 716,\n          \"quantity\": 1720,\n          \"unitCost\": 7654.542436139283,\n          \"unitPrice\": 3016.4459639470056,\n          \"id\": 4417,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 1915,\n      \"name\": \"string\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": 6126,\n          \"quantity\": 8112,\n          \"unitCost\": 6513.410434871402,\n          \"unitPrice\": 6153.6443199407195,\n          \"id\": 3143,\n          \"description\": \"string\"\n        },\n        {\n          \"catalogItemId\": 7782,\n          \"quantity\": 7357,\n          \"unitCost\": 1029.3093840991462,\n          \"unitPrice\": 2670.1490222970247,\n          \"id\": 8834,\n          \"description\": \"string\"\n        }\n      ],\n      \"id\": 3737,\n      \"name\": \"string\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": 8163,\n      \"quantity\": 7020,\n      \"unitCost\": 3657.380683253142,\n      \"unitPrice\": 1447.6317802863991,\n      \"id\": 6077,\n      \"description\": \"string\"\n    },\n    {\n      \"catalogItemId\": 1113,\n      \"quantity\": 5515,\n      \"unitCost\": 1448.3788326465108,\n      \"unitPrice\": 8307.55345836799,\n      \"id\": 7102,\n      \"description\": \"string\"\n    }\n  ],\n  \"discountType\": \"FIXED\",\n  \"discountValue\": \"<double>\",\n  \"taxId\": \"<integer,null>\",\n  \"issueDate\": \"<dateTime>\",\n  \"status\": \"CHANGES_REQUESTED\",\n  \"description\": \"<string,null>\",\n  \"sharedWithPortal\": \"<boolean>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45d5e63f-4bcb-4f03-afe3-74a24c701a25",
+          "name": "Delete Quote",
+          "request": {
+            "name": "Delete Quote",
+            "description": {
+              "content": "Delete a quote. The quote is archived first (required by the payment service),\nthen permanently deleted.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                ":quoteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quoteId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5ef7d4a-5472-4707-b342-df42e49cc536",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e6c2520e-73f9-451e-b54c-51d9991c9c30",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "724ef3bc-fbad-49e1-9f69-70e2e289a449",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9279fced-9bd0-424a-ae7a-f1b38b1330b9",
+          "name": "Get Quote PDF",
+          "request": {
+            "name": "Get Quote PDF",
+            "description": {
+              "content": "Returns the quote PDF. Response is JSON with base64-encoded PDF (`pdfBase64`) and `contentType`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                ":quoteId",
+                "pdf"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quoteId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "73e2fc38-07e1-41a4-bf0f-520665d08dc6",
+              "name": "PDF payload (base64 JSON)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pdfBase64\": \"string\",\n  \"contentType\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88f55086-7845-41ad-b665-6afb2c207531",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6eb6b4ab-3b79-4886-b705-fcd53518afb6",
+              "name": "API key valid but does not have access to this resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bab6e06e-ce59-4600-aed5-a39ce336b9e1",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b3a69d2-d3ce-4099-9aaf-6f684c992934",
+          "name": "Send Quote",
+          "request": {
+            "name": "Send Quote",
+            "description": {
+              "content": "Email the quote to the customer and transition **DRAFT** to **SENT** when applicable.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                ":quoteId",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quoteId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "13836fb9-2891-4e3d-896c-3a6fbb06d585",
+              "name": "Quote sent; returns the updated quote",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4878,\n  \"status\": \"DRAFT\",\n  \"amount\": 4591.116415875656,\n  \"createdAt\": \"1967-09-14T06:17:37.787Z\",\n  \"updatedAt\": \"1974-06-03T22:01:03.933Z\",\n  \"quoteNumber\": 227,\n  \"description\": \"string\",\n  \"discountType\": \"PERCENTAGE\",\n  \"discountValue\": 3582.926287177205,\n  \"taxId\": 9850,\n  \"issueDate\": \"2002-06-25T13:04:53.990Z\",\n  \"subtotal\": 6882.271517859899,\n  \"taxRate\": 3001.654369644836,\n  \"isArchived\": false,\n  \"sharedWithPortal\": false,\n  \"account\": {\n    \"id\": 2042,\n    \"title\": \"string\"\n  },\n  \"record\": {\n    \"id\": 5072,\n    \"title\": \"string\",\n    \"type\": \"string\"\n  },\n  \"lineItems\": [\n    {\n      \"id\": 3513,\n      \"quantity\": 6469,\n      \"unitCost\": 8140.697348976026,\n      \"unitPrice\": 9191.203869725687,\n      \"description\": \"string\",\n      \"totalCost\": 2038.1599267445815,\n      \"totalPrice\": 3641.4789521990797,\n      \"sectionName\": \"string\",\n      \"catalogItem\": {\n        \"id\": 6854,\n        \"name\": \"string\",\n        \"sku\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\"\n      }\n    },\n    {\n      \"id\": 2764,\n      \"quantity\": 9795,\n      \"unitCost\": 2981.2816675185504,\n      \"unitPrice\": 2529.1719262399683,\n      \"description\": \"string\",\n      \"totalCost\": 4581.163872120795,\n      \"totalPrice\": 5968.506842635977,\n      \"sectionName\": \"string\",\n      \"catalogItem\": {\n        \"id\": 964,\n        \"name\": \"string\",\n        \"sku\": \"string\",\n        \"type\": \"string\",\n        \"manufacturer\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23c11411-9226-4229-93e7-ca5d204e5bfc",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "360d2228-6561-495f-a534-c59e20d9cd68",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quoteId",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coperniq.io/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bff08592-3c24-4c6f-a8b4-989e9fac372f",
+    "name": "API Key accounts quotes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

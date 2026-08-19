@@ -1,0 +1,1047 @@
+{
+  "item": [
+    {
+      "id": "b19c3599-ac56-4dcc-ab20-13c9038057f5",
+      "name": "catalogItems",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "02fbe538-c63f-471f-9787-4d22463d04ea",
+          "name": "List Catalog Items",
+          "request": {
+            "name": "List Catalog Items",
+            "description": {
+              "content": "Lists catalog items (products and services).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalog-items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f93a8ec-c414-452c-be71-2c688b4606ea",
+              "name": "List of catalog items",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 8923,\n    \"name\": \"string\",\n    \"catalog\": \"ENVELOPE\",\n    \"type\": \"SERVICE\",\n    \"category\": \"AUTOMATION_CONTROLLER\",\n    \"cost\": 2403.8208023406514,\n    \"price\": 6364.422214007463,\n    \"manufacturer\": \"string\",\n    \"sku\": \"string\",\n    \"code\": \"string\",\n    \"description\": \"string\",\n    \"image\": {\n      \"id\": 6807,\n      \"name\": \"string\",\n      \"url\": \"string\"\n    },\n    \"isArchived\": true,\n    \"createdById\": 9933,\n    \"createdAt\": \"2019-01-06T11:01:24.874Z\",\n    \"updatedAt\": \"1967-09-01T01:37:21.820Z\",\n    \"preferredVendorId\": 2980\n  },\n  {\n    \"id\": 2692,\n    \"name\": \"string\",\n    \"catalog\": \"ENERGY\",\n    \"type\": \"PRODUCT\",\n    \"category\": \"AUTOMATIC_TRANSFER_SWITCH\",\n    \"cost\": 5957.014545448317,\n    \"price\": 3121.6498089839806,\n    \"manufacturer\": \"string\",\n    \"sku\": \"string\",\n    \"code\": \"string\",\n    \"description\": \"string\",\n    \"image\": {\n      \"id\": 3910,\n      \"name\": \"string\",\n      \"url\": \"string\"\n    },\n    \"isArchived\": true,\n    \"createdById\": 2889,\n    \"createdAt\": \"2006-04-02T02:33:13.187Z\",\n    \"updatedAt\": \"1985-05-09T19:22:08.240Z\",\n    \"preferredVendorId\": 4309\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4af99c08-cb70-4143-824e-8f4fb96908ed",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9795c877-50ed-4686-9e99-cc5b25150388",
+          "name": "Create Catalog Item",
+          "request": {
+            "name": "Create Catalog Item",
+            "description": {
+              "content": "Create a new catalog item.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalog-items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"category\": \"<string>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"<string>\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b03d30b3-1f13-43aa-a5e6-f3e7103f7149",
+              "name": "Catalog item created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"AIR_CONDITIONER\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4056,\n  \"name\": \"string\",\n  \"catalog\": \"ENERGY\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"DOOR_STRIKE\",\n  \"cost\": 2044.2977264175865,\n  \"price\": 1100.1829873826762,\n  \"manufacturer\": \"string\",\n  \"sku\": \"string\",\n  \"code\": \"string\",\n  \"description\": \"string\",\n  \"image\": {\n    \"id\": 7758,\n    \"name\": \"string\",\n    \"url\": \"string\"\n  },\n  \"isArchived\": false,\n  \"createdById\": 2143,\n  \"createdAt\": \"1976-09-25T22:58:17.125Z\",\n  \"updatedAt\": \"2024-06-02T00:47:35.591Z\",\n  \"preferredVendorId\": 9179\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23287077-3c34-4697-857b-60e1ee8ab3cf",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"AIR_CONDITIONER\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "625d8833-8dbe-4f36-ac76-780a852c2ccf",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"AIR_CONDITIONER\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5373dbb1-d7ad-4905-8d8f-cbf596be54e0",
+          "name": "Get Catalog Item",
+          "request": {
+            "name": "Get Catalog Item",
+            "description": {
+              "content": "Retrieve a specific catalog item by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalog-items",
+                ":catalogItemId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "catalogItemId",
+                  "description": "(Required) Catalog item identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "50857140-1e41-45ef-b87c-400e67e3c4d1",
+              "name": "Catalog item details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4056,\n  \"name\": \"string\",\n  \"catalog\": \"ENERGY\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"DOOR_STRIKE\",\n  \"cost\": 2044.2977264175865,\n  \"price\": 1100.1829873826762,\n  \"manufacturer\": \"string\",\n  \"sku\": \"string\",\n  \"code\": \"string\",\n  \"description\": \"string\",\n  \"image\": {\n    \"id\": 7758,\n    \"name\": \"string\",\n    \"url\": \"string\"\n  },\n  \"isArchived\": false,\n  \"createdById\": 2143,\n  \"createdAt\": \"1976-09-25T22:58:17.125Z\",\n  \"updatedAt\": \"2024-06-02T00:47:35.591Z\",\n  \"preferredVendorId\": 9179\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9a04da6-df11-442f-aa27-8b23d216e42c",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddea9993-723d-4f39-beaf-3cca47515fe0",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e765e4ee-90ce-4342-a8a4-98171d0cda0b",
+          "name": "Update Catalog Item",
+          "request": {
+            "name": "Update Catalog Item",
+            "description": {
+              "content": "Update an existing catalog item.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalog-items",
+                ":catalogItemId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "catalogItemId",
+                  "description": "(Required) Catalog item identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"<string>\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d8ad19a0-44e7-4251-b4ad-e69d391d3adf",
+              "name": "Catalog item updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"PRODUCT\",\n  \"name\": \"<string>\",\n  \"category\": \"TRANSFORMER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"ELECTRICAL\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4056,\n  \"name\": \"string\",\n  \"catalog\": \"ENERGY\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"DOOR_STRIKE\",\n  \"cost\": 2044.2977264175865,\n  \"price\": 1100.1829873826762,\n  \"manufacturer\": \"string\",\n  \"sku\": \"string\",\n  \"code\": \"string\",\n  \"description\": \"string\",\n  \"image\": {\n    \"id\": 7758,\n    \"name\": \"string\",\n    \"url\": \"string\"\n  },\n  \"isArchived\": false,\n  \"createdById\": 2143,\n  \"createdAt\": \"1976-09-25T22:58:17.125Z\",\n  \"updatedAt\": \"2024-06-02T00:47:35.591Z\",\n  \"preferredVendorId\": 9179\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "154320e5-92a1-4edd-94ad-3561fce7091c",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"PRODUCT\",\n  \"name\": \"<string>\",\n  \"category\": \"TRANSFORMER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"ELECTRICAL\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0410bea-c433-4aad-91fd-fc05bd1d2b21",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"PRODUCT\",\n  \"name\": \"<string>\",\n  \"category\": \"TRANSFORMER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"ELECTRICAL\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81c947ac-d84e-4e21-90c0-7995fb1d30bf",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"PRODUCT\",\n  \"name\": \"<string>\",\n  \"category\": \"TRANSFORMER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"ELECTRICAL\",\n  \"preferredVendorId\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b09a011d-11cb-4977-a24b-469c82afd709",
+          "name": "Delete Catalog Item",
+          "request": {
+            "name": "Delete Catalog Item",
+            "description": {
+              "content": "Archives the catalog item (soft delete). The item is marked as archived and will no longer appear in list or lookup responses, but is not permanently removed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalog-items",
+                ":catalogItemId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "catalogItemId",
+                  "description": "(Required) Catalog item identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "39117989-4ac6-435b-bad3-96ec1a7654b2",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "adb58d9e-caaf-438a-a259-46a77cba9be7",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af5e8cee-e485-4d65-9096-5427974f21cb",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalog-items",
+                    ":catalogItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "catalogItemId",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coperniq.io/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "94a02a58-9b2f-416c-be52-2792f2bfb144",
+    "name": "API Key accounts catalogItems API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

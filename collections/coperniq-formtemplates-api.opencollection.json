@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts formTemplates API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "formTemplates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Form Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/form-templates",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "includeArchived",
+                "value": "",
+                "type": "query",
+                "description": "Include archived form templates in results"
+              }
+            ]
+          },
+          "docs": "Retrieve all form templates for the company. Form templates are reusable form definitions\nthat define the layout, fields, assignees, and labels for forms created on projects/workflows.\n"
+        },
+        {
+          "info": {
+            "name": "Get Form Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/form-templates/:formTemplateId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "formTemplateId",
+                "value": "",
+                "type": "path",
+                "description": "Form template identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific form template by ID, including its full field layout.\n"
+        },
+        {
+          "info": {
+            "name": "Update Form Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/form-templates/:formTemplateId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "formTemplateId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing form template. All fields are optional — only provided fields are updated. `formLayouts` is optional — omit it to leave the existing layout untouched.\n\n**formLayouts replacement:** When provided, the `formLayouts` array **fully replaces** all layout groups and their fields on the template. Position is determined by array order.\n\n**IDs are not stable across updates.** Every update internally deletes all existing layout rows and inserts new ones, so every group and field receive"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

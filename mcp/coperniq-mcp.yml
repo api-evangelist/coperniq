@@ -7,13 +7,16 @@ server:
   transport: http
   url: https://docs.coperniq.io/_mcp/server
   provider: Fern (documentation MCP)
-description: >-
-  Coperniq publishes an official documentation MCP server (via Fern) so AI clients such as Claude
-  Code and Cursor can query the Coperniq API documentation, endpoints, and schemas directly. This
-  is a docs/knowledge MCP server; it exposes the documentation surface rather than authenticated
-  API operations. The underlying REST API (https://api.coperniq.io/v1, x-api-key auth) can be
-  wrapped as an execution MCP server per the derived tool candidates below.
-tool_candidates_note: >-
-  The 154 REST operations in openapi/coperniq-openapi.yml are candidate execution tools (one per
-  operationId) if wrapping the API itself in an MCP server. See agentic-access/coperniq-agentic-access.yml
+description: Coperniq publishes an official documentation MCP server (via Fern) so AI clients such as
+  Claude Code and Cursor can query the Coperniq API documentation, endpoints, and schemas directly. This
+  is a docs/knowledge MCP server; it exposes the documentation surface rather than authenticated API operations.
+  The underlying REST API (https://api.coperniq.io/v1, x-api-key auth) can be wrapped as an execution
+  MCP server per the derived tool candidates below.
+tool_candidates_note: The 154 REST operations in openapi/coperniq-openapi.yml are candidate execution
+  tools (one per operationId) if wrapping the API itself in an MCP server. See agentic-access/coperniq-agentic-access.yml
   for per-operation execution-contract classification.
+deployment:
+  mode: remote
+  verified: searched
+  checked: '2026-08-12'
+  source: catalog MCP census

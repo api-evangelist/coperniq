@@ -1,0 +1,296 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts notes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Project Notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/notes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve notes for a specific project\n\n**Note:** The `/projects/{projectId}/comments` path will continue to work until users are individually notified and migrated to the new naming.\n"
+        },
+        {
+          "info": {
+            "name": "Create Project Note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/notes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new note on a project\n\n**Note:** The `/projects/{projectId}/comments` path will continue to work until users are notified and migrated to the new naming.\n"
+        },
+        {
+          "info": {
+            "name": "List Opportunity Notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId/notes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve notes for a specific opportunity\n\n**Note:** The `/requests/{requestId}/comments` path will continue to work until users are notified and migrated to the new naming.\n"
+        },
+        {
+          "info": {
+            "name": "Create Opportunity Note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId/notes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new note on an opportunity\n\n**Note:** The `/requests/{requestId}/comments` path will continue to work until users are notified and migrated to the new naming.\n"
+        },
+        {
+          "info": {
+            "name": "List Account Notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/accounts/:accountId/notes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve notes for a specific account\n\n**Note:** The `/clients/{clientId}/comments` path will continue to work until users are notified and migrated to the new naming.\n"
+        },
+        {
+          "info": {
+            "name": "Create Account Note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/accounts/:accountId/notes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new note on an account\n\n**Note:** The `/clients/{clientId}/comments` path will continue to work until users are notified and migrated to the new naming.\n"
+        },
+        {
+          "info": {
+            "name": "List Work Order Notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/work-orders/:workOrderId/notes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns paginated notes (comments) for a specific work order, sorted by creation date descending (newest first).\n"
+        },
+        {
+          "info": {
+            "name": "Create Work Order Note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/work-orders/:workOrderId/notes",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a note (comment) to a specific work order.\n\nNotes are stored as internal comments linked to the work order. They trigger\nthe same notification and feed pipeline as comments created in the Coperniq UI.\n"
+        },
+        {
+          "info": {
+            "name": "Update Note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/notes/:noteId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing note. The note being updated must be authored by the connected user.\n\n**Note:** The following legacy paths will continue to work until users are notified and migrated to the new naming:\n- `/projects/{projectId}/comments/{commentId}`\n- `/requests/{requestId}/comments/{commentId}`\n- `/clients/{clientId}/comments/{commentId}`\n"
+        },
+        {
+          "info": {
+            "name": "Delete Note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/notes/:noteId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a note by its ID.\n\nIf the note has replies, it is soft-deleted — the text is replaced with \"This communication was deleted.\" and the thread is preserved. If the note has no replies, both the Communication and Comment records are hard-deleted.\n\nReturns `204 No Content` on success.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

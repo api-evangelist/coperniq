@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts forms API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Project Forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/forms",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter forms by status"
+              }
+            ]
+          },
+          "docs": "Retrieve all forms associated with a project.\n\nSupports:\n- Status filtering (`status` query parameter)\n"
+        },
+        {
+          "info": {
+            "name": "Create Project Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/forms",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new form instance in a project.\n\nNotes:\n- `templateId` is required.\n- `phaseInstanceId` is optional, but if provided the referenced phase must be started (active) for creation to succeed.\n"
+        },
+        {
+          "info": {
+            "name": "List Opportunity Forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId/forms",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter forms by status"
+              }
+            ]
+          },
+          "docs": "Retrieve all forms associated with an opportunity.\n\nSupports:\n- Status filtering (`status` query parameter)\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n"
+        },
+        {
+          "info": {
+            "name": "Get Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/forms/:formId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "formId",
+                "value": "",
+                "type": "path",
+                "description": "Form identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific form by ID with detailed layout information"
+        },
+        {
+          "info": {
+            "name": "Update Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/forms/:formId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "formId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing form, including core fields (status, due dates, assignee, collaborators)\nand individual field responses.\n"
+        },
+        {
+          "info": {
+            "name": "Attach file to form field from URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/forms/:formId/fields/file-from-url",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "formId",
+                "value": "",
+                "type": "path",
+                "description": "Form identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads a file from a public URL into Coperniq and attaches it to a specific FILE-type field on the form.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

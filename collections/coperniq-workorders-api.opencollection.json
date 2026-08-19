@@ -1,0 +1,499 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts workOrders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "workOrders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/work-orders",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated after this timestamp (ISO 8601)"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated before this timestamp (ISO 8601)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of work orders across all projects.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`)\n"
+        },
+        {
+          "info": {
+            "name": "List Project Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/work-orders",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated after this timestamp (ISO 8601)"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated before this timestamp (ISO 8601)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              }
+            ]
+          },
+          "docs": "Retrieve work orders for a specific project.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`)\n"
+        },
+        {
+          "info": {
+            "name": "Create Project Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/work-orders",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new work order in a project.\n\nNotes:\n- `templateId` is required.\n- `phaseInstanceId` is optional; if provided the referenced phase must be started (active) for creation to succeed.\n"
+        },
+        {
+          "info": {
+            "name": "List Opportunity Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId/work-orders",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve work orders for a specific opportunity\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n"
+        },
+        {
+          "info": {
+            "name": "Create Opportunity Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId/work-orders",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new work order for an opportunity.\n\nNotes:\n- `templateId` is required.\n- `phaseInstanceId` is optional. The phase does not need to be started to create an opportunity work order.\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n"
+        },
+        {
+          "info": {
+            "name": "List Account Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/accounts/:accountId/work-orders",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve work orders for a specific account\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n"
+        },
+        {
+          "info": {
+            "name": "Create Account Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/accounts/:accountId/work-orders",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new work order for an account (no phases)\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n"
+        },
+        {
+          "info": {
+            "name": "Get Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/work-orders/:workOrderId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific work order by ID.\n\nThe `lineItems` property is returned **only** for service work orders on an **account** (parent project type `ACCOUNT`), and **only** when at least one line item exists. Otherwise the field is omitted from the JSON object.\n"
+        },
+        {
+          "info": {
+            "name": "List Work Order Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/work-orders/templates",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve available work order templates. Returns all templates (not paginated)."
+        },
+        {
+          "info": {
+            "name": "Update Project Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/work-orders/:workOrderId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a project's work order. Supports partial updates.\n\nUpdatable fields:\n- title, description, priority\n- startDate, endDate, startDateAllDay, endDateAllDay\n- status (label string)\n- assigneeId\n- visits: Only applicable on field work orders. When provided, the `visits` array REPLACES the full set of visits for the work order. Include all existing visits you wish to keep or update (with their `id`), and include new visits without an `id`. Any existing visit not included in the request will be "
+        },
+        {
+          "info": {
+            "name": "Delete Project Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/work-orders/:workOrderId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order identifier"
+              }
+            ]
+          },
+          "docs": "Delete a specific work order from a project"
+        },
+        {
+          "info": {
+            "name": "Update Opportunity Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId/work-orders/:workOrderId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              },
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an opportunity's work order. Supports partial updates.\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n\nUpdatable fields:\n- title, description, priority\n- startDate, endDate, startDateAllDay, endDateAllDay\n- status (label string)\n- assigneeId\n- visits: Only applicable on field work orders. When provided, the `visits` array REPLACES the full set of visits for the work order. Include all existing "
+        },
+        {
+          "info": {
+            "name": "Delete Opportunity Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/opportunities/:opportunityId/work-orders/:workOrderId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier"
+              },
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order identifier"
+              }
+            ]
+          },
+          "docs": "Delete an opportunity's work order by ID\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n"
+        },
+        {
+          "info": {
+            "name": "Update Account Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/accounts/:accountId/work-orders/:workOrderId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier"
+              },
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an account's work order. Supports partial updates.\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n\nUpdatable fields:\n- title, description, priority\n- startDate, endDate, startDateAllDay, endDateAllDay\n- status (label string)\n- assigneeId\n- visits: Only applicable on field work orders. When provided, the `visits` array REPLACES the full set of visits for the work order. Include all existing visits you"
+        },
+        {
+          "info": {
+            "name": "Delete Account Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/accounts/:accountId/work-orders/:workOrderId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier"
+              },
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order identifier"
+              }
+            ]
+          },
+          "docs": "Delete a specific work order for an account\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

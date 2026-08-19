@@ -1,0 +1,222 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts bills API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "bills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/bills",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated after this timestamp (ISO 8601)"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated before this timestamp (ISO 8601)"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of bills.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`)\n"
+        },
+        {
+          "info": {
+            "name": "Create Bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/bills",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new bill.\n\nRequired fields:\n- `recordId`: Project ID (the project must exist first)\n- `calculationMethod`: Must be \"LINE_ITEMS\" or \"PERCENTAGE\"\n- `lineItems`: Array of at least one line item if calculationMethod is \"LINE_ITEMS\"\n- `percentage`: Percentage if calculationMethod is \"PERCENTAGE\"\n\n**Line item rules for bills:**\n- `unitCost` must be greater than 0 (strictly positive — bills represent vendor costs)\n- `unitPrice` may be negative (negative values represent discounts)\n\nOptional fi"
+        },
+        {
+          "info": {
+            "name": "Get Bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/bills/:billId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path",
+                "description": "Bill identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific bill by ID"
+        },
+        {
+          "info": {
+            "name": "Update Bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.coperniq.io/v1/bills/:billId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path",
+                "description": "Bill identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing bill. Supports partial updates.\n\nUpdatable fields:\n- `calculationMethod`: Must be \"LINE_ITEMS\" or \"PERCENTAGE\"\n- `lineItems`: Array of line items if calculationMethod is \"LINE_ITEMS\"\n- `percentage`: Percentage if calculationMethod is \"PERCENTAGE\"\n- `dueDate`: ISO 8601 datetime string\n- `issueDate`: ISO 8601 datetime string\n- `description`: Bill description\n- `status`: Bill status\n"
+        },
+        {
+          "info": {
+            "name": "Delete Bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.coperniq.io/v1/bills/:billId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path",
+                "description": "Bill identifier"
+              }
+            ]
+          },
+          "docs": "Delete a specific bill by ID.\n\nThe bill is automatically archived before deletion — no separate archive step is required.\n"
+        },
+        {
+          "info": {
+            "name": "Get Project Bills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/bills",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated after this timestamp (ISO 8601)"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter items updated before this timestamp (ISO 8601)"
+              }
+            ]
+          },
+          "docs": "Retrieve bills for a specific project.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

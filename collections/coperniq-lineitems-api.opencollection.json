@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts lineItems API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "lineItems",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Project Line Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/line-items",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve all line items for a project"
+        },
+        {
+          "info": {
+            "name": "Replace Project Line Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.coperniq.io/v1/projects/:projectId/line-items",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace all line items for a project. Send an object with `lineItems`, `sections`, or both:\n\n- **`lineItems`** `{ lineItems: [...] }` — ungrouped line items.\n- **`sections`** `{ sections: [{ name?, lineItems: [...] }] }` — line items grouped into named sections.\n- The two may be combined (ungrouped items + named sections).\n\nA `catalogItemId` may appear at most once across the flattened set.\n\n> **Deprecated:** the previous request shape is still accepted for backwards compatibility but is depreca"
+        },
+        {
+          "info": {
+            "name": "Replace Work Order Line Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.coperniq.io/v1/work-orders/:workOrderId/line-items",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces all line items on a work order. Internally updates or creates the underlying quote linked to the task.\n\nSupported **only** for service work orders on an **account** (parent project type `ACCOUNT`). Requests for other work orders receive `400`.\n\nProvide **either** `sections` **or** `lineItems` (not both), using the same shapes as quote line items.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

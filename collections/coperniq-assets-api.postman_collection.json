@@ -1,0 +1,1086 @@
+{
+  "item": [
+    {
+      "id": "adff7dca-4891-48c5-a048-f6cf81eeb6d4",
+      "name": "assets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "797786eb-846c-417a-852b-70ebf8622522",
+          "name": "List Assets",
+          "request": {
+            "name": "List Assets",
+            "description": {
+              "content": "List assets for the authenticated company. Supports pagination and filters (`account_id`, `site_id`, `status`, `type`, `manufacturer`, `is_archived`, date range on `updated_at`).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "assets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "20"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "desc"
+                },
+                {
+                  "disabled": false,
+                  "key": "account_id",
+                  "value": "<integer>",
+                  "description": "Filter to assets belonging to a specific account."
+                },
+                {
+                  "disabled": false,
+                  "key": "site_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "manufacturer",
+                  "value": "<string>",
+                  "description": "Case-insensitive substring match on `manufacturer`."
+                },
+                {
+                  "disabled": false,
+                  "key": "is_archived",
+                  "value": "false",
+                  "description": "Filter by archive state. Accepts `true` / `false` / `1` / `0`."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_before",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bba99c27-b786-4708-909e-ad91000b4a2e",
+              "name": "List of assets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "account_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "site_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "DRAFT"
+                    },
+                    {
+                      "key": "type",
+                      "value": "LIGHTING_PANEL"
+                    },
+                    {
+                      "key": "manufacturer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_archived",
+                      "value": "false"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 204,\n    \"status\": \"INACTIVE\",\n    \"siteId\": 9958,\n    \"labels\": [\n      {\n        \"id\": 123,\n        \"name\": \"string\",\n        \"type\": \"TASK\",\n        \"color\": \"string\"\n      },\n      {\n        \"id\": 7338,\n        \"name\": \"string\",\n        \"type\": \"ASSET\",\n        \"color\": \"string\"\n      }\n    ],\n    \"isArchived\": true,\n    \"uid\": 4555,\n    \"name\": \"string\",\n    \"type\": \"LIGHTING_PANEL\",\n    \"manufacturer\": \"string\",\n    \"model\": \"string\",\n    \"serialNumber\": \"string\",\n    \"accountId\": 1267,\n    \"size\": 1751.9094699894388,\n    \"installDate\": \"2011-06-25\",\n    \"manufacturingDate\": \"1986-04-16\",\n    \"expectedLifetime\": 5419.212429603063,\n    \"description\": \"string\",\n    \"coverImageFileId\": 3446,\n    \"nameplateImageFileId\": 1524,\n    \"createdAt\": \"2025-01-28T02:46:40.644Z\",\n    \"updatedAt\": \"2007-04-16T14:32:34.866Z\"\n  },\n  {\n    \"id\": 2053,\n    \"status\": \"DRAFT\",\n    \"siteId\": 1839,\n    \"labels\": [\n      {\n        \"id\": 2901,\n        \"name\": \"string\",\n        \"type\": \"ASSET\",\n        \"color\": \"string\"\n      },\n      {\n        \"id\": 202,\n        \"name\": \"string\",\n        \"type\": \"ASSET\",\n        \"color\": \"string\"\n      }\n    ],\n    \"isArchived\": true,\n    \"uid\": 3575,\n    \"name\": \"string\",\n    \"type\": \"MAGLOCK\",\n    \"manufacturer\": \"string\",\n    \"model\": \"string\",\n    \"serialNumber\": \"string\",\n    \"accountId\": 8007,\n    \"size\": 7990.481366417028,\n    \"installDate\": \"2023-12-27\",\n    \"manufacturingDate\": \"2002-12-07\",\n    \"expectedLifetime\": 8233.769250367483,\n    \"description\": \"string\",\n    \"coverImageFileId\": 4470,\n    \"nameplateImageFileId\": 1317,\n    \"createdAt\": \"2018-12-06T14:48:42.047Z\",\n    \"updatedAt\": \"1954-07-10T07:04:43.910Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e3bfbb4-a273-4f6e-a6f0-317ed7f99e4c",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "account_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "site_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "DRAFT"
+                    },
+                    {
+                      "key": "type",
+                      "value": "LIGHTING_PANEL"
+                    },
+                    {
+                      "key": "manufacturer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_archived",
+                      "value": "false"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51147cbe-9afd-461a-bac4-46f0ecd9b778",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "account_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "site_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "DRAFT"
+                    },
+                    {
+                      "key": "type",
+                      "value": "LIGHTING_PANEL"
+                    },
+                    {
+                      "key": "manufacturer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_archived",
+                      "value": "false"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db1af094-e92e-4bdf-879b-d4be38c56911",
+          "name": "Create Asset",
+          "request": {
+            "name": "Create Asset",
+            "description": {
+              "content": "Create a new asset. Requires `accountId`, `siteId`, `type`, `manufacturer`, `model`, and `serialNumber`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "assets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": \"<integer>\",\n  \"siteId\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"status\": \"<string>\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<date>\",\n  \"manufacturingDate\": \"<date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98f80f2c-867f-43b1-a069-88e73eb29b8c",
+              "name": "Asset created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountId\": \"<integer>\",\n  \"siteId\": \"<integer>\",\n  \"type\": \"VALVE\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"status\": \"RETIRED\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<date>\",\n  \"manufacturingDate\": \"<date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 3906,\n  \"status\": \"RETIRED\",\n  \"siteId\": 5818,\n  \"labels\": [\n    {\n      \"id\": 4911,\n      \"name\": \"string\",\n      \"type\": \"TASK\",\n      \"color\": \"string\"\n    },\n    {\n      \"id\": 1373,\n      \"name\": \"string\",\n      \"type\": \"TASK\",\n      \"color\": \"string\"\n    }\n  ],\n  \"isArchived\": false,\n  \"uid\": 9356,\n  \"name\": \"string\",\n  \"type\": \"TRACKER\",\n  \"manufacturer\": \"string\",\n  \"model\": \"string\",\n  \"serialNumber\": \"string\",\n  \"accountId\": 6667,\n  \"size\": 7960.483124569166,\n  \"installDate\": \"2000-03-20\",\n  \"manufacturingDate\": \"1951-03-01\",\n  \"expectedLifetime\": 4725.054386370595,\n  \"description\": \"string\",\n  \"coverImageFileId\": 5444,\n  \"nameplateImageFileId\": 835,\n  \"createdAt\": \"2003-09-24T21:31:46.621Z\",\n  \"updatedAt\": \"1996-02-11T12:08:30.999Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bb12560-15ab-44da-9d47-b09ca50e9cdb",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountId\": \"<integer>\",\n  \"siteId\": \"<integer>\",\n  \"type\": \"VALVE\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"status\": \"RETIRED\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<date>\",\n  \"manufacturingDate\": \"<date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1201add7-4c87-4054-8a3e-c839f3c0a2b1",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountId\": \"<integer>\",\n  \"siteId\": \"<integer>\",\n  \"type\": \"VALVE\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"status\": \"RETIRED\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<date>\",\n  \"manufacturingDate\": \"<date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34a322a7-890b-45f2-81ec-c321b312ba5b",
+          "name": "Get Asset",
+          "request": {
+            "name": "Get Asset",
+            "description": {
+              "content": "Retrieve a specific asset by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "assets",
+                ":assetId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "assetId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb98c946-6473-4da6-a66b-c11ee4c11c48",
+              "name": "Asset details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 3906,\n  \"status\": \"RETIRED\",\n  \"siteId\": 5818,\n  \"labels\": [\n    {\n      \"id\": 4911,\n      \"name\": \"string\",\n      \"type\": \"TASK\",\n      \"color\": \"string\"\n    },\n    {\n      \"id\": 1373,\n      \"name\": \"string\",\n      \"type\": \"TASK\",\n      \"color\": \"string\"\n    }\n  ],\n  \"isArchived\": false,\n  \"uid\": 9356,\n  \"name\": \"string\",\n  \"type\": \"TRACKER\",\n  \"manufacturer\": \"string\",\n  \"model\": \"string\",\n  \"serialNumber\": \"string\",\n  \"accountId\": 6667,\n  \"size\": 7960.483124569166,\n  \"installDate\": \"2000-03-20\",\n  \"manufacturingDate\": \"1951-03-01\",\n  \"expectedLifetime\": 4725.054386370595,\n  \"description\": \"string\",\n  \"coverImageFileId\": 5444,\n  \"nameplateImageFileId\": 835,\n  \"createdAt\": \"2003-09-24T21:31:46.621Z\",\n  \"updatedAt\": \"1996-02-11T12:08:30.999Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d29cf2e-8b1f-4756-b9a1-0f3c926f9117",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85dee4a0-58c3-4283-bba4-d2e4a0dab2a3",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00a72bf3-ed72-4907-a8a9-2e1464979686",
+          "name": "Update Asset",
+          "request": {
+            "name": "Update Asset",
+            "description": {
+              "content": "Update an existing asset. All fields are optional — only include what you want to change.\n\n`siteId` and `accountId` cannot be changed after creation. Including either field in the request body is rejected with a `400 Bad Request` validation error.\n\nTo archive an asset, set `isArchived: true`. To unarchive, set `isArchived: false`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "assets",
+                ":assetId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "assetId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"status\": \"<string>\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<string,null-date>\",\n  \"manufacturingDate\": \"<string,null-date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\",\n  \"isArchived\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3635138-d065-466f-98d7-d368fcb9b8f5",
+              "name": "Asset updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"PANELBOARD\",\n  \"status\": \"MAINTENANCE\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<string,null-date>\",\n  \"manufacturingDate\": \"<string,null-date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 3906,\n  \"status\": \"RETIRED\",\n  \"siteId\": 5818,\n  \"labels\": [\n    {\n      \"id\": 4911,\n      \"name\": \"string\",\n      \"type\": \"TASK\",\n      \"color\": \"string\"\n    },\n    {\n      \"id\": 1373,\n      \"name\": \"string\",\n      \"type\": \"TASK\",\n      \"color\": \"string\"\n    }\n  ],\n  \"isArchived\": false,\n  \"uid\": 9356,\n  \"name\": \"string\",\n  \"type\": \"TRACKER\",\n  \"manufacturer\": \"string\",\n  \"model\": \"string\",\n  \"serialNumber\": \"string\",\n  \"accountId\": 6667,\n  \"size\": 7960.483124569166,\n  \"installDate\": \"2000-03-20\",\n  \"manufacturingDate\": \"1951-03-01\",\n  \"expectedLifetime\": 4725.054386370595,\n  \"description\": \"string\",\n  \"coverImageFileId\": 5444,\n  \"nameplateImageFileId\": 835,\n  \"createdAt\": \"2003-09-24T21:31:46.621Z\",\n  \"updatedAt\": \"1996-02-11T12:08:30.999Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bdda69fd-7a6f-4335-8dde-f85ed7fddf7d",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"PANELBOARD\",\n  \"status\": \"MAINTENANCE\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<string,null-date>\",\n  \"manufacturingDate\": \"<string,null-date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e590a915-3175-4288-9254-3b7f1ba6ee56",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"PANELBOARD\",\n  \"status\": \"MAINTENANCE\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<string,null-date>\",\n  \"manufacturingDate\": \"<string,null-date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c5b540c-e146-4df0-a67d-c398661caff2",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assets",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"PANELBOARD\",\n  \"status\": \"MAINTENANCE\",\n  \"manufacturer\": \"<string>\",\n  \"model\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"size\": \"<double>\",\n  \"labelIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"installDate\": \"<string,null-date>\",\n  \"manufacturingDate\": \"<string,null-date>\",\n  \"expectedLifetime\": \"<double>\",\n  \"description\": \"<string>\",\n  \"coverImageFileId\": \"<integer>\",\n  \"nameplateImageFileId\": \"<integer>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coperniq.io/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f1294ea3-48a5-4f83-8031-f9e75e18cec3",
+    "name": "API Key accounts assets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

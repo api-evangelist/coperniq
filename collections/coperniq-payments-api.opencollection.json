@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Key accounts payments API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Invoice Payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/invoices/:invoiceId/payments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve all payment records for an invoice.\n\nAmounts are returned in **dollars** (internal storage uses cents).\n"
+        },
+        {
+          "info": {
+            "name": "Create Invoice Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/invoices/:invoiceId/payments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record a manual payment against an invoice.\n\n**Request body**\n- `amount`: Positive number in **dollars**\n- `paymentDate`: ISO 8601 datetime string\n- `paymentMethod`: One of `CASH`, `ACH`, `CREDIT_CARD`, `KLARNA`, `AFFIRM`, `CHECK`\n- `notes` (optional)\n- `paymentReference` (optional)\n"
+        },
+        {
+          "info": {
+            "name": "Get Invoice Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/invoices/:invoiceId/payments/:paymentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice identifier"
+              },
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Payment record identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a single payment record on an invoice by payment id.\n\nCore does not expose a standalone payment-record GET; this resolves the payment from the invoice's nested payment records.\n"
+        },
+        {
+          "info": {
+            "name": "List Bill Payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/bills/:billId/payments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path",
+                "description": "Bill identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve all payment records for a bill.\n\nAmounts are returned in **dollars** (internal storage uses cents).\n"
+        },
+        {
+          "info": {
+            "name": "Create Bill Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coperniq.io/v1/bills/:billId/payments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path",
+                "description": "Bill identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record a manual payment against a bill.\n\n**Request body**\n- `amount`: Positive number in **dollars**\n- `paymentDate`: ISO 8601 datetime string\n- `paymentMethod`: One of `CASH`, `ACH`, `CREDIT_CARD`, `KLARNA`, `AFFIRM`, `CHECK`\n- `notes` (optional)\n- `paymentReference` (optional)\n"
+        },
+        {
+          "info": {
+            "name": "Get Bill Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coperniq.io/v1/bills/:billId/payments/:paymentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path",
+                "description": "Bill identifier"
+              },
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Payment record identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a single payment record on a bill by payment id.\n\nCore does not expose a standalone payment-record GET; this resolves the payment from the bill's nested payment records.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1727 @@
+{
+  "item": [
+    {
+      "id": "35b1a418-a715-4c01-b99f-af84b745057f",
+      "name": "opportunities",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7e3617d8-68c3-4e30-ab25-320c687ea235",
+          "name": "List Opportunities",
+          "request": {
+            "name": "List Opportunities",
+            "description": {
+              "content": "Retrieve a paginated list of opportunities.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`, default: desc)\n- Field search (`title`, `address`, `primaryName`, `primaryPhone`, `primaryEmail`)\n- Full text search (`q`)\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n\n**Note:** If an opportunity has no `title` (empty or whitespace-only), the response returns the parent account's `title` instead. The stored value is not modified — this is a read-time fallback only.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Number of items per page (max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (1-based)"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "<dateTime>",
+                  "description": "Filter items updated after this timestamp (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_before",
+                  "value": "<dateTime>",
+                  "description": "Filter items updated before this timestamp (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "asc",
+                  "description": "Sort order for results"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_virtual_properties",
+                  "value": "false",
+                  "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_archived",
+                  "value": "false",
+                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Full text search query"
+                },
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>",
+                  "description": "Title search query"
+                },
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>",
+                  "description": "Address search query"
+                },
+                {
+                  "disabled": false,
+                  "key": "primaryName",
+                  "value": "<string>",
+                  "description": "Contact name search query"
+                },
+                {
+                  "disabled": false,
+                  "key": "primaryPhone",
+                  "value": "<string>",
+                  "description": "Contact phone search query"
+                },
+                {
+                  "disabled": false,
+                  "key": "primaryEmail",
+                  "value": "<string>",
+                  "description": "Contact email search query"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99e443ea-117f-4e1a-904e-123b1fedd723",
+              "name": "List of opportunities",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "include_virtual_properties",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "primaryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "primaryPhone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "primaryEmail",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 8342,\n    \"createdAt\": \"2024-07-04T16:58:40.044Z\",\n    \"updatedAt\": \"1955-11-09T20:34:34.013Z\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"rlxh6Jl9nEmV@IXHeBQYWqifmZsJfCGPEgyOWgiZeXt.icux\",\n    \"primaryPhone\": \"string\",\n    \"number\": 2424,\n    \"createdBy\": {\n      \"id\": 5068,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"fJygScRGP@ySSZAKgfJprcFuXjL.fe\",\n      \"avatarUrl\": \"string\"\n    },\n    \"updatedBy\": {\n      \"id\": 375,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"avCYmtC9@arBrkbUiVqhNDzxLVenAscWB.sp\",\n      \"avatarUrl\": \"string\"\n    },\n    \"custom\": {\n      \"key_0\": {}\n    },\n    \"trades\": [\n      \"string\",\n      \"string\"\n    ],\n    \"value\": 176.00636749786293,\n    \"size\": 739.4469795950853,\n    \"confidence\": 4894.829318985529,\n    \"workflowId\": 9236,\n    \"accountId\": 8766,\n    \"geoLocation\": [\n      \"string\",\n      \"string\"\n    ],\n    \"imageUrl\": \"string\",\n    \"streetViewUrl\": \"string\",\n    \"city\": \"string\",\n    \"zipcode\": \"string\",\n    \"state\": \"string\",\n    \"street\": \"string\",\n    \"phase\": {\n      \"id\": 9517,\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"phaseInstances\": [\n      {\n        \"id\": 7961,\n        \"name\": \"string\",\n        \"status\": \"NOT_STARTED\",\n        \"position\": 7140,\n        \"type\": \"string\",\n        \"phaseTemplateId\": 5391,\n        \"phaseTemplate\": {\n          \"id\": 9513,\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"redSla\": 5223,\n          \"yellowSla\": 5103\n        }\n      },\n      {\n        \"id\": 4676,\n        \"name\": \"string\",\n        \"status\": \"IN_PROGRESS\",\n        \"position\": 7657,\n        \"type\": \"string\",\n        \"phaseTemplateId\": 7272,\n        \"phaseTemplate\": {\n          \"id\": 2707,\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"redSla\": 6903,\n          \"yellowSla\": 2394\n        }\n      }\n    ],\n    \"owner\": {\n      \"id\": 8822,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"salesRep\": {\n      \"id\": 8910,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"projectManager\": {\n      \"id\": 4243,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"jurisdiction\": {\n      \"id\": 7597,\n      \"name\": \"string\",\n      \"uuid\": \"string\"\n    },\n    \"lastActivity\": \"1996-02-09T11:48:47.896Z\",\n    \"phaseId\": 2169,\n    \"workflowName\": \"string\"\n  },\n  {\n    \"id\": 4901,\n    \"createdAt\": \"1955-03-28T15:53:32.868Z\",\n    \"updatedAt\": \"2004-06-01T17:06:39.738Z\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"U3TloCd@xLlkozAzqwn.ruy\",\n    \"primaryPhone\": \"string\",\n    \"number\": 7306,\n    \"createdBy\": {\n      \"id\": 9336,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"ba4-Uj@TpiPnTLFVxMqTqvq.kll\",\n      \"avatarUrl\": \"string\"\n    },\n    \"updatedBy\": {\n      \"id\": 2144,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"iDkSun400LzHzt@on.jv\",\n      \"avatarUrl\": \"string\"\n    },\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"trades\": [\n      \"string\",\n      \"string\"\n    ],\n    \"value\": 5174.84437180692,\n    \"size\": 6745.086293930925,\n    \"confidence\": 2077.6526416826714,\n    \"workflowId\": 7062,\n    \"accountId\": 8872,\n    \"geoLocation\": [\n      \"string\",\n      \"string\"\n    ],\n    \"imageUrl\": \"string\",\n    \"streetViewUrl\": \"string\",\n    \"city\": \"string\",\n    \"zipcode\": \"string\",\n    \"state\": \"string\",\n    \"street\": \"string\",\n    \"phase\": {\n      \"id\": 3801,\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"phaseInstances\": [\n      {\n        \"id\": 8524,\n        \"name\": \"string\",\n        \"status\": \"COMPLETED\",\n        \"position\": 4217,\n        \"type\": \"string\",\n        \"phaseTemplateId\": 2061,\n        \"phaseTemplate\": {\n          \"id\": 5886,\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"redSla\": 7584,\n          \"yellowSla\": 1786\n        }\n      },\n      {\n        \"id\": 2049,\n        \"name\": \"string\",\n        \"status\": \"NOT_STARTED\",\n        \"position\": 8079,\n        \"type\": \"string\",\n        \"phaseTemplateId\": 607,\n        \"phaseTemplate\": {\n          \"id\": 1638,\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"redSla\": 1366,\n          \"yellowSla\": 2738\n        }\n      }\n    ],\n    \"owner\": {\n      \"id\": 5054,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"salesRep\": {\n      \"id\": 1391,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"projectManager\": {\n      \"id\": 1013,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"jurisdiction\": {\n      \"id\": 766,\n      \"name\": \"string\",\n      \"uuid\": \"string\"\n    },\n    \"lastActivity\": \"2021-07-14T17:14:41.898Z\",\n    \"phaseId\": 5655,\n    \"workflowName\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "085c8b0f-6396-456b-a3d8-d93b4b6c42aa",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "include_virtual_properties",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "primaryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "primaryPhone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "primaryEmail",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4f4e969-1251-484e-bcbd-62e349ef82e6",
+          "name": "Create Opportunity",
+          "request": {
+            "name": "Create Opportunity",
+            "description": {
+              "content": "Create a new opportunity with required and optional fields.\n\nRequired fields:\n- `title`: Opportunity title/name\n- `address`: Opportunity location\n- `trades`: Array of trade types\n\nOptional fields:\n- `accountId`: Link to existing account\n- `workflowId`: Link to workflow\n- `phaseId`: Link to phase\n- `value`: Opportunity value\n- `size`: Opportunity size\n- `confidence`: Confidence score (0-100)\n- `primaryEmail`/`primaryPhone`: Contact information\n- `contacts`: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.\n- `custom`: Custom fields object\n\nNote: If primaryEmail or primaryPhone is provided, a contact will be automatically created or matched.\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "allow_new_options",
+                  "value": "false",
+                  "description": "Whether to allow creation of new dropdown options during record creation"
+                },
+                {
+                  "disabled": false,
+                  "key": "match_by",
+                  "value": "title",
+                  "description": "Field to use for matching existing records"
+                },
+                {
+                  "disabled": false,
+                  "key": "match_found_strategy",
+                  "value": "skip",
+                  "description": "Strategy to use when a match is found"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"<string>\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "928cb7a7-cbc1-4fe3-a0df-f0879202ff86",
+              "name": "Matching opportunity found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allow_new_options",
+                      "value": "false"
+                    },
+                    {
+                      "key": "match_by",
+                      "value": "title"
+                    },
+                    {
+                      "key": "match_found_strategy",
+                      "value": "skip"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"CANCELLED\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 6288,\n  \"createdAt\": \"1978-01-31T22:51:39.065Z\",\n  \"updatedAt\": \"1986-07-29T18:52:45.335Z\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": false,\n  \"primaryEmail\": \"FKHrRAldUHSCy@ARYgyKnFvkwp.vl\",\n  \"primaryPhone\": \"string\",\n  \"number\": 9873,\n  \"createdBy\": {\n    \"id\": 113,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"IynqHCrp79@kKjr.gos\",\n    \"avatarUrl\": \"string\"\n  },\n  \"updatedBy\": {\n    \"id\": 8500,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"G3Wp5EBX05b9@HXEICuuANYCexY.tiwc\",\n    \"avatarUrl\": \"string\"\n  },\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"trades\": [\n    \"string\",\n    \"string\"\n  ],\n  \"value\": 2955.7278374395246,\n  \"size\": 5015.108019746875,\n  \"confidence\": 4019.059578356303,\n  \"workflowId\": 5580,\n  \"accountId\": 3887,\n  \"geoLocation\": [\n    \"string\",\n    \"string\"\n  ],\n  \"imageUrl\": \"string\",\n  \"streetViewUrl\": \"string\",\n  \"city\": \"string\",\n  \"zipcode\": \"string\",\n  \"state\": \"string\",\n  \"street\": \"string\",\n  \"phase\": {\n    \"id\": 9971,\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"phaseInstances\": [\n    {\n      \"id\": 5569,\n      \"name\": \"string\",\n      \"status\": \"COMPLETED\",\n      \"position\": 3635,\n      \"type\": \"string\",\n      \"phaseTemplateId\": 393,\n      \"phaseTemplate\": {\n        \"id\": 3826,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"redSla\": 8490,\n        \"yellowSla\": 9639\n      }\n    },\n    {\n      \"id\": 3751,\n      \"name\": \"string\",\n      \"status\": \"NOT_STARTED\",\n      \"position\": 4689,\n      \"type\": \"string\",\n      \"phaseTemplateId\": 3246,\n      \"phaseTemplate\": {\n        \"id\": 9071,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"redSla\": 1656,\n        \"yellowSla\": 5574\n      }\n    }\n  ],\n  \"owner\": {\n    \"id\": 7443,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"salesRep\": {\n    \"id\": 3669,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"projectManager\": {\n    \"id\": 7298,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"jurisdiction\": {\n    \"id\": 674,\n    \"name\": \"string\",\n    \"uuid\": \"string\"\n  },\n  \"lastActivity\": \"2022-04-16T02:38:57.494Z\",\n  \"phaseId\": 292,\n  \"workflowName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48a2527b-1d4b-4ae7-91d2-3c73923554b7",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allow_new_options",
+                      "value": "false"
+                    },
+                    {
+                      "key": "match_by",
+                      "value": "title"
+                    },
+                    {
+                      "key": "match_found_strategy",
+                      "value": "skip"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"CANCELLED\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "694132b4-3228-463f-81aa-c666d218ce2f",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allow_new_options",
+                      "value": "false"
+                    },
+                    {
+                      "key": "match_by",
+                      "value": "title"
+                    },
+                    {
+                      "key": "match_found_strategy",
+                      "value": "skip"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"CANCELLED\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5dd8cef8-08a4-4962-9927-39a570ac96aa",
+          "name": "Search Opportunities",
+          "request": {
+            "name": "Search Opportunities",
+            "description": {
+              "content": "Search opportunities using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `status`, `title`, `city`, `type`, `accountId`, etc.) or a custom property key name.\n- Use the `property key` from your company settings.\n- Filter by parent account with `accountId`. `clientId` is accepted as a deprecated alias for backwards compatibility.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Numeric/datetime comparisons: `gt`, `gte`, `lt`, `lte`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)\n- Ranges: `between` (use `valueX` as `from,to`)\n- Existence: `exists` is not supported for custom properties due to performance limitations. Use `eq` or `neq` instead.\n\nValue formats:\n- `in`/`nin`: lists can be provided as:\n  - Plain CSV: `value1=OPEN,ACTIVE`\n  - Quoted CSV (to include commas inside a value): `value1=\"Last, First\",Other`\n  - JSON array: `value1=[\"Last, First\",\"Other\"]`\n- `between`: `from,to` (e.g., `value1=2025-01-01,2025-12-31` or `value1=10,20`)\n- Dates should be ISO 8601 strings; numeric-like values on custom properties are matched against both numeric and text representations.\n\nExamples:\n- status equals ACTIVE: `?prop1=status&op1=eq&value1=ACTIVE`\n- custom id equals 1234: `?prop1=legacy_tool_project_id&op1=eq&value1=1234`\n- title contains \"Solar\": `?prop1=name&op1=contains&value1=Solar`\n- status IN (ACTIVE, ON_HOLD) AND city = Austin: `?prop1=status&op1=in&value1=ACTIVE,ON_HOLD&logic=and&prop2=city&op2=eq&value2=Austin`\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n\n**Note:** If an opportunity has no `title` (empty or whitespace-only), the response returns the parent account's `title` instead. The stored value is not modified — this is a read-time fallback only.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "prop1",
+                  "value": "<string>",
+                  "description": "(Required) First field to filter (standard or custom keyName)"
+                },
+                {
+                  "disabled": false,
+                  "key": "op1",
+                  "value": "<string>",
+                  "description": "(Required) Operator for prop1"
+                },
+                {
+                  "disabled": false,
+                  "key": "value1",
+                  "value": "<string>",
+                  "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)"
+                },
+                {
+                  "disabled": false,
+                  "key": "logic",
+                  "value": "and",
+                  "description": "Logical combination when both prop1 and prop2 are provided"
+                },
+                {
+                  "disabled": false,
+                  "key": "prop2",
+                  "value": "<string>",
+                  "description": "Optional second field to filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "op2",
+                  "value": "<string>",
+                  "description": "Operator for prop2"
+                },
+                {
+                  "disabled": false,
+                  "key": "value2",
+                  "value": "<string>",
+                  "description": "Value for prop2 (comma-separated values for in/nin or between)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Number of items per page (max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (1-based)"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "asc",
+                  "description": "Sort order for results"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_archived",
+                  "value": "false",
+                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a11965b-6b28-4798-baac-e7653c8e04c0",
+              "name": "List of opportunities matching filters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "prop1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "op1",
+                      "value": "in"
+                    },
+                    {
+                      "key": "value1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "logic",
+                      "value": "and"
+                    },
+                    {
+                      "key": "prop2",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "op2",
+                      "value": "between"
+                    },
+                    {
+                      "key": "value2",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 8342,\n    \"createdAt\": \"2024-07-04T16:58:40.044Z\",\n    \"updatedAt\": \"1955-11-09T20:34:34.013Z\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"rlxh6Jl9nEmV@IXHeBQYWqifmZsJfCGPEgyOWgiZeXt.icux\",\n    \"primaryPhone\": \"string\",\n    \"number\": 2424,\n    \"createdBy\": {\n      \"id\": 5068,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"fJygScRGP@ySSZAKgfJprcFuXjL.fe\",\n      \"avatarUrl\": \"string\"\n    },\n    \"updatedBy\": {\n      \"id\": 375,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"avCYmtC9@arBrkbUiVqhNDzxLVenAscWB.sp\",\n      \"avatarUrl\": \"string\"\n    },\n    \"custom\": {\n      \"key_0\": {}\n    },\n    \"trades\": [\n      \"string\",\n      \"string\"\n    ],\n    \"value\": 176.00636749786293,\n    \"size\": 739.4469795950853,\n    \"confidence\": 4894.829318985529,\n    \"workflowId\": 9236,\n    \"accountId\": 8766,\n    \"geoLocation\": [\n      \"string\",\n      \"string\"\n    ],\n    \"imageUrl\": \"string\",\n    \"streetViewUrl\": \"string\",\n    \"city\": \"string\",\n    \"zipcode\": \"string\",\n    \"state\": \"string\",\n    \"street\": \"string\",\n    \"phase\": {\n      \"id\": 9517,\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"phaseInstances\": [\n      {\n        \"id\": 7961,\n        \"name\": \"string\",\n        \"status\": \"NOT_STARTED\",\n        \"position\": 7140,\n        \"type\": \"string\",\n        \"phaseTemplateId\": 5391,\n        \"phaseTemplate\": {\n          \"id\": 9513,\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"redSla\": 5223,\n          \"yellowSla\": 5103\n        }\n      },\n      {\n        \"id\": 4676,\n        \"name\": \"string\",\n        \"status\": \"IN_PROGRESS\",\n        \"position\": 7657,\n        \"type\": \"string\",\n        \"phaseTemplateId\": 7272,\n        \"phaseTemplate\": {\n          \"id\": 2707,\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"redSla\": 6903,\n          \"yellowSla\": 2394\n        }\n      }\n    ],\n    \"owner\": {\n      \"id\": 8822,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"salesRep\": {\n      \"id\": 8910,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"projectManager\": {\n      \"id\": 4243,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"jurisdiction\": {\n      \"id\": 7597,\n      \"name\": \"string\",\n      \"uuid\": \"string\"\n    },\n    \"lastActivity\": \"1996-02-09T11:48:47.896Z\",\n    \"phaseId\": 2169,\n    \"workflowName\": \"string\"\n  },\n  {\n    \"id\": 4901,\n    \"createdAt\": \"1955-03-28T15:53:32.868Z\",\n    \"updatedAt\": \"2004-06-01T17:06:39.738Z\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"U3TloCd@xLlkozAzqwn.ruy\",\n    \"primaryPhone\": \"string\",\n    \"number\": 7306,\n    \"createdBy\": {\n      \"id\": 9336,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"ba4-Uj@TpiPnTLFVxMqTqvq.kll\",\n      \"avatarUrl\": \"string\"\n    },\n    \"updatedBy\": {\n      \"id\": 2144,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"iDkSun400LzHzt@on.jv\",\n      \"avatarUrl\": \"string\"\n    },\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"trades\": [\n      \"string\",\n      \"string\"\n    ],\n    \"value\": 5174.84437180692,\n    \"size\": 6745.086293930925,\n    \"confidence\": 2077.6526416826714,\n    \"workflowId\": 7062,\n    \"accountId\": 8872,\n    \"geoLocation\": [\n      \"string\",\n      \"string\"\n    ],\n    \"imageUrl\": \"string\",\n    \"streetViewUrl\": \"string\",\n    \"city\": \"string\",\n    \"zipcode\": \"string\",\n    \"state\": \"string\",\n    \"street\": \"string\",\n    \"phase\": {\n      \"id\": 3801,\n      \"name\": \"string\",\n      \"type\": \"string\"\n    },\n    \"phaseInstances\": [\n      {\n        \"id\": 8524,\n        \"name\": \"string\",\n        \"status\": \"COMPLETED\",\n        \"position\": 4217,\n        \"type\": \"string\",\n        \"phaseTemplateId\": 2061,\n        \"phaseTemplate\": {\n          \"id\": 5886,\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"redSla\": 7584,\n          \"yellowSla\": 1786\n        }\n      },\n      {\n        \"id\": 2049,\n        \"name\": \"string\",\n        \"status\": \"NOT_STARTED\",\n        \"position\": 8079,\n        \"type\": \"string\",\n        \"phaseTemplateId\": 607,\n        \"phaseTemplate\": {\n          \"id\": 1638,\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"redSla\": 1366,\n          \"yellowSla\": 2738\n        }\n      }\n    ],\n    \"owner\": {\n      \"id\": 5054,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"salesRep\": {\n      \"id\": 1391,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"projectManager\": {\n      \"id\": 1013,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"jurisdiction\": {\n      \"id\": 766,\n      \"name\": \"string\",\n      \"uuid\": \"string\"\n    },\n    \"lastActivity\": \"2021-07-14T17:14:41.898Z\",\n    \"phaseId\": 5655,\n    \"workflowName\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67916cb4-13fd-45dc-b6bf-f4a23b4506e8",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "prop1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "op1",
+                      "value": "in"
+                    },
+                    {
+                      "key": "value1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "logic",
+                      "value": "and"
+                    },
+                    {
+                      "key": "prop2",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "op2",
+                      "value": "between"
+                    },
+                    {
+                      "key": "value2",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "646c2ca1-5414-4e33-b651-5d298f5beffb",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "prop1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "op1",
+                      "value": "in"
+                    },
+                    {
+                      "key": "value1",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "logic",
+                      "value": "and"
+                    },
+                    {
+                      "key": "prop2",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "op2",
+                      "value": "between"
+                    },
+                    {
+                      "key": "value2",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a499bf58-d2eb-4a9d-905b-d6f49399b8f4",
+          "name": "Get Opportunity",
+          "request": {
+            "name": "Get Opportunity",
+            "description": {
+              "content": "Retrieve a specific opportunity by ID\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n\n**Note:** If the opportunity has no `title` (empty or whitespace-only), the response returns the parent account's `title` instead. The stored value is not modified — this is a read-time fallback only.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities",
+                ":opportunityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_virtual_properties",
+                  "value": "false",
+                  "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_archived",
+                  "value": "false",
+                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "opportunityId",
+                  "description": "(Required) Opportunity identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eb8b8842-c00a-4ef6-ace2-552271845888",
+              "name": "Opportunity details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_virtual_properties",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 6288,\n  \"createdAt\": \"1978-01-31T22:51:39.065Z\",\n  \"updatedAt\": \"1986-07-29T18:52:45.335Z\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": false,\n  \"primaryEmail\": \"FKHrRAldUHSCy@ARYgyKnFvkwp.vl\",\n  \"primaryPhone\": \"string\",\n  \"number\": 9873,\n  \"createdBy\": {\n    \"id\": 113,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"IynqHCrp79@kKjr.gos\",\n    \"avatarUrl\": \"string\"\n  },\n  \"updatedBy\": {\n    \"id\": 8500,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"G3Wp5EBX05b9@HXEICuuANYCexY.tiwc\",\n    \"avatarUrl\": \"string\"\n  },\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"trades\": [\n    \"string\",\n    \"string\"\n  ],\n  \"value\": 2955.7278374395246,\n  \"size\": 5015.108019746875,\n  \"confidence\": 4019.059578356303,\n  \"workflowId\": 5580,\n  \"accountId\": 3887,\n  \"geoLocation\": [\n    \"string\",\n    \"string\"\n  ],\n  \"imageUrl\": \"string\",\n  \"streetViewUrl\": \"string\",\n  \"city\": \"string\",\n  \"zipcode\": \"string\",\n  \"state\": \"string\",\n  \"street\": \"string\",\n  \"phase\": {\n    \"id\": 9971,\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"phaseInstances\": [\n    {\n      \"id\": 5569,\n      \"name\": \"string\",\n      \"status\": \"COMPLETED\",\n      \"position\": 3635,\n      \"type\": \"string\",\n      \"phaseTemplateId\": 393,\n      \"phaseTemplate\": {\n        \"id\": 3826,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"redSla\": 8490,\n        \"yellowSla\": 9639\n      }\n    },\n    {\n      \"id\": 3751,\n      \"name\": \"string\",\n      \"status\": \"NOT_STARTED\",\n      \"position\": 4689,\n      \"type\": \"string\",\n      \"phaseTemplateId\": 3246,\n      \"phaseTemplate\": {\n        \"id\": 9071,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"redSla\": 1656,\n        \"yellowSla\": 5574\n      }\n    }\n  ],\n  \"owner\": {\n    \"id\": 7443,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"salesRep\": {\n    \"id\": 3669,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"projectManager\": {\n    \"id\": 7298,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"jurisdiction\": {\n    \"id\": 674,\n    \"name\": \"string\",\n    \"uuid\": \"string\"\n  },\n  \"lastActivity\": \"2022-04-16T02:38:57.494Z\",\n  \"phaseId\": 292,\n  \"workflowName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1b5fec7-37a9-4384-8baf-82a66e319dd6",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_virtual_properties",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d224237f-6998-4320-936b-8e710b6e13d7",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_virtual_properties",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59ce3ce5-4b5e-446e-880e-53a171ccafd6",
+          "name": "Update Opportunity",
+          "request": {
+            "name": "Update Opportunity",
+            "description": {
+              "content": "Update an existing opportunity. Supports partial updates.\n\nUpdatable fields:\n- Standard fields (value, size, status, confidence, etc.)\n- Workflow fields (workflowId, phaseId)\n- Contact information (primaryEmail, primaryPhone)\n- Contacts (contact IDs only, no name, email, phone, etc.)\n- Custom fields (through custom object)\n\nNote: Updates are atomic - either all fields update or none do.\n\n> **Changing account association is not supported via update.** To move an opportunity to a different account, delete and re-create it under the new account.\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities",
+                ":opportunityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "allow_new_options",
+                  "value": "false",
+                  "description": "Whether to allow creation of new dropdown options during record creation"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "opportunityId",
+                  "description": "(Required) Opportunity identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"<string>\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "73679404-bf0f-41c8-9da9-9afa66d93e1a",
+              "name": "Opportunity updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"CANCELLED\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 6288,\n  \"createdAt\": \"1978-01-31T22:51:39.065Z\",\n  \"updatedAt\": \"1986-07-29T18:52:45.335Z\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": false,\n  \"primaryEmail\": \"FKHrRAldUHSCy@ARYgyKnFvkwp.vl\",\n  \"primaryPhone\": \"string\",\n  \"number\": 9873,\n  \"createdBy\": {\n    \"id\": 113,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"IynqHCrp79@kKjr.gos\",\n    \"avatarUrl\": \"string\"\n  },\n  \"updatedBy\": {\n    \"id\": 8500,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"G3Wp5EBX05b9@HXEICuuANYCexY.tiwc\",\n    \"avatarUrl\": \"string\"\n  },\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"trades\": [\n    \"string\",\n    \"string\"\n  ],\n  \"value\": 2955.7278374395246,\n  \"size\": 5015.108019746875,\n  \"confidence\": 4019.059578356303,\n  \"workflowId\": 5580,\n  \"accountId\": 3887,\n  \"geoLocation\": [\n    \"string\",\n    \"string\"\n  ],\n  \"imageUrl\": \"string\",\n  \"streetViewUrl\": \"string\",\n  \"city\": \"string\",\n  \"zipcode\": \"string\",\n  \"state\": \"string\",\n  \"street\": \"string\",\n  \"phase\": {\n    \"id\": 9971,\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"phaseInstances\": [\n    {\n      \"id\": 5569,\n      \"name\": \"string\",\n      \"status\": \"COMPLETED\",\n      \"position\": 3635,\n      \"type\": \"string\",\n      \"phaseTemplateId\": 393,\n      \"phaseTemplate\": {\n        \"id\": 3826,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"redSla\": 8490,\n        \"yellowSla\": 9639\n      }\n    },\n    {\n      \"id\": 3751,\n      \"name\": \"string\",\n      \"status\": \"NOT_STARTED\",\n      \"position\": 4689,\n      \"type\": \"string\",\n      \"phaseTemplateId\": 3246,\n      \"phaseTemplate\": {\n        \"id\": 9071,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"redSla\": 1656,\n        \"yellowSla\": 5574\n      }\n    }\n  ],\n  \"owner\": {\n    \"id\": 7443,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"salesRep\": {\n    \"id\": 3669,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"projectManager\": {\n    \"id\": 7298,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"jurisdiction\": {\n    \"id\": 674,\n    \"name\": \"string\",\n    \"uuid\": \"string\"\n  },\n  \"lastActivity\": \"2022-04-16T02:38:57.494Z\",\n  \"phaseId\": 292,\n  \"workflowName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e19a681-fec1-4000-a67e-9b20c735d49b",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"CANCELLED\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01897306-d903-4833-88a7-7a687bc41242",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"CANCELLED\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "967ccbe4-fba4-4110-84b2-fefd895f3730",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trades\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"workflowId\": \"<integer,null>\",\n  \"value\": \"<double>\",\n  \"size\": \"<double>\",\n  \"status\": \"CANCELLED\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4ba11e3-5442-4e2c-bb93-ee24e8544470",
+          "name": "Delete Opportunity",
+          "request": {
+            "name": "Delete Opportunity",
+            "description": {
+              "content": "Delete a specific opportunity by ID\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opportunities",
+                ":opportunityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "opportunityId",
+                  "description": "(Required) Opportunity identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a0ed2066-9c79-40d1-8a66-77679c8887fd",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2ad86e47-b348-4cc8-9311-eef19b596d81",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7b6dca4-25cf-4331-adc0-6de3ae72fa85",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":opportunityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "opportunityId",
+                      "description": "(Required) Opportunity identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coperniq.io/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9c10450f-c0aa-4fb3-94fd-8c4c8ec47c72",
+    "name": "API Key accounts opportunities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
