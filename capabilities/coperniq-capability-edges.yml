@@ -1,0 +1,92 @@
+slug: coperniq
+provider: Coperniq
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Power & Water Utilities
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 8
+edges:
+- tag: opportunities
+  spec_file: coperniq-opportunities-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.9
+  evidence: GET /opportunities/search search-opportunities; schemas OpportunitySalesRep, OpportunityOwner,
+    PhaseInstance, OpportunitiesPostParametersMatchFoundStrategy
+  reason: Explicit sales opportunity records with owners, sales reps and pipeline phases — the lead/opportunity/deal
+    lifecycle.
+- tag: quotes
+  spec_file: coperniq-quotes-api-openapi.yml
+  capability_id: BC-410.40
+  capability_id_l1: BC-410
+  capability_name: Quote & Configuration Management
+  confidence: 0.85
+  evidence: POST /quotes create-quote; GET /opportunities/{opportunityId}/quotes; QuoteLineItemCreate;
+    QuoteCreateDiscountType; POST /quotes/{quoteId}/send
+  reason: Quote creation with line items, discounts, PDF generation and sending against opportunities
+    is configure-price-quote in the sales lead-to-order flow.
+- tag: projects
+  spec_file: coperniq-projects-api-openapi.yml
+  capability_id: BC-900.30
+  capability_id_l1: BC-900
+  capability_name: Project Management
+  confidence: 0.8
+  evidence: GET /projects, POST /projects create-project, ProjectWithPhaseInstancesPhaseSlaStatus, ProjectStage
+  reason: CRUD over projects with stages, phases and SLA status is project execution tracking for a contractor's
+    job delivery — project management.
+- tag: invoices
+  spec_file: coperniq-invoices-api-openapi.yml
+  capability_id: BC-200.30
+  capability_id_l1: BC-200
+  capability_name: Accounts Receivable Management
+  confidence: 0.75
+  evidence: POST /invoices create-invoice; GET /accounts/{accountId}/invoices get-account-invoices; schemas
+    InvoiceAccount, InvoiceStatus, InvoiceLineItemCatalogItem
+  reason: Customer-facing invoices raised against accounts and projects with line items and status are
+    receivables/customer invoicing operations.
+- tag: payments
+  spec_file: coperniq-payments-api-openapi.yml
+  capability_id: BC-200
+  capability_id_l1: BC-200
+  capability_name: Financial Management
+  confidence: 0.75
+  evidence: POST /invoices/{invoiceId}/payments  create-invoice-payment; POST /bills/{billId}/payments  create-bill-payment
+  reason: Operations record payments against customer invoices (receivables) and vendor bills (payables),
+    which is financial accounting operations. Both AR and AP are covered, so no single L2 is chosen.
+- tag: contacts
+  spec_file: coperniq-contacts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.72
+  evidence: GET /contacts list-contacts; POST /contacts create-contact; schemas ContactAccountsItems,
+    ContactProjectsItems, ContactCreate
+  reason: CRUD over contact records linked to accounts and projects is customer master/contact data management
+    in the CRM sense. Straightforward, though 'contact' could also serve purely internal directory purposes.
+- tag: users
+  spec_file: coperniq-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /users  invite-user; GET /roles  list-roles; schemas UserInvite, Role, UserRole, TeamMemberRole
+  reason: User invitation, roles and team membership is application user and access administration — identity
+    & access management, not HR employee records.
+- tag: vendors
+  spec_file: coperniq-vendors-api-openapi.yml
+  capability_id: BC-510
+  capability_id_l1: BC-510
+  capability_name: Supplier Management
+  confidence: 0.7
+  evidence: POST /vendors create-vendor; POST /projects/{projectId}/vendors/{vendorId} Create Vendor-Project
+    Link; VendorCreateVendorType
+  reason: Maintains a supplier/subcontractor register and links vendors to projects — supplier master
+    and relationship management for the contractor.
