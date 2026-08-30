@@ -3,7 +3,7 @@ provider: Coperniq
 generated_by: planning/capability-mapping/scripts/classify_capabilities.py
 model: claude-opus-5
 frame:
-- Power & Water Utilities
+- Oil & Gas
 min_confidence: 0.7
 capability_model:
   source: https://github.com/vincentmakes/turbo-ea-capabilities
@@ -19,74 +19,77 @@ edges:
   capability_id_l1: BC-410
   capability_name: Opportunity & Pipeline Management
   confidence: 0.9
-  evidence: GET /opportunities/search search-opportunities; schemas OpportunitySalesRep, OpportunityOwner,
-    PhaseInstance, OpportunitiesPostParametersMatchFoundStrategy
-  reason: Explicit sales opportunity records with owners, sales reps and pipeline phases — the lead/opportunity/deal
-    lifecycle.
+  evidence: POST /opportunities  create-opportunity; schemas OpportunitySalesRep, OpportunityOwner, PhaseInstance
+  reason: Full lifecycle of sales opportunities with sales rep, owner and pipeline phase is opportunity
+    and pipeline management.
+- tag: invoices
+  spec_file: coperniq-invoices-api-openapi.yml
+  capability_id: BC-200.30
+  capability_id_l1: BC-200
+  capability_name: Accounts Receivable Management
+  confidence: 0.85
+  evidence: POST /invoices  create-invoice; schemas InvoiceLineItemCreate, InvoiceAccount, InvoiceStatus,
+    GetAccountInvoicesRequestUnauthorizedError
+  reason: Creation and lifecycle of customer invoices tied to accounts and projects is accounts receivable
+    / customer invoicing.
 - tag: quotes
   spec_file: coperniq-quotes-api-openapi.yml
   capability_id: BC-410.40
   capability_id_l1: BC-410
   capability_name: Quote & Configuration Management
   confidence: 0.85
-  evidence: POST /quotes create-quote; GET /opportunities/{opportunityId}/quotes; QuoteLineItemCreate;
-    QuoteCreateDiscountType; POST /quotes/{quoteId}/send
-  reason: Quote creation with line items, discounts, PDF generation and sending against opportunities
-    is configure-price-quote in the sales lead-to-order flow.
-- tag: projects
-  spec_file: coperniq-projects-api-openapi.yml
-  capability_id: BC-900.30
-  capability_id_l1: BC-900
-  capability_name: Project Management
-  confidence: 0.8
-  evidence: GET /projects, POST /projects create-project, ProjectWithPhaseInstancesPhaseSlaStatus, ProjectStage
-  reason: CRUD over projects with stages, phases and SLA status is project execution tracking for a contractor's
-    job delivery — project management.
-- tag: invoices
-  spec_file: coperniq-invoices-api-openapi.yml
-  capability_id: BC-200.30
-  capability_id_l1: BC-200
-  capability_name: Accounts Receivable Management
-  confidence: 0.75
-  evidence: POST /invoices create-invoice; GET /accounts/{accountId}/invoices get-account-invoices; schemas
-    InvoiceAccount, InvoiceStatus, InvoiceLineItemCatalogItem
-  reason: Customer-facing invoices raised against accounts and projects with line items and status are
-    receivables/customer invoicing operations.
-- tag: payments
-  spec_file: coperniq-payments-api-openapi.yml
-  capability_id: BC-200
-  capability_id_l1: BC-200
-  capability_name: Financial Management
-  confidence: 0.75
-  evidence: POST /invoices/{invoiceId}/payments  create-invoice-payment; POST /bills/{billId}/payments  create-bill-payment
-  reason: Operations record payments against customer invoices (receivables) and vendor bills (payables),
-    which is financial accounting operations. Both AR and AP are covered, so no single L2 is chosen.
+  evidence: POST /quotes create-quote; GET /quotes/{quoteId}/pdf get-quote-pdf; POST /quotes/{quoteId}/send
+    send-quote; schemas QuoteLineItemCreate, QuoteDiscountType, QuoteSection
+  reason: Operations create, price (line items, discount type), render and send customer quotes tied to
+    opportunities — classic configure/price/quote surface in the lead-to-order flow.
 - tag: contacts
   spec_file: coperniq-contacts-api-openapi.yml
   capability_id: BC-420.10
   capability_id_l1: BC-420
   capability_name: Customer Data Management
-  confidence: 0.72
-  evidence: GET /contacts list-contacts; POST /contacts create-contact; schemas ContactAccountsItems,
-    ContactProjectsItems, ContactCreate
-  reason: CRUD over contact records linked to accounts and projects is customer master/contact data management
-    in the CRM sense. Straightforward, though 'contact' could also serve purely internal directory purposes.
+  confidence: 0.8
+  evidence: GET /contacts  list-contacts; schemas ContactCreate, ContactAccountsItems, ContactProjectsItems
+  reason: CRUD over contact master records linked to accounts and projects is customer/contact data management
+    in the vendor's contractor CRM.
+- tag: payments
+  spec_file: coperniq-payments-api-openapi.yml
+  capability_id: BC-200
+  capability_id_l1: BC-200
+  capability_name: Financial Management
+  confidence: 0.8
+  evidence: POST /invoices/{invoiceId}/payments  create-invoice-payment; POST /bills/{billId}/payments  create-bill-payment
+  reason: Records payments against both customer invoices and supplier bills, spanning receivables cash
+    application and payables disbursement, so the L1 Financial Management level is the accurate mapping.
+- tag: accounts
+  spec_file: coperniq-accounts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.7
+  evidence: GET /accounts list-accounts 'List Accounts'; POST /accounts 'Create Account'; schemas AccountContactsItems,
+    AccountAccountType, AccountUpdate
+  reason: CRUD plus search over customer/account records with associated contacts and account types in
+    a contractor CRM/operations platform — this is customer account master data maintenance. Some ambiguity
+    between Customer Data Management and Sales Account Management, so confidence is held at 0.7.
+- tag: projects
+  spec_file: coperniq-projects-api-openapi.yml
+  capability_id: BC-900.30
+  capability_id_l1: BC-900
+  capability_name: Project Management
+  confidence: 0.7
+  evidence: POST /projects create-project Create Project; schema ProjectWithPhaseInstancesPhaseSlaStatus,
+    ProjectStage
+  reason: Coperniq is a contractor operating system 'consolidating sales, project management, service
+    operations'; this tag is CRUD over project records with stages, phases and SLA status — i.e. execution
+    tracking of delivery projects, mapping to cross-industry Project Management. Not an oil & gas subsurface
+    or drilling programme, so no industry capability applies.
 - tag: users
   spec_file: coperniq-users-api-openapi.yml
   capability_id: BC-620.20
   capability_id_l1: BC-620
   capability_name: Identity & Access Management
   confidence: 0.7
-  evidence: POST /users  invite-user; GET /roles  list-roles; schemas UserInvite, Role, UserRole, TeamMemberRole
-  reason: User invitation, roles and team membership is application user and access administration — identity
-    & access management, not HR employee records.
-- tag: vendors
-  spec_file: coperniq-vendors-api-openapi.yml
-  capability_id: BC-510
-  capability_id_l1: BC-510
-  capability_name: Supplier Management
-  confidence: 0.7
-  evidence: POST /vendors create-vendor; POST /projects/{projectId}/vendors/{vendorId} Create Vendor-Project
-    Link; VendorCreateVendorType
-  reason: Maintains a supplier/subcontractor register and links vendors to projects — supplier master
-    and relationship management for the contractor.
+  evidence: POST /users invite-user Invite User; GET /roles list-roles; GET /teams list-teams; schemas
+    UserRole, TeamMemberRole
+  reason: Application user provisioning via invitation plus role and team enumeration is access administration
+    for the platform, not HR employee records; maps to Identity & Access Management.
