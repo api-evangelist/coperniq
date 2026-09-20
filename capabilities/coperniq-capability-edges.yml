@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 8
+edge_count: 10
 edges:
 - tag: opportunities
   spec_file: coperniq-opportunities-api-openapi.yml
@@ -93,3 +93,26 @@ edges:
     UserRole, TeamMemberRole
   reason: Application user provisioning via invitation plus role and team enumeration is access administration
     for the platform, not HR employee records; maps to Identity & Access Management.
+- tag: vendors
+  spec_file: coperniq-vendors-api-openapi.yml
+  capability_id: BC-510
+  capability_id_l1: BC-510
+  capability_name: Supplier Management
+  confidence: 0.7
+  evidence: POST /vendors create-vendor; POST /projects/{projectId}/vendors/{vendorId} Create Vendor-Project
+    Link; VendorCreateVendorType
+  reason: Maintains a supplier/subcontractor register and links vendors to projects — supplier master
+    and relationship management for the contractor.
+  recovered_from: vertical-power-water-utilities-edges.json
+- tag: workOrders
+  spec_file: coperniq-work-orders-api-openapi.yml
+  capability_id: BC-1150.30
+  capability_id_l1: BC-1150
+  capability_name: Construction Supervision Management
+  confidence: 0.7
+  evidence: POST /projects/{projectId}/work-orders Create Project Work Order; WorkOrderVisits; WorkOrderTemplateLineItemsItems
+  reason: Work orders with scheduled visits and line items created against projects/accounts for trade
+    contractors is field/site work execution — construction supervision and day-to-day site work management.
+    Sub-capability choice is somewhat uncertain (could be service dispatch), hence moderate confidence.
+  recovered_from: vertical-engineering-services-edges.json
+  reanchored_from: coperniq-workorders-api-openapi.yml
