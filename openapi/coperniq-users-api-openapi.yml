@@ -1,12 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Key accounts users API
+  title: Reference Users API
   version: 1.0.0
 servers:
 - url: https://api.coperniq.io/v1
   description: Production server
 tags:
-- name: users
+- name: Users
 paths:
   /users:
     get:
@@ -14,7 +14,7 @@ paths:
       summary: List Users
       description: Retrieve a list of users
       tags:
-      - users
+      - Users
       parameters:
       - name: email
         in: query
@@ -47,7 +47,7 @@ paths:
       summary: Invite User
       description: Invite a new user to the organization
       tags:
-      - users
+      - Users
       parameters:
       - name: x-api-key
         in: header
@@ -72,7 +72,7 @@ paths:
       summary: List Roles
       description: Retrieve available user roles
       tags:
-      - users
+      - Users
       parameters:
       - name: x-api-key
         in: header
@@ -94,7 +94,7 @@ paths:
       summary: List Teams
       description: Retrieve available teams
       tags:
-      - users
+      - Users
       parameters:
       - name: x-api-key
         in: header
@@ -112,6 +112,46 @@ paths:
                   $ref: '#/components/schemas/Team'
 components:
   schemas:
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        firstName:
+          type: string
+          description: First name
+        lastName:
+          type: string
+          description: Last name
+        email:
+          type: string
+          format: email
+          description: Email address
+        phone:
+          type: string
+          description: Phone number
+        role:
+          $ref: '#/components/schemas/TeamMemberRole'
+        isTeamLead:
+          type: boolean
+          description: Indicates whether this user is the lead for the team.
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - role
+      title: TeamMember
+    Users_inviteUser_Response_201:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+      title: Users_inviteUser_Response_201
     Team:
       type: object
       properties:
@@ -124,16 +164,34 @@ components:
           items:
             $ref: '#/components/schemas/TeamMember'
       title: Team
-    UserRole:
+    User:
       type: object
       properties:
         id:
+          type: integer
+          description: Unique identifier
+        firstName:
           type: string
-          description: Role identifier
-        name:
+          description: First name
+        lastName:
           type: string
-          description: Role name
-      title: UserRole
+          description: Last name
+        email:
+          type: string
+          format: email
+          description: Email address
+        phone:
+          type: string
+          description: Phone number
+        role:
+          $ref: '#/components/schemas/UserRole'
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - role
+      title: User
     Role:
       type: object
       properties:
@@ -178,74 +236,16 @@ components:
       - lastName
       - roleIds
       title: UserInvite
-    User:
+    UserRole:
       type: object
       properties:
         id:
-          type: integer
-          description: Unique identifier
-        firstName:
           type: string
-          description: First name
-        lastName:
+          description: Role identifier
+        name:
           type: string
-          description: Last name
-        email:
-          type: string
-          format: email
-          description: Email address
-        phone:
-          type: string
-          description: Phone number
-        role:
-          $ref: '#/components/schemas/UserRole'
-      required:
-      - id
-      - firstName
-      - lastName
-      - email
-      - role
-      title: User
-    Users_inviteUser_Response_201:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        status:
-          type: string
-      title: Users_inviteUser_Response_201
-    TeamMember:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier
-        firstName:
-          type: string
-          description: First name
-        lastName:
-          type: string
-          description: Last name
-        email:
-          type: string
-          format: email
-          description: Email address
-        phone:
-          type: string
-          description: Phone number
-        role:
-          $ref: '#/components/schemas/TeamMemberRole'
-        isTeamLead:
-          type: boolean
-          description: Indicates whether this user is the lead for the team.
-      required:
-      - id
-      - firstName
-      - lastName
-      - email
-      - role
-      title: TeamMember
+          description: Role name
+      title: UserRole
     TeamMemberRole:
       type: object
       properties:
@@ -257,6 +257,7 @@ components:
           description: Role name
       title: TeamMemberRole
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

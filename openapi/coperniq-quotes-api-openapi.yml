@@ -1,12 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Key accounts quotes API
+  title: Reference Quotes API
   version: 1.0.0
 servers:
 - url: https://api.coperniq.io/v1
   description: Production server
 tags:
-- name: quotes
+- name: Quotes
 paths:
   /quotes:
     get:
@@ -23,11 +23,9 @@ paths:
 
         - Status filtering (`status`)
 
-        - Sorting (`order_by`)
-
-        '
+        - Sorting (`order_by`)'
       tags:
-      - quotes
+      - Quotes
       parameters:
       - name: page_size
         in: query
@@ -110,11 +108,9 @@ paths:
         - `issueDate` / `status`: `issueDate` only allowed with `status` of `SENT` or `APPROVED`
 
 
-        To add or replace line items on a **work order**, use `PUT /work-orders/{workOrderId}/line-items` instead.
-
-        '
+        To add or replace line items on a **work order**, use `PUT /work-orders/{workOrderId}/line-items` instead.'
       tags:
-      - quotes
+      - Quotes
       parameters:
       - name: x-api-key
         in: header
@@ -151,7 +147,7 @@ paths:
       summary: Get Opportunity Quotes
       description: Retrieve quotes for a specific opportunity.
       tags:
-      - quotes
+      - Quotes
       parameters:
       - name: opportunityId
         in: path
@@ -217,7 +213,7 @@ paths:
       summary: Get Quote
       description: Retrieve a specific quote by ID
       tags:
-      - quotes
+      - Quotes
       parameters:
       - name: quoteId
         in: path
@@ -260,11 +256,9 @@ paths:
         When setting **`status`** to anything other than **`DRAFT`**, you must supply **`issueDate`** unless the quote already has one.
 
 
-        **`sharedWithPortal`**: pass `true` or `false` to show or hide the quote on the client portal.
-
-        '
+        **`sharedWithPortal`**: pass `true` or `false` to show or hide the quote on the client portal.'
       tags:
-      - quotes
+      - Quotes
       parameters:
       - name: quoteId
         in: path
@@ -311,11 +305,9 @@ paths:
       summary: Delete Quote
       description: 'Delete a quote. The quote is archived first (required by the payment service),
 
-        then permanently deleted.
-
-        '
+        then permanently deleted.'
       tags:
-      - quotes
+      - Quotes
       parameters:
       - name: quoteId
         in: path
@@ -346,11 +338,9 @@ paths:
     get:
       operationId: get-quote-pdf
       summary: Get Quote PDF
-      description: 'Returns the quote PDF. Response is JSON with base64-encoded PDF (`pdfBase64`) and `contentType`.
-
-        '
+      description: Returns the quote PDF. Response is JSON with base64-encoded PDF (`pdfBase64`) and `contentType`.
       tags:
-      - quotes
+      - Quotes
       parameters:
       - name: quoteId
         in: path
@@ -391,11 +381,9 @@ paths:
     post:
       operationId: send-quote
       summary: Send Quote
-      description: 'Email the quote to the customer and transition **DRAFT** to **SENT** when applicable.
-
-        '
+      description: Email the quote to the customer and transition **DRAFT** to **SENT** when applicable.
       tags:
-      - quotes
+      - Quotes
       parameters:
       - name: quoteId
         in: path
@@ -428,230 +416,6 @@ paths:
                 $ref: '#/components/schemas/SendQuoteRequestNotFoundError'
 components:
   schemas:
-    QuoteCreate:
-      type: object
-      properties:
-        opportunityId:
-          type: integer
-          description: Opportunity / project / account record ID
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteSection'
-          description: Grouped line items. Required if `lineItems` is not provided.
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteLineItemCreate'
-          description: Flat line items (grouped into one section automatically). Required if `sections` is not provided.
-        discountType:
-          $ref: '#/components/schemas/QuoteCreateDiscountType'
-          description: Discount type
-        discountValue:
-          type: number
-          format: double
-          description: Discount amount or percentage
-        taxId:
-          type: integer
-          description: Tax configuration ID
-        issueDate:
-          type: string
-          format: date-time
-          description: Issue date. Requires `status` to be `SENT` or `APPROVED`.
-        status:
-          $ref: '#/components/schemas/QuoteCreateStatus'
-          description: Initial status (defaults to DRAFT)
-        description:
-          type:
-          - string
-          - 'null'
-        title:
-          type: string
-          description: Quote title (defaults to "Quote")
-        servicePlanInstanceId:
-          type: integer
-        siteId:
-          type: integer
-      required:
-      - opportunityId
-      description: '`opportunityId` is the record (project/opportunity/account) id used by the payment service.
-
-
-        When the quote is for a **Client (Account)** record, provide **`siteId`** (or use work-order line items via `PUT /work-orders/{workOrderId}/line-items`) so the quote can be linked correctly.
-
-        '
-      title: QuoteCreate
-    QuotesGetParametersStatus:
-      type: string
-      enum:
-      - DRAFT
-      - SENT
-      - APPROVED
-      - CHANGES_REQUESTED
-      - DECLINED
-      title: QuotesGetParametersStatus
-    ListQuotesRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListQuotesRequestBadRequestError
-    QuoteSection:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Section identifier
-        name:
-          type:
-          - string
-          - 'null'
-          description: Section name (1–500 chars)
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteLineItemCreate'
-          description: Line items within this section (at least one required)
-      required:
-      - lineItems
-      title: QuoteSection
-    QuotesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: QuotesGetResponsesContentApplicationJsonSchemaCode
-    GetQuotePdfRequestForbiddenError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode'
-      title: GetQuotePdfRequestForbiddenError
-    GetQuotePdfRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode'
-      title: GetQuotePdfRequestUnauthorizedError
-    QuoteRecord:
-      type: object
-      properties:
-        id:
-          type: integer
-        title:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-      title: QuoteRecord
-    SendQuoteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesQuoteIdSendPostResponsesContentApplicationJsonSchemaCode'
-      title: SendQuoteRequestUnauthorizedError
-    QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode
-    QuoteStatus:
-      type: string
-      enum:
-      - DRAFT
-      - SENT
-      - APPROVED
-      - CHANGES_REQUESTED
-      - DECLINED
-      description: Quote status
-      title: QuoteStatus
-    OpportunitiesOpportunityIdQuotesGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: OpportunitiesOpportunityIdQuotesGetParametersOrderBy
-    QuoteListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/Quote'
-      title: QuoteListResponse
-    ListQuotesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListQuotesRequestUnauthorizedError
-    UpdateQuoteRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesQuoteIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateQuoteRequestBadRequestError
-    CreateQuoteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateQuoteRequestUnauthorizedError
-    QuoteCreateStatus:
-      type: string
-      enum:
-      - DRAFT
-      - SENT
-      - APPROVED
-      - CHANGES_REQUESTED
-      - DECLINED
-      description: Initial status (defaults to DRAFT)
-      title: QuoteCreateStatus
-    QuoteUpdateStatus:
-      type: string
-      enum:
-      - DRAFT
-      - SENT
-      - APPROVED
-      - CHANGES_REQUESTED
-      - DECLINED
-      title: QuoteUpdateStatus
-    SendQuoteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesQuoteIdSendPostResponsesContentApplicationJsonSchemaCode'
-      title: SendQuoteRequestNotFoundError
-    GetOpportunityQuotesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdQuotesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetOpportunityQuotesRequestUnauthorizedError
     QuoteLineItemCreate:
       type: object
       properties:
@@ -683,46 +447,11 @@ components:
       - unitCost
       - unitPrice
       title: QuoteLineItemCreate
-    QuoteLineItemCatalogItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        sku:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        manufacturer:
-          type:
-          - string
-          - 'null'
-      title: QuoteLineItemCatalogItem
-    UpdateQuoteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesQuoteIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateQuoteRequestNotFoundError
-    QuoteCreateDiscountType:
+    QuotesQuoteIdSendPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - PERCENTAGE
-      - FIXED
-      description: Discount type
-      title: QuoteCreateDiscountType
-    OpportunitiesOpportunityIdQuotesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesOpportunityIdQuotesGetResponsesContentApplicationJsonSchemaCode
+      - NOT_FOUND
+      title: QuotesQuoteIdSendPostResponsesContentApplicationJsonSchemaCode
     Quote:
       type: object
       properties:
@@ -813,6 +542,14 @@ components:
       - createdAt
       - updatedAt
       title: Quote
+    GetQuoteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetQuoteRequestNotFoundError
     GetQuotePdfRequestNotFoundError:
       type: object
       properties:
@@ -821,19 +558,86 @@ components:
         code:
           $ref: '#/components/schemas/QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode'
       title: GetQuotePdfRequestNotFoundError
-    Quotes_getQuotePdf_Response_200:
+    GetQuoteRequestUnauthorizedError:
       type: object
       properties:
-        pdfBase64:
+        message:
           type: string
-        contentType:
-          type: string
-      title: Quotes_getQuotePdf_Response_200
-    QuotesQuoteIdDeleteResponsesContentApplicationJsonSchemaCode:
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetQuoteRequestUnauthorizedError
+    QuotesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - NOT_FOUND
-      title: QuotesQuoteIdDeleteResponsesContentApplicationJsonSchemaCode
+      - UNAUTHORIZED
+      title: QuotesGetResponsesContentApplicationJsonSchemaCode
+    QuoteLineItemCatalogItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        sku:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        manufacturer:
+          type:
+          - string
+          - 'null'
+      title: QuoteLineItemCatalogItem
+    QuoteCreateStatus:
+      type: string
+      enum:
+      - DRAFT
+      - SENT
+      - APPROVED
+      - CHANGES_REQUESTED
+      - DECLINED
+      description: Initial status (defaults to DRAFT)
+      title: QuoteCreateStatus
+    QuoteDiscountType:
+      type: string
+      enum:
+      - PERCENTAGE
+      - FIXED
+      description: Discount type
+      title: QuoteDiscountType
+    QuoteUpdateDiscountType:
+      type: string
+      enum:
+      - PERCENTAGE
+      - FIXED
+      title: QuoteUpdateDiscountType
+    QuoteListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Quote'
+      title: QuoteListResponse
+    SendQuoteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdSendPostResponsesContentApplicationJsonSchemaCode'
+      title: SendQuoteRequestNotFoundError
+    UpdateQuoteRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateQuoteRequestBadRequestError
     QuoteLineItem:
       type: object
       properties:
@@ -879,11 +683,28 @@ components:
       - unitCost
       - unitPrice
       title: QuoteLineItem
-    QuotesQuoteIdSendPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: QuotesQuoteIdSendPostResponsesContentApplicationJsonSchemaCode
+    QuoteRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+      title: QuoteRecord
+    Quotes_getQuotePdf_Response_200:
+      type: object
+      properties:
+        pdfBase64:
+          type: string
+        contentType:
+          type: string
+      title: Quotes_getQuotePdf_Response_200
     UpdateQuoteRequestUnauthorizedError:
       type: object
       properties:
@@ -903,6 +724,47 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: CreateQuoteRequestBadRequestError
+    QuoteAccount:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type:
+          - string
+          - 'null'
+      title: QuoteAccount
+    UpdateQuoteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateQuoteRequestNotFoundError
+    GetOpportunityQuotesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdQuotesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityQuotesRequestUnauthorizedError
+    DeleteQuoteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteQuoteRequestUnauthorizedError
+    QuotesGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: QuotesGetParametersOrderBy
     QuoteUpdate:
       type: object
       properties:
@@ -939,36 +801,148 @@ components:
           type: boolean
           description: Set true to archive or false to unarchive (maps to payment service archive/unarchive routes)
       title: QuoteUpdate
-    QuoteDiscountType:
-      type: string
-      enum:
-      - PERCENTAGE
-      - FIXED
-      description: Discount type
-      title: QuoteDiscountType
-    QuotesQuoteIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: QuotesQuoteIdPatchResponsesContentApplicationJsonSchemaCode
-    GetQuoteRequestUnauthorizedError:
+    ListQuotesRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/QuotesQuoteIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetQuoteRequestUnauthorizedError
-    QuoteAccount:
+          $ref: '#/components/schemas/QuotesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListQuotesRequestBadRequestError
+    QuotesGetParametersStatus:
+      type: string
+      enum:
+      - DRAFT
+      - SENT
+      - APPROVED
+      - CHANGES_REQUESTED
+      - DECLINED
+      title: QuotesGetParametersStatus
+    GetQuotePdfRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode'
+      title: GetQuotePdfRequestUnauthorizedError
+    QuoteCreate:
+      type: object
+      properties:
+        opportunityId:
+          type: integer
+          description: Opportunity / project / account record ID
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteSection'
+          description: Grouped line items. Required if `lineItems` is not provided.
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteLineItemCreate'
+          description: Flat line items (grouped into one section automatically). Required if `sections` is not provided.
+        discountType:
+          $ref: '#/components/schemas/QuoteCreateDiscountType'
+          description: Discount type
+        discountValue:
+          type: number
+          format: double
+          description: Discount amount or percentage
+        taxId:
+          type: integer
+          description: Tax configuration ID
+        issueDate:
+          type: string
+          format: date-time
+          description: Issue date. Requires `status` to be `SENT` or `APPROVED`.
+        status:
+          $ref: '#/components/schemas/QuoteCreateStatus'
+          description: Initial status (defaults to DRAFT)
+        description:
+          type:
+          - string
+          - 'null'
+        title:
+          type: string
+          description: Quote title (defaults to "Quote")
+        servicePlanInstanceId:
+          type: integer
+        siteId:
+          type: integer
+      required:
+      - opportunityId
+      description: '`opportunityId` is the record (project/opportunity/account) id used by the payment service.
+
+
+        When the quote is for a **Client (Account)** record, provide **`siteId`** (or use work-order line items via `PUT /work-orders/{workOrderId}/line-items`) so the quote can be linked correctly.
+
+        '
+      title: QuoteCreate
+    QuoteStatus:
+      type: string
+      enum:
+      - DRAFT
+      - SENT
+      - APPROVED
+      - CHANGES_REQUESTED
+      - DECLINED
+      description: Quote status
+      title: QuoteStatus
+    QuoteSection:
       type: object
       properties:
         id:
           type: integer
-        title:
+          description: Section identifier
+        name:
           type:
           - string
           - 'null'
-      title: QuoteAccount
+          description: Section name (1–500 chars)
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteLineItemCreate'
+          description: Line items within this section (at least one required)
+      required:
+      - lineItems
+      title: QuoteSection
+    OpportunitiesOpportunityIdQuotesGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesOpportunityIdQuotesGetParametersOrderBy
+    GetQuotePdfRequestForbiddenError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode'
+      title: GetQuotePdfRequestForbiddenError
+    QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: QuotesQuoteIdPdfGetResponsesContentApplicationJsonSchemaCode
+    QuotesQuoteIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: QuotesQuoteIdDeleteResponsesContentApplicationJsonSchemaCode
+    QuoteCreateDiscountType:
+      type: string
+      enum:
+      - PERCENTAGE
+      - FIXED
+      description: Discount type
+      title: QuoteCreateDiscountType
     DeleteQuoteRequestNotFoundError:
       type: object
       properties:
@@ -977,46 +951,61 @@ components:
         code:
           $ref: '#/components/schemas/QuotesQuoteIdDeleteResponsesContentApplicationJsonSchemaCode'
       title: DeleteQuoteRequestNotFoundError
-    QuotesPostResponsesContentApplicationJsonSchemaCode:
+    ListQuotesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListQuotesRequestUnauthorizedError
+    QuoteUpdateStatus:
+      type: string
+      enum:
+      - DRAFT
+      - SENT
+      - APPROVED
+      - CHANGES_REQUESTED
+      - DECLINED
+      title: QuoteUpdateStatus
+    OpportunitiesOpportunityIdQuotesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - UNAUTHORIZED
-      title: QuotesPostResponsesContentApplicationJsonSchemaCode
-    GetQuoteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesQuoteIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetQuoteRequestNotFoundError
-    QuoteUpdateDiscountType:
+      title: OpportunitiesOpportunityIdQuotesGetResponsesContentApplicationJsonSchemaCode
+    QuotesQuoteIdPatchResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - PERCENTAGE
-      - FIXED
-      title: QuoteUpdateDiscountType
-    DeleteQuoteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/QuotesQuoteIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteQuoteRequestUnauthorizedError
+      - NOT_FOUND
+      title: QuotesQuoteIdPatchResponsesContentApplicationJsonSchemaCode
     QuotesQuoteIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
       title: QuotesQuoteIdGetResponsesContentApplicationJsonSchemaCode
-    QuotesGetParametersOrderBy:
+    SendQuoteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesQuoteIdSendPostResponsesContentApplicationJsonSchemaCode'
+      title: SendQuoteRequestUnauthorizedError
+    QuotesPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - asc
-      - desc
-      default: asc
-      title: QuotesGetParametersOrderBy
+      - UNAUTHORIZED
+      title: QuotesPostResponsesContentApplicationJsonSchemaCode
+    CreateQuoteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/QuotesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateQuoteRequestUnauthorizedError
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

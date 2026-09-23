@@ -1,12 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Key accounts taxes API
+  title: Reference Taxes API
   version: 1.0.0
 servers:
 - url: https://api.coperniq.io/v1
   description: Production server
 tags:
-- name: taxes
+- name: Taxes
 paths:
   /taxes:
     get:
@@ -14,11 +14,9 @@ paths:
       summary: List Taxes
       description: 'Lists tax rates configured for your company. Use these IDs when assigning taxes to quotes, invoices, and other financial documents.
 
-        The company is implied by the API key; `companyId` is not returned on each item.
-
-        '
+        The company is implied by the API key; `companyId` is not returned on each item.'
       tags:
-      - taxes
+      - Taxes
       parameters:
       - name: include_archived
         in: query
@@ -81,6 +79,11 @@ paths:
                 $ref: '#/components/schemas/ListTaxesRequestBadGatewayError'
 components:
   schemas:
+    TaxesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: TaxesGetResponsesContentApplicationJsonSchemaCode
     ListTaxesRequestBadRequestError:
       type: object
       properties:
@@ -92,6 +95,22 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: ListTaxesRequestBadRequestError
+    ListTaxesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListTaxesRequestUnauthorizedError
+    ListTaxesRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListTaxesRequestInternalServerError
     ListTaxesRequestBadGatewayError:
       type: object
       properties:
@@ -104,11 +123,6 @@ components:
       - message
       - code
       title: ListTaxesRequestBadGatewayError
-    TaxesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - GRAPHQL_ERROR
-      title: TaxesGetResponsesContentApplicationJsonSchemaCode
     CompanyTax:
       type: object
       properties:
@@ -139,23 +153,8 @@ components:
       - updatedAt
       description: A tax rate configured for the company.
       title: CompanyTax
-    ListTaxesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListTaxesRequestUnauthorizedError
-    ListTaxesRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListTaxesRequestInternalServerError
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Key accounts ahJs API
+  title: Reference Ah Js API
   version: 1.0.0
 servers:
 - url: https://api.coperniq.io/v1
@@ -28,9 +28,7 @@ paths:
         - Geo mode: pass `lat`+`lng` (together) to return every AHJ whose boundary covers the point — e.g. city, county, and state — ordered most-specific-first. Name/state/type filters are ignored, and an empty array is returned if none cover the point.
 
 
-        Only active jurisdictions are returned. AHJs are seeded globally from the US Census TIGER catalog plus per-company private records. Most fields are read-only; only custom fields can be updated (see PATCH /ahjs/{id}).
-
-        '
+        Only active jurisdictions are returned. AHJs are seeded globally from the US Census TIGER catalog plus per-company private records. Most fields are read-only; only custom fields can be updated (see PATCH /ahjs/{id}).'
       tags:
       - ahJs
       parameters:
@@ -177,9 +175,7 @@ paths:
         Built-in AHJ fields (under `Community Data` in the UI) are read-only and cannot be updated through this endpoint.
 
 
-        Pass `null` to clear a value.
-
-        '
+        Pass `null` to clear a value.'
       tags:
       - ahJs
       parameters:
@@ -238,14 +234,6 @@ paths:
               $ref: '#/components/schemas/AHJUpdate'
 components:
   schemas:
-    List-ahjsRequestBadGatewayError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
-      title: List-ahjsRequestBadGatewayError
     UpdateAhjRequestUnauthorizedError:
       type: object
       properties:
@@ -254,33 +242,19 @@ components:
         code:
           $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
       title: UpdateAhjRequestUnauthorizedError
-    UpdateAhjRequestBadGatewayError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAhjRequestBadGatewayError
-    GetAhjRequestNotFoundError:
+    AhjsIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: AhjsIdGetResponsesContentApplicationJsonSchemaCode
+    GetAhjRequestBadGatewayError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/AhjsIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAhjRequestNotFoundError
-    List-ahjsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: List-ahjsRequestBadRequestError
+      title: GetAhjRequestBadGatewayError
     UpdateAhjRequestBadRequestError:
       type: object
       properties:
@@ -292,14 +266,11 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: UpdateAhjRequestBadRequestError
-    GetAhjRequestBadGatewayError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AhjsIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAhjRequestBadGatewayError
+    AhjsIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: AhjsIdPatchResponsesContentApplicationJsonSchemaCode
     AhjsGetParametersType:
       type: string
       enum:
@@ -310,6 +281,60 @@ components:
       - TOWNSHIP
       - TRIBAL
       title: AhjsGetParametersType
+    GetAhjRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAhjRequestNotFoundError
+    AhjType:
+      type: string
+      enum:
+      - STATE
+      - COUNTY
+      - CITY
+      - MUNICIPALITY
+      - TOWNSHIP
+      - TRIBAL
+      description: Jurisdiction type.
+      title: AhjType
+    List-ahjsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
+      title: List-ahjsRequestUnauthorizedError
+    UpdateAhjRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAhjRequestNotFoundError
+    AHJUpdate:
+      type: object
+      properties:
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom field values keyed by property keyName. Pass `null` to clear a value. Unknown keyNames are rejected with a 400 — fetch valid keys via GET /properties?record_type=ahj.
+      required:
+      - custom
+      title: AHJUpdate
+    UpdateAhjRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAhjRequestBadGatewayError
     AHJ:
       type: object
       properties:
@@ -544,48 +569,6 @@ components:
           description: Custom field values keyed by property keyName. This includes only customer-defined custom columns (see GET /properties?record_type=ahj). Built-in catalog AHJ fields (turnaround, website, fees, notes, etc.) are exposed as top-level fields on the AHJ object and are read-only.
       description: An Authority Having Jurisdiction (AHJ). Most fields are read-only catalog data sourced from the US Census TIGER dataset; only fields under `custom` are user-editable.
       title: AHJ
-    AhjType:
-      type: string
-      enum:
-      - STATE
-      - COUNTY
-      - CITY
-      - MUNICIPALITY
-      - TOWNSHIP
-      - TRIBAL
-      description: Jurisdiction type.
-      title: AhjType
-    AhjsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: AhjsGetParametersOrderBy
-    List-ahjsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
-      title: List-ahjsRequestUnauthorizedError
-    AHJUpdate:
-      type: object
-      properties:
-        custom:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Custom field values keyed by property keyName. Pass `null` to clear a value. Unknown keyNames are rejected with a 400 — fetch valid keys via GET /properties?record_type=ahj.
-      required:
-      - custom
-      title: AHJUpdate
-    AhjsIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - BAD_GATEWAY
-      title: AhjsIdGetResponsesContentApplicationJsonSchemaCode
     GetAhjRequestUnauthorizedError:
       type: object
       properties:
@@ -594,25 +577,39 @@ components:
         code:
           $ref: '#/components/schemas/AhjsIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetAhjRequestUnauthorizedError
-    UpdateAhjRequestNotFoundError:
+    List-ahjsRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/AhjsIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAhjRequestNotFoundError
+          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: List-ahjsRequestBadRequestError
+    List-ahjsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AhjsGetResponsesContentApplicationJsonSchemaCode'
+      title: List-ahjsRequestBadGatewayError
+    AhjsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: AhjsGetParametersOrderBy
     AhjsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - BAD_GATEWAY
       title: AhjsGetResponsesContentApplicationJsonSchemaCode
-    AhjsIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - BAD_GATEWAY
-      title: AhjsIdPatchResponsesContentApplicationJsonSchemaCode
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

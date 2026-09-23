@@ -1,12 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Key accounts calls API
+  title: Reference Calls API
   version: 1.0.0
 servers:
 - url: https://api.coperniq.io/v1
   description: Production server
 tags:
-- name: calls
+- name: Calls
 paths:
   /projects/{projectId}/calls:
     get:
@@ -14,7 +14,7 @@ paths:
       summary: List Project Calls
       description: Retrieve all phone call records associated with a project
       tags:
-      - calls
+      - Calls
       parameters:
       - name: projectId
         in: path
@@ -53,7 +53,7 @@ paths:
       summary: Create Project Call
       description: Create a new phone call record associated with a project
       tags:
-      - calls
+      - Calls
       parameters:
       - name: projectId
         in: path
@@ -96,11 +96,9 @@ paths:
       description: 'Retrieve all phone call records associated with an opportunity
 
 
-        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
-
-        '
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.'
       tags:
-      - calls
+      - Calls
       parameters:
       - name: opportunityId
         in: path
@@ -140,11 +138,9 @@ paths:
       description: 'Create a new phone call record associated with an opportunity
 
 
-        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
-
-        '
+        **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.'
       tags:
-      - calls
+      - Calls
       parameters:
       - name: opportunityId
         in: path
@@ -188,11 +184,9 @@ paths:
       description: 'Retrieve all phone call records associated with an account
 
 
-        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.
-
-        '
+        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.'
       tags:
-      - calls
+      - Calls
       parameters:
       - name: accountId
         in: path
@@ -232,11 +226,9 @@ paths:
       description: 'Create a new phone call record associated with an account
 
 
-        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.
-
-        '
+        **Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.'
       tags:
-      - calls
+      - Calls
       parameters:
       - name: accountId
         in: path
@@ -275,140 +267,7 @@ paths:
               $ref: '#/components/schemas/CallCreate'
 components:
   schemas:
-    CreateProjectCallRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateProjectCallRequestUnauthorizedError
-    ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode
-    ListAccountCallsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListAccountCallsRequestUnauthorizedError
-    CreateAccountCallRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateAccountCallRequestBadRequestError
-    ListProjectCallsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectCallsRequestNotFoundError
-    CallCreate:
-      type: object
-      properties:
-        fromNumber:
-          type: string
-          description: Phone number that initiated the call
-        toNumber:
-          type: string
-          description: Phone number that received the call
-        isInbound:
-          type: boolean
-          default: false
-          description: Whether the call was inbound (true) or outbound (false)
-        outcome:
-          $ref: '#/components/schemas/CallCreateOutcome'
-          description: Call outcome
-        startTime:
-          type: string
-          format: date-time
-          description: When the call started
-        endTime:
-          type: string
-          format: date-time
-          description: When the call ended
-        reason:
-          $ref: '#/components/schemas/CallCreateReason'
-          description: Reason for the call
-        disposition:
-          $ref: '#/components/schemas/CallCreateDisposition'
-          description: Call disposition
-        note:
-          type: string
-          description: Notes about the call
-        recordingUrl:
-          type: string
-          description: URL to the call recording
-        transcriptUrl:
-          type: string
-          description: URL to the call transcript
-      required:
-      - fromNumber
-      - toNumber
-      - isInbound
-      - startTime
-      - endTime
-      - reason
-      - disposition
-      title: CallCreate
-    CallCreateDisposition:
-      type: string
-      enum:
-      - INFO_PROVIDED
-      - VISIT_SCHEDULED
-      - ISSUE_RESOLVED
-      - FOLLOW_UP
-      - ESCALATION
-      - NO_ACTION
-      - UNRESPONSIVE
-      - OTHER
-      description: Call disposition
-      title: CallCreateDisposition
-    ListOpportunityCallsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListOpportunityCallsRequestUnauthorizedError
-    ListOpportunityCallsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListOpportunityCallsRequestNotFoundError
-    OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode
-    CreateProjectCallRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateProjectCallRequestBadRequestError
-    CallCreateReason:
+    CallReason:
       type: string
       enum:
       - PRODUCT
@@ -419,31 +278,12 @@ components:
       - FEEDBACK
       - OTHER
       description: Reason for the call
-      title: CallCreateReason
-    CreateOpportunityCallRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateOpportunityCallRequestBadRequestError
-    CallDisposition:
+      title: CallReason
+    AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - INFO_PROVIDED
-      - VISIT_SCHEDULED
-      - ISSUE_RESOLVED
-      - FOLLOW_UP
-      - ESCALATION
-      - NO_ACTION
-      - UNRESPONSIVE
-      - OTHER
-      description: Call disposition
-      title: CallDisposition
+      - UNAUTHORIZED
+      title: AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode
     OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -454,14 +294,22 @@ components:
       enum:
       - UNAUTHORIZED
       title: ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode
-    CreateAccountCallRequestUnauthorizedError:
+    CreateOpportunityCallRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateAccountCallRequestUnauthorizedError
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityCallRequestUnauthorizedError
+    CreateProjectCallRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectCallRequestUnauthorizedError
     Call:
       type: object
       properties:
@@ -540,39 +388,15 @@ components:
       - createdAt
       - updatedAt
       title: Call
-    CallOutcome:
-      type: string
-      enum:
-      - ANSWERED
-      - MISSED
-      description: Call outcome
-      title: CallOutcome
-    AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode
-    CallCreateOutcome:
-      type: string
-      enum:
-      - ANSWERED
-      - MISSED
-      description: Call outcome
-      title: CallCreateOutcome
-    ListProjectCallsRequestUnauthorizedError:
+    CreateAccountCallRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectCallsRequestUnauthorizedError
-    AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode
-    CallReason:
+          $ref: '#/components/schemas/AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateAccountCallRequestUnauthorizedError
+    CallCreateReason:
       type: string
       enum:
       - PRODUCT
@@ -583,15 +407,27 @@ components:
       - FEEDBACK
       - OTHER
       description: Reason for the call
-      title: CallReason
-    CreateOpportunityCallRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateOpportunityCallRequestUnauthorizedError
+      title: CallCreateReason
+    CallCreateOutcome:
+      type: string
+      enum:
+      - ANSWERED
+      - MISSED
+      description: Call outcome
+      title: CallCreateOutcome
+    CallCreateDisposition:
+      type: string
+      enum:
+      - INFO_PROVIDED
+      - VISIT_SCHEDULED
+      - ISSUE_RESOLVED
+      - FOLLOW_UP
+      - ESCALATION
+      - NO_ACTION
+      - UNRESPONSIVE
+      - OTHER
+      description: Call disposition
+      title: CallCreateDisposition
     ListAccountCallsRequestNotFoundError:
       type: object
       properties:
@@ -600,7 +436,164 @@ components:
         code:
           $ref: '#/components/schemas/AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode'
       title: ListAccountCallsRequestNotFoundError
+    OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode
+    CallDisposition:
+      type: string
+      enum:
+      - INFO_PROVIDED
+      - VISIT_SCHEDULED
+      - ISSUE_RESOLVED
+      - FOLLOW_UP
+      - ESCALATION
+      - NO_ACTION
+      - UNRESPONSIVE
+      - OTHER
+      description: Call disposition
+      title: CallDisposition
+    AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode
+    CallCreate:
+      type: object
+      properties:
+        fromNumber:
+          type: string
+          description: Phone number that initiated the call
+        toNumber:
+          type: string
+          description: Phone number that received the call
+        isInbound:
+          type: boolean
+          default: false
+          description: Whether the call was inbound (true) or outbound (false)
+        outcome:
+          $ref: '#/components/schemas/CallCreateOutcome'
+          description: Call outcome
+        startTime:
+          type: string
+          format: date-time
+          description: When the call started
+        endTime:
+          type: string
+          format: date-time
+          description: When the call ended
+        reason:
+          $ref: '#/components/schemas/CallCreateReason'
+          description: Reason for the call
+        disposition:
+          $ref: '#/components/schemas/CallCreateDisposition'
+          description: Call disposition
+        note:
+          type: string
+          description: Notes about the call
+        recordingUrl:
+          type: string
+          description: URL to the call recording
+        transcriptUrl:
+          type: string
+          description: URL to the call transcript
+      required:
+      - fromNumber
+      - toNumber
+      - isInbound
+      - startTime
+      - endTime
+      - reason
+      - disposition
+      title: CallCreate
+    ListProjectCallsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectCallsRequestUnauthorizedError
+    CreateOpportunityCallRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateOpportunityCallRequestBadRequestError
+    ListProjectCallsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectCallsRequestNotFoundError
+    ListAccountCallsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListAccountCallsRequestUnauthorizedError
+    ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode
+    CallOutcome:
+      type: string
+      enum:
+      - ANSWERED
+      - MISSED
+      description: Call outcome
+      title: CallOutcome
+    ListOpportunityCallsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListOpportunityCallsRequestUnauthorizedError
+    CreateProjectCallRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateProjectCallRequestBadRequestError
+    CreateAccountCallRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateAccountCallRequestBadRequestError
+    ListOpportunityCallsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListOpportunityCallsRequestNotFoundError
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

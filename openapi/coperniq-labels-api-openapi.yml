@@ -1,12 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Key accounts labels API
+  title: Reference Labels API
   version: 1.0.0
 servers:
 - url: https://api.coperniq.io/v1
   description: Production server
 tags:
-- name: labels
+- name: Labels
 paths:
   /labels:
     get:
@@ -14,11 +14,9 @@ paths:
       summary: List Labels
       description: 'Lists active labels for your company. Labels can be applied to work orders (`WORK` type) or assets (`ASSET` type).
 
-        The company is implied by the API key.
-
-        '
+        The company is implied by the API key.'
       tags:
-      - labels
+      - Labels
       parameters:
       - name: type
         in: query
@@ -81,11 +79,9 @@ paths:
     post:
       operationId: create-label
       summary: Create Label
-      description: 'Creates a new label for the company. Use `WORK` for work-order labels or `ASSET` for asset labels.
-
-        '
+      description: Creates a new label for the company. Use `WORK` for work-order labels or `ASSET` for asset labels.
       tags:
-      - labels
+      - Labels
       parameters:
       - name: x-api-key
         in: header
@@ -128,7 +124,7 @@ paths:
       summary: Get Label
       description: Retrieve a single label by ID.
       tags:
-      - labels
+      - Labels
       parameters:
       - name: labelId
         in: path
@@ -173,6 +169,14 @@ paths:
                 $ref: '#/components/schemas/GetLabelRequestBadGatewayError'
 components:
   schemas:
+    ListLabelsRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListLabelsRequestInternalServerError
     CreateLabelRequest:
       type: object
       properties:
@@ -191,52 +195,6 @@ components:
       - name
       - type
       title: CreateLabelRequest
-    LabelsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - INTERNAL_SERVER_ERROR
-      title: LabelsPostResponsesContentApplicationJsonSchemaCode
-    CreateLabelRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateLabelRequestBadRequestError
-    LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - GRAPHQL_ERROR
-      title: LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode
-    LabelType:
-      type: string
-      enum:
-      - WORK
-      - ASSET
-      description: Label type — WORK for work-order labels, ASSET for asset labels
-      title: LabelType
-    LabelsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - GRAPHQL_ERROR
-      title: LabelsGetResponsesContentApplicationJsonSchemaCode
-    CreateLabelRequestType:
-      type: string
-      enum:
-      - WORK
-      - ASSET
-      description: Label type — WORK for work-order labels, ASSET for asset labels
-      title: CreateLabelRequestType
-    LabelsGetParametersType:
-      type: string
-      enum:
-      - WORK
-      - ASSET
-      title: LabelsGetParametersType
     CreateLabelRequestInternalServerError:
       type: object
       properties:
@@ -245,87 +203,6 @@ components:
         code:
           $ref: '#/components/schemas/LabelsPostResponsesContentApplicationJsonSchemaCode'
       title: CreateLabelRequestInternalServerError
-    GetLabelRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetLabelRequestNotFoundError
-    GetLabelRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetLabelRequestInternalServerError
-    ListLabelsRequestBadGatewayError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsGetResponsesContentApplicationJsonSchemaCode'
-      required:
-      - message
-      - code
-      title: ListLabelsRequestBadGatewayError
-    ListLabelsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListLabelsRequestUnauthorizedError
-    GetLabelRequestBadGatewayError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: GetLabelRequestBadGatewayError
-    ListLabelsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListLabelsRequestBadRequestError
-    GetLabelRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetLabelRequestUnauthorizedError
-    CreateLabelRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateLabelRequestUnauthorizedError
-    ListLabelsRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/LabelsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListLabelsRequestInternalServerError
     Label:
       type: object
       properties:
@@ -358,7 +235,127 @@ components:
       - updatedAt
       description: A label that can be applied to work orders or assets.
       title: Label
+    ListLabelsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListLabelsRequestUnauthorizedError
+    GetLabelRequestBadGatewayError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: GetLabelRequestBadGatewayError
+    LabelsGetParametersType:
+      type: string
+      enum:
+      - WORK
+      - ASSET
+      title: LabelsGetParametersType
+    LabelType:
+      type: string
+      enum:
+      - WORK
+      - ASSET
+      description: Label type — WORK for work-order labels, ASSET for asset labels
+      title: LabelType
+    LabelsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: LabelsPostResponsesContentApplicationJsonSchemaCode
+    GetLabelRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetLabelRequestNotFoundError
+    GetLabelRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetLabelRequestUnauthorizedError
+    GetLabelRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetLabelRequestInternalServerError
+    LabelsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: LabelsGetResponsesContentApplicationJsonSchemaCode
+    ListLabelsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListLabelsRequestBadRequestError
+    CreateLabelRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateLabelRequestBadRequestError
+    LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: LabelsLabelIdGetResponsesContentApplicationJsonSchemaCode
+    CreateLabelRequestType:
+      type: string
+      enum:
+      - WORK
+      - ASSET
+      description: Label type — WORK for work-order labels, ASSET for asset labels
+      title: CreateLabelRequestType
+    CreateLabelRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateLabelRequestUnauthorizedError
+    ListLabelsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/LabelsGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListLabelsRequestBadGatewayError
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

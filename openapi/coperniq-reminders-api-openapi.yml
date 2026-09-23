@@ -1,12 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Key accounts reminders API
+  title: Reference Reminders API
   version: 1.0.0
 servers:
 - url: https://api.coperniq.io/v1
   description: Production server
 tags:
-- name: reminders
+- name: Reminders
 paths:
   /projects/{projectId}/reminders:
     get:
@@ -23,11 +23,9 @@ paths:
 
         - Sorting (`order_by`)
 
-        - Completion filter (`is_completed`)
-
-        '
+        - Completion filter (`is_completed`)'
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: projectId
         in: path
@@ -103,7 +101,7 @@ paths:
       summary: Create Project Reminder
       description: Create a new reminder associated with a project.
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: projectId
         in: path
@@ -154,11 +152,9 @@ paths:
 
         - Sorting (`order_by`)
 
-        - Completion filter (`is_completed`)
-
-        '
+        - Completion filter (`is_completed`)'
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: opportunityId
         in: path
@@ -234,7 +230,7 @@ paths:
       summary: Create Opportunity Reminder
       description: Create a new reminder associated with an opportunity.
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: opportunityId
         in: path
@@ -285,11 +281,9 @@ paths:
 
         - Sorting (`order_by`)
 
-        - Completion filter (`is_completed`)
-
-        '
+        - Completion filter (`is_completed`)'
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: accountId
         in: path
@@ -365,7 +359,7 @@ paths:
       summary: Create Account Reminder
       description: Create a new reminder associated with an account.
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: accountId
         in: path
@@ -407,7 +401,7 @@ paths:
       summary: Get Reminder
       description: Retrieve a specific reminder by ID.
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: reminderId
         in: path
@@ -443,7 +437,7 @@ paths:
       summary: Update Reminder
       description: Update an existing reminder.
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: reminderId
         in: path
@@ -490,7 +484,7 @@ paths:
       summary: Delete Reminder
       description: Delete a specific reminder by ID.
       tags:
-      - reminders
+      - Reminders
       parameters:
       - name: reminderId
         in: path
@@ -519,17 +513,6 @@ paths:
                 $ref: '#/components/schemas/DeleteReminderRequestNotFoundError'
 components:
   schemas:
-    GetProjectRemindersRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdRemindersGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: GetProjectRemindersRequestBadRequestError
     UpdateReminderRequestUnauthorizedError:
       type: object
       properties:
@@ -538,88 +521,25 @@ components:
         code:
           $ref: '#/components/schemas/RemindersReminderIdPatchResponsesContentApplicationJsonSchemaCode'
       title: UpdateReminderRequestUnauthorizedError
-    DeleteReminderRequestUnauthorizedError:
+    CreateAccountReminderRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/RemindersReminderIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteReminderRequestUnauthorizedError
-    ReminderCreateType:
-      type: string
-      enum:
-      - CALL
-      - EMAIL
-      - IN_PERSON
-      - VIRTUAL
-      - DEADLINE
-      - OTHER
-      description: Reminder type
-      title: ReminderCreateType
-    GetAccountRemindersRequestUnauthorizedError:
+          $ref: '#/components/schemas/AccountsAccountIdRemindersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateAccountReminderRequestUnauthorizedError
+    CreateOpportunityReminderRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/AccountsAccountIdRemindersGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAccountRemindersRequestUnauthorizedError
-    GetOpportunityRemindersRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdRemindersGetResponsesContentApplicationJsonSchemaCode'
-      title: GetOpportunityRemindersRequestUnauthorizedError
-    GetReminderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/RemindersReminderIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetReminderRequestUnauthorizedError
-    RemindersReminderIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: RemindersReminderIdPatchResponsesContentApplicationJsonSchemaCode
-    GetAccountRemindersRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdRemindersGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdRemindersPostResponsesContentApplicationJsonSchemaCode'
         field:
           type: string
           description: Field that caused the validation error (if applicable)
-      title: GetAccountRemindersRequestBadRequestError
-    UpdateReminderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/RemindersReminderIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateReminderRequestNotFoundError
-    AccountsAccountIdRemindersGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AccountsAccountIdRemindersGetResponsesContentApplicationJsonSchemaCode
-    OpportunitiesOpportunityIdRemindersPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesOpportunityIdRemindersPostResponsesContentApplicationJsonSchemaCode
-    ProjectsProjectIdRemindersGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ProjectsProjectIdRemindersGetResponsesContentApplicationJsonSchemaCode
+      title: CreateOpportunityReminderRequestBadRequestError
     ReminderListResponse:
       type: object
       properties:
@@ -633,6 +553,93 @@ components:
       - reminders
       - totalCount
       title: ReminderListResponse
+    RemindersReminderIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: RemindersReminderIdDeleteResponsesContentApplicationJsonSchemaCode
+    ReminderCreateType:
+      type: string
+      enum:
+      - CALL
+      - EMAIL
+      - IN_PERSON
+      - VIRTUAL
+      - DEADLINE
+      - OTHER
+      description: Reminder type
+      title: ReminderCreateType
+    ReminderCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Reminder title
+        assigneeId:
+          type: integer
+          description: ID of the user assigned to this reminder
+        description:
+          type: string
+          description: Optional description
+        dueDate:
+          type: string
+          format: date-time
+          description: ISO 8601 due date
+        isCompleted:
+          type: boolean
+          description: Whether the reminder is completed
+        type:
+          $ref: '#/components/schemas/ReminderCreateType'
+          description: Reminder type
+      required:
+      - title
+      - assigneeId
+      title: ReminderCreate
+    ProjectsProjectIdRemindersGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ProjectsProjectIdRemindersGetResponsesContentApplicationJsonSchemaCode
+    RemindersReminderIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: RemindersReminderIdGetResponsesContentApplicationJsonSchemaCode
+    UpdateReminderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/RemindersReminderIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateReminderRequestNotFoundError
+    CreateProjectReminderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdRemindersPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateProjectReminderRequestBadRequestError
+    GetProjectRemindersRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdRemindersGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetProjectRemindersRequestBadRequestError
+    AccountsAccountIdRemindersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AccountsAccountIdRemindersPostResponsesContentApplicationJsonSchemaCode
     AccountsAccountIdRemindersGetParametersOrderBy:
       type: string
       enum:
@@ -640,51 +647,11 @@ components:
       - desc
       default: asc
       title: AccountsAccountIdRemindersGetParametersOrderBy
-    GetReminderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/RemindersReminderIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetReminderRequestNotFoundError
-    CreateAccountReminderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdRemindersPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateAccountReminderRequestBadRequestError
-    RemindersReminderIdDeleteResponsesContentApplicationJsonSchemaCode:
+    ProjectsProjectIdRemindersPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - NOT_FOUND
-      title: RemindersReminderIdDeleteResponsesContentApplicationJsonSchemaCode
-    ReminderUpdate:
-      type: object
-      properties:
-        title:
-          type: string
-        assigneeId:
-          type: integer
-        description:
-          type:
-          - string
-          - 'null'
-        dueDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        isCompleted:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/ReminderUpdateType'
-      title: ReminderUpdate
+      - UNAUTHORIZED
+      title: ProjectsProjectIdRemindersPostResponsesContentApplicationJsonSchemaCode
     CreateOpportunityReminderRequestUnauthorizedError:
       type: object
       properties:
@@ -693,11 +660,57 @@ components:
         code:
           $ref: '#/components/schemas/OpportunitiesOpportunityIdRemindersPostResponsesContentApplicationJsonSchemaCode'
       title: CreateOpportunityReminderRequestUnauthorizedError
-    OpportunitiesOpportunityIdRemindersGetResponsesContentApplicationJsonSchemaCode:
+    AccountsAccountIdRemindersGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - UNAUTHORIZED
-      title: OpportunitiesOpportunityIdRemindersGetResponsesContentApplicationJsonSchemaCode
+      title: AccountsAccountIdRemindersGetResponsesContentApplicationJsonSchemaCode
+    OpportunitiesOpportunityIdRemindersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesOpportunityIdRemindersPostResponsesContentApplicationJsonSchemaCode
+    ReminderType:
+      type: string
+      enum:
+      - CALL
+      - EMAIL
+      - IN_PERSON
+      - VIRTUAL
+      - DEADLINE
+      - OTHER
+      title: ReminderType
+    GetReminderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/RemindersReminderIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetReminderRequestNotFoundError
+    DeleteReminderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/RemindersReminderIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteReminderRequestUnauthorizedError
+    GetReminderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/RemindersReminderIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetReminderRequestUnauthorizedError
+    OpportunitiesOpportunityIdRemindersGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesOpportunityIdRemindersGetParametersOrderBy
     Reminder:
       type: object
       properties:
@@ -760,32 +773,74 @@ components:
 
         '
       title: Reminder
-    ReminderCreate:
+    CreateAccountReminderRequestBadRequestError:
       type: object
       properties:
-        title:
+        message:
           type: string
-          description: Reminder title
-        assigneeId:
-          type: integer
-          description: ID of the user assigned to this reminder
-        description:
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdRemindersPostResponsesContentApplicationJsonSchemaCode'
+        field:
           type: string
-          description: Optional description
-        dueDate:
+          description: Field that caused the validation error (if applicable)
+      title: CreateAccountReminderRequestBadRequestError
+    GetOpportunityRemindersRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
           type: string
-          format: date-time
-          description: ISO 8601 due date
-        isCompleted:
-          type: boolean
-          description: Whether the reminder is completed
-        type:
-          $ref: '#/components/schemas/ReminderCreateType'
-          description: Reminder type
-      required:
-      - title
-      - assigneeId
-      title: ReminderCreate
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdRemindersGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityRemindersRequestUnauthorizedError
+    GetAccountRemindersRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdRemindersGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetAccountRemindersRequestBadRequestError
+    RemindersReminderIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: RemindersReminderIdPatchResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdRemindersGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: ProjectsProjectIdRemindersGetParametersOrderBy
+    GetProjectRemindersRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdRemindersGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectRemindersRequestUnauthorizedError
+    CreateProjectReminderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdRemindersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectReminderRequestUnauthorizedError
+    ReminderUpdateType:
+      type: string
+      enum:
+      - CALL
+      - EMAIL
+      - IN_PERSON
+      - VIRTUAL
+      - DEADLINE
+      - OTHER
+      title: ReminderUpdateType
     UpdateReminderRequestBadRequestError:
       type: object
       properties:
@@ -808,52 +863,6 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: GetOpportunityRemindersRequestBadRequestError
-    CreateProjectReminderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdRemindersPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateProjectReminderRequestBadRequestError
-    ProjectsProjectIdRemindersPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ProjectsProjectIdRemindersPostResponsesContentApplicationJsonSchemaCode
-    CreateProjectReminderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdRemindersPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateProjectReminderRequestUnauthorizedError
-    GetProjectRemindersRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdRemindersGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectRemindersRequestUnauthorizedError
-    OpportunitiesOpportunityIdRemindersGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: OpportunitiesOpportunityIdRemindersGetParametersOrderBy
-    ProjectsProjectIdRemindersGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: ProjectsProjectIdRemindersGetParametersOrderBy
     DeleteReminderRequestNotFoundError:
       type: object
       properties:
@@ -862,56 +871,42 @@ components:
         code:
           $ref: '#/components/schemas/RemindersReminderIdDeleteResponsesContentApplicationJsonSchemaCode'
       title: DeleteReminderRequestNotFoundError
-    RemindersReminderIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: RemindersReminderIdGetResponsesContentApplicationJsonSchemaCode
-    ReminderType:
-      type: string
-      enum:
-      - CALL
-      - EMAIL
-      - IN_PERSON
-      - VIRTUAL
-      - DEADLINE
-      - OTHER
-      title: ReminderType
-    CreateOpportunityReminderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdRemindersPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateOpportunityReminderRequestBadRequestError
-    CreateAccountReminderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdRemindersPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateAccountReminderRequestUnauthorizedError
-    ReminderUpdateType:
-      type: string
-      enum:
-      - CALL
-      - EMAIL
-      - IN_PERSON
-      - VIRTUAL
-      - DEADLINE
-      - OTHER
-      title: ReminderUpdateType
-    AccountsAccountIdRemindersPostResponsesContentApplicationJsonSchemaCode:
+    OpportunitiesOpportunityIdRemindersGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - UNAUTHORIZED
-      title: AccountsAccountIdRemindersPostResponsesContentApplicationJsonSchemaCode
+      title: OpportunitiesOpportunityIdRemindersGetResponsesContentApplicationJsonSchemaCode
+    GetAccountRemindersRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdRemindersGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAccountRemindersRequestUnauthorizedError
+    ReminderUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        assigneeId:
+          type: integer
+        description:
+          type:
+          - string
+          - 'null'
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isCompleted:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/ReminderUpdateType'
+      title: ReminderUpdate
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

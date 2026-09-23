@@ -1,12 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Key accounts properties API
+  title: Reference Properties API
   version: 1.0.0
 servers:
 - url: https://api.coperniq.io/v1
   description: Production server
 tags:
-- name: properties
+- name: Properties
 paths:
   /properties:
     get:
@@ -30,11 +30,9 @@ paths:
         > **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They will continue to be returned until all users have migrated.
 
 
-        > **AHJ:** The `ahj` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in AHJ fields are not included here — they are exposed directly on the AHJ object instead, and are not updatable via the public API.
-
-        '
+        > **AHJ:** The `ahj` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in AHJ fields are not included here — they are exposed directly on the AHJ object instead, and are not updatable via the public API.'
       tags:
-      - properties
+      - Properties
       parameters:
       - name: record_type
         in: query
@@ -101,6 +99,15 @@ components:
           type: boolean
           description: True for customer-defined custom columns, false for built-in standard properties.
       title: Property
+    PropertiesGetParametersRecordType:
+      type: string
+      enum:
+      - account
+      - opportunity
+      - project
+      - vendor
+      - ahj
+      title: PropertiesGetParametersRecordType
     Properties_listProperties_Response_200:
       type: object
       properties:
@@ -136,16 +143,8 @@ components:
             $ref: '#/components/schemas/Property'
           description: Deprecated alias for `opportunity`. Contains identical data.
       title: Properties_listProperties_Response_200
-    PropertiesGetParametersRecordType:
-      type: string
-      enum:
-      - account
-      - opportunity
-      - project
-      - vendor
-      - ahj
-      title: PropertiesGetParametersRecordType
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
