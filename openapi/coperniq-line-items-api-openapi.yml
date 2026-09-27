@@ -176,6 +176,301 @@ paths:
               $ref: '#/components/schemas/WorkOrderLineItemsPutRequest'
 components:
   schemas:
+    WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode
+    ListProjectLineItemsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdLineItemsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectLineItemsRequestUnauthorizedError
+    ProjectsProjectIdLineItemsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdLineItemsGetResponsesContentApplicationJsonSchemaCode
+    ReplaceWorkOrderLineItemsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
+      title: ReplaceWorkOrderLineItemsRequestNotFoundError
+    LineItemCatalogItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Catalog item identifier
+        name:
+          type: string
+          description: Catalog item name
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: Manufacturer name
+        sku:
+          type:
+          - string
+          - 'null'
+          description: Stock keeping unit
+        type:
+          $ref: '#/components/schemas/LineItemCatalogItemType'
+          description: Item type (e.g., PRODUCT)
+        description:
+          type:
+          - string
+          - 'null'
+          description: Item description
+      required:
+      - id
+      - name
+      - type
+      title: LineItemCatalogItem
+    ProjectLineItemsPutRequest:
+      type: object
+      properties:
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectLineItemCreate'
+          description: Ungrouped line items. May be combined with `sections` (a catalogItemId may appear only once across both).
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectLineItemSection'
+          description: Line items grouped into named sections. May be combined with `lineItems` (ungrouped items).
+      description: 'Replace all project line items. Provide `lineItems`, `sections`, or both — a `catalogItemId`
+
+        may appear at most once across the flattened set.
+
+
+        > **Deprecated:** the previous request shape is still accepted for backwards compatibility but is
+
+        > deprecated and will not be supported in a future version.
+
+        '
+      title: ProjectLineItemsPutRequest
+    ReplaceWorkOrderLineItemsRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
+      title: ReplaceWorkOrderLineItemsRequestInternalServerError
+    ReplaceProjectLineItemsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
+      title: ReplaceProjectLineItemsRequestUnauthorizedError
+    ListProjectLineItemsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdLineItemsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectLineItemsRequestNotFoundError
+    ReplaceWorkOrderLineItemsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ReplaceWorkOrderLineItemsRequestBadRequestError
+    ReplaceWorkOrderLineItemsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
+      title: ReplaceWorkOrderLineItemsRequestUnauthorizedError
+    ReplaceProjectLineItemsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ReplaceProjectLineItemsRequestBadRequestError
+    ProjectLineItemCreate:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Existing line item ID (omit for new items)
+        catalogItemId:
+          type: integer
+          description: Catalog item identifier
+        quantity:
+          type: integer
+          description: Quantity
+        unitCost:
+          type: number
+          format: double
+          description: Cost per unit
+        unitPrice:
+          type: number
+          format: double
+          description: Price per unit (may be negative for discount line items)
+        description:
+          type:
+          - string
+          - 'null'
+          description: Line item description
+      required:
+      - catalogItemId
+      - quantity
+      - unitCost
+      - unitPrice
+      title: ProjectLineItemCreate
+    WorkOrderLineItemsPutRequest:
+      type: object
+      properties:
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteSection'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteLineItemCreate'
+      description: Provide either `sections` or `lineItems` (not both). Same shapes as quote create.
+      title: WorkOrderLineItemsPutRequest
+    ProjectLineItemSection:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Existing section ID (omit for new sections)
+        name:
+          type:
+          - string
+          - 'null'
+          description: Section name (1–500 chars). Omit or pass null for an unnamed section.
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectLineItemCreate'
+          description: Line items within this section (at least one required)
+      required:
+      - lineItems
+      description: A named section grouping one or more project line items.
+      title: ProjectLineItemSection
+    ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode
+    LineItemCatalogItemType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      description: Item type (e.g., PRODUCT)
+      title: LineItemCatalogItemType
+    QuoteSection:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Section identifier
+        name:
+          type:
+          - string
+          - 'null'
+          description: Section name (1–500 chars)
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteLineItemCreate'
+          description: Line items within this section (at least one required)
+      required:
+      - lineItems
+      title: QuoteSection
+    WorkOrderLineItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        quantity:
+          type: integer
+        description:
+          type:
+          - string
+          - 'null'
+        unitCost:
+          type: number
+          format: double
+        totalCost:
+          type:
+          - number
+          - 'null'
+          format: double
+        unitPrice:
+          type: number
+          format: double
+        totalPrice:
+          type:
+          - number
+          - 'null'
+          format: double
+        sectionName:
+          type:
+          - string
+          - 'null'
+        catalogItem:
+          oneOf:
+          - $ref: '#/components/schemas/WorkOrderLineItemCatalogItem'
+          - type: 'null'
+      title: WorkOrderLineItem
+    ReplaceProjectLineItemsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
+      title: ReplaceProjectLineItemsRequestNotFoundError
+    WorkOrderLineItemCatalogItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        sku:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        manufacturer:
+          type:
+          - string
+          - 'null'
+      title: WorkOrderLineItemCatalogItem
     QuoteLineItemCreate:
       type: object
       properties:
@@ -207,58 +502,6 @@ components:
       - unitCost
       - unitPrice
       title: QuoteLineItemCreate
-    ListProjectLineItemsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdLineItemsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectLineItemsRequestUnauthorizedError
-    ProjectLineItemsPutRequest:
-      type: object
-      properties:
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectLineItemCreate'
-          description: Ungrouped line items. May be combined with `sections` (a catalogItemId may appear only once across both).
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectLineItemSection'
-          description: Line items grouped into named sections. May be combined with `lineItems` (ungrouped items).
-      description: 'Replace all project line items. Provide `lineItems`, `sections`, or both — a `catalogItemId`
-
-        may appear at most once across the flattened set.
-
-
-        > **Deprecated:** the previous request shape is still accepted for backwards compatibility but is
-
-        > deprecated and will not be supported in a future version.
-
-        '
-      title: ProjectLineItemsPutRequest
-    WorkOrderLineItemCatalogItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        sku:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        manufacturer:
-          type:
-          - string
-          - 'null'
-      title: WorkOrderLineItemCatalogItem
     LineItem:
       type: object
       properties:
@@ -309,249 +552,6 @@ components:
       - createdAt
       - catalogItem
       title: LineItem
-    ProjectLineItemCreate:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Existing line item ID (omit for new items)
-        catalogItemId:
-          type: integer
-          description: Catalog item identifier
-        quantity:
-          type: integer
-          description: Quantity
-        unitCost:
-          type: number
-          format: double
-          description: Cost per unit
-        unitPrice:
-          type: number
-          format: double
-          description: Price per unit (may be negative for discount line items)
-        description:
-          type:
-          - string
-          - 'null'
-          description: Line item description
-      required:
-      - catalogItemId
-      - quantity
-      - unitCost
-      - unitPrice
-      title: ProjectLineItemCreate
-    ProjectsProjectIdLineItemsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdLineItemsGetResponsesContentApplicationJsonSchemaCode
-    ReplaceWorkOrderLineItemsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ReplaceWorkOrderLineItemsRequestBadRequestError
-    WorkOrderLineItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        quantity:
-          type: integer
-        description:
-          type:
-          - string
-          - 'null'
-        unitCost:
-          type: number
-          format: double
-        totalCost:
-          type:
-          - number
-          - 'null'
-          format: double
-        unitPrice:
-          type: number
-          format: double
-        totalPrice:
-          type:
-          - number
-          - 'null'
-          format: double
-        sectionName:
-          type:
-          - string
-          - 'null'
-        catalogItem:
-          oneOf:
-          - $ref: '#/components/schemas/WorkOrderLineItemCatalogItem'
-          - type: 'null'
-      title: WorkOrderLineItem
-    ReplaceWorkOrderLineItemsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
-      title: ReplaceWorkOrderLineItemsRequestUnauthorizedError
-    ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode
-    ProjectLineItemSection:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Existing section ID (omit for new sections)
-        name:
-          type:
-          - string
-          - 'null'
-          description: Section name (1–500 chars). Omit or pass null for an unnamed section.
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectLineItemCreate'
-          description: Line items within this section (at least one required)
-      required:
-      - lineItems
-      description: A named section grouping one or more project line items.
-      title: ProjectLineItemSection
-    ListProjectLineItemsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdLineItemsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectLineItemsRequestNotFoundError
-    ReplaceWorkOrderLineItemsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
-      title: ReplaceWorkOrderLineItemsRequestNotFoundError
-    LineItemCatalogItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Catalog item identifier
-        name:
-          type: string
-          description: Catalog item name
-        manufacturer:
-          type:
-          - string
-          - 'null'
-          description: Manufacturer name
-        sku:
-          type:
-          - string
-          - 'null'
-          description: Stock keeping unit
-        type:
-          $ref: '#/components/schemas/LineItemCatalogItemType'
-          description: Item type (e.g., PRODUCT)
-        description:
-          type:
-          - string
-          - 'null'
-          description: Item description
-      required:
-      - id
-      - name
-      - type
-      title: LineItemCatalogItem
-    ReplaceProjectLineItemsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ReplaceProjectLineItemsRequestBadRequestError
-    QuoteSection:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Section identifier
-        name:
-          type:
-          - string
-          - 'null'
-          description: Section name (1–500 chars)
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteLineItemCreate'
-          description: Line items within this section (at least one required)
-      required:
-      - lineItems
-      title: QuoteSection
-    ReplaceProjectLineItemsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
-      title: ReplaceProjectLineItemsRequestUnauthorizedError
-    WorkOrderLineItemsPutRequest:
-      type: object
-      properties:
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteSection'
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteLineItemCreate'
-      description: Provide either `sections` or `lineItems` (not both). Same shapes as quote create.
-      title: WorkOrderLineItemsPutRequest
-    ReplaceWorkOrderLineItemsRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
-      title: ReplaceWorkOrderLineItemsRequestInternalServerError
-    WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - INTERNAL_SERVER_ERROR
-      title: WorkOrdersWorkOrderIdLineItemsPutResponsesContentApplicationJsonSchemaCode
-    ReplaceProjectLineItemsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdLineItemsPutResponsesContentApplicationJsonSchemaCode'
-      title: ReplaceProjectLineItemsRequestNotFoundError
-    LineItemCatalogItemType:
-      type: string
-      enum:
-      - PRODUCT
-      - SERVICE
-      description: Item type (e.g., PRODUCT)
-      title: LineItemCatalogItemType
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

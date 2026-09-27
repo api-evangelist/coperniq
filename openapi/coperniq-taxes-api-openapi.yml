@@ -79,38 +79,6 @@ paths:
                 $ref: '#/components/schemas/ListTaxesRequestBadGatewayError'
 components:
   schemas:
-    TaxesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - GRAPHQL_ERROR
-      title: TaxesGetResponsesContentApplicationJsonSchemaCode
-    ListTaxesRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListTaxesRequestBadRequestError
-    ListTaxesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListTaxesRequestUnauthorizedError
-    ListTaxesRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListTaxesRequestInternalServerError
     ListTaxesRequestBadGatewayError:
       type: object
       properties:
@@ -123,6 +91,33 @@ components:
       - message
       - code
       title: ListTaxesRequestBadGatewayError
+    ListTaxesRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListTaxesRequestInternalServerError
+    ListTaxesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListTaxesRequestUnauthorizedError
+    ListTaxesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListTaxesRequestBadRequestError
     CompanyTax:
       type: object
       properties:
@@ -153,6 +148,11 @@ components:
       - updatedAt
       description: A tax rate configured for the company.
       title: CompanyTax
+    TaxesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: TaxesGetResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

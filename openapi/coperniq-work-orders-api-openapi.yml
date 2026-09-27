@@ -860,139 +860,44 @@ paths:
                 $ref: '#/components/schemas/DeleteAccountWorkOrderRequestNotFoundError'
 components:
   schemas:
-    DeleteProjectWorkOrderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteProjectWorkOrderRequestNotFoundError
-    AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode
-    WorkOrderLineItem:
+    Visit:
       type: object
       properties:
         id:
           type: integer
-        quantity:
-          type: integer
+          description: Visit identifier
         description:
           type:
           - string
           - 'null'
-        unitCost:
-          type: number
-          format: double
-        totalCost:
-          type:
-          - number
-          - 'null'
-          format: double
-        unitPrice:
-          type: number
-          format: double
-        totalPrice:
-          type:
-          - number
-          - 'null'
-          format: double
-        sectionName:
-          type:
-          - string
-          - 'null'
-        catalogItem:
-          oneOf:
-          - $ref: '#/components/schemas/WorkOrderLineItemCatalogItem'
-          - type: 'null'
-      title: WorkOrderLineItem
-    CreateAccountWorkOrderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateAccountWorkOrderRequestBadRequestError
-    WorkOrderStatus:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: Status identifier
-        label:
-          type:
-          - string
-          - 'null'
-          description: Human readable status label
-      description: Current status of the work order
-      title: WorkOrderStatus
-    CatalogItemImage:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          description: URL to download the image
-      title: CatalogItemImage
-    WorkOrderUpdate:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        priority:
-          type: integer
         startDate:
-          type: string
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
           format: date-time
         startDateAllDay:
           type: boolean
-        endDate:
-          type: string
-          format: date-time
+          default: false
         endDateAllDay:
           type: boolean
-        status:
+          default: false
+        isCompleted:
+          type: boolean
+      description: Only applicable on field work orders.
+      title: Visit
+    ListWorkOrdersRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
           type: string
-          description: Status label
-        assigneeId:
-          type: integer
-          description: User identifier to assign to the work order
-        collaborators:
-          type: array
-          items:
-            type: integer
-          description: User identifiers to assign as collaborators to the work order
-        visits:
-          type: array
-          items:
-            $ref: '#/components/schemas/VisitUpsert'
-          description: Only applicable on field work orders. When provided, the `visits` array REPLACES the full set of visits for the work order. Include all existing visits you wish to keep or update (with their `id`), and include new visits without an `id`. Any existing visit not included in the request will be removed. Visit booleans default to false when omitted.
-        checklist:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChecklistItemUpdate'
-          description: "Update the checklist for the work order.\nWhen this field is provided, the `checklist` array REPLACES the full set of checklist items on the work order.\n- Include every existing item you want to keep or modify (identified by `id`). \n- Any existing item NOT included in this array will be removed.\n- Each item MUST include an `id`. Items without an `id` are ignored (checklist item creation is not supported).\n"
-      description: Payload for updating a work order. Supports partial updates.
-      title: WorkOrderUpdate
-    WorkOrdersGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: WorkOrdersGetResponsesContentApplicationJsonSchemaCode
+        code:
+          $ref: '#/components/schemas/WorkOrdersGetResponsesContentApplicationJsonSchemaCode'
+      title: ListWorkOrdersRequestUnauthorizedError
     CreateProjectWorkOrderRequestBadRequestError:
       type: object
       properties:
@@ -1004,73 +909,29 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: CreateProjectWorkOrderRequestBadRequestError
-    WorkOrderStatusesItems:
-      type: object
-      properties:
-        count:
-          type: string
-          description: Number of times this status was entered
-        endedAt:
-          type: string
-          format: date-time
-          description: When the status ended
-        spentTime:
-          type: number
-          format: double
-          description: Time spent in this status in seconds
-        startedAt:
-          type: string
-          format: date-time
-          description: When the status started
-        status:
-          type: string
-          description: Status identifier
-      title: WorkOrderStatusesItems
-    DeleteAccountWorkOrderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: DeleteAccountWorkOrderRequestBadRequestError
-    ListProjectWorkOrdersRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectWorkOrdersRequestUnauthorizedError
-    UpdateProjectWorkOrderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateProjectWorkOrderRequestBadRequestError
-    DeleteProjectWorkOrderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-      title: DeleteProjectWorkOrderRequestBadRequestError
-    CatalogItemType:
+    ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - PRODUCT
-      - SERVICE
-      description: Catalog item type
-      title: CatalogItemType
+      - NOT_FOUND
+      title: ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode
+    UpdateAccountWorkOrderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateAccountWorkOrderRequestBadRequestError
+    WorkOrdersGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: WorkOrdersGetParametersOrderBy
     ProductCategory:
       type: string
       enum:
@@ -1153,6 +1014,11 @@ components:
       - OTHER
       description: Product catalog category.
       title: ProductCategory
+    WorkOrderFormItemType:
+      type: string
+      enum:
+      - FORM
+      title: WorkOrderFormItemType
     WorkOrderAssignee:
       type: object
       properties:
@@ -1170,6 +1036,76 @@ components:
           description: User's email address
       description: User assigned to the work order
       title: WorkOrderAssignee
+    DeleteOpportunityWorkOrderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteOpportunityWorkOrderRequestUnauthorizedError
+    CreateProjectWorkOrderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectWorkOrderRequestUnauthorizedError
+    WorkOrderStatus:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: Status identifier
+        label:
+          type:
+          - string
+          - 'null'
+          description: Human readable status label
+      description: Current status of the work order
+      title: WorkOrderStatus
+    WorkOrderLineItemCatalogItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        sku:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        manufacturer:
+          type:
+          - string
+          - 'null'
+      title: WorkOrderLineItemCatalogItem
+    DeleteOpportunityWorkOrderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: DeleteOpportunityWorkOrderRequestBadRequestError
+    UpdateProjectWorkOrderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateProjectWorkOrderRequestUnauthorizedError
     WorkOrderVisits:
       type: object
       properties:
@@ -1180,129 +1116,31 @@ components:
           description: List of visits
       description: Site visits associated with the work order (legacy shape)
       title: WorkOrderVisits
-    DeleteOpportunityWorkOrderRequestNotFoundError:
+    ListProjectWorkOrdersRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteOpportunityWorkOrderRequestNotFoundError
-    WorkOrderWorkItem:
-      oneOf:
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/WorkOrderFormItemType'
-          id:
-            type: integer
-            description: Form instance ID
-          name:
-            type:
-            - string
-            - 'null'
-            description: Form name
-          templateId:
-            type:
-            - integer
-            - 'null'
-            description: Template the form was created from
-          dueDate:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: Due date ISO string
-          status:
-            type:
-            - string
-            - 'null'
-            description: Form status (e.g. OPEN, IN_PROGRESS, COMPLETED)
-          isCompleted:
-            type: boolean
-          completedAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-        required:
-        - type
-        - id
-        description: A form work item linked to the work order via Blueprint workflow.
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/WorkOrderFileRequestItemType'
-          id:
-            type: integer
-            description: Action instance ID
-          name:
-            type:
-            - string
-            - 'null'
-            description: File request title
-          status:
-            type:
-            - string
-            - 'null'
-            description: Element instance status (e.g. OPEN, IN_PROGRESS, COMPLETED)
-        required:
-        - type
-        - id
-        description: A file request (document upload) work item linked to the work order via Blueprint workflow.
-      discriminator:
-        propertyName: type
-      title: WorkOrderWorkItem
-    WorkOrderTemplateLineItemsItems:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectWorkOrdersRequestNotFoundError
+    CreateAccountWorkOrderRequestBadRequestError:
       type: object
       properties:
-        id:
-          type: integer
-        quantity:
-          type: number
-          format: double
-        description:
-          type:
-          - string
-          - 'null'
-        unitCost:
-          type: number
-          format: double
-        totalCost:
-          type: number
-          format: double
-        unitPrice:
-          type: number
-          format: double
-        totalPrice:
-          type: number
-          format: double
-        catalogItem:
-          oneOf:
-          - $ref: '#/components/schemas/CatalogItem'
-          - type: 'null'
-          description: The linked catalog item, in the same shape as GET /catalog-items/{catalogItemId}.
-      title: WorkOrderTemplateLineItemsItems
-    TemplateUser:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateAccountWorkOrderRequestBadRequestError
+    WorkOrderTemplateLabelsItems:
       type: object
       properties:
-        id:
-          type: integer
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-      description: A user reference reduced to non-sensitive identity fields.
-      title: TemplateUser
-    WorkOrdersWorkOrderIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: WorkOrdersWorkOrderIdGetResponsesContentApplicationJsonSchemaCode
+        label:
+          $ref: '#/components/schemas/WorkOrderTemplateLabelsItemsLabel'
+      title: WorkOrderTemplateLabelsItems
     WorkOrderTemplateChecklistsItems:
       type: object
       properties:
@@ -1313,6 +1151,38 @@ components:
           - string
           - 'null'
       title: WorkOrderTemplateChecklistsItems
+    OpportunitiesOpportunityIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode
+    CreateOpportunityWorkOrderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityWorkOrderRequestUnauthorizedError
+    UpdateProjectWorkOrderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateProjectWorkOrderRequestNotFoundError
+    DeleteAccountWorkOrderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: DeleteAccountWorkOrderRequestBadRequestError
     WorkOrderTemplate:
       type: object
       properties:
@@ -1400,508 +1270,6 @@ components:
             $ref: '#/components/schemas/WorkOrderTemplateLineItemsItems'
           description: Present only when the template has line items.
       title: WorkOrderTemplate
-    ServiceCategory:
-      type: string
-      enum:
-      - ADJUSTMENT
-      - BALANCING
-      - CALIBRATION
-      - CLEANING
-      - COMMISSIONING
-      - DECOMMISSIONING
-      - DIAGNOSTICS
-      - ENGINEERING
-      - EQUIPMENT_RENTAL
-      - INSPECTION
-      - INSTALLATION
-      - MAINTENANCE
-      - MONITORING
-      - OPTIMIZATION
-      - PERMITTING
-      - RELOCATION
-      - REMOVAL
-      - REPAIR
-      - REPLACEMENT
-      - RETROFIT
-      - SITE_SURVEY
-      - TESTING
-      - TRAINING
-      - OTHER
-      description: Service catalog category.
-      title: ServiceCategory
-    WorkOrderFileRequestItemType:
-      type: string
-      enum:
-      - FILE_REQUEST
-      title: WorkOrderFileRequestItemType
-    WorkOrdersTemplatesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: WorkOrdersTemplatesGetResponsesContentApplicationJsonSchemaCode
-    OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode
-    AccountsAccountIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AccountsAccountIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode
-    WorkOrderCreateResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Created workflow element (task) identifier
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        description:
-          type:
-          - string
-          - 'null'
-        position:
-          type: integer
-          description: Position within phase
-        phaseInstanceId:
-          type: integer
-        projectId:
-          type: integer
-        createdById:
-          type: integer
-      title: WorkOrderCreateResponse
-    CreateOpportunityWorkOrderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateOpportunityWorkOrderRequestBadRequestError
-    ListProjectWorkOrdersRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectWorkOrdersRequestNotFoundError
-    Visit:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Visit identifier
-        description:
-          type:
-          - string
-          - 'null'
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        startDateAllDay:
-          type: boolean
-          default: false
-        endDateAllDay:
-          type: boolean
-          default: false
-        isCompleted:
-          type: boolean
-      description: Only applicable on field work orders.
-      title: Visit
-    UpdateAccountWorkOrderRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateAccountWorkOrderRequestBadRequestError
-    UserSummary:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-          format: email
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-      description: Minimal user representation used in responses
-      title: UserSummary
-    CreateOpportunityWorkOrderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateOpportunityWorkOrderRequestNotFoundError
-    WorkOrdersGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: WorkOrdersGetParametersOrderBy
-    ProjectsProjectIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode
-    DeleteAccountWorkOrderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteAccountWorkOrderRequestUnauthorizedError
-    CreateAccountWorkOrderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateAccountWorkOrderRequestUnauthorizedError
-    ChecklistItemUpdate:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Checklist item identifier to update (required).
-        detail:
-          type: string
-          description: New detail text.
-        isCompleted:
-          type: boolean
-          description: Completion flag.
-      required:
-      - id
-      description: Checklist item update payload. Only fields provided are updated.
-      title: ChecklistItemUpdate
-    WorkOrderTemplateLabelsItems:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/WorkOrderTemplateLabelsItemsLabel'
-      title: WorkOrderTemplateLabelsItems
-    UpdateOpportunityWorkOrderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateOpportunityWorkOrderRequestNotFoundError
-    GetWorkOrderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetWorkOrderRequestNotFoundError
-    UpdateAccountWorkOrderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAccountWorkOrderRequestNotFoundError
-    WorkOrderTemplateLabelsItemsLabel:
-      type: object
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-        label:
-          type:
-          - string
-          - 'null'
-        color:
-          type:
-          - string
-          - 'null'
-      title: WorkOrderTemplateLabelsItemsLabel
-    UpdateProjectWorkOrderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateProjectWorkOrderRequestUnauthorizedError
-    CreateProjectWorkOrderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateProjectWorkOrderRequestNotFoundError
-    TradeGroup:
-      type: string
-      enum:
-      - ENERGY
-      - MECHANICAL
-      - ELECTRICAL
-      - PLUMBING
-      - LOW_VOLTAGE
-      - ENVELOPE
-      - OTHER
-      description: High-level trade group for catalog items.
-      title: TradeGroup
-    CreateProjectWorkOrderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateProjectWorkOrderRequestUnauthorizedError
-    UpdateAccountWorkOrderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAccountWorkOrderRequestUnauthorizedError
-    WorkOrderLabelsItems:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/WorkOrderLabelsItemsLabel'
-      title: WorkOrderLabelsItems
-    WorkOrderLabelsItemsLabel:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Label identifier
-        label:
-          type: string
-          description: Label name
-        color:
-          type: string
-          description: Label color (hex code)
-      title: WorkOrderLabelsItemsLabel
-    OpportunitiesOpportunityIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode
-    CatalogItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Catalog item identifier
-        name:
-          type: string
-          description: Catalog item name
-        catalog:
-          oneOf:
-          - $ref: '#/components/schemas/TradeGroup'
-          - type: 'null'
-          description: High-level trade group for this item.
-        type:
-          $ref: '#/components/schemas/CatalogItemType'
-          description: Catalog item type
-        category:
-          $ref: '#/components/schemas/CatalogCategoryCode'
-          description: Catalog item category code (ProductCategory or ServiceCategory)
-        manufacturer:
-          type:
-          - string
-          - 'null'
-          description: Catalog item manufacturer
-        sku:
-          type:
-          - string
-          - 'null'
-          description: Catalog item SKU
-        code:
-          type:
-          - string
-          - 'null'
-          description: Catalog item code
-        cost:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Catalog item cost
-        price:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Catalog item price
-        description:
-          type:
-          - string
-          - 'null'
-          description: Catalog item description
-        image:
-          oneOf:
-          - $ref: '#/components/schemas/CatalogItemImage'
-          - type: 'null'
-        isArchived:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the catalog item is archived
-        createdById:
-          type: integer
-          description: Identifier of the user who created the catalog item
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        preferredVendorId:
-          type:
-          - integer
-          - 'null'
-          description: ID of the preferred vendor (must be an existing active vendor for this company)
-      required:
-      - id
-      - name
-      - catalog
-      - type
-      - category
-      - cost
-      - price
-      title: CatalogItem
-    CreateOpportunityWorkOrderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateOpportunityWorkOrderRequestUnauthorizedError
-    ListWorkOrderTemplatesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersTemplatesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListWorkOrderTemplatesRequestUnauthorizedError
-    DeleteOpportunityWorkOrderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteOpportunityWorkOrderRequestUnauthorizedError
-    UpdateProjectWorkOrderRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateProjectWorkOrderRequestNotFoundError
-    ListWorkOrdersRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersGetResponsesContentApplicationJsonSchemaCode'
-      title: ListWorkOrdersRequestUnauthorizedError
-    OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode
-    VisitUpsert:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Include to update an existing visit; omit to create new. When `visits` is sent, any existing visit not included will be deleted.
-        description:
-          type: string
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
-        startDateAllDay:
-          type: boolean
-          default: false
-        endDateAllDay:
-          type: boolean
-          default: false
-        isCompleted:
-          type: boolean
-      description: Shape used to create or update visits in work order PATCH requests.
-      title: VisitUpsert
-    WorkOrderLineItemCatalogItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        sku:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        manufacturer:
-          type:
-          - string
-          - 'null'
-      title: WorkOrderLineItemCatalogItem
     WorkOrder:
       type: object
       properties:
@@ -2017,14 +1385,329 @@ components:
 
             '
       title: WorkOrder
-    DeleteAccountWorkOrderRequestNotFoundError:
+    DeleteAccountWorkOrderRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteAccountWorkOrderRequestNotFoundError
+      title: DeleteAccountWorkOrderRequestUnauthorizedError
+    WorkOrderStatusesItems:
+      type: object
+      properties:
+        count:
+          type: string
+          description: Number of times this status was entered
+        endedAt:
+          type: string
+          format: date-time
+          description: When the status ended
+        spentTime:
+          type: number
+          format: double
+          description: Time spent in this status in seconds
+        startedAt:
+          type: string
+          format: date-time
+          description: When the status started
+        status:
+          type: string
+          description: Status identifier
+      title: WorkOrderStatusesItems
+    OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode
+    CatalogItemImage:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          description: URL to download the image
+      title: CatalogItemImage
+    ProjectsProjectIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      description: Minimal user representation used in responses
+      title: UserSummary
+    GetWorkOrderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetWorkOrderRequestUnauthorizedError
+    DeleteProjectWorkOrderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteProjectWorkOrderRequestNotFoundError
+    WorkOrderWorkItem:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/WorkOrderFormItemType'
+          id:
+            type: integer
+            description: Form instance ID
+          name:
+            type:
+            - string
+            - 'null'
+            description: Form name
+          templateId:
+            type:
+            - integer
+            - 'null'
+            description: Template the form was created from
+          dueDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: Due date ISO string
+          status:
+            type:
+            - string
+            - 'null'
+            description: Form status (e.g. OPEN, IN_PROGRESS, COMPLETED)
+          isCompleted:
+            type: boolean
+          completedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+        required:
+        - type
+        - id
+        description: A form work item linked to the work order via Blueprint workflow.
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/WorkOrderFileRequestItemType'
+          id:
+            type: integer
+            description: Action instance ID
+          name:
+            type:
+            - string
+            - 'null'
+            description: File request title
+          status:
+            type:
+            - string
+            - 'null'
+            description: Element instance status (e.g. OPEN, IN_PROGRESS, COMPLETED)
+        required:
+        - type
+        - id
+        description: A file request (document upload) work item linked to the work order via Blueprint workflow.
+      discriminator:
+        propertyName: type
+      title: WorkOrderWorkItem
+    TemplateUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+      description: A user reference reduced to non-sensitive identity fields.
+      title: TemplateUser
+    VisitUpsert:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Include to update an existing visit; omit to create new. When `visits` is sent, any existing visit not included will be deleted.
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        startDateAllDay:
+          type: boolean
+          default: false
+        endDateAllDay:
+          type: boolean
+          default: false
+        isCompleted:
+          type: boolean
+      description: Shape used to create or update visits in work order PATCH requests.
+      title: VisitUpsert
+    WorkOrdersGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: WorkOrdersGetResponsesContentApplicationJsonSchemaCode
+    AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode
+    AccountsAccountIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AccountsAccountIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode
+    TradeGroup:
+      type: string
+      enum:
+      - ENERGY
+      - MECHANICAL
+      - ELECTRICAL
+      - PLUMBING
+      - LOW_VOLTAGE
+      - ENVELOPE
+      - OTHER
+      description: High-level trade group for catalog items.
+      title: TradeGroup
+    CatalogItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Catalog item identifier
+        name:
+          type: string
+          description: Catalog item name
+        catalog:
+          oneOf:
+          - $ref: '#/components/schemas/TradeGroup'
+          - type: 'null'
+          description: High-level trade group for this item.
+        type:
+          $ref: '#/components/schemas/CatalogItemType'
+          description: Catalog item type
+        category:
+          $ref: '#/components/schemas/CatalogCategoryCode'
+          description: Catalog item category code (ProductCategory or ServiceCategory)
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: Catalog item manufacturer
+        sku:
+          type:
+          - string
+          - 'null'
+          description: Catalog item SKU
+        code:
+          type:
+          - string
+          - 'null'
+          description: Catalog item code
+        cost:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Catalog item cost
+        price:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Catalog item price
+        description:
+          type:
+          - string
+          - 'null'
+          description: Catalog item description
+        image:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogItemImage'
+          - type: 'null'
+        isArchived:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the catalog item is archived
+        createdById:
+          type: integer
+          description: Identifier of the user who created the catalog item
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        preferredVendorId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the preferred vendor (must be an existing active vendor for this company)
+      required:
+      - id
+      - name
+      - catalog
+      - type
+      - category
+      - cost
+      - price
+      title: CatalogItem
+    WorkOrderLabelsItemsLabel:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Label identifier
+        label:
+          type: string
+          description: Label name
+        color:
+          type: string
+          description: Label color (hex code)
+      title: WorkOrderLabelsItemsLabel
     CatalogCategoryCode:
       oneOf:
       - $ref: '#/components/schemas/ProductCategory'
@@ -2039,16 +1722,78 @@ components:
 
         '
       title: CatalogCategoryCode
-    ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode:
+    DeleteAccountWorkOrderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAccountWorkOrderRequestNotFoundError
+    ProjectsProjectIdWorkOrdersGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode
-    WorkOrderFormItemType:
+      title: ProjectsProjectIdWorkOrdersGetResponsesContentApplicationJsonSchemaCode
+    ServiceCategory:
       type: string
       enum:
-      - FORM
-      title: WorkOrderFormItemType
+      - ADJUSTMENT
+      - BALANCING
+      - CALIBRATION
+      - CLEANING
+      - COMMISSIONING
+      - DECOMMISSIONING
+      - DIAGNOSTICS
+      - ENGINEERING
+      - EQUIPMENT_RENTAL
+      - INSPECTION
+      - INSTALLATION
+      - MAINTENANCE
+      - MONITORING
+      - OPTIMIZATION
+      - PERMITTING
+      - RELOCATION
+      - REMOVAL
+      - REPAIR
+      - REPLACEMENT
+      - RETROFIT
+      - SITE_SURVEY
+      - TESTING
+      - TRAINING
+      - OTHER
+      description: Service catalog category.
+      title: ServiceCategory
+    WorkOrderTemplateLineItemsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        quantity:
+          type: number
+          format: double
+        description:
+          type:
+          - string
+          - 'null'
+        unitCost:
+          type: number
+          format: double
+        totalCost:
+          type: number
+          format: double
+        unitPrice:
+          type: number
+          format: double
+        totalPrice:
+          type: number
+          format: double
+        catalogItem:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogItem'
+          - type: 'null'
+          description: The linked catalog item, in the same shape as GET /catalog-items/{catalogItemId}.
+      title: WorkOrderTemplateLineItemsItems
     UpdateOpportunityWorkOrderRequestUnauthorizedError:
       type: object
       properties:
@@ -2057,11 +1802,176 @@ components:
         code:
           $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
       title: UpdateOpportunityWorkOrderRequestUnauthorizedError
-    ProjectsProjectIdWorkOrdersGetResponsesContentApplicationJsonSchemaCode:
+    ListProjectWorkOrdersRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectWorkOrdersRequestUnauthorizedError
+    DeleteProjectWorkOrderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+      title: DeleteProjectWorkOrderRequestBadRequestError
+    CreateProjectWorkOrderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectWorkOrderRequestNotFoundError
+    WorkOrderUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: integer
+        startDate:
+          type: string
+          format: date-time
+        startDateAllDay:
+          type: boolean
+        endDate:
+          type: string
+          format: date-time
+        endDateAllDay:
+          type: boolean
+        status:
+          type: string
+          description: Status label
+        assigneeId:
+          type: integer
+          description: User identifier to assign to the work order
+        collaborators:
+          type: array
+          items:
+            type: integer
+          description: User identifiers to assign as collaborators to the work order
+        visits:
+          type: array
+          items:
+            $ref: '#/components/schemas/VisitUpsert'
+          description: Only applicable on field work orders. When provided, the `visits` array REPLACES the full set of visits for the work order. Include all existing visits you wish to keep or update (with their `id`), and include new visits without an `id`. Any existing visit not included in the request will be removed. Visit booleans default to false when omitted.
+        checklist:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChecklistItemUpdate'
+          description: "Update the checklist for the work order.\nWhen this field is provided, the `checklist` array REPLACES the full set of checklist items on the work order.\n- Include every existing item you want to keep or modify (identified by `id`). \n- Any existing item NOT included in this array will be removed.\n- Each item MUST include an `id`. Items without an `id` are ignored (checklist item creation is not supported).\n"
+      description: Payload for updating a work order. Supports partial updates.
+      title: WorkOrderUpdate
+    WorkOrderCreateResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Created workflow element (task) identifier
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        description:
+          type:
+          - string
+          - 'null'
+        position:
+          type: integer
+          description: Position within phase
+        phaseInstanceId:
+          type: integer
+        projectId:
+          type: integer
+        createdById:
+          type: integer
+      title: WorkOrderCreateResponse
+    GetWorkOrderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetWorkOrderRequestNotFoundError
+    ProjectsProjectIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: ProjectsProjectIdWorkOrdersGetResponsesContentApplicationJsonSchemaCode
+      title: ProjectsProjectIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode
+    OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode
+    WorkOrdersTemplatesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: WorkOrdersTemplatesGetResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdWorkOrdersGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: ProjectsProjectIdWorkOrdersGetParametersOrderBy
+    UpdateProjectWorkOrderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateProjectWorkOrderRequestBadRequestError
+    AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode
+    CreateOpportunityWorkOrderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateOpportunityWorkOrderRequestBadRequestError
+    ListWorkOrderTemplatesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersTemplatesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListWorkOrderTemplatesRequestUnauthorizedError
+    WorkOrderFileRequestItemType:
+      type: string
+      enum:
+      - FILE_REQUEST
+      title: WorkOrderFileRequestItemType
+    DeleteProjectWorkOrderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteProjectWorkOrderRequestUnauthorizedError
     WorkOrderProject:
       type: object
       properties:
@@ -2086,21 +1996,127 @@ components:
           description: Project stage (if available)
       description: Project associated with the work order
       title: WorkOrderProject
-    DeleteProjectWorkOrderRequestUnauthorizedError:
+    DeleteOpportunityWorkOrderRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/ProjectsProjectIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteProjectWorkOrderRequestUnauthorizedError
-    ProjectsProjectIdWorkOrdersGetParametersOrderBy:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteOpportunityWorkOrderRequestNotFoundError
+    UpdateAccountWorkOrderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAccountWorkOrderRequestUnauthorizedError
+    CreateOpportunityWorkOrderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityWorkOrderRequestNotFoundError
+    UpdateAccountWorkOrderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAccountWorkOrderRequestNotFoundError
+    WorkOrderLineItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        quantity:
+          type: integer
+        description:
+          type:
+          - string
+          - 'null'
+        unitCost:
+          type: number
+          format: double
+        totalCost:
+          type:
+          - number
+          - 'null'
+          format: double
+        unitPrice:
+          type: number
+          format: double
+        totalPrice:
+          type:
+          - number
+          - 'null'
+          format: double
+        sectionName:
+          type:
+          - string
+          - 'null'
+        catalogItem:
+          oneOf:
+          - $ref: '#/components/schemas/WorkOrderLineItemCatalogItem'
+          - type: 'null'
+      title: WorkOrderLineItem
+    ChecklistItemUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Checklist item identifier to update (required).
+        detail:
+          type: string
+          description: New detail text.
+        isCompleted:
+          type: boolean
+          description: Completion flag.
+      required:
+      - id
+      description: Checklist item update payload. Only fields provided are updated.
+      title: ChecklistItemUpdate
+    CreateAccountWorkOrderRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateAccountWorkOrderRequestUnauthorizedError
+    WorkOrderLabelsItems:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/WorkOrderLabelsItemsLabel'
+      title: WorkOrderLabelsItems
+    UpdateOpportunityWorkOrderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateOpportunityWorkOrderRequestBadRequestError
+    CatalogItemType:
       type: string
       enum:
-      - asc
-      - desc
-      default: asc
-      title: ProjectsProjectIdWorkOrdersGetParametersOrderBy
+      - PRODUCT
+      - SERVICE
+      description: Catalog item type
+      title: CatalogItemType
+    WorkOrdersWorkOrderIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: WorkOrdersWorkOrderIdGetResponsesContentApplicationJsonSchemaCode
     ChecklistItem:
       type: object
       properties:
@@ -2120,46 +2136,30 @@ components:
           format: date-time
           description: Completion timestamp, if completed
       title: ChecklistItem
-    DeleteOpportunityWorkOrderRequestBadRequestError:
+    WorkOrderTemplateLabelsItemsLabel:
       type: object
       properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: DeleteOpportunityWorkOrderRequestBadRequestError
-    UpdateOpportunityWorkOrderRequestBadRequestError:
+        id:
+          type:
+          - integer
+          - 'null'
+        label:
+          type:
+          - string
+          - 'null'
+        color:
+          type:
+          - string
+          - 'null'
+      title: WorkOrderTemplateLabelsItemsLabel
+    UpdateOpportunityWorkOrderRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/OpportunitiesOpportunityIdWorkOrdersWorkOrderIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateOpportunityWorkOrderRequestBadRequestError
-    AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AccountsAccountIdWorkOrdersWorkOrderIdDeleteResponsesContentApplicationJsonSchemaCode
-    ProjectsProjectIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdWorkOrdersPostResponsesContentApplicationJsonSchemaCode
-    GetWorkOrderRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetWorkOrderRequestUnauthorizedError
+      title: UpdateOpportunityWorkOrderRequestNotFoundError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

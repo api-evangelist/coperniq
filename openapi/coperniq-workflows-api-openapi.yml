@@ -77,6 +77,14 @@ paths:
                 $ref: '#/components/schemas/GetWorkflowRequestNotFoundError'
 components:
   schemas:
+    GetWorkflowRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetWorkflowRequestNotFoundError
     Workflow:
       type: object
       properties:
@@ -145,6 +153,19 @@ components:
       - PROJECT
       description: Workflow type
       title: WorkflowType
+    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
+    GetWorkflowRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetWorkflowRequestUnauthorizedError
     WorkflowCreatedBy:
       type: object
       properties:
@@ -163,27 +184,6 @@ components:
           - 'null'
           description: URL to user avatar image
       title: WorkflowCreatedBy
-    GetWorkflowRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetWorkflowRequestNotFoundError
-    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
-    GetWorkflowRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetWorkflowRequestUnauthorizedError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

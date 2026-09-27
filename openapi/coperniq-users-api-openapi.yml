@@ -112,6 +112,15 @@ paths:
                   $ref: '#/components/schemas/Team'
 components:
   schemas:
+    Users_inviteUser_Response_201:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+      title: Users_inviteUser_Response_201
     TeamMember:
       type: object
       properties:
@@ -143,15 +152,43 @@ components:
       - email
       - role
       title: TeamMember
-    Users_inviteUser_Response_201:
+    UserInvite:
       type: object
       properties:
         email:
           type: string
           format: email
-        status:
+          description: Email address of user to invite
+        firstName:
           type: string
-      title: Users_inviteUser_Response_201
+          description: User's first name
+        lastName:
+          type: string
+          description: User's last name
+        roleIds:
+          type: array
+          items:
+            type: integer
+          description: Role IDs to assign to the user
+        phone:
+          type: string
+          description: User's phone number
+      required:
+      - email
+      - firstName
+      - lastName
+      - roleIds
+      title: UserInvite
+    TeamMemberRole:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Role identifier
+        name:
+          type: string
+          description: Role name
+      title: TeamMemberRole
     Team:
       type: object
       properties:
@@ -164,6 +201,16 @@ components:
           items:
             $ref: '#/components/schemas/TeamMember'
       title: Team
+    UserRole:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Role identifier
+        name:
+          type: string
+          description: Role name
+      title: UserRole
     User:
       type: object
       properties:
@@ -209,53 +256,6 @@ components:
       - name
       - active
       title: Role
-    UserInvite:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          description: Email address of user to invite
-        firstName:
-          type: string
-          description: User's first name
-        lastName:
-          type: string
-          description: User's last name
-        roleIds:
-          type: array
-          items:
-            type: integer
-          description: Role IDs to assign to the user
-        phone:
-          type: string
-          description: User's phone number
-      required:
-      - email
-      - firstName
-      - lastName
-      - roleIds
-      title: UserInvite
-    UserRole:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Role identifier
-        name:
-          type: string
-          description: Role name
-      title: UserRole
-    TeamMemberRole:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Role identifier
-        name:
-          type: string
-          description: Role name
-      title: TeamMemberRole
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

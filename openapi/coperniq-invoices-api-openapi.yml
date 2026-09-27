@@ -455,94 +455,90 @@ paths:
                 $ref: '#/components/schemas/GetAccountInvoicesRequestNotFoundError'
 components:
   schemas:
-    GetAccountInvoicesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAccountInvoicesRequestUnauthorizedError
-    GetAccountInvoicesRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: GetAccountInvoicesRequestBadRequestError
-    ProjectsProjectIdInvoicesGetResponsesContentApplicationJsonSchemaCode:
+    ProjectsProjectIdInvoicesGetParametersOrderBy:
       type: string
       enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdInvoicesGetResponsesContentApplicationJsonSchemaCode
-    UpdateInvoiceRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateInvoiceRequestBadRequestError
-    ListInvoicesRequestBadRequestError:
+      - asc
+      - desc
+      default: asc
+      title: ProjectsProjectIdInvoicesGetParametersOrderBy
+    InvoiceCreateStatus:
+      type: string
+      enum:
+      - DRAFT
+      - SENT
+      - PARTIALLY_PAID
+      - PAID
+      description: 'Optional; defaults to DRAFT when omitted. To finalize the invoice, set `SENT`,
+
+        `PARTIALLY_PAID`, or `PAID` — `issueDate` is then required. Lifecycle statuses
+
+        (DECLINED, OVERDUE) cannot be set at creation.
+
+        '
+      title: InvoiceCreateStatus
+    ListInvoicesRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/InvoicesGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListInvoicesRequestBadRequestError
-    InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode
-    InvoiceLineItemCatalogItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        manufacturer:
-          type:
-          - string
-          - 'null'
-        sku:
-          type:
-          - string
-          - 'null'
-        type:
-          $ref: '#/components/schemas/InvoiceLineItemCatalogItemType'
-      title: InvoiceLineItemCatalogItem
-    InvoiceStatus:
-      type: string
-      enum:
-      - DRAFT
-      - SENT
-      - DECLINED
-      - PAID
-      - PARTIALLY_PAID
-      - OVERDUE
-      description: Invoice status
-      title: InvoiceStatus
-    DeleteInvoiceRequestNotFoundError:
+      title: ListInvoicesRequestUnauthorizedError
+    UpdateInvoiceRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteInvoiceRequestNotFoundError
+          $ref: '#/components/schemas/InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateInvoiceRequestNotFoundError
+    InvoiceLineItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Line item identifier
+        catalogItemId:
+          type: integer
+          description: Catalog item identifier
+        quantity:
+          type: integer
+          description: Quantity
+        unitCost:
+          type: number
+          format: double
+          description: Cost per unit
+        unitPrice:
+          type: number
+          format: double
+          description: Price per unit
+        description:
+          type:
+          - string
+          - 'null'
+          description: Line item description
+        catalogItem:
+          oneOf:
+          - $ref: '#/components/schemas/InvoiceLineItemCatalogItem'
+          - type: 'null'
+      required:
+      - id
+      - catalogItemId
+      - quantity
+      - unitCost
+      - unitPrice
+      title: InvoiceLineItem
+    InvoicesInvoiceIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: InvoicesInvoiceIdDeleteResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdInvoicesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdInvoicesGetResponsesContentApplicationJsonSchemaCode
     GetInvoiceRequestNotFoundError:
       type: object
       properties:
@@ -551,6 +547,11 @@ components:
         code:
           $ref: '#/components/schemas/InvoicesInvoiceIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetInvoiceRequestNotFoundError
+    AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode
     InvoiceUpdateStatus:
       type: string
       enum:
@@ -562,62 +563,25 @@ components:
       - OVERDUE
       description: Invoice status
       title: InvoiceUpdateStatus
-    UpdateInvoiceRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateInvoiceRequestNotFoundError
-    InvoiceLineItemCatalogItemType:
+    InvoiceStatus:
       type: string
       enum:
-      - PRODUCT
-      - SERVICE
-      title: InvoiceLineItemCatalogItemType
-    GetProjectInvoicesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectInvoicesRequestUnauthorizedError
-    DeleteInvoiceRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteInvoiceRequestUnauthorizedError
-    CreateInvoiceRequestBadRequestError:
+      - DRAFT
+      - SENT
+      - DECLINED
+      - PAID
+      - PARTIALLY_PAID
+      - OVERDUE
+      description: Invoice status
+      title: InvoiceStatus
+    CreateInvoiceRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/InvoicesPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateInvoiceRequestBadRequestError
-    ListInvoicesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListInvoicesRequestUnauthorizedError
-    ProjectsProjectIdInvoicesGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: ProjectsProjectIdInvoicesGetParametersOrderBy
+      title: CreateInvoiceRequestUnauthorizedError
     InvoiceCreate:
       type: object
       properties:
@@ -684,63 +648,19 @@ components:
 
         '
       title: InvoiceCreate
-    InvoicesGetParametersOrderBy:
+    InvoiceLineItemCatalogItemType:
       type: string
       enum:
-      - asc
-      - desc
-      default: asc
-      title: InvoicesGetParametersOrderBy
-    GetInvoiceRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetInvoiceRequestUnauthorizedError
-    GetProjectInvoicesRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectInvoicesRequestNotFoundError
-    InvoiceListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Invoice'
-          description: List of invoices
-        page:
-          type: integer
-          description: Current page number
-        page_size:
-          type: integer
-          description: Number of items per page
-        has_more:
-          type: boolean
-          description: Whether there are more items
-      required:
-      - items
-      - page
-      - page_size
-      - has_more
-      title: InvoiceListResponse
-    InvoicesInvoiceIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: InvoicesInvoiceIdGetResponsesContentApplicationJsonSchemaCode
-    InvoiceLineItem:
+      - PRODUCT
+      - SERVICE
+      title: InvoiceLineItemCatalogItemType
+    InvoiceLineItemCreate:
       type: object
       properties:
         id:
           type: integer
-          description: Line item identifier
+          default: 0
+          description: Line item ID (0 for new items)
         catalogItemId:
           type: integer
           description: Catalog item identifier
@@ -754,74 +674,18 @@ components:
         unitPrice:
           type: number
           format: double
-          description: Price per unit
+          description: Price per unit (may be negative for discount line items)
         description:
           type:
           - string
           - 'null'
           description: Line item description
-        catalogItem:
-          oneOf:
-          - $ref: '#/components/schemas/InvoiceLineItemCatalogItem'
-          - type: 'null'
       required:
-      - id
       - catalogItemId
       - quantity
       - unitCost
       - unitPrice
-      title: InvoiceLineItem
-    InvoiceSection:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Existing section ID (omit for new sections)
-        name:
-          type:
-          - string
-          - 'null'
-          description: Section name (1–500 chars). Omit or pass null for an unnamed section.
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvoiceLineItemCreate'
-          description: Line items within this section (at least one required)
-      required:
-      - lineItems
-      description: A named section grouping one or more invoice line items.
-      title: InvoiceSection
-    InvoiceUpdate:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/InvoiceUpdateStatus'
-          description: Invoice status
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvoiceLineItemCreate'
-          description: Flat array of line items (LINE_ITEMS only). May be combined with `sections` (a catalogItemId may appear only once across both).
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvoiceSection'
-          description: Grouped line items with named sections (LINE_ITEMS only). May be combined with `lineItems` (ungrouped items).
-        dueDate:
-          type: string
-          format: date-time
-          description: Due date (ISO 8601 datetime string)
-        description:
-          type:
-          - string
-          - 'null'
-          description: Invoice description
-      description: 'All fields are optional. When updating line items, provide `lineItems`, `sections`, or both. A `catalogItemId` may appear at most once across the flattened set.
-
-        `calculationMethod` cannot be changed after creation and is not accepted on update. `percentage` (PERCENTAGE invoices) cannot be combined with `lineItems` or `sections` (LINE_ITEMS invoices).
-
-        '
-      title: InvoiceUpdate
+      title: InvoiceLineItemCreate
     Invoice:
       type: object
       properties:
@@ -917,29 +781,33 @@ components:
       - createdAt
       - updatedAt
       title: Invoice
-    GetAccountInvoicesRequestNotFoundError:
+    DeleteInvoiceRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAccountInvoicesRequestNotFoundError
-    InvoiceCreateStatus:
-      type: string
-      enum:
-      - DRAFT
-      - SENT
-      - PARTIALLY_PAID
-      - PAID
-      description: 'Optional; defaults to DRAFT when omitted. To finalize the invoice, set `SENT`,
-
-        `PARTIALLY_PAID`, or `PAID` — `issueDate` is then required. Lifecycle statuses
-
-        (DECLINED, OVERDUE) cannot be set at creation.
-
-        '
-      title: InvoiceCreateStatus
+          $ref: '#/components/schemas/InvoicesInvoiceIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteInvoiceRequestNotFoundError
+    ListInvoicesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListInvoicesRequestBadRequestError
+    DeleteInvoiceRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteInvoiceRequestUnauthorizedError
     InvoiceAccount:
       type: object
       properties:
@@ -948,34 +816,30 @@ components:
         title:
           type: string
       title: InvoiceAccount
-    InvoiceCreateCalculationMethod:
-      type: string
-      enum:
-      - LINE_ITEMS
-      - PERCENTAGE
-      description: Calculation method
-      title: InvoiceCreateCalculationMethod
-    InvoicesInvoiceIdDeleteResponsesContentApplicationJsonSchemaCode:
+    InvoicesInvoiceIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: InvoicesInvoiceIdDeleteResponsesContentApplicationJsonSchemaCode
-    AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode
-    InvoicesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: InvoicesPostResponsesContentApplicationJsonSchemaCode
-    InvoiceType:
-      type: string
-      enum:
-      - INVOICE
-      description: Invoice type
-      title: InvoiceType
+      title: InvoicesInvoiceIdGetResponsesContentApplicationJsonSchemaCode
+    GetInvoiceRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetInvoiceRequestUnauthorizedError
+    UpdateInvoiceRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateInvoiceRequestBadRequestError
     InvoiceRecord:
       type: object
       properties:
@@ -986,6 +850,55 @@ components:
         title:
           type: string
       title: InvoiceRecord
+    InvoiceUpdate:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/InvoiceUpdateStatus'
+          description: Invoice status
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceLineItemCreate'
+          description: Flat array of line items (LINE_ITEMS only). May be combined with `sections` (a catalogItemId may appear only once across both).
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceSection'
+          description: Grouped line items with named sections (LINE_ITEMS only). May be combined with `lineItems` (ungrouped items).
+        dueDate:
+          type: string
+          format: date-time
+          description: Due date (ISO 8601 datetime string)
+        description:
+          type:
+          - string
+          - 'null'
+          description: Invoice description
+      description: 'All fields are optional. When updating line items, provide `lineItems`, `sections`, or both. A `catalogItemId` may appear at most once across the flattened set.
+
+        `calculationMethod` cannot be changed after creation and is not accepted on update. `percentage` (PERCENTAGE invoices) cannot be combined with `lineItems` or `sections` (LINE_ITEMS invoices).
+
+        '
+      title: InvoiceUpdate
+    GetAccountInvoicesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetAccountInvoicesRequestBadRequestError
+    InvoiceCreateCalculationMethod:
+      type: string
+      enum:
+      - LINE_ITEMS
+      - PERCENTAGE
+      description: Calculation method
+      title: InvoiceCreateCalculationMethod
     UpdateInvoiceRequestUnauthorizedError:
       type: object
       properties:
@@ -994,51 +907,37 @@ components:
         code:
           $ref: '#/components/schemas/InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode'
       title: UpdateInvoiceRequestUnauthorizedError
-    CreateInvoiceRequestUnauthorizedError:
+    GetAccountInvoicesRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/InvoicesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateInvoiceRequestUnauthorizedError
+          $ref: '#/components/schemas/AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAccountInvoicesRequestNotFoundError
     InvoicesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - UNAUTHORIZED
       title: InvoicesGetResponsesContentApplicationJsonSchemaCode
-    InvoiceLineItemCreate:
+    InvoiceLineItemCatalogItem:
       type: object
       properties:
         id:
           type: integer
-          default: 0
-          description: Line item ID (0 for new items)
-        catalogItemId:
-          type: integer
-          description: Catalog item identifier
-        quantity:
-          type: integer
-          description: Quantity
-        unitCost:
-          type: number
-          format: double
-          description: Cost per unit
-        unitPrice:
-          type: number
-          format: double
-          description: Price per unit (may be negative for discount line items)
-        description:
+        name:
+          type: string
+        manufacturer:
           type:
           - string
           - 'null'
-          description: Line item description
-      required:
-      - catalogItemId
-      - quantity
-      - unitCost
-      - unitPrice
-      title: InvoiceLineItemCreate
+        sku:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/InvoiceLineItemCatalogItemType'
+      title: InvoiceLineItemCatalogItem
     AccountsAccountIdInvoicesGetParametersOrderBy:
       type: string
       enum:
@@ -1046,6 +945,68 @@ components:
       - desc
       default: asc
       title: AccountsAccountIdInvoicesGetParametersOrderBy
+    CreateInvoiceRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateInvoiceRequestBadRequestError
+    GetProjectInvoicesRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectInvoicesRequestNotFoundError
+    InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: InvoicesInvoiceIdPatchResponsesContentApplicationJsonSchemaCode
+    InvoiceType:
+      type: string
+      enum:
+      - INVOICE
+      description: Invoice type
+      title: InvoiceType
+    InvoicesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: InvoicesPostResponsesContentApplicationJsonSchemaCode
+    InvoicesGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: InvoicesGetParametersOrderBy
+    InvoiceSection:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Existing section ID (omit for new sections)
+        name:
+          type:
+          - string
+          - 'null'
+          description: Section name (1–500 chars). Omit or pass null for an unnamed section.
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceLineItemCreate'
+          description: Line items within this section (at least one required)
+      required:
+      - lineItems
+      description: A named section grouping one or more invoice line items.
+      title: InvoiceSection
     GetProjectInvoicesRequestBadRequestError:
       type: object
       properties:
@@ -1057,6 +1018,45 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: GetProjectInvoicesRequestBadRequestError
+    InvoiceListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
+          description: List of invoices
+        page:
+          type: integer
+          description: Current page number
+        page_size:
+          type: integer
+          description: Number of items per page
+        has_more:
+          type: boolean
+          description: Whether there are more items
+      required:
+      - items
+      - page
+      - page_size
+      - has_more
+      title: InvoiceListResponse
+    GetProjectInvoicesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectInvoicesRequestUnauthorizedError
+    GetAccountInvoicesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdInvoicesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAccountInvoicesRequestUnauthorizedError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

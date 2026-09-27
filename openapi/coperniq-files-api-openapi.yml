@@ -571,243 +571,6 @@ paths:
               - file
 components:
   schemas:
-    FileUploadResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: File identifier
-        name:
-          type: string
-          description: File name
-        downloadUrl:
-          type: string
-          description: URL to download the file
-        metaData:
-          $ref: '#/components/schemas/FileUploadResponseMetaData'
-      required:
-      - id
-      - name
-      - downloadUrl
-      - metaData
-      description: Response returned after a successful file upload.
-      title: FileUploadResponse
-    GetRequestFileRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetRequestFileRequestNotFoundError
-    UploadRequestFileRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
-      title: UploadRequestFileRequestInternalServerError
-    ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - INTERNAL_SERVER_ERROR
-      title: ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode
-    UploadRequestFileRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
-      title: UploadRequestFileRequestNotFoundError
-    GetProjectFileRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectFileRequestNotFoundError
-    UploadProjectFileFromUrlRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
-      title: UploadProjectFileFromUrlRequestNotFoundError
-    FileMetaDataGps:
-      type: object
-      properties: {}
-      description: GPS coordinates if applicable
-      title: FileMetaDataGps
-    OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - INTERNAL_SERVER_ERROR
-      title: OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode
-    GetRequestFileRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: GetRequestFileRequestBadRequestError
-    UploadProjectFileRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
-      title: UploadProjectFileRequestNotFoundError
-    UploadProjectFileRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UploadProjectFileRequestBadRequestError
-    FileCreatedByUser:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: User identifier
-        firstName:
-          type: string
-          description: User's first name
-        lastName:
-          type: string
-          description: User's last name
-      title: FileCreatedByUser
-    File:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: File identifier
-        name:
-          type: string
-          description: File name
-        downloadUrl:
-          type: string
-          description: URL to download the file
-        type:
-          type: string
-          description: File type
-        updatedAt:
-          type: string
-          format: date-time
-          description: Last update timestamp
-        createdAt:
-          type: string
-          format: date-time
-          description: Creation timestamp
-        isArchived:
-          type: boolean
-          description: Whether the file is archived
-        metaData:
-          $ref: '#/components/schemas/FileMetaData'
-        source:
-          type: string
-          description: File source (e.g., INTERNAL)
-        createdByUser:
-          $ref: '#/components/schemas/FileCreatedByUser'
-      required:
-      - id
-      - name
-      - downloadUrl
-      - type
-      - updatedAt
-      - createdAt
-      - metaData
-      - source
-      - createdByUser
-      title: File
-    OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode
-    FileUploadResponseMetaDataGps:
-      type: object
-      properties: {}
-      description: GPS coordinates if applicable
-      title: FileUploadResponseMetaDataGps
-    GetProjectFileRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: GetProjectFileRequestBadRequestError
-    FileUploadResponseMetaData:
-      type: object
-      properties:
-        acl:
-          type: string
-          description: Access control level
-        gps:
-          $ref: '#/components/schemas/FileUploadResponseMetaDataGps'
-          description: GPS coordinates if applicable
-        size:
-          type: integer
-          description: File size in bytes
-        userId:
-          type: integer
-          description: User who uploaded the file
-        mimeType:
-          type: string
-          description: MIME type of the file
-        extention:
-          type: string
-          description: File extension
-        originalName:
-          type: string
-          description: Original file name
-        thumbnailUrl:
-          type: string
-          description: URL to the thumbnail version
-        generatedName:
-          type: string
-          description: Generated unique file name
-        thumbnailName:
-          type: string
-          description: Generated thumbnail file name
-        requestFileName:
-          type: string
-          description: Original request file name
-      required:
-      - acl
-      - size
-      - userId
-      - mimeType
-      - extention
-      - originalName
-      - generatedName
-      title: FileUploadResponseMetaData
-    GetRequestFilesRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetRequestFilesRequestInternalServerError
     FileMetaData:
       type: object
       properties:
@@ -853,134 +616,56 @@ components:
       - originalName
       - generatedName
       title: FileMetaData
-    ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - INTERNAL_SERVER_ERROR
-      title: ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode
-    UploadProjectFileRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
-      title: UploadProjectFileRequestInternalServerError
-    UploadRequestFileFromUrlRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode'
-      title: UploadRequestFileFromUrlRequestInternalServerError
-    GetProjectFileRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectFileRequestInternalServerError
-    UploadRequestFileRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UploadRequestFileRequestBadRequestError
-    GetProjectFilesRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectFilesRequestNotFoundError
-    GetRequestFilesRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: GetRequestFilesRequestBadRequestError
-    GetProjectFilesRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectFilesRequestInternalServerError
     Files_deleteProjectFile_Response_200:
       type: object
       properties: {}
       description: Empty response body
       title: Files_deleteProjectFile_Response_200
-    ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode
-    DeleteRequestFileRequestNotFoundError:
+    FileUploadResponseMetaData:
       type: object
       properties:
-        message:
+        acl:
           type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteRequestFileRequestNotFoundError
-    UploadProjectFileFromUrlRequestBadRequestError:
-      type: object
-      properties:
-        message:
+          description: Access control level
+        gps:
+          $ref: '#/components/schemas/FileUploadResponseMetaDataGps'
+          description: GPS coordinates if applicable
+        size:
+          type: integer
+          description: File size in bytes
+        userId:
+          type: integer
+          description: User who uploaded the file
+        mimeType:
           type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
-        field:
+          description: MIME type of the file
+        extention:
           type: string
-          description: Field that caused the validation error (if applicable)
-      title: UploadProjectFileFromUrlRequestBadRequestError
-    UploadRequestFileFromUrlRequestNotFoundError:
-      type: object
-      properties:
-        message:
+          description: File extension
+        originalName:
           type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode'
-      title: UploadRequestFileFromUrlRequestNotFoundError
-    UploadProjectFileFromUrlRequestInternalServerError:
-      type: object
-      properties:
-        message:
+          description: Original file name
+        thumbnailUrl:
           type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
-      title: UploadProjectFileFromUrlRequestInternalServerError
-    Files_deleteRequestFile_Response_200:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Files_deleteRequestFile_Response_200
-    DeleteProjectFileRequestBadRequestError:
-      type: object
-      properties:
-        message:
+          description: URL to the thumbnail version
+        generatedName:
           type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
-        field:
+          description: Generated unique file name
+        thumbnailName:
           type: string
-          description: Field that caused the validation error (if applicable)
-      title: DeleteProjectFileRequestBadRequestError
+          description: Generated thumbnail file name
+        requestFileName:
+          type: string
+          description: Original request file name
+      required:
+      - acl
+      - size
+      - userId
+      - mimeType
+      - extention
+      - originalName
+      - generatedName
+      title: FileUploadResponseMetaData
     UploadRequestFileFromUrlRequestBadRequestError:
       type: object
       properties:
@@ -992,37 +677,231 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: UploadRequestFileFromUrlRequestBadRequestError
-    OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - INTERNAL_SERVER_ERROR
-      title: OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode
-    GetRequestFilesRequestNotFoundError:
+    Files_deleteRequestFile_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Files_deleteRequestFile_Response_200
+    GetRequestFileRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
-      title: GetRequestFilesRequestNotFoundError
-    ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetRequestFileRequestNotFoundError
+    OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - INTERNAL_SERVER_ERROR
-      title: ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode
-    DeleteProjectFileRequestNotFoundError:
+      title: OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode
+    UploadProjectFileFromUrlRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadProjectFileFromUrlRequestNotFoundError
+    UploadProjectFileFromUrlRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadProjectFileFromUrlRequestInternalServerError
+    OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode
+    OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode
+    UploadProjectFileFromUrlRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UploadProjectFileFromUrlRequestBadRequestError
+    GetProjectFilesRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFilesRequestNotFoundError
+    UploadRequestFileRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadRequestFileRequestInternalServerError
+    GetProjectFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFileRequestNotFoundError
+    DeleteProjectFileRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteProjectFileRequestNotFoundError
-    OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode:
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: DeleteProjectFileRequestBadRequestError
+    UploadProjectFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadProjectFileRequestNotFoundError
+    FileCreatedByUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User identifier
+        firstName:
+          type: string
+          description: User's first name
+        lastName:
+          type: string
+          description: User's last name
+      title: FileCreatedByUser
+    ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode
+      title: ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: File identifier
+        name:
+          type: string
+          description: File name
+        downloadUrl:
+          type: string
+          description: URL to download the file
+        type:
+          type: string
+          description: File type
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        isArchived:
+          type: boolean
+          description: Whether the file is archived
+        metaData:
+          $ref: '#/components/schemas/FileMetaData'
+        source:
+          type: string
+          description: File source (e.g., INTERNAL)
+        createdByUser:
+          $ref: '#/components/schemas/FileCreatedByUser'
+      required:
+      - id
+      - name
+      - downloadUrl
+      - type
+      - updatedAt
+      - createdAt
+      - metaData
+      - source
+      - createdByUser
+      title: File
+    GetRequestFilesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetRequestFilesRequestBadRequestError
+    DeleteRequestFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteRequestFileRequestNotFoundError
+    UploadRequestFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UploadRequestFileRequestBadRequestError
+    UploadProjectFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UploadProjectFileRequestBadRequestError
+    GetProjectFileRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFileRequestInternalServerError
+    UploadRequestFileFromUrlRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadRequestFileFromUrlRequestNotFoundError
+    UploadRequestFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadRequestFileRequestNotFoundError
     GetProjectFilesRequestBadRequestError:
       type: object
       properties:
@@ -1034,16 +913,119 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: GetProjectFilesRequestBadRequestError
-    OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode:
+    ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - INTERNAL_SERVER_ERROR
-      title: OpportunitiesOpportunityIdFilesUploadPostResponsesContentApplicationJsonSchemaCode
-    ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode:
+      title: ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode
+    UploadProjectFileRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadProjectFileRequestInternalServerError
+    FileUploadResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: File identifier
+        name:
+          type: string
+          description: File name
+        downloadUrl:
+          type: string
+          description: URL to download the file
+        metaData:
+          $ref: '#/components/schemas/FileUploadResponseMetaData'
+      required:
+      - id
+      - name
+      - downloadUrl
+      - metaData
+      description: Response returned after a successful file upload.
+      title: FileUploadResponse
+    ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - INTERNAL_SERVER_ERROR
-      title: ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode
+      title: ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode
+    UploadRequestFileFromUrlRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesPostResponsesContentApplicationJsonSchemaCode'
+      title: UploadRequestFileFromUrlRequestInternalServerError
+    GetProjectFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetProjectFileRequestBadRequestError
+    ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: ProjectsProjectIdFilesUploadPostResponsesContentApplicationJsonSchemaCode
+    GetProjectFilesRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFilesRequestInternalServerError
+    GetRequestFilesRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetRequestFilesRequestNotFoundError
+    OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode
+    DeleteProjectFileRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteProjectFileRequestNotFoundError
+    OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdFilesFileIdDeleteResponsesContentApplicationJsonSchemaCode
+    FileMetaDataGps:
+      type: object
+      properties: {}
+      description: GPS coordinates if applicable
+      title: FileMetaDataGps
+    GetRequestFileRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesFileIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetRequestFileRequestBadRequestError
     DeleteRequestFileRequestBadRequestError:
       type: object
       properties:
@@ -1055,6 +1037,24 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: DeleteRequestFileRequestBadRequestError
+    FileUploadResponseMetaDataGps:
+      type: object
+      properties: {}
+      description: GPS coordinates if applicable
+      title: FileUploadResponseMetaDataGps
+    GetRequestFilesRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFilesGetResponsesContentApplicationJsonSchemaCode'
+      title: GetRequestFilesRequestInternalServerError
+    ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: ProjectsProjectIdFilesPostResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
