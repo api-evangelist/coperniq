@@ -277,13 +277,6 @@ paths:
                 $ref: '#/components/schemas/DeleteContactRequestNotFoundError'
 components:
   schemas:
-    ContactCreatedByUser:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: User identifier
-      title: ContactCreatedByUser
     ContactUpdate:
       type: object
       properties:
@@ -314,52 +307,19 @@ components:
             type: integer
           description: Project IDs to associate with the contact
       title: ContactUpdate
-    ContactsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ContactsGetResponsesContentApplicationJsonSchemaCode
-    ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode
-    CreateContactRequestBadRequestError:
+    GetContactRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateContactRequestBadRequestError
-    ContactsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ContactsPostResponsesContentApplicationJsonSchemaCode
-    ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode:
+          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetContactRequestUnauthorizedError
+    ContactsContactIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode
-    ContactsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: ContactsGetParametersOrderBy
-    DeleteContactRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteContactRequestNotFoundError
+      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaCode
     Contact:
       type: object
       properties:
@@ -394,6 +354,97 @@ components:
       required:
       - name
       title: Contact
+    ContactAccountsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Account identifier
+        title:
+          type: string
+          description: Account title
+      description: Account object
+      title: ContactAccountsItems
+    DeleteContactRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteContactRequestNotFoundError
+    ContactsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ContactsGetResponsesContentApplicationJsonSchemaCode
+    ContactCreatedByUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User identifier
+      title: ContactCreatedByUser
+    CreateContactRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateContactRequestBadRequestError
+    ListContactsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListContactsRequestUnauthorizedError
+    ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode
+    ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode
+    ContactProjectsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Project identifier
+        title:
+          type: string
+          description: Project title
+      description: Project object
+      title: ContactProjectsItems
+    ContactsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: ContactsGetParametersOrderBy
+    CreateContactRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateContactRequestUnauthorizedError
+    ContactsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ContactsPostResponsesContentApplicationJsonSchemaCode
     ContactCreate:
       type: object
       properties:
@@ -426,41 +477,14 @@ components:
       required:
       - name
       title: ContactCreate
-    GetContactRequestUnauthorizedError:
+    UpdateContactRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetContactRequestUnauthorizedError
-    ContactAccountsItems:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Account identifier
-        title:
-          type: string
-          description: Account title
-      description: Account object
-      title: ContactAccountsItems
-    GetContactRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetContactRequestNotFoundError
-    DeleteContactRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteContactRequestUnauthorizedError
+          $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateContactRequestNotFoundError
     UpdateContactRequestBadRequestError:
       type: object
       properties:
@@ -472,38 +496,6 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: UpdateContactRequestBadRequestError
-    ContactsContactIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaCode
-    CreateContactRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateContactRequestUnauthorizedError
-    UpdateContactRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateContactRequestNotFoundError
-    ContactProjectsItems:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Project identifier
-        title:
-          type: string
-          description: Project title
-      description: Project object
-      title: ContactProjectsItems
     UpdateContactRequestUnauthorizedError:
       type: object
       properties:
@@ -512,14 +504,22 @@ components:
         code:
           $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
       title: UpdateContactRequestUnauthorizedError
-    ListContactsRequestUnauthorizedError:
+    DeleteContactRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListContactsRequestUnauthorizedError
+          $ref: '#/components/schemas/ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteContactRequestUnauthorizedError
+    GetContactRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetContactRequestNotFoundError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

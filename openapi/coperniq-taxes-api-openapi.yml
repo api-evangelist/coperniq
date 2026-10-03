@@ -79,45 +79,6 @@ paths:
                 $ref: '#/components/schemas/ListTaxesRequestBadGatewayError'
 components:
   schemas:
-    ListTaxesRequestBadGatewayError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Summary of the downstream service failure
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-      required:
-      - message
-      - code
-      title: ListTaxesRequestBadGatewayError
-    ListTaxesRequestInternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListTaxesRequestInternalServerError
-    ListTaxesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListTaxesRequestUnauthorizedError
-    ListTaxesRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListTaxesRequestBadRequestError
     CompanyTax:
       type: object
       properties:
@@ -153,6 +114,45 @@ components:
       enum:
       - GRAPHQL_ERROR
       title: TaxesGetResponsesContentApplicationJsonSchemaCode
+    ListTaxesRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListTaxesRequestInternalServerError
+    ListTaxesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListTaxesRequestBadRequestError
+    ListTaxesRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListTaxesRequestBadGatewayError
+    ListTaxesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListTaxesRequestUnauthorizedError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

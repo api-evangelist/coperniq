@@ -77,14 +77,6 @@ paths:
                 $ref: '#/components/schemas/GetWorkflowRequestNotFoundError'
 components:
   schemas:
-    GetWorkflowRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetWorkflowRequestNotFoundError
     Workflow:
       type: object
       properties:
@@ -119,6 +111,29 @@ components:
           items:
             $ref: '#/components/schemas/WorkflowPhasesItems'
       title: Workflow
+    WorkflowCreatedBy:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User identifier
+        firstName:
+          type: string
+          description: User first name
+        lastName:
+          type: string
+          description: User last name
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to user avatar image
+      title: WorkflowCreatedBy
+    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
     WorkflowPhasesItems:
       type: object
       properties:
@@ -153,11 +168,14 @@ components:
       - PROJECT
       description: Workflow type
       title: WorkflowType
-    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
+    GetWorkflowRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetWorkflowRequestNotFoundError
     GetWorkflowRequestUnauthorizedError:
       type: object
       properties:
@@ -166,24 +184,6 @@ components:
         code:
           $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetWorkflowRequestUnauthorizedError
-    WorkflowCreatedBy:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: User identifier
-        firstName:
-          type: string
-          description: User first name
-        lastName:
-          type: string
-          description: User last name
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-          description: URL to user avatar image
-      title: WorkflowCreatedBy
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

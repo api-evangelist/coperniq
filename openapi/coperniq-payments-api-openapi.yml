@@ -332,67 +332,6 @@ paths:
                 $ref: '#/components/schemas/GetBillPaymentRequestNotFoundError'
 components:
   schemas:
-    InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode
-    CreateBillPaymentRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateBillPaymentRequestNotFoundError
-    ListInvoicePaymentsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListInvoicePaymentsRequestNotFoundError
-    ListBillPaymentsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListBillPaymentsRequestBadRequestError
-    BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode
-    BillPaymentCreatedBy:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-      title: BillPaymentCreatedBy
-    BillPaymentListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/BillPayment'
-      title: BillPaymentListResponse
-    BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode
     BillPayment:
       type: object
       properties:
@@ -453,35 +392,6 @@ components:
       - status
       - paymentMethod
       title: BillPayment
-    ListBillPaymentsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListBillPaymentsRequestUnauthorizedError
-    PaymentListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/Payment'
-      title: PaymentListResponse
-    CreateInvoicePaymentRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateInvoicePaymentRequestUnauthorizedError
-    GetBillPaymentRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetBillPaymentRequestUnauthorizedError
     CreateInvoicePaymentRequestNotFoundError:
       type: object
       properties:
@@ -490,14 +400,59 @@ components:
         code:
           $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
       title: CreateInvoicePaymentRequestNotFoundError
-    GetInvoicePaymentRequestNotFoundError:
+    ListBillPaymentsRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetInvoicePaymentRequestNotFoundError
+          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListBillPaymentsRequestUnauthorizedError
+    CreateBillPaymentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateBillPaymentRequestNotFoundError
+    BillPaymentListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/BillPayment'
+      title: BillPaymentListResponse
+    PaymentCreate:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Payment amount in dollars
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentCreatePaymentMethod'
+        paymentDate:
+          type: string
+          format: date-time
+        notes:
+          type: string
+          description: Optional notes about the payment
+        paymentReference:
+          type:
+          - string
+          - 'null'
+      required:
+      - amount
+      - paymentMethod
+      - paymentDate
+      title: PaymentCreate
+    ListInvoicePaymentsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListInvoicePaymentsRequestNotFoundError
     Payment:
       type: object
       properties:
@@ -558,6 +513,153 @@ components:
       - status
       - paymentMethod
       title: Payment
+    ListBillPaymentsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListBillPaymentsRequestBadRequestError
+    GetBillPaymentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetBillPaymentRequestUnauthorizedError
+    CreateInvoicePaymentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateInvoicePaymentRequestBadRequestError
+    ListBillPaymentsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListBillPaymentsRequestNotFoundError
+    InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode
+    ListInvoicePaymentsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListInvoicePaymentsRequestBadRequestError
+    CreateBillPaymentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateBillPaymentRequestBadRequestError
+    PaymentListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Payment'
+      title: PaymentListResponse
+    BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode
+    GetInvoicePaymentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetInvoicePaymentRequestUnauthorizedError
+    ListInvoicePaymentsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListInvoicePaymentsRequestUnauthorizedError
+    CreateInvoicePaymentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateInvoicePaymentRequestUnauthorizedError
+    BillPaymentCreatedBy:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+      title: BillPaymentCreatedBy
+    PaymentCreatePaymentMethod:
+      type: string
+      enum:
+      - CASH
+      - ACH
+      - CREDIT_CARD
+      - KLARNA
+      - AFFIRM
+      - CHECK
+      title: PaymentCreatePaymentMethod
+    BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode
+    CreateBillPaymentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateBillPaymentRequestUnauthorizedError
+    GetInvoicePaymentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetInvoicePaymentRequestBadRequestError
     GetBillPaymentRequestBadRequestError:
       type: object
       properties:
@@ -569,40 +671,37 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: GetBillPaymentRequestBadRequestError
-    InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode:
+    InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode
-    ListInvoicePaymentsRequestUnauthorizedError:
+      title: InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode
+    GetInvoicePaymentRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListInvoicePaymentsRequestUnauthorizedError
-    CreateBillPaymentRequestUnauthorizedError:
+          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetInvoicePaymentRequestNotFoundError
+    BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode
+    GetBillPaymentRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateBillPaymentRequestUnauthorizedError
+          $ref: '#/components/schemas/BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetBillPaymentRequestNotFoundError
     InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
       title: InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode
-    ListBillPaymentsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListBillPaymentsRequestNotFoundError
     PaymentCreatedBy:
       type: object
       properties:
@@ -617,105 +716,6 @@ components:
           - string
           - 'null'
       title: PaymentCreatedBy
-    PaymentCreatePaymentMethod:
-      type: string
-      enum:
-      - CASH
-      - ACH
-      - CREDIT_CARD
-      - KLARNA
-      - AFFIRM
-      - CHECK
-      title: PaymentCreatePaymentMethod
-    GetInvoicePaymentRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetInvoicePaymentRequestUnauthorizedError
-    PaymentCreate:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-          description: Payment amount in dollars
-        paymentMethod:
-          $ref: '#/components/schemas/PaymentCreatePaymentMethod'
-        paymentDate:
-          type: string
-          format: date-time
-        notes:
-          type: string
-          description: Optional notes about the payment
-        paymentReference:
-          type:
-          - string
-          - 'null'
-      required:
-      - amount
-      - paymentMethod
-      - paymentDate
-      title: PaymentCreate
-    GetBillPaymentRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetBillPaymentRequestNotFoundError
-    ListInvoicePaymentsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListInvoicePaymentsRequestBadRequestError
-    GetInvoicePaymentRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPaymentIdGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: GetInvoicePaymentRequestBadRequestError
-    CreateInvoicePaymentRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/InvoicesInvoiceIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateInvoicePaymentRequestBadRequestError
-    CreateBillPaymentRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateBillPaymentRequestBadRequestError
-    BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: BillsBillIdPaymentsPostResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

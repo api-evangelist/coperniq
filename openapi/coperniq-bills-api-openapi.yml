@@ -374,16 +374,99 @@ paths:
                 $ref: '#/components/schemas/GetProjectBillsRequestNotFoundError'
 components:
   schemas:
-    BillUpdateStatus:
+    ListBillsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListBillsRequestUnauthorizedError
+    BillLineItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Line item identifier
+        catalogItemId:
+          type: integer
+          description: Catalog item identifier
+        quantity:
+          type: integer
+          description: Quantity
+        unitCost:
+          type: number
+          format: double
+          description: Cost per unit (must be greater than 0 for bills)
+        unitPrice:
+          type: number
+          format: double
+          description: Price per unit (may be negative for discounts)
+        description:
+          type:
+          - string
+          - 'null'
+          description: Line item description
+        catalogItem:
+          oneOf:
+          - $ref: '#/components/schemas/BillLineItemCatalogItem'
+          - type: 'null'
+      required:
+      - id
+      - catalogItemId
+      - quantity
+      - unitCost
+      - unitPrice
+      title: BillLineItem
+    BillSection:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Existing section ID (omit for new sections)
+        name:
+          type:
+          - string
+          - 'null'
+          description: Section name (1–500 chars). Omit or pass null for an unnamed section.
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillLineItemCreate'
+          description: Line items within this section (at least one required). `unitCost` must be greater than 0.
+      required:
+      - lineItems
+      description: A named section grouping one or more bill line items.
+      title: BillSection
+    BillStatus:
       type: string
       enum:
+      - DRAFT
       - SENT
-      - PARTIALLY_PAID
+      - DECLINED
       - PAID
-      description: 'Bill status (LINE_ITEMS bills only). Only valid when `issueDate` is also provided.
-
-        '
-      title: BillUpdateStatus
+      - PARTIALLY_PAID
+      - OVERDUE
+      description: Bill status
+      title: BillStatus
+    BillsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: BillsPostResponsesContentApplicationJsonSchemaCode
+    UpdateBillRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateBillRequestNotFoundError
+    BillsBillIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdPatchResponsesContentApplicationJsonSchemaCode
     BillCreate:
       type: object
       properties:
@@ -456,75 +539,94 @@ components:
 
         '
       title: BillCreate
-    BillLineItemCatalogItem:
+    BillListResponse:
       type: object
       properties:
-        id:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bill'
+          description: List of bills
+        page:
           type: integer
-        name:
-          type: string
-        manufacturer:
-          type:
-          - string
-          - 'null'
-        sku:
-          type:
-          - string
-          - 'null'
-        type:
-          $ref: '#/components/schemas/BillLineItemCatalogItemType'
-      title: BillLineItemCatalogItem
-    BillLineItemCatalogItemType:
+          description: Current page number
+        page_size:
+          type: integer
+          description: Number of items per page
+        has_more:
+          type: boolean
+          description: Whether there are more items
+      required:
+      - items
+      - page
+      - page_size
+      - has_more
+      title: BillListResponse
+    ProjectsProjectIdBillsGetParametersOrderBy:
       type: string
       enum:
-      - PRODUCT
-      - SERVICE
-      title: BillLineItemCatalogItemType
-    BillCreateCalculationMethod:
-      type: string
-      enum:
-      - LINE_ITEMS
-      - PERCENTAGE
-      description: 'Calculation method. Cannot be changed after creation.
-
-        - `LINE_ITEMS`: requires `lineItems` or `sections`; allows `issueDate` and `status`
-
-        - `PERCENTAGE`: requires `percentage`; `issueDate`, `status`, `lineItems`, and `sections` are not allowed
-
-        '
-      title: BillCreateCalculationMethod
-    GetBillRequestUnauthorizedError:
+      - asc
+      - desc
+      default: asc
+      title: ProjectsProjectIdBillsGetParametersOrderBy
+    CreateBillRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/BillsBillIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetBillRequestUnauthorizedError
-    ListBillsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/BillsPostResponsesContentApplicationJsonSchemaCode'
         field:
           type: string
           description: Field that caused the validation error (if applicable)
-      title: ListBillsRequestBadRequestError
-    DeleteBillRequestUnauthorizedError:
+      title: CreateBillRequestBadRequestError
+    BillUpdate:
       type: object
       properties:
-        message:
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillLineItemCreate'
+          description: Flat array of line items (LINE_ITEMS bills only). May be combined with `sections` (a catalogItemId may appear only once across both).
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillSection'
+          description: Grouped line items with named sections (LINE_ITEMS bills only). May be combined with `lineItems` (ungrouped items).
+        percentage:
+          type: number
+          format: double
+          description: Percentage value (PERCENTAGE bills only)
+        dueDate:
           type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteBillRequestUnauthorizedError
-    BillsBillIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: BillsBillIdDeleteResponsesContentApplicationJsonSchemaCode
+          format: date-time
+          description: Due date (ISO 8601 datetime string)
+        issueDate:
+          type: string
+          format: date-time
+          description: 'Issue date (LINE_ITEMS bills only). When provided, `status` must also be provided and must not be `DRAFT`.
+
+            '
+        status:
+          $ref: '#/components/schemas/BillUpdateStatus'
+          description: 'Bill status (LINE_ITEMS bills only). Only valid when `issueDate` is also provided.
+
+            '
+        description:
+          type:
+          - string
+          - 'null'
+          description: Bill description
+      description: 'All fields are optional. `calculationMethod` cannot be changed after creation.
+
+
+        **PERCENTAGE bills** — only `description`, `dueDate`, and `percentage` may be updated.
+
+
+        **LINE_ITEMS bills** — `lineItems`, `sections`, or both may be updated (a `catalogItemId` may appear at most once across the flattened set). `issueDate` and `status` must be provided together; when `issueDate` is provided, `status` must be `SENT`, `PARTIALLY_PAID`, or `PAID`.
+
+        '
+      title: BillUpdate
     BillLineItemCreate:
       type: object
       properties:
@@ -557,6 +659,20 @@ components:
       - unitCost
       - unitPrice
       title: BillLineItemCreate
+    BillAccount:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+      title: BillAccount
+    BillLineItemCatalogItemType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      title: BillLineItemCatalogItemType
     Bill:
       type: object
       properties:
@@ -654,14 +770,13 @@ components:
       - createdAt
       - updatedAt
       title: Bill
-    UpdateBillRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateBillRequestUnauthorizedError
+    BillsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: BillsGetParametersOrderBy
     GetProjectBillsRequestBadRequestError:
       type: object
       properties:
@@ -673,40 +788,6 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: GetProjectBillsRequestBadRequestError
-    BillsBillIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: BillsBillIdGetResponsesContentApplicationJsonSchemaCode
-    BillAccount:
-      type: object
-      properties:
-        id:
-          type: integer
-        title:
-          type: string
-      title: BillAccount
-    BillStatus:
-      type: string
-      enum:
-      - DRAFT
-      - SENT
-      - DECLINED
-      - PAID
-      - PARTIALLY_PAID
-      - OVERDUE
-      description: Bill status
-      title: BillStatus
-    ProjectsProjectIdBillsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdBillsGetResponsesContentApplicationJsonSchemaCode
-    BillsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: BillsPostResponsesContentApplicationJsonSchemaCode
     DeleteBillRequestNotFoundError:
       type: object
       properties:
@@ -715,190 +796,24 @@ components:
         code:
           $ref: '#/components/schemas/BillsBillIdDeleteResponsesContentApplicationJsonSchemaCode'
       title: DeleteBillRequestNotFoundError
-    CreateBillRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateBillRequestUnauthorizedError
-    CreateBillRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateBillRequestBadRequestError
-    ListBillsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/BillsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListBillsRequestUnauthorizedError
-    BillUpdate:
-      type: object
-      properties:
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillLineItemCreate'
-          description: Flat array of line items (LINE_ITEMS bills only). May be combined with `sections` (a catalogItemId may appear only once across both).
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillSection'
-          description: Grouped line items with named sections (LINE_ITEMS bills only). May be combined with `lineItems` (ungrouped items).
-        percentage:
-          type: number
-          format: double
-          description: Percentage value (PERCENTAGE bills only)
-        dueDate:
-          type: string
-          format: date-time
-          description: Due date (ISO 8601 datetime string)
-        issueDate:
-          type: string
-          format: date-time
-          description: 'Issue date (LINE_ITEMS bills only). When provided, `status` must also be provided and must not be `DRAFT`.
-
-            '
-        status:
-          $ref: '#/components/schemas/BillUpdateStatus'
-          description: 'Bill status (LINE_ITEMS bills only). Only valid when `issueDate` is also provided.
-
-            '
-        description:
-          type:
-          - string
-          - 'null'
-          description: Bill description
-      description: 'All fields are optional. `calculationMethod` cannot be changed after creation.
-
-
-        **PERCENTAGE bills** — only `description`, `dueDate`, and `percentage` may be updated.
-
-
-        **LINE_ITEMS bills** — `lineItems`, `sections`, or both may be updated (a `catalogItemId` may appear at most once across the flattened set). `issueDate` and `status` must be provided together; when `issueDate` is provided, `status` must be `SENT`, `PARTIALLY_PAID`, or `PAID`.
-
-        '
-      title: BillUpdate
-    BillsBillIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: BillsBillIdPatchResponsesContentApplicationJsonSchemaCode
-    BillLineItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Line item identifier
-        catalogItemId:
-          type: integer
-          description: Catalog item identifier
-        quantity:
-          type: integer
-          description: Quantity
-        unitCost:
-          type: number
-          format: double
-          description: Cost per unit (must be greater than 0 for bills)
-        unitPrice:
-          type: number
-          format: double
-          description: Price per unit (may be negative for discounts)
-        description:
-          type:
-          - string
-          - 'null'
-          description: Line item description
-        catalogItem:
-          oneOf:
-          - $ref: '#/components/schemas/BillLineItemCatalogItem'
-          - type: 'null'
-      required:
-      - id
-      - catalogItemId
-      - quantity
-      - unitCost
-      - unitPrice
-      title: BillLineItem
-    BillType:
-      type: string
-      enum:
-      - BILL
-      description: Document type
-      title: BillType
-    BillsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: BillsGetResponsesContentApplicationJsonSchemaCode
-    GetProjectBillsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdBillsGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectBillsRequestNotFoundError
-    BillsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: BillsGetParametersOrderBy
-    ProjectsProjectIdBillsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: ProjectsProjectIdBillsGetParametersOrderBy
-    BillSection:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Existing section ID (omit for new sections)
-        name:
-          type:
-          - string
-          - 'null'
-          description: Section name (1–500 chars). Omit or pass null for an unnamed section.
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillLineItemCreate'
-          description: Line items within this section (at least one required). `unitCost` must be greater than 0.
-      required:
-      - lineItems
-      description: A named section grouping one or more bill line items.
-      title: BillSection
-    GetProjectBillsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdBillsGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectBillsRequestUnauthorizedError
-    UpdateBillRequestNotFoundError:
+    UpdateBillRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/BillsBillIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateBillRequestNotFoundError
+      title: UpdateBillRequestUnauthorizedError
+    ProjectsProjectIdBillsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdBillsGetResponsesContentApplicationJsonSchemaCode
+    BillsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: BillsGetResponsesContentApplicationJsonSchemaCode
     UpdateBillRequestBadRequestError:
       type: object
       properties:
@@ -910,14 +825,16 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: UpdateBillRequestBadRequestError
-    GetBillRequestNotFoundError:
+    BillRecord:
       type: object
       properties:
-        message:
+        id:
+          type: integer
+        uid:
+          type: integer
+        title:
           type: string
-        code:
-          $ref: '#/components/schemas/BillsBillIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetBillRequestNotFoundError
+      title: BillRecord
     BillCreateStatus:
       type: string
       enum:
@@ -930,39 +847,122 @@ components:
 
         '
       title: BillCreateStatus
-    BillRecord:
+    GetBillRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetBillRequestNotFoundError
+    CreateBillRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateBillRequestUnauthorizedError
+    ListBillsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListBillsRequestBadRequestError
+    GetProjectBillsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdBillsGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectBillsRequestUnauthorizedError
+    BillType:
+      type: string
+      enum:
+      - BILL
+      description: Document type
+      title: BillType
+    BillUpdateStatus:
+      type: string
+      enum:
+      - SENT
+      - PARTIALLY_PAID
+      - PAID
+      description: 'Bill status (LINE_ITEMS bills only). Only valid when `issueDate` is also provided.
+
+        '
+      title: BillUpdateStatus
+    BillsBillIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdGetResponsesContentApplicationJsonSchemaCode
+    BillLineItemCatalogItem:
       type: object
       properties:
         id:
           type: integer
-        uid:
-          type: integer
-        title:
+        name:
           type: string
-      title: BillRecord
-    BillListResponse:
+        manufacturer:
+          type:
+          - string
+          - 'null'
+        sku:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/BillLineItemCatalogItemType'
+      title: BillLineItemCatalogItem
+    BillsBillIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: BillsBillIdDeleteResponsesContentApplicationJsonSchemaCode
+    BillCreateCalculationMethod:
+      type: string
+      enum:
+      - LINE_ITEMS
+      - PERCENTAGE
+      description: 'Calculation method. Cannot be changed after creation.
+
+        - `LINE_ITEMS`: requires `lineItems` or `sections`; allows `issueDate` and `status`
+
+        - `PERCENTAGE`: requires `percentage`; `issueDate`, `status`, `lineItems`, and `sections` are not allowed
+
+        '
+      title: BillCreateCalculationMethod
+    DeleteBillRequestUnauthorizedError:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Bill'
-          description: List of bills
-        page:
-          type: integer
-          description: Current page number
-        page_size:
-          type: integer
-          description: Number of items per page
-        has_more:
-          type: boolean
-          description: Whether there are more items
-      required:
-      - items
-      - page
-      - page_size
-      - has_more
-      title: BillListResponse
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteBillRequestUnauthorizedError
+    GetBillRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/BillsBillIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetBillRequestUnauthorizedError
+    GetProjectBillsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdBillsGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectBillsRequestNotFoundError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

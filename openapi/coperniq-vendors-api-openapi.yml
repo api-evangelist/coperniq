@@ -500,30 +500,6 @@ paths:
                 $ref: '#/components/schemas/DeleteVendorProjectLinkRequestNotFoundError'
 components:
   schemas:
-    DeleteVendorProjectLinkRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteVendorProjectLinkRequestNotFoundError
-    Vendors_deleteVendorProjectLink_Response_200:
-      type: object
-      properties:
-        message:
-          type: string
-      title: Vendors_deleteVendorProjectLink_Response_200
-    VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode
-    ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode
     CreateVendorRequestBadRequestError:
       type: object
       properties:
@@ -535,6 +511,48 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: CreateVendorRequestBadRequestError
+    DeleteVendorRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteVendorRequestUnauthorizedError
+    VendorsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: VendorsGetParametersOrderBy
+    ListVendorsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListVendorsRequestUnauthorizedError
+    VendorVendorType:
+      type: string
+      enum:
+      - CONSULTANT
+      - FINANCING
+      - LOGISTICS
+      - MANUFACTURER
+      - SUBCONTRACTOR
+      - SUPPLIER
+      description: The type of vendor
+      title: VendorVendorType
+    CreateVendorRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateVendorRequestUnauthorizedError
     VendorUpdateVendorType:
       type: string
       enum:
@@ -552,19 +570,14 @@ components:
         message:
           type: string
       title: Vendors_createVendorProjectLink_Response_200
-    VendorsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: VendorsPostResponsesContentApplicationJsonSchemaCode
-    DeleteVendorRequestNotFoundError:
+    SearchVendorsRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteVendorRequestNotFoundError
+          $ref: '#/components/schemas/VendorsSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchVendorsRequestUnauthorizedError
     VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
@@ -617,22 +630,6 @@ components:
             description: Any type
           description: Custom fields
       title: VendorUpdate
-    ListVendorsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListVendorsRequestUnauthorizedError
-    GetVendorRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetVendorRequestUnauthorizedError
     UpdateVendorRequestUnauthorizedError:
       type: object
       properties:
@@ -641,6 +638,170 @@ components:
         code:
           $ref: '#/components/schemas/VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode'
       title: UpdateVendorRequestUnauthorizedError
+    SearchVendorsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsSearchGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: SearchVendorsRequestBadRequestError
+    VendorsSearchGetParametersLogic:
+      type: string
+      enum:
+      - and
+      - or
+      default: and
+      title: VendorsSearchGetParametersLogic
+    CreateVendorProjectLinkRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateVendorProjectLinkRequestNotFoundError
+    Vendors_deleteVendorProjectLink_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Vendors_deleteVendorProjectLink_Response_200
+    VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode
+    VendorsSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: VendorsSearchGetResponsesContentApplicationJsonSchemaCode
+    DeleteVendorProjectLinkRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteVendorProjectLinkRequestUnauthorizedError
+    GetVendorRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetVendorRequestNotFoundError
+    UpdateVendorRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateVendorRequestNotFoundError
+    GetVendorRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetVendorRequestUnauthorizedError
+    DeleteVendorProjectLinkRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteVendorProjectLinkRequestNotFoundError
+    VendorCreateVendorType:
+      type: string
+      enum:
+      - CONSULTANT
+      - FINANCING
+      - LOGISTICS
+      - MANUFACTURER
+      - SUBCONTRACTOR
+      - SUPPLIER
+      description: The type of vendor
+      title: VendorCreateVendorType
+    VendorsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: VendorsGetResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode
+    CreateVendorProjectLinkRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateVendorProjectLinkRequestUnauthorizedError
+    VendorsGetParametersVendorType:
+      type: string
+      enum:
+      - CONSULTANT
+      - FINANCING
+      - LOGISTICS
+      - MANUFACTURER
+      - SUBCONTRACTOR
+      - SUPPLIER
+      title: VendorsGetParametersVendorType
+    VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode
+    DeleteVendorRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteVendorRequestNotFoundError
+    VendorsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: VendorsPostResponsesContentApplicationJsonSchemaCode
+    VendorsSearchGetParametersOp1:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: VendorsSearchGetParametersOp1
+    UpdateVendorRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateVendorRequestBadRequestError
     VendorCreate:
       type: object
       properties:
@@ -692,6 +853,20 @@ components:
       - name
       - vendorType
       title: VendorCreate
+    VendorsSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: VendorsSearchGetParametersOp2
     Vendor:
       type: object
       properties:
@@ -757,186 +932,11 @@ components:
             description: Any type
           description: Custom fields
       title: Vendor
-    ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode:
+    ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode
-    DeleteVendorProjectLinkRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteVendorProjectLinkRequestUnauthorizedError
-    VendorsSearchGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: VendorsSearchGetResponsesContentApplicationJsonSchemaCode
-    GetVendorRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsVendorIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetVendorRequestNotFoundError
-    SearchVendorsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsSearchGetResponsesContentApplicationJsonSchemaCode'
-      title: SearchVendorsRequestUnauthorizedError
-    VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode
-    UpdateVendorRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateVendorRequestNotFoundError
-    SearchVendorsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsSearchGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: SearchVendorsRequestBadRequestError
-    VendorsSearchGetParametersOp1:
-      type: string
-      enum:
-      - eq
-      - neq
-      - gt
-      - gte
-      - lt
-      - lte
-      - contains
-      - in
-      - nin
-      - between
-      title: VendorsSearchGetParametersOp1
-    CreateVendorProjectLinkRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateVendorProjectLinkRequestUnauthorizedError
-    VendorsSearchGetParametersLogic:
-      type: string
-      enum:
-      - and
-      - or
-      default: and
-      title: VendorsSearchGetParametersLogic
-    VendorCreateVendorType:
-      type: string
-      enum:
-      - CONSULTANT
-      - FINANCING
-      - LOGISTICS
-      - MANUFACTURER
-      - SUBCONTRACTOR
-      - SUPPLIER
-      description: The type of vendor
-      title: VendorCreateVendorType
-    VendorsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: VendorsGetParametersOrderBy
-    VendorsGetParametersVendorType:
-      type: string
-      enum:
-      - CONSULTANT
-      - FINANCING
-      - LOGISTICS
-      - MANUFACTURER
-      - SUBCONTRACTOR
-      - SUPPLIER
-      title: VendorsGetParametersVendorType
-    DeleteVendorRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteVendorRequestUnauthorizedError
-    UpdateVendorRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsVendorIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateVendorRequestBadRequestError
-    CreateVendorProjectLinkRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdVendorsVendorIdPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateVendorProjectLinkRequestNotFoundError
-    VendorsSearchGetParametersOp2:
-      type: string
-      enum:
-      - eq
-      - neq
-      - gt
-      - gte
-      - lt
-      - lte
-      - contains
-      - in
-      - nin
-      - between
-      title: VendorsSearchGetParametersOp2
-    CreateVendorRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/VendorsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateVendorRequestUnauthorizedError
-    VendorVendorType:
-      type: string
-      enum:
-      - CONSULTANT
-      - FINANCING
-      - LOGISTICS
-      - MANUFACTURER
-      - SUBCONTRACTOR
-      - SUPPLIER
-      description: The type of vendor
-      title: VendorVendorType
-    VendorsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: VendorsGetResponsesContentApplicationJsonSchemaCode
+      title: ProjectsProjectIdVendorsVendorIdDeleteResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

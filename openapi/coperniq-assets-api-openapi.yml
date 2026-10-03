@@ -232,17 +232,73 @@ paths:
               $ref: '#/components/schemas/AssetUpdate'
 components:
   schemas:
-    UpdateAssetRequestBadRequestError:
+    ListAssetsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListAssetsRequestBadRequestError
+    GetAssetRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAssetRequestUnauthorizedError
+    UpdateAssetRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAssetRequestNotFoundError
+    AssetsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AssetsPostResponsesContentApplicationJsonSchemaCode
+    CreateAssetRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsPostResponsesContentApplicationJsonSchemaCode'
         field:
           type: string
           description: Field that caused the validation error (if applicable)
-      title: UpdateAssetRequestBadRequestError
+      title: CreateAssetRequestBadRequestError
+    UpdateAssetRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAssetRequestUnauthorizedError
+    AssetsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: AssetsGetParametersOrderBy
+    AssetsGetParametersIsArchived:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+      - '1'
+      - '0'
+      default: 'false'
+      title: AssetsGetParametersIsArchived
     ListAssetsRequestUnauthorizedError:
       type: object
       properties:
@@ -251,11 +307,72 @@ components:
         code:
           $ref: '#/components/schemas/AssetsGetResponsesContentApplicationJsonSchemaCode'
       title: ListAssetsRequestUnauthorizedError
+    AssetCreate:
+      type: object
+      properties:
+        accountId:
+          type: integer
+          description: ID of the account (project with type ACCOUNT) the asset should belong to.
+        siteId:
+          type: integer
+        type:
+          $ref: '#/components/schemas/AssetType'
+        manufacturer:
+          type: string
+        model:
+          type: string
+        serialNumber:
+          type: string
+        status:
+          $ref: '#/components/schemas/AssetStatus'
+        size:
+          type: number
+          format: double
+        labelIds:
+          type: array
+          items:
+            type: integer
+          description: Label IDs to attach to the asset.
+        installDate:
+          type: string
+          format: date
+        manufacturingDate:
+          type: string
+          format: date
+        expectedLifetime:
+          type: number
+          format: double
+          description: Expected lifetime in years
+        description:
+          type: string
+        coverImageFileId:
+          type: integer
+        nameplateImageFileId:
+          type: integer
+      required:
+      - accountId
+      - siteId
+      - type
+      - manufacturer
+      - model
+      - serialNumber
+      description: Body for `POST /assets`.
+      title: AssetCreate
     AssetsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - UNAUTHORIZED
       title: AssetsGetResponsesContentApplicationJsonSchemaCode
+    AssetStatus:
+      type: string
+      enum:
+      - DRAFT
+      - ACTIVE
+      - MAINTENANCE
+      - INACTIVE
+      - RETIRED
+      description: Asset lifecycle status.
+      title: AssetStatus
     AssetUpdate:
       type: object
       properties:
@@ -309,104 +426,96 @@ components:
 
         '
       title: AssetUpdate
+    AssetLabelType:
+      type: string
+      enum:
+      - ASSET
+      - TASK
+      title: AssetLabelType
     AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
       title: AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode
-    CreateAssetRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateAssetRequestUnauthorizedError
-    ListAssetsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListAssetsRequestBadRequestError
-    AssetCreate:
-      type: object
-      properties:
-        accountId:
-          type: integer
-          description: ID of the account (project with type ACCOUNT) the asset should belong to.
-        siteId:
-          type: integer
-        type:
-          $ref: '#/components/schemas/AssetType'
-        manufacturer:
-          type: string
-        model:
-          type: string
-        serialNumber:
-          type: string
-        status:
-          $ref: '#/components/schemas/AssetStatus'
-        size:
-          type: number
-          format: double
-        labelIds:
-          type: array
-          items:
-            type: integer
-          description: Label IDs to attach to the asset.
-        installDate:
-          type: string
-          format: date
-        manufacturingDate:
-          type: string
-          format: date
-        expectedLifetime:
-          type: number
-          format: double
-          description: Expected lifetime in years
-        description:
-          type: string
-        coverImageFileId:
-          type: integer
-        nameplateImageFileId:
-          type: integer
-      required:
-      - accountId
-      - siteId
-      - type
-      - manufacturer
-      - model
-      - serialNumber
-      description: Body for `POST /assets`.
-      title: AssetCreate
-    GetAssetRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAssetRequestUnauthorizedError
-    AssetsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: AssetsGetParametersOrderBy
-    UpdateAssetRequestNotFoundError:
+    UpdateAssetRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAssetRequestNotFoundError
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateAssetRequestBadRequestError
+    GetAssetRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAssetRequestNotFoundError
+    AssetType:
+      type: string
+      enum:
+      - BATTERY_SYSTEM
+      - CHARGING_GATEWAY
+      - COMBINER_BOX
+      - EV_CHARGER
+      - LOAD_CENTER
+      - MICROINVERTER
+      - POWER_OPTIMIZER
+      - PRODUCTION_METER
+      - RAPID_SHUTDOWN_DEVICE
+      - PV_INVERTER
+      - TRACKER
+      - WEATHER_STATION
+      - AIR_CONDITIONER
+      - AIR_HANDLING_UNIT
+      - BOILER
+      - CHILLER
+      - COOLING_TOWER
+      - FAN
+      - HEAT_EXCHANGER
+      - HEAT_PUMP
+      - MAKE_UP_AIR_UNIT
+      - PUMP
+      - ROOFTOP_UNIT
+      - THERMOSTAT
+      - VARIABLE_FREQUENCY_DRIVE
+      - AUTOMATIC_TRANSFER_SWITCH
+      - BREAKER
+      - DISCONNECT_SWITCH
+      - ELECTRIC_METER
+      - GENERATOR
+      - LIGHTING_PANEL
+      - PANELBOARD
+      - SWITCHGEAR
+      - TRANSFORMER
+      - UNINTERRUPTIBLE_POWER_SUPPLY
+      - BACKFLOW_PREVENTER
+      - BOOSTER_PUMP
+      - GREASE_INTERCEPTOR
+      - STORAGE_TANK
+      - SUMP_PUMP
+      - VALVE
+      - WATER_FILTRATION_SYSTEM
+      - WATER_HEATER
+      - WATER_SOFTENER
+      - ACCESS_CONTROLLER
+      - AUTOMATION_CONTROLLER
+      - CAMERA
+      - CARD_READER
+      - DOOR_STRIKE
+      - MAGLOCK
+      - NETWORK_SWITCH
+      - NETWORK_VIDEO_RECORDER
+      - SENSOR
+      - WIRELESS_ACCESS_POINT
+      - OTHER
+      description: Asset type enum.
+      title: AssetType
     Asset:
       type: object
       properties:
@@ -500,85 +609,6 @@ components:
       - labels
       - isArchived
       title: Asset
-    AssetLabelType:
-      type: string
-      enum:
-      - ASSET
-      - TASK
-      title: AssetLabelType
-    AssetsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AssetsPostResponsesContentApplicationJsonSchemaCode
-    GetAssetRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAssetRequestNotFoundError
-    AssetType:
-      type: string
-      enum:
-      - BATTERY_SYSTEM
-      - CHARGING_GATEWAY
-      - COMBINER_BOX
-      - EV_CHARGER
-      - LOAD_CENTER
-      - MICROINVERTER
-      - POWER_OPTIMIZER
-      - PRODUCTION_METER
-      - RAPID_SHUTDOWN_DEVICE
-      - PV_INVERTER
-      - TRACKER
-      - WEATHER_STATION
-      - AIR_CONDITIONER
-      - AIR_HANDLING_UNIT
-      - BOILER
-      - CHILLER
-      - COOLING_TOWER
-      - FAN
-      - HEAT_EXCHANGER
-      - HEAT_PUMP
-      - MAKE_UP_AIR_UNIT
-      - PUMP
-      - ROOFTOP_UNIT
-      - THERMOSTAT
-      - VARIABLE_FREQUENCY_DRIVE
-      - AUTOMATIC_TRANSFER_SWITCH
-      - BREAKER
-      - DISCONNECT_SWITCH
-      - ELECTRIC_METER
-      - GENERATOR
-      - LIGHTING_PANEL
-      - PANELBOARD
-      - SWITCHGEAR
-      - TRANSFORMER
-      - UNINTERRUPTIBLE_POWER_SUPPLY
-      - BACKFLOW_PREVENTER
-      - BOOSTER_PUMP
-      - GREASE_INTERCEPTOR
-      - STORAGE_TANK
-      - SUMP_PUMP
-      - VALVE
-      - WATER_FILTRATION_SYSTEM
-      - WATER_HEATER
-      - WATER_SOFTENER
-      - ACCESS_CONTROLLER
-      - AUTOMATION_CONTROLLER
-      - CAMERA
-      - CARD_READER
-      - DOOR_STRIKE
-      - MAGLOCK
-      - NETWORK_SWITCH
-      - NETWORK_VIDEO_RECORDER
-      - SENSOR
-      - WIRELESS_ACCESS_POINT
-      - OTHER
-      description: Asset type enum.
-      title: AssetType
     AssetLabel:
       type: object
       properties:
@@ -598,49 +628,19 @@ components:
       - type
       description: Label attached to an asset (read-only expansion of the label id).
       title: AssetLabel
-    AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode
-    AssetsGetParametersIsArchived:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-      - '1'
-      - '0'
-      default: 'false'
-      title: AssetsGetParametersIsArchived
-    AssetStatus:
-      type: string
-      enum:
-      - DRAFT
-      - ACTIVE
-      - MAINTENANCE
-      - INACTIVE
-      - RETIRED
-      description: Asset lifecycle status.
-      title: AssetStatus
-    CreateAssetRequestBadRequestError:
+    CreateAssetRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/AssetsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateAssetRequestBadRequestError
-    UpdateAssetRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAssetRequestUnauthorizedError
+      title: CreateAssetRequestUnauthorizedError
+    AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -562,23 +562,24 @@ paths:
                 $ref: '#/components/schemas/DeleteOpportunityRequestNotFoundError'
 components:
   schemas:
-    UpdateOpportunityRequestUnauthorizedError:
+    OpportunitiesGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesGetParametersOrderBy
+    SearchOpportunitiesRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateOpportunityRequestUnauthorizedError
-    OpportunitiesPostParametersMatchBy:
-      type: string
-      enum:
-      - title
-      - primaryEmail
-      - primaryPhone
-      - address
-      default: title
-      title: OpportunitiesPostParametersMatchBy
+          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: SearchOpportunitiesRequestBadRequestError
     OpportunityPhase:
       type: object
       properties:
@@ -589,92 +590,6 @@ components:
         type:
           type: string
       title: OpportunityPhase
-    ProjectStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - ON_HOLD
-      - CANCELLED
-      - COMPLETED
-      description: 'Status of the project:
-
-        * `ACTIVE` - Project is active and in progress
-
-        * `ON_HOLD` - Project is temporarily paused
-
-        * `CANCELLED` - Project has been cancelled
-
-        * `COMPLETED` - Project has been completed
-
-        '
-      title: ProjectStatus
-    OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode
-    ListOpportunitiesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListOpportunitiesRequestUnauthorizedError
-    OpportunitiesPostParametersMatchFoundStrategy:
-      type: string
-      enum:
-      - skip
-      - replace
-      - enrich
-      default: skip
-      description: '- skip: Return existing record without changes
-
-        - replace: Replace existing record with new data
-
-        - enrich: Update only empty fields in existing record
-
-        '
-      title: OpportunitiesPostParametersMatchFoundStrategy
-    OpportunityProjectManager:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phone:
-          type:
-          - string
-          - 'null'
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-      title: OpportunityProjectManager
-    OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode
-    OpportunitiesSearchGetParametersOp2:
-      type: string
-      enum:
-      - eq
-      - neq
-      - gt
-      - gte
-      - lt
-      - lte
-      - contains
-      - in
-      - nin
-      - between
-      title: OpportunitiesSearchGetParametersOp2
     OpportunitySalesRep:
       type: object
       properties:
@@ -695,85 +610,11 @@ components:
           - string
           - 'null'
       title: OpportunitySalesRep
-    DeleteOpportunityRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteOpportunityRequestNotFoundError
-    SearchOpportunitiesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
-      title: SearchOpportunitiesRequestUnauthorizedError
-    PhaseTemplateSummary:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        type:
-          type: string
-        redSla:
-          type:
-          - integer
-          - 'null'
-        yellowSla:
-          type:
-          - integer
-          - 'null'
-      title: PhaseTemplateSummary
-    OpportunitiesSearchGetParametersLogic:
+    OpportunitiesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - and
-      - or
-      default: and
-      title: OpportunitiesSearchGetParametersLogic
-    DeleteOpportunityRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteOpportunityRequestUnauthorizedError
-    GetOpportunityRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetOpportunityRequestNotFoundError
-    UpdateOpportunityRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateOpportunityRequestBadRequestError
-    SearchOpportunitiesRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: SearchOpportunitiesRequestBadRequestError
+      - UNAUTHORIZED
+      title: OpportunitiesGetResponsesContentApplicationJsonSchemaCode
     Opportunity:
       type: object
       properties:
@@ -929,6 +770,117 @@ components:
 
             '
       title: Opportunity
+    DeleteOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteOpportunityRequestUnauthorizedError
+    OpportunitiesPostParametersMatchFoundStrategy:
+      type: string
+      enum:
+      - skip
+      - replace
+      - enrich
+      default: skip
+      description: '- skip: Return existing record without changes
+
+        - replace: Replace existing record with new data
+
+        - enrich: Update only empty fields in existing record
+
+        '
+      title: OpportunitiesPostParametersMatchFoundStrategy
+    OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode
+    OpportunityProjectManager:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunityProjectManager
+    CreateOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityRequestUnauthorizedError
+    PhaseInstance:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/PhaseInstanceStatus'
+        position:
+          type: integer
+        type:
+          type: string
+        phaseTemplateId:
+          type: integer
+        phaseTemplate:
+          $ref: '#/components/schemas/PhaseTemplateSummary'
+      title: PhaseInstance
+    OpportunitiesPostParametersMatchBy:
+      type: string
+      enum:
+      - title
+      - primaryEmail
+      - primaryPhone
+      - address
+      default: title
+      title: OpportunitiesPostParametersMatchBy
+    SearchOpportunitiesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchOpportunitiesRequestUnauthorizedError
+    UpdateOpportunityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateOpportunityRequestNotFoundError
+    OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode
+    OpportunitiesSearchGetParametersLogic:
+      type: string
+      enum:
+      - and
+      - or
+      default: and
+      title: OpportunitiesSearchGetParametersLogic
     UserSummary:
       type: object
       properties:
@@ -953,97 +905,6 @@ components:
           - 'null'
       description: Minimal user representation used in responses
       title: UserSummary
-    OpportunitiesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesGetResponsesContentApplicationJsonSchemaCode
-    OpportunitiesSearchGetParametersOp1:
-      type: string
-      enum:
-      - eq
-      - neq
-      - gt
-      - gte
-      - lt
-      - lte
-      - contains
-      - in
-      - nin
-      - between
-      title: OpportunitiesSearchGetParametersOp1
-    OpportunityJurisdiction:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        uuid:
-          type: string
-      title: OpportunityJurisdiction
-    OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode
-    PhaseInstanceStatus:
-      type: string
-      enum:
-      - NOT_STARTED
-      - IN_PROGRESS
-      - COMPLETED
-      title: PhaseInstanceStatus
-    UpdateOpportunityRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateOpportunityRequestNotFoundError
-    OpportunityOwner:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phone:
-          type:
-          - string
-          - 'null'
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-      title: OpportunityOwner
-    CreateOpportunityRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateOpportunityRequestUnauthorizedError
-    OpportunitiesGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: OpportunitiesGetParametersOrderBy
-    OpportunitiesSearchGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: OpportunitiesSearchGetParametersOrderBy
     OpportunityUpsert:
       type: object
       properties:
@@ -1105,24 +966,147 @@ components:
 
         '
       title: OpportunityUpsert
-    PhaseInstance:
+    OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode
+    OpportunitiesSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: OpportunitiesSearchGetParametersOp2
+    GetOpportunityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityRequestNotFoundError
+    UpdateOpportunityRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateOpportunityRequestBadRequestError
+    OpportunitiesSearchGetParametersOp1:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: OpportunitiesSearchGetParametersOp1
+    PhaseTemplateSummary:
       type: object
       properties:
         id:
           type: integer
         name:
           type: string
-        status:
-          $ref: '#/components/schemas/PhaseInstanceStatus'
-        position:
-          type: integer
         type:
           type: string
-        phaseTemplateId:
+        redSla:
+          type:
+          - integer
+          - 'null'
+        yellowSla:
+          type:
+          - integer
+          - 'null'
+      title: PhaseTemplateSummary
+    OpportunityOwner:
+      type: object
+      properties:
+        id:
           type: integer
-        phaseTemplate:
-          $ref: '#/components/schemas/PhaseTemplateSummary'
-      title: PhaseInstance
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunityOwner
+    ListOpportunitiesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListOpportunitiesRequestUnauthorizedError
+    DeleteOpportunityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteOpportunityRequestNotFoundError
+    OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode
+    OpportunityJurisdiction:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        uuid:
+          type: string
+      title: OpportunityJurisdiction
+    GetOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityRequestUnauthorizedError
+    OpportunitiesSearchGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesSearchGetParametersOrderBy
+    OpportunitiesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesPostResponsesContentApplicationJsonSchemaCode
     CreateOpportunityRequestBadRequestError:
       type: object
       properties:
@@ -1134,24 +1118,40 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: CreateOpportunityRequestBadRequestError
-    GetOpportunityRequestUnauthorizedError:
+    UpdateOpportunityRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetOpportunityRequestUnauthorizedError
-    OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateOpportunityRequestUnauthorizedError
+    ProjectStatus:
       type: string
       enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode
-    OpportunitiesPostResponsesContentApplicationJsonSchemaCode:
+      - ACTIVE
+      - ON_HOLD
+      - CANCELLED
+      - COMPLETED
+      description: 'Status of the project:
+
+        * `ACTIVE` - Project is active and in progress
+
+        * `ON_HOLD` - Project is temporarily paused
+
+        * `CANCELLED` - Project has been cancelled
+
+        * `COMPLETED` - Project has been completed
+
+        '
+      title: ProjectStatus
+    PhaseInstanceStatus:
       type: string
       enum:
-      - UNAUTHORIZED
-      title: OpportunitiesPostResponsesContentApplicationJsonSchemaCode
+      - NOT_STARTED
+      - IN_PROGRESS
+      - COMPLETED
+      title: PhaseInstanceStatus
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
