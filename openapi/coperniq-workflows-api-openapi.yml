@@ -77,6 +77,35 @@ paths:
                 $ref: '#/components/schemas/GetWorkflowRequestNotFoundError'
 components:
   schemas:
+    WorkflowCreatedBy:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User identifier
+        firstName:
+          type: string
+          description: User first name
+        lastName:
+          type: string
+          description: User last name
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to user avatar image
+      title: WorkflowCreatedBy
+    WorkflowType:
+      type: string
+      enum:
+      - PROJECT
+      description: Workflow type
+      title: WorkflowType
+    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
     Workflow:
       type: object
       properties:
@@ -111,29 +140,14 @@ components:
           items:
             $ref: '#/components/schemas/WorkflowPhasesItems'
       title: Workflow
-    WorkflowCreatedBy:
+    GetWorkflowRequestUnauthorizedError:
       type: object
       properties:
-        id:
-          type: integer
-          description: User identifier
-        firstName:
+        message:
           type: string
-          description: User first name
-        lastName:
-          type: string
-          description: User last name
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-          description: URL to user avatar image
-      title: WorkflowCreatedBy
-    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
+        code:
+          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetWorkflowRequestUnauthorizedError
     WorkflowPhasesItems:
       type: object
       properties:
@@ -162,12 +176,6 @@ components:
           - 'null'
           description: Yellow SLA (Service Level Agreement) in days
       title: WorkflowPhasesItems
-    WorkflowType:
-      type: string
-      enum:
-      - PROJECT
-      description: Workflow type
-      title: WorkflowType
     GetWorkflowRequestNotFoundError:
       type: object
       properties:
@@ -176,14 +184,6 @@ components:
         code:
           $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetWorkflowRequestNotFoundError
-    GetWorkflowRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetWorkflowRequestUnauthorizedError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

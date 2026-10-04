@@ -70,6 +70,15 @@ paths:
                 $ref: '#/components/schemas/Properties_listProperties_Response_200'
 components:
   schemas:
+    PropertiesGetParametersRecordType:
+      type: string
+      enum:
+      - account
+      - opportunity
+      - project
+      - vendor
+      - ahj
+      title: PropertiesGetParametersRecordType
     Property:
       type: object
       properties:
@@ -134,15 +143,6 @@ components:
             $ref: '#/components/schemas/Property'
           description: Deprecated alias for `opportunity`. Contains identical data.
       title: Properties_listProperties_Response_200
-    PropertiesGetParametersRecordType:
-      type: string
-      enum:
-      - account
-      - opportunity
-      - project
-      - vendor
-      - ahj
-      title: PropertiesGetParametersRecordType
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

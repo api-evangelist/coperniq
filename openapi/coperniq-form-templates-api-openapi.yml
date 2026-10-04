@@ -165,233 +165,6 @@ paths:
               $ref: '#/components/schemas/FormTemplateUpdate'
 components:
   schemas:
-    FormTemplatePropertyInputOptions:
-      type: object
-      properties: {}
-      description: Field-type-specific configuration (e.g. dropdown choices).
-      title: FormTemplatePropertyInputOptions
-    FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode
-    FormTemplateDetailAssignee:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-      description: Direct user assignment. Null if assigneeProperty is used instead.
-      title: FormTemplateDetailAssignee
-    FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode
-    GetFormTemplateByIdRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetFormTemplateByIdRequestUnauthorizedError
-    UpdateFormTemplateRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateFormTemplateRequestNotFoundError
-    UpdateFormTemplateRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateFormTemplateRequestBadRequestError
-    FormTemplatePropertyInputType:
-      type: string
-      enum:
-      - TEXT
-      - NUMERIC
-      - DROPDOWN
-      - FILE
-      description: 'Field type. Required when projectPropertyKey is not provided. TEXT = text input, NUMERIC = number input, DROPDOWN = single or multi-select (set multiple: true for multi-select), FILE = file attachment.
-
-        '
-      title: FormTemplatePropertyInputType
-    GetFormTemplateByIdRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: GetFormTemplateByIdRequestBadRequestError
-    FormTemplateDetailLabelsItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        label:
-          type: string
-        color:
-          type: string
-      title: FormTemplateDetailLabelsItems
-    ListFormTemplatesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/FormTemplatesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListFormTemplatesRequestUnauthorizedError
-    FormTemplateSummary:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Form template identifier
-        name:
-          type: string
-          description: Template name
-        fileId:
-          type:
-          - integer
-          - 'null'
-          description: Associated file identifier
-        isArchived:
-          type: boolean
-          description: Whether the template is archived
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        createdBy:
-          oneOf:
-          - $ref: '#/components/schemas/FormTemplateSummaryCreatedBy'
-          - type: 'null'
-        parentWorkOrderTemplateId:
-          type:
-          - integer
-          - 'null'
-      title: FormTemplateSummary
-    FormTemplateChildLayoutColumn:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        type:
-          type: string
-        multiple:
-          type: boolean
-        isRequired:
-          type: boolean
-        isReadOnly:
-          type: boolean
-      description: Field metadata
-      title: FormTemplateChildLayoutColumn
-    FormTemplateSummaryCreatedBy:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-      title: FormTemplateSummaryCreatedBy
-    FormTemplatesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: FormTemplatesGetResponsesContentApplicationJsonSchemaCode
-    FormTemplateChildLayout:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Layout row identifier
-        name:
-          type:
-          - string
-          - 'null'
-        type:
-          $ref: '#/components/schemas/FormTemplateChildLayoutType'
-        columnId:
-          type:
-          - integer
-          - 'null'
-          description: Column (property) identifier
-        column:
-          $ref: '#/components/schemas/FormTemplateChildLayoutColumn'
-          description: Field metadata
-      title: FormTemplateChildLayout
-    FormTemplateLayoutInput:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: 'ID of an existing group from a recent GET response. When provided without other fields, the API carries forward the group''s current name. Note: IDs change after every update — only use an id obtained from the most recent GET on this template.
-
-            '
-        name:
-          type:
-          - string
-          - 'null'
-          description: Group title displayed above the fields.
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/FormTemplatePropertyInput'
-          description: Ordered list of fields inside this group.
-      description: A form group containing a title and an ordered list of field properties.
-      title: FormTemplateLayoutInput
-    FormTemplateDetailCollaboratorsItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-      title: FormTemplateDetailCollaboratorsItems
-    GetFormTemplateByIdRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetFormTemplateByIdRequestNotFoundError
-    FormTemplateChildLayoutType:
-      type: string
-      enum:
-      - COLUMN
-      title: FormTemplateChildLayoutType
     FormTemplateUpdate:
       type: object
       properties:
@@ -457,13 +230,27 @@ components:
           - 'null'
           description: Number of days after creation that the form is due.
       title: FormTemplateUpdate
-    FormTemplateLayoutType:
-      type: string
-      enum:
-      - GROUP
-      - COLUMN
-      description: GROUP = section header containing child items in properties. COLUMN = an actual form field.
-      title: FormTemplateLayoutType
+    FormTemplateChildLayout:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Layout row identifier
+        name:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/FormTemplateChildLayoutType'
+        columnId:
+          type:
+          - integer
+          - 'null'
+          description: Column (property) identifier
+        column:
+          $ref: '#/components/schemas/FormTemplateChildLayoutColumn'
+          description: Field metadata
+      title: FormTemplateChildLayout
     FormTemplateLayoutColumn:
       type: object
       properties:
@@ -482,14 +269,6 @@ components:
           type: boolean
       description: Field metadata. Only present for COLUMN type.
       title: FormTemplateLayoutColumn
-    UpdateFormTemplateRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateFormTemplateRequestUnauthorizedError
     FormTemplateLayout:
       type: object
       properties:
@@ -523,6 +302,176 @@ components:
             $ref: '#/components/schemas/FormTemplateChildLayout'
           description: Deprecated alias of properties; kept for backward compatibility. Use properties instead.
       title: FormTemplateLayout
+    FormTemplateDetailAssignee:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+      description: Direct user assignment. Null if assigneeProperty is used instead.
+      title: FormTemplateDetailAssignee
+    ListFormTemplatesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormTemplatesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListFormTemplatesRequestUnauthorizedError
+    FormTemplateSummaryCreatedBy:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+      title: FormTemplateSummaryCreatedBy
+    FormTemplateDetailCollaboratorsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+      title: FormTemplateDetailCollaboratorsItems
+    FormTemplatePropertyInputOptions:
+      type: object
+      properties: {}
+      description: Field-type-specific configuration (e.g. dropdown choices).
+      title: FormTemplatePropertyInputOptions
+    UpdateFormTemplateRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateFormTemplateRequestNotFoundError
+    FormTemplateSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Form template identifier
+        name:
+          type: string
+          description: Template name
+        fileId:
+          type:
+          - integer
+          - 'null'
+          description: Associated file identifier
+        isArchived:
+          type: boolean
+          description: Whether the template is archived
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/FormTemplateSummaryCreatedBy'
+          - type: 'null'
+        parentWorkOrderTemplateId:
+          type:
+          - integer
+          - 'null'
+      title: FormTemplateSummary
+    FormTemplateDetailLabelsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+        label:
+          type: string
+        color:
+          type: string
+      title: FormTemplateDetailLabelsItems
+    FormTemplateDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Form template identifier
+        name:
+          type: string
+          description: Template name
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        assignee:
+          oneOf:
+          - $ref: '#/components/schemas/FormTemplateDetailAssignee'
+          - type: 'null'
+          description: Direct user assignment. Null if assigneeProperty is used instead.
+        assigneeProperty:
+          type:
+          - string
+          - 'null'
+          description: 'Property-based assignee key. Returns a standard key (`OWNER`, `SALES_REP`, `PROJECT_MANAGER`, `CREATED_BY`) or the keyName of a custom PERSON property. Null if a direct user assignee is set.
+
+            '
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormTemplateDetailCollaboratorsItems'
+          description: Direct user collaborators.
+        collaboratorProperties:
+          type: array
+          items:
+            type: string
+          description: 'Property-based collaborator keys. Each value is a standard key (`OWNER`, `SALES_REP`, `PROJECT_MANAGER`, `CREATED_BY`) or the keyName of a custom PERSON property.
+
+            '
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormTemplateDetailLabelsItems'
+        dueDateXDaysAfter:
+          type:
+          - integer
+          - 'null'
+          description: Number of days after creation that the form is due
+        formLayouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormTemplateLayout'
+          description: Top-level layout items (GROUP sections and standalone COLUMN fields). Only root-level items are returned; child items are nested inside each GROUP's properties array.
+      title: FormTemplateDetail
+    GetFormTemplateByIdRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetFormTemplateByIdRequestUnauthorizedError
+    GetFormTemplateByIdRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetFormTemplateByIdRequestNotFoundError
     FormTemplatePropertyInput:
       type: object
       properties:
@@ -608,60 +557,111 @@ components:
 
         '
       title: FormTemplatePropertyInput
-    FormTemplateDetail:
+    FormTemplateChildLayoutColumn:
       type: object
       properties:
         id:
           type: integer
-          description: Form template identifier
         name:
           type: string
-          description: Template name
-        createdAt:
+        type:
           type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        assignee:
-          oneOf:
-          - $ref: '#/components/schemas/FormTemplateDetailAssignee'
-          - type: 'null'
-          description: Direct user assignment. Null if assigneeProperty is used instead.
-        assigneeProperty:
+        multiple:
+          type: boolean
+        isRequired:
+          type: boolean
+        isReadOnly:
+          type: boolean
+      description: Field metadata
+      title: FormTemplateChildLayoutColumn
+    FormTemplateLayoutInput:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID of an existing group from a recent GET response. When provided without other fields, the API carries forward the group''s current name. Note: IDs change after every update — only use an id obtained from the most recent GET on this template.
+
+            '
+        name:
           type:
           - string
           - 'null'
-          description: 'Property-based assignee key. Returns a standard key (`OWNER`, `SALES_REP`, `PROJECT_MANAGER`, `CREATED_BY`) or the keyName of a custom PERSON property. Null if a direct user assignee is set.
+          description: Group title displayed above the fields.
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormTemplatePropertyInput'
+          description: Ordered list of fields inside this group.
+      description: A form group containing a title and an ordered list of field properties.
+      title: FormTemplateLayoutInput
+    FormTemplatesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: FormTemplatesGetResponsesContentApplicationJsonSchemaCode
+    FormTemplateLayoutType:
+      type: string
+      enum:
+      - GROUP
+      - COLUMN
+      description: GROUP = section header containing child items in properties. COLUMN = an actual form field.
+      title: FormTemplateLayoutType
+    UpdateFormTemplateRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateFormTemplateRequestBadRequestError
+    FormTemplatePropertyInputType:
+      type: string
+      enum:
+      - TEXT
+      - NUMERIC
+      - DROPDOWN
+      - FILE
+      description: 'Field type. Required when projectPropertyKey is not provided. TEXT = text input, NUMERIC = number input, DROPDOWN = single or multi-select (set multiple: true for multi-select), FILE = file attachment.
 
-            '
-        collaborators:
-          type: array
-          items:
-            $ref: '#/components/schemas/FormTemplateDetailCollaboratorsItems'
-          description: Direct user collaborators.
-        collaboratorProperties:
-          type: array
-          items:
-            type: string
-          description: 'Property-based collaborator keys. Each value is a standard key (`OWNER`, `SALES_REP`, `PROJECT_MANAGER`, `CREATED_BY`) or the keyName of a custom PERSON property.
-
-            '
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/FormTemplateDetailLabelsItems'
-        dueDateXDaysAfter:
-          type:
-          - integer
-          - 'null'
-          description: Number of days after creation that the form is due
-        formLayouts:
-          type: array
-          items:
-            $ref: '#/components/schemas/FormTemplateLayout'
-          description: Top-level layout items (GROUP sections and standalone COLUMN fields). Only root-level items are returned; child items are nested inside each GROUP's properties array.
-      title: FormTemplateDetail
+        '
+      title: FormTemplatePropertyInputType
+    FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode
+    FormTemplateChildLayoutType:
+      type: string
+      enum:
+      - COLUMN
+      title: FormTemplateChildLayoutType
+    GetFormTemplateByIdRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetFormTemplateByIdRequestBadRequestError
+    FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: FormTemplatesFormTemplateIdGetResponsesContentApplicationJsonSchemaCode
+    UpdateFormTemplateRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FormTemplatesFormTemplateIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateFormTemplateRequestUnauthorizedError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

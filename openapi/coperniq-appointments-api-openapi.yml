@@ -247,57 +247,11 @@ paths:
                 $ref: '#/components/schemas/DeleteAppointmentRequestNotFoundError'
 components:
   schemas:
-    AppointmentUpdate:
-      type: object
-      properties:
-        title:
-          type: string
-        assigneeId:
-          type: integer
-        dueDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        description:
-          type:
-          - string
-          - 'null'
-        isCompleted:
-          type: boolean
-      title: AppointmentUpdate
-    OpportunitiesOpportunityIdAppointmentsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesOpportunityIdAppointmentsGetResponsesContentApplicationJsonSchemaCode
-    AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode:
+    AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode
-    UpdateAppointmentRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateAppointmentRequestBadRequestError
-    CreateOpportunityAppointmentRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateOpportunityAppointmentRequestBadRequestError
+      title: AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode
     GetAppointmentRequestUnauthorizedError:
       type: object
       properties:
@@ -306,6 +260,14 @@ components:
         code:
           $ref: '#/components/schemas/AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetAppointmentRequestUnauthorizedError
+    UpdateAppointmentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAppointmentRequestUnauthorizedError
     GetOpportunityAppointmentsRequestUnauthorizedError:
       type: object
       properties:
@@ -319,19 +281,19 @@ components:
       enum:
       - NOT_FOUND
       title: AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode
-    DeleteAppointmentRequestNotFoundError:
+    AppointmentListResponse:
       type: object
       properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteAppointmentRequestNotFoundError
-    OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode
+        appointments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Appointment'
+        totalCount:
+          type: integer
+      required:
+      - appointments
+      - totalCount
+      title: AppointmentListResponse
     Appointment:
       type: object
       properties:
@@ -375,6 +337,50 @@ components:
           type: string
           format: date-time
       title: Appointment
+    DeleteAppointmentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAppointmentRequestNotFoundError
+    CreateOpportunityAppointmentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateOpportunityAppointmentRequestBadRequestError
+    OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode
+    CreateOpportunityAppointmentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityAppointmentRequestUnauthorizedError
+    OpportunitiesOpportunityIdAppointmentsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesOpportunityIdAppointmentsGetParametersOrderBy
+    OpportunitiesOpportunityIdAppointmentsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesOpportunityIdAppointmentsGetResponsesContentApplicationJsonSchemaCode
     GetAppointmentRequestNotFoundError:
       type: object
       properties:
@@ -383,42 +389,30 @@ components:
         code:
           $ref: '#/components/schemas/AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetAppointmentRequestNotFoundError
-    UpdateAppointmentRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAppointmentRequestUnauthorizedError
-    OpportunitiesOpportunityIdAppointmentsGetParametersOrderBy:
+    AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - asc
-      - desc
-      default: asc
-      title: OpportunitiesOpportunityIdAppointmentsGetParametersOrderBy
-    UpdateAppointmentRequestNotFoundError:
+      - NOT_FOUND
+      title: AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode
+    AppointmentUpdate:
       type: object
       properties:
-        message:
+        title:
           type: string
-        code:
-          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAppointmentRequestNotFoundError
-    AppointmentListResponse:
-      type: object
-      properties:
-        appointments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Appointment'
-        totalCount:
+        assigneeId:
           type: integer
-      required:
-      - appointments
-      - totalCount
-      title: AppointmentListResponse
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        description:
+          type:
+          - string
+          - 'null'
+        isCompleted:
+          type: boolean
+      title: AppointmentUpdate
     GetOpportunityAppointmentsRequestBadRequestError:
       type: object
       properties:
@@ -430,6 +424,33 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: GetOpportunityAppointmentsRequestBadRequestError
+    UpdateAppointmentRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateAppointmentRequestBadRequestError
+    DeleteAppointmentRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAppointmentRequestUnauthorizedError
+    UpdateAppointmentRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AppointmentsAppointmentIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAppointmentRequestNotFoundError
     AppointmentCreate:
       type: object
       properties:
@@ -451,27 +472,6 @@ components:
       - assigneeId
       - dueDate
       title: AppointmentCreate
-    AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AppointmentsAppointmentIdGetResponsesContentApplicationJsonSchemaCode
-    DeleteAppointmentRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AppointmentsAppointmentIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteAppointmentRequestUnauthorizedError
-    CreateOpportunityAppointmentRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdAppointmentsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateOpportunityAppointmentRequestUnauthorizedError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -193,69 +193,6 @@ paths:
                 $ref: '#/components/schemas/DeleteCatalogItemRequestNotFoundError'
 components:
   schemas:
-    CatalogItemsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: CatalogItemsGetResponsesContentApplicationJsonSchemaCode
-    ListCatalogItemsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListCatalogItemsRequestUnauthorizedError
-    CatalogItemType:
-      type: string
-      enum:
-      - PRODUCT
-      - SERVICE
-      description: Catalog item type
-      title: CatalogItemType
-    GetCatalogItemRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetCatalogItemRequestUnauthorizedError
-    CatalogCategoryCode:
-      oneOf:
-      - $ref: '#/components/schemas/ProductCategory'
-      - $ref: '#/components/schemas/ServiceCategory'
-      description: 'Catalog item category code.
-
-        Must be:
-
-        - one of `ProductCategory` when `type` is `PRODUCT`, or
-
-        - one of `ServiceCategory` when `type` is `SERVICE`.
-
-        '
-      title: CatalogCategoryCode
-    CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode
-    DeleteCatalogItemRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteCatalogItemRequestUnauthorizedError
-    UpdateCatalogItemRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateCatalogItemRequestUnauthorizedError
     CatalogItemCreate:
       type: object
       properties:
@@ -311,43 +248,6 @@ components:
       - cost
       - price
       title: CatalogItemCreate
-    CatalogItemUpdate:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CatalogItemUpdateType'
-          description: Catalog item type
-        name:
-          type: string
-          description: Catalog item name
-        category:
-          $ref: '#/components/schemas/CatalogCategoryCode'
-          description: Catalog item category code. Must be a valid ProductCategory or ServiceCategory value.
-        code:
-          type: string
-          description: Catalog item code
-        description:
-          type:
-          - string
-          - 'null'
-          description: Catalog item description
-        cost:
-          type: number
-          format: double
-          description: Catalog item cost
-        price:
-          type: number
-          format: double
-          description: Catalog item price
-        tradeGroup:
-          $ref: '#/components/schemas/TradeGroup'
-          description: High-level trade group for this item.
-        preferredVendorId:
-          type:
-          - integer
-          - 'null'
-          description: ID of the preferred vendor. Pass null to clear the preferred vendor.
-      title: CatalogItemUpdate
     CatalogItem:
       type: object
       properties:
@@ -436,22 +336,93 @@ components:
       - cost
       - price
       title: CatalogItem
-    CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode
-    CreateCatalogItemRequestBadRequestError:
+    CatalogItemImage:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          description: URL to download the image
+      title: CatalogItemImage
+    ListCatalogItemsRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
-        field:
+          $ref: '#/components/schemas/CatalogItemsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListCatalogItemsRequestUnauthorizedError
+    UpdateCatalogItemRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
           type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateCatalogItemRequestBadRequestError
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateCatalogItemRequestUnauthorizedError
+    CatalogItemUpdate:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CatalogItemUpdateType'
+          description: Catalog item type
+        name:
+          type: string
+          description: Catalog item name
+        category:
+          $ref: '#/components/schemas/CatalogCategoryCode'
+          description: Catalog item category code. Must be a valid ProductCategory or ServiceCategory value.
+        code:
+          type: string
+          description: Catalog item code
+        description:
+          type:
+          - string
+          - 'null'
+          description: Catalog item description
+        cost:
+          type: number
+          format: double
+          description: Catalog item cost
+        price:
+          type: number
+          format: double
+          description: Catalog item price
+        tradeGroup:
+          $ref: '#/components/schemas/TradeGroup'
+          description: High-level trade group for this item.
+        preferredVendorId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the preferred vendor. Pass null to clear the preferred vendor.
+      title: CatalogItemUpdate
+    DeleteCatalogItemRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteCatalogItemRequestNotFoundError
+    UpdateCatalogItemRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateCatalogItemRequestNotFoundError
+    CatalogItemCreateType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      description: Catalog item type
+      title: CatalogItemCreateType
     UpdateCatalogItemRequestBadRequestError:
       type: object
       properties:
@@ -463,6 +434,143 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: UpdateCatalogItemRequestBadRequestError
+    TradeGroup:
+      type: string
+      enum:
+      - ENERGY
+      - MECHANICAL
+      - ELECTRICAL
+      - PLUMBING
+      - LOW_VOLTAGE
+      - ENVELOPE
+      - OTHER
+      description: High-level trade group for catalog items.
+      title: TradeGroup
+    CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode
+    GetCatalogItemRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetCatalogItemRequestNotFoundError
+    CatalogCategoryCode:
+      oneOf:
+      - $ref: '#/components/schemas/ProductCategory'
+      - $ref: '#/components/schemas/ServiceCategory'
+      description: 'Catalog item category code.
+
+        Must be:
+
+        - one of `ProductCategory` when `type` is `PRODUCT`, or
+
+        - one of `ServiceCategory` when `type` is `SERVICE`.
+
+        '
+      title: CatalogCategoryCode
+    CatalogItemsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: CatalogItemsGetResponsesContentApplicationJsonSchemaCode
+    CatalogItemType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      description: Catalog item type
+      title: CatalogItemType
+    CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode
+    DeleteCatalogItemRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteCatalogItemRequestUnauthorizedError
+    CatalogItemsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: CatalogItemsPostResponsesContentApplicationJsonSchemaCode
+    CatalogItemUpdateType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      description: Catalog item type
+      title: CatalogItemUpdateType
+    CreateCatalogItemRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateCatalogItemRequestBadRequestError
+    ServiceCategory:
+      type: string
+      enum:
+      - ADJUSTMENT
+      - BALANCING
+      - CALIBRATION
+      - CLEANING
+      - COMMISSIONING
+      - DECOMMISSIONING
+      - DIAGNOSTICS
+      - ENGINEERING
+      - EQUIPMENT_RENTAL
+      - INSPECTION
+      - INSTALLATION
+      - MAINTENANCE
+      - MONITORING
+      - OPTIMIZATION
+      - PERMITTING
+      - RELOCATION
+      - REMOVAL
+      - REPAIR
+      - REPLACEMENT
+      - RETROFIT
+      - SITE_SURVEY
+      - TESTING
+      - TRAINING
+      - OTHER
+      description: Service catalog category.
+      title: ServiceCategory
+    CreateCatalogItemRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateCatalogItemRequestUnauthorizedError
+    GetCatalogItemRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetCatalogItemRequestUnauthorizedError
+    CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode
     ProductCategory:
       type: string
       enum:
@@ -545,114 +653,6 @@ components:
       - OTHER
       description: Product catalog category.
       title: ProductCategory
-    CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode
-    ServiceCategory:
-      type: string
-      enum:
-      - ADJUSTMENT
-      - BALANCING
-      - CALIBRATION
-      - CLEANING
-      - COMMISSIONING
-      - DECOMMISSIONING
-      - DIAGNOSTICS
-      - ENGINEERING
-      - EQUIPMENT_RENTAL
-      - INSPECTION
-      - INSTALLATION
-      - MAINTENANCE
-      - MONITORING
-      - OPTIMIZATION
-      - PERMITTING
-      - RELOCATION
-      - REMOVAL
-      - REPAIR
-      - REPLACEMENT
-      - RETROFIT
-      - SITE_SURVEY
-      - TESTING
-      - TRAINING
-      - OTHER
-      description: Service catalog category.
-      title: ServiceCategory
-    GetCatalogItemRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetCatalogItemRequestNotFoundError
-    CatalogItemCreateType:
-      type: string
-      enum:
-      - PRODUCT
-      - SERVICE
-      description: Catalog item type
-      title: CatalogItemCreateType
-    CatalogItemsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: CatalogItemsPostResponsesContentApplicationJsonSchemaCode
-    UpdateCatalogItemRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateCatalogItemRequestNotFoundError
-    CreateCatalogItemRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateCatalogItemRequestUnauthorizedError
-    TradeGroup:
-      type: string
-      enum:
-      - ENERGY
-      - MECHANICAL
-      - ELECTRICAL
-      - PLUMBING
-      - LOW_VOLTAGE
-      - ENVELOPE
-      - OTHER
-      description: High-level trade group for catalog items.
-      title: TradeGroup
-    CatalogItemImage:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          description: URL to download the image
-      title: CatalogItemImage
-    DeleteCatalogItemRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteCatalogItemRequestNotFoundError
-    CatalogItemUpdateType:
-      type: string
-      enum:
-      - PRODUCT
-      - SERVICE
-      description: Catalog item type
-      title: CatalogItemUpdateType
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

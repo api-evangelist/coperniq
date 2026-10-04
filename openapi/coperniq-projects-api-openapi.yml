@@ -538,159 +538,15 @@ paths:
                 $ref: '#/components/schemas/DeleteProjectRequestNotFoundError'
 components:
   schemas:
-    ProjectWithPhaseInstances:
-      type: object
-      properties:
-        trades:
-          type: array
-          items:
-            type: string
-          description: Array of trade types
-        value:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Project value
-        size:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Project size
-        workflowId:
-          type:
-          - integer
-          - 'null'
-          description: Associated workflow ID
-        accountId:
-          type:
-          - integer
-          - 'null'
-          description: Associated account ID
-        status:
-          $ref: '#/components/schemas/ProjectStatus'
-        stage:
-          $ref: '#/components/schemas/ProjectWithPhaseInstancesStage'
-          description: 'Current stage information (Workflows 1.0).
-
-
-            This object is present only for records still using the original Stage-based workflow engine.
-
-            When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
-
-            related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
-
-            '
-        phase:
-          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhase'
-          description: 'Current phase information (Workflows 2.0).
-
-
-            This object replaces `stage` when a project is attached to the Phase-based workflow engine.
-
-            If the project is still on Workflows 1.0 this object will be omitted.
-
-            '
-        workflowName:
-          type: string
-          description: 'Name of the associated workflow.
-
-            '
-        phaseInstances:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseInstancesItems'
-          description: Ordered list of phase instances for the project
-      title: ProjectWithPhaseInstances
-    ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode:
+    ProjectsPostParametersMatchBy:
       type: string
       enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode
-    CreateProjectRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateProjectRequestUnauthorizedError
-    ProjectsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ProjectsPostResponsesContentApplicationJsonSchemaCode
-    UpdateProjectRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateProjectRequestUnauthorizedError
-    ProjectsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: ProjectsGetParametersOrderBy
-    ProjectUpdate:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Project title/name
-        description:
-          type:
-          - string
-          - 'null'
-          description: Project description
-        address:
-          type: array
-          items:
-            type: string
-          description: An array containing a single string, which represents the full project location/address.
-        trades:
-          type: array
-          items:
-            type: string
-          description: Array of trade types
-        workflowId:
-          type: string
-          description: ID of associated workflow
-        value:
-          type: number
-          format: double
-          description: Project value
-        size:
-          type: number
-          format: double
-          description: Project size
-        status:
-          $ref: '#/components/schemas/ProjectStatus'
-        primaryEmail:
-          type: string
-          format: email
-          description: Primary contact email
-        primaryPhone:
-          type: string
-          description: Primary contact phone
-        contacts:
-          type: array
-          items:
-            type: integer
-          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
-        custom:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Custom fields
-      description: 'All fields are optional. Changing account association is not supported via update — delete and re-create the project under the new account.
-
-        '
-      title: ProjectUpdate
+      - title
+      - primaryEmail
+      - primaryPhone
+      - address
+      default: title
+      title: ProjectsPostParametersMatchBy
     Project:
       type: object
       properties:
@@ -807,71 +663,17 @@ components:
 
             '
       title: Project
-    UpdateProjectRequestNotFoundError:
+    UpdateProjectRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateProjectRequestNotFoundError
-    ProjectsPostParametersMatchBy:
-      type: string
-      enum:
-      - title
-      - primaryEmail
-      - primaryPhone
-      - address
-      default: title
-      title: ProjectsPostParametersMatchBy
-    ProjectsSearchGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ProjectsSearchGetResponsesContentApplicationJsonSchemaCode
-    DeleteProjectRequestNotFoundError:
-      type: object
-      properties:
-        message:
+        field:
           type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteProjectRequestNotFoundError
-    ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode
-    ProjectWithPhaseInstancesPhaseInstancesItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        status:
-          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseInstancesItemsStatus'
-        position:
-          type: integer
-        type:
-          type: string
-        phaseTemplateId:
-          type: integer
-        phaseTemplate:
-          $ref: '#/components/schemas/PhaseTemplateSummary'
-        startedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Timestamp when the phase instance started (get project by id only)
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Timestamp when the phase instance completed (get project by id only)
-      title: ProjectWithPhaseInstancesPhaseInstancesItems
+          description: Field that caused the validation error (if applicable)
+      title: UpdateProjectRequestBadRequestError
     ProjectsPostParametersMatchFoundStrategy:
       type: string
       enum:
@@ -887,83 +689,13 @@ components:
 
         '
       title: ProjectsPostParametersMatchFoundStrategy
-    ProjectWithPhaseInstancesPhaseInstancesItemsStatus:
+    ProjectsSearchGetParametersOrderBy:
       type: string
       enum:
-      - NOT_STARTED
-      - IN_PROGRESS
-      - COMPLETED
-      title: ProjectWithPhaseInstancesPhaseInstancesItemsStatus
-    ProjectStage:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Stage identifier
-        name:
-          type: string
-          description: Stage name
-        type:
-          type: string
-          description: Stage type
-        scope:
-          type: string
-          description: Stage scope
-        redSla:
-          type: integer
-          description: Red SLA threshold in days
-        yellowSla:
-          type: integer
-          description: Yellow SLA threshold in days
-        timeInStageDays:
-          type: integer
-          description: Number of days in current stage
-        slaStatus:
-          $ref: '#/components/schemas/ProjectStageSlaStatus'
-          description: Current SLA violation status
-      description: 'Current stage information (Workflows 1.0).
-
-
-        This object is present only for records still using the original Stage-based workflow engine.
-
-        When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
-
-        related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
-
-        '
-      title: ProjectStage
-    GetProjectRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectRequestNotFoundError
-    UserSummary:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-          format: email
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-      description: Minimal user representation used in responses
-      title: UserSummary
+      - asc
+      - desc
+      default: asc
+      title: ProjectsSearchGetParametersOrderBy
     ProjectsSearchGetParametersOp1:
       type: string
       enum:
@@ -978,13 +710,6 @@ components:
       - nin
       - between
       title: ProjectsSearchGetParametersOp1
-    ProjectPhaseSlaStatus:
-      type: string
-      enum:
-      - VIOLATED
-      - NON_VIOLATED
-      description: Current SLA violation status for the phase
-      title: ProjectPhaseSlaStatus
     ProjectWithPhaseInstancesPhaseSlaStatus:
       type: string
       enum:
@@ -992,84 +717,28 @@ components:
       - NON_VIOLATED
       description: Current SLA violation status for the phase
       title: ProjectWithPhaseInstancesPhaseSlaStatus
-    ProjectWithPhaseInstancesStage:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Stage identifier
-        name:
-          type: string
-          description: Stage name
-        type:
-          type: string
-          description: Stage type
-        scope:
-          type: string
-          description: Stage scope
-        redSla:
-          type: integer
-          description: Red SLA threshold in days
-        yellowSla:
-          type: integer
-          description: Yellow SLA threshold in days
-        timeInStageDays:
-          type: integer
-          description: Number of days in current stage
-        slaStatus:
-          $ref: '#/components/schemas/ProjectWithPhaseInstancesStageSlaStatus'
-          description: Current SLA violation status
-      description: 'Current stage information (Workflows 1.0).
-
-
-        This object is present only for records still using the original Stage-based workflow engine.
-
-        When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
-
-        related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
-
-        '
-      title: ProjectWithPhaseInstancesStage
-    PhaseTemplateSummary:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        type:
-          type: string
-        redSla:
-          type:
-          - integer
-          - 'null'
-        yellowSla:
-          type:
-          - integer
-          - 'null'
-      title: PhaseTemplateSummary
-    ProjectStageSlaStatus:
+    ProjectsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: ProjectsGetParametersOrderBy
+    ProjectPhaseSlaStatus:
       type: string
       enum:
       - VIOLATED
       - NON_VIOLATED
-      description: Current SLA violation status
-      title: ProjectStageSlaStatus
-    DeleteProjectRequestUnauthorizedError:
+      description: Current SLA violation status for the phase
+      title: ProjectPhaseSlaStatus
+    DeleteProjectRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteProjectRequestUnauthorizedError
-    ProjectsSearchGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: ProjectsSearchGetParametersOrderBy
+      title: DeleteProjectRequestNotFoundError
     ProjectsSearchGetParametersLogic:
       type: string
       enum:
@@ -1077,18 +746,110 @@ components:
       - or
       default: and
       title: ProjectsSearchGetParametersLogic
-    ProjectWithPhaseInstancesStageSlaStatus:
+    ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - VIOLATED
-      - NON_VIOLATED
-      description: Current SLA violation status
-      title: ProjectWithPhaseInstancesStageSlaStatus
+      - NOT_FOUND
+      title: ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode
+    ProjectPhase:
+      type: object
+      properties:
+        instanceId:
+          type: integer
+          description: Phase instance identifier
+        templateId:
+          type: integer
+          description: Phase template identifier
+        name:
+          type: string
+          description: Phase name
+        status:
+          type: string
+          description: Current phase status
+        type:
+          type: string
+          description: Phase type
+        redSla:
+          type: integer
+          description: Red SLA threshold in days (from template)
+        yellowSla:
+          type: integer
+          description: Yellow SLA threshold in days (from template)
+        timeInStageDays:
+          type: integer
+          description: Number of days in current phase (mirrors `timeInStageDays` metric)
+        slaStatus:
+          $ref: '#/components/schemas/ProjectPhaseSlaStatus'
+          description: Current SLA violation status for the phase
+      description: 'Current phase information (Workflows 2.0).
+
+
+        This object replaces `stage` when a project is attached to the Phase-based workflow engine.
+
+        If the project is still on Workflows 1.0 this object will be omitted.
+
+        '
+      title: ProjectPhase
     ProjectsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - UNAUTHORIZED
       title: ProjectsGetResponsesContentApplicationJsonSchemaCode
+    ProjectsSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ProjectsSearchGetResponsesContentApplicationJsonSchemaCode
+    ProjectWithPhaseInstancesPhase:
+      type: object
+      properties:
+        instanceId:
+          type: integer
+          description: Phase instance identifier
+        templateId:
+          type: integer
+          description: Phase template identifier
+        name:
+          type: string
+          description: Phase name
+        status:
+          type: string
+          description: Current phase status
+        type:
+          type: string
+          description: Phase type
+        redSla:
+          type: integer
+          description: Red SLA threshold in days (from template)
+        yellowSla:
+          type: integer
+          description: Yellow SLA threshold in days (from template)
+        timeInStageDays:
+          type: integer
+          description: Number of days in current phase (mirrors `timeInStageDays` metric)
+        slaStatus:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseSlaStatus'
+          description: Current SLA violation status for the phase
+      description: 'Current phase information (Workflows 2.0).
+
+
+        This object replaces `stage` when a project is attached to the Phase-based workflow engine.
+
+        If the project is still on Workflows 1.0 this object will be omitted.
+
+        '
+      title: ProjectWithPhaseInstancesPhase
+    CreateProjectRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateProjectRequestBadRequestError
     ProjectCreate:
       type: object
       properties:
@@ -1147,45 +908,283 @@ components:
       - title
       - address
       title: ProjectCreate
-    ProjectWithPhaseInstancesPhase:
+    ProjectWithPhaseInstancesPhaseInstancesItems:
       type: object
       properties:
-        instanceId:
+        id:
           type: integer
-          description: Phase instance identifier
-        templateId:
-          type: integer
-          description: Phase template identifier
         name:
           type: string
-          description: Phase name
         status:
-          type: string
-          description: Current phase status
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseInstancesItemsStatus'
+        position:
+          type: integer
         type:
           type: string
-          description: Phase type
+        phaseTemplateId:
+          type: integer
+        phaseTemplate:
+          $ref: '#/components/schemas/PhaseTemplateSummary'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the phase instance started (get project by id only)
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the phase instance completed (get project by id only)
+      title: ProjectWithPhaseInstancesPhaseInstancesItems
+    ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode
+    ProjectWithPhaseInstancesPhaseInstancesItemsStatus:
+      type: string
+      enum:
+      - NOT_STARTED
+      - IN_PROGRESS
+      - COMPLETED
+      title: ProjectWithPhaseInstancesPhaseInstancesItemsStatus
+    UpdateProjectRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateProjectRequestUnauthorizedError
+    GetProjectRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectRequestUnauthorizedError
+    ProjectStage:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Stage identifier
+        name:
+          type: string
+          description: Stage name
+        type:
+          type: string
+          description: Stage type
+        scope:
+          type: string
+          description: Stage scope
         redSla:
           type: integer
-          description: Red SLA threshold in days (from template)
+          description: Red SLA threshold in days
         yellowSla:
           type: integer
-          description: Yellow SLA threshold in days (from template)
+          description: Yellow SLA threshold in days
         timeInStageDays:
           type: integer
-          description: Number of days in current phase (mirrors `timeInStageDays` metric)
+          description: Number of days in current stage
         slaStatus:
-          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseSlaStatus'
-          description: Current SLA violation status for the phase
-      description: 'Current phase information (Workflows 2.0).
+          $ref: '#/components/schemas/ProjectStageSlaStatus'
+          description: Current SLA violation status
+      description: 'Current stage information (Workflows 1.0).
 
 
-        This object replaces `stage` when a project is attached to the Phase-based workflow engine.
+        This object is present only for records still using the original Stage-based workflow engine.
 
-        If the project is still on Workflows 1.0 this object will be omitted.
+        When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
+
+        related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
 
         '
-      title: ProjectWithPhaseInstancesPhase
+      title: ProjectStage
+    SearchProjectsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchProjectsRequestUnauthorizedError
+    ListProjectsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectsRequestUnauthorizedError
+    ProjectWithPhaseInstances:
+      type: object
+      properties:
+        trades:
+          type: array
+          items:
+            type: string
+          description: Array of trade types
+        value:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Project value
+        size:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Project size
+        workflowId:
+          type:
+          - integer
+          - 'null'
+          description: Associated workflow ID
+        accountId:
+          type:
+          - integer
+          - 'null'
+          description: Associated account ID
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        stage:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesStage'
+          description: 'Current stage information (Workflows 1.0).
+
+
+            This object is present only for records still using the original Stage-based workflow engine.
+
+            When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
+
+            related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
+
+            '
+        phase:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesPhase'
+          description: 'Current phase information (Workflows 2.0).
+
+
+            This object replaces `stage` when a project is attached to the Phase-based workflow engine.
+
+            If the project is still on Workflows 1.0 this object will be omitted.
+
+            '
+        workflowName:
+          type: string
+          description: 'Name of the associated workflow.
+
+            '
+        phaseInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectWithPhaseInstancesPhaseInstancesItems'
+          description: Ordered list of phase instances for the project
+      title: ProjectWithPhaseInstances
+    ProjectWithPhaseInstancesStageSlaStatus:
+      type: string
+      enum:
+      - VIOLATED
+      - NON_VIOLATED
+      description: Current SLA violation status
+      title: ProjectWithPhaseInstancesStageSlaStatus
+    DeleteProjectRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteProjectRequestUnauthorizedError
+    PhaseTemplateSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+        redSla:
+          type:
+          - integer
+          - 'null'
+        yellowSla:
+          type:
+          - integer
+          - 'null'
+      title: PhaseTemplateSummary
+    ProjectUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Project title/name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Project description
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the full project location/address.
+        trades:
+          type: array
+          items:
+            type: string
+          description: Array of trade types
+        workflowId:
+          type: string
+          description: ID of associated workflow
+        value:
+          type: number
+          format: double
+          description: Project value
+        size:
+          type: number
+          format: double
+          description: Project size
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        primaryEmail:
+          type: string
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type: string
+          description: Primary contact phone
+        contacts:
+          type: array
+          items:
+            type: integer
+          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      description: 'All fields are optional. Changing account association is not supported via update — delete and re-create the project under the new account.
+
+        '
+      title: ProjectUpdate
+    ProjectStageSlaStatus:
+      type: string
+      enum:
+      - VIOLATED
+      - NON_VIOLATED
+      description: Current SLA violation status
+      title: ProjectStageSlaStatus
     SearchProjectsRequestBadRequestError:
       type: object
       properties:
@@ -1197,102 +1196,51 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: SearchProjectsRequestBadRequestError
-    ProjectPhase:
-      type: object
-      properties:
-        instanceId:
-          type: integer
-          description: Phase instance identifier
-        templateId:
-          type: integer
-          description: Phase template identifier
-        name:
-          type: string
-          description: Phase name
-        status:
-          type: string
-          description: Current phase status
-        type:
-          type: string
-          description: Phase type
-        redSla:
-          type: integer
-          description: Red SLA threshold in days (from template)
-        yellowSla:
-          type: integer
-          description: Yellow SLA threshold in days (from template)
-        timeInStageDays:
-          type: integer
-          description: Number of days in current phase (mirrors `timeInStageDays` metric)
-        slaStatus:
-          $ref: '#/components/schemas/ProjectPhaseSlaStatus'
-          description: Current SLA violation status for the phase
-      description: 'Current phase information (Workflows 2.0).
-
-
-        This object replaces `stage` when a project is attached to the Phase-based workflow engine.
-
-        If the project is still on Workflows 1.0 this object will be omitted.
-
-        '
-      title: ProjectPhase
-    SearchProjectsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsSearchGetResponsesContentApplicationJsonSchemaCode'
-      title: SearchProjectsRequestUnauthorizedError
-    ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode
-    ProjectsSearchGetParametersOp2:
-      type: string
-      enum:
-      - eq
-      - neq
-      - gt
-      - gte
-      - lt
-      - lte
-      - contains
-      - in
-      - nin
-      - between
-      title: ProjectsSearchGetParametersOp2
-    UpdateProjectRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateProjectRequestBadRequestError
-    CreateProjectRequestBadRequestError:
+    CreateProjectRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/ProjectsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateProjectRequestBadRequestError
-    GetProjectRequestUnauthorizedError:
+      title: CreateProjectRequestUnauthorizedError
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      description: Minimal user representation used in responses
+      title: UserSummary
+    ProjectsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ProjectsPostResponsesContentApplicationJsonSchemaCode
+    UpdateProjectRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetProjectRequestUnauthorizedError
+          $ref: '#/components/schemas/ProjectsProjectIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateProjectRequestNotFoundError
     ProjectStatus:
       type: string
       enum:
@@ -1312,14 +1260,66 @@ components:
 
         '
       title: ProjectStatus
-    ListProjectsRequestUnauthorizedError:
+    ProjectWithPhaseInstancesStage:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Stage identifier
+        name:
+          type: string
+          description: Stage name
+        type:
+          type: string
+          description: Stage type
+        scope:
+          type: string
+          description: Stage scope
+        redSla:
+          type: integer
+          description: Red SLA threshold in days
+        yellowSla:
+          type: integer
+          description: Yellow SLA threshold in days
+        timeInStageDays:
+          type: integer
+          description: Number of days in current stage
+        slaStatus:
+          $ref: '#/components/schemas/ProjectWithPhaseInstancesStageSlaStatus'
+          description: Current SLA violation status
+      description: 'Current stage information (Workflows 1.0).
+
+
+        This object is present only for records still using the original Stage-based workflow engine.
+
+        When the project is managed by Workflows 2.0 (Phase engine) the `stage` object and
+
+        related fields (`stageId`, `timeInStageDays`, `slaStatus`) are omitted.
+
+        '
+      title: ProjectWithPhaseInstancesStage
+    GetProjectRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/ProjectsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectsRequestUnauthorizedError
+          $ref: '#/components/schemas/ProjectsProjectIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectRequestNotFoundError
+    ProjectsSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: ProjectsSearchGetParametersOp2
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

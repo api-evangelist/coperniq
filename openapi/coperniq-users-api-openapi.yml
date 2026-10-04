@@ -112,92 +112,6 @@ paths:
                   $ref: '#/components/schemas/Team'
 components:
   schemas:
-    Role:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier
-        name:
-          type: string
-          description: Role name
-        active:
-          type: boolean
-          description: Whether the role is active
-      required:
-      - id
-      - name
-      - active
-      title: Role
-    TeamMemberRole:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Role identifier
-        name:
-          type: string
-          description: Role name
-      title: TeamMemberRole
-    UserRole:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Role identifier
-        name:
-          type: string
-          description: Role name
-      title: UserRole
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier
-        firstName:
-          type: string
-          description: First name
-        lastName:
-          type: string
-          description: Last name
-        email:
-          type: string
-          format: email
-          description: Email address
-        phone:
-          type: string
-          description: Phone number
-        role:
-          $ref: '#/components/schemas/UserRole'
-      required:
-      - id
-      - firstName
-      - lastName
-      - email
-      - role
-      title: User
-    Team:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        workers:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamMember'
-      title: Team
-    Users_inviteUser_Response_201:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        status:
-          type: string
-      title: Users_inviteUser_Response_201
     TeamMember:
       type: object
       properties:
@@ -229,6 +143,73 @@ components:
       - email
       - role
       title: TeamMember
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        firstName:
+          type: string
+          description: First name
+        lastName:
+          type: string
+          description: Last name
+        email:
+          type: string
+          format: email
+          description: Email address
+        phone:
+          type: string
+          description: Phone number
+        role:
+          $ref: '#/components/schemas/UserRole'
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - role
+      title: User
+    Role:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier
+        name:
+          type: string
+          description: Role name
+        active:
+          type: boolean
+          description: Whether the role is active
+      required:
+      - id
+      - name
+      - active
+      title: Role
+    UserRole:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Role identifier
+        name:
+          type: string
+          description: Role name
+      title: UserRole
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        workers:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMember'
+      title: Team
     UserInvite:
       type: object
       properties:
@@ -256,6 +237,25 @@ components:
       - lastName
       - roleIds
       title: UserInvite
+    TeamMemberRole:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Role identifier
+        name:
+          type: string
+          description: Role name
+      title: TeamMemberRole
+    Users_inviteUser_Response_201:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+      title: Users_inviteUser_Response_201
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
