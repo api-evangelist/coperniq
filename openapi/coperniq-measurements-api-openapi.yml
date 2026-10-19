@@ -1,0 +1,330 @@
+openapi: 3.2.0
+info:
+  title: Reference Measurements API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: Measurements
+paths:
+  /measurements:
+    get:
+      operationId: measurements_listMeasurements
+      summary: List Measurements
+      description: 'Lists the measurements (and sub-measurements) available to your company. Use these IDs when
+
+        setting `measurementIds` on a catalog item. A "sub-measurement" is a measurement with
+
+        `type: SUB_CALCULATION`.'
+      tags:
+      - Measurements
+      parameters:
+      - name: type
+        in: query
+        description: Filter by measurement type
+        required: false
+        schema:
+          $ref: '#/components/schemas/MeasurementsGetParametersType'
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      responses:
+        '200':
+          description: List of measurements
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Measurement'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMeasurementsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMeasurementsRequestUnauthorizedError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMeasurementsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+  /measurements/{measurement_id}:
+    get:
+      operationId: measurements_getMeasurement
+      summary: Get Measurement
+      description: Retrieve a specific measurement (or sub-measurement) by ID.
+      tags:
+      - Measurements
+      parameters:
+      - name: measurement_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Measurement details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Measurement'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMeasurementRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMeasurementRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMeasurementRequestNotFoundError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMeasurementRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    Measurement:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Measurement identifier
+        name:
+          type: string
+          description: Measurement name
+        type:
+          $ref: '#/components/schemas/MeasurementType'
+          description: A plain MEASUREMENT is a raw input value; a SUB_CALCULATION ("sub-measurement") derives its value from a formula over other measurements.
+        unit:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogUnit'
+          - type: 'null'
+          description: The unit this measurement is expressed in, if any.
+        minimumValue:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Minimum allowed value. Only meaningful for type MEASUREMENT.
+        formula:
+          $ref: '#/components/schemas/MeasurementFormula'
+        isArchived:
+          type: boolean
+          description: Whether this measurement has been archived.
+      required:
+      - id
+      - name
+      - type
+      description: 'A named measurement or sub-calculation that a catalog item can link to (via `measurementIds`) to drive its quantity. A "sub-measurement" is simply a Measurement with `type: SUB_CALCULATION` — not a separate structure.
+
+        '
+      title: Measurement
+    MeasurementsMeasurementIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: MeasurementsMeasurementIdGetResponsesContentApplicationJsonSchemaCode
+    MeasurementsGetParametersType:
+      type: string
+      enum:
+      - MEASUREMENT
+      - SUB_CALCULATION
+      title: MeasurementsGetParametersType
+    GetMeasurementRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/MeasurementsMeasurementIdGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: GetMeasurementRequestBadGatewayError
+    MeasurementFormula:
+      type: object
+      properties:
+        operands:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementFormulaOperandsItems'
+        ast:
+          $ref: '#/components/schemas/MeasurementFormulaAst'
+          description: Binary-operation AST node or leaf. See the formula description above.
+        sourceText:
+          type: string
+          description: The formula as originally authored (e.g. "( m1 + m2 ) / 100")
+      description: 'The formula driving a SUB_CALCULATION measurement''s quantity. Read-only — there is no API to create or edit a measurement''s formula; it can only be authored in the app. Shape: `operands` names each referenced measurement (`{name, measurementId}`); `ast` is a binary-operation tree (`ADD`/`SUB`/`MUL`/`DIV`) whose leaves are either `{operandRef}` (referencing an entry in `operands` by name) or `{constant}` (a literal number); `sourceText` is the original formula text as authored.
+
+        '
+      title: MeasurementFormula
+    ListMeasurementsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/MeasurementsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListMeasurementsRequestUnauthorizedError
+    MeasurementFormulaOperandsItems:
+      type: object
+      properties:
+        name:
+          type: string
+        measurementId:
+          type: integer
+      title: MeasurementFormulaOperandsItems
+    CatalogUnit:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Catalog unit identifier
+        code:
+          type: string
+          description: Stable short code for the unit (e.g. "SF", "EA")
+        label:
+          type: string
+          description: Human-readable label for the unit (e.g. "Square Feet")
+        dimension:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogUnitDimension'
+          - type: 'null'
+          description: The physical dimension this unit measures, if any. Null for packaging-style units (e.g. bundle, roll) that can't be used on a measurement.
+        isCustom:
+          type: boolean
+          description: Whether this unit was defined by the company, as opposed to one of the seeded defaults.
+        isArchived:
+          type: boolean
+          description: Whether this unit has been archived.
+      required:
+      - id
+      - code
+      - label
+      description: A unit of measure from the company's unit registry (e.g. Each, Square Feet, Linear Feet). Referenced by catalog items and measurements via `unitId`.
+      title: CatalogUnit
+    CatalogUnitDimension:
+      type: string
+      enum:
+      - LENGTH
+      - AREA
+      - COUNT
+      description: The physical dimension this unit measures, if any. Null for packaging-style units (e.g. bundle, roll) that can't be used on a measurement.
+      title: CatalogUnitDimension
+    ListMeasurementsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/MeasurementsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListMeasurementsRequestBadRequestError
+    GetMeasurementRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/MeasurementsMeasurementIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetMeasurementRequestUnauthorizedError
+    ListMeasurementsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/MeasurementsGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListMeasurementsRequestBadGatewayError
+    MeasurementsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: MeasurementsGetResponsesContentApplicationJsonSchemaCode
+    MeasurementType:
+      type: string
+      enum:
+      - MEASUREMENT
+      - SUB_CALCULATION
+      description: A plain MEASUREMENT is a raw input value; a SUB_CALCULATION ("sub-measurement") derives its value from a formula over other measurements.
+      title: MeasurementType
+    MeasurementFormulaAst:
+      type: object
+      properties: {}
+      description: Binary-operation AST node or leaf. See the formula description above.
+      title: MeasurementFormulaAst
+    GetMeasurementRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/MeasurementsMeasurementIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetMeasurementRequestBadRequestError
+    GetMeasurementRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/MeasurementsMeasurementIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetMeasurementRequestNotFoundError
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

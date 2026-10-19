@@ -10,7 +10,7 @@ tags:
 paths:
   /sites:
     get:
-      operationId: list-sites
+      operationId: sites_listSites
       summary: List Sites
       description: Retrieve a paginated list of sites. Results can be filtered by account, state, city, or zipcode.
       tags:
@@ -46,6 +46,7 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
       - name: page_size
         in: query
@@ -53,12 +54,9 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of sites
@@ -80,8 +78,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListSitesRequestUnauthorizedError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-site
+      operationId: sites_createSite
       summary: Create Site
       description: 'Create a new site record belonging to an account.
 
@@ -96,12 +96,6 @@ paths:
         If a site with the same address already exists for the same account, the existing site is returned instead of creating a duplicate (`200` instead of `201`).'
       tags:
       - Sites
-      parameters:
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Duplicate site found — existing site returned
@@ -126,21 +120,18 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SiteCreate'
-  /sites/{siteId}:
+      security:
+      - ApiKeyAuth: []
+  /sites/{site_id}:
     get:
-      operationId: get-site
+      operationId: sites_getSite
       summary: Get Site
       description: Retrieve a specific site by ID. Returns 404 if not found or if the site belongs to a different company.
       tags:
       - Sites
       parameters:
-      - name: siteId
+      - name: site_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -169,26 +160,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSiteRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
     patch:
-      operationId: update-site
+      operationId: sites_updateSite
       summary: Update Site
       description: 'Update an existing site. All fields are optional — only provided fields are changed.
 
 
-        > **Moving a site to a different account:** Use `POST /sites/{siteId}/move` instead. `accountId` cannot be changed on a site update.
+        > **Moving a site to a different account:** Use `POST /sites/{site_id}/move` instead. `accountId` cannot be changed on a site update.
 
 
         > **Note on `geoLocation` and `fullAddress`:** Sending either field on update triggers geocoding — the backend may overwrite the stored coordinates with what Google Maps snaps to for the nearest address, so the values you send may not be stored as-is. There is currently no way to update coordinates without allowing the geocoder to potentially adjust them.'
       tags:
       - Sites
       parameters:
-      - name: siteId
+      - name: site_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -222,20 +210,17 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SiteUpdate'
+      security:
+      - ApiKeyAuth: []
     delete:
-      operationId: delete-site
+      operationId: sites_deleteSite
       summary: Delete Site
       description: Delete a specific site by ID. Returns 404 if not found.
       tags:
       - Sites
       parameters:
-      - name: siteId
+      - name: site_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -254,9 +239,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteSiteRequestNotFoundError'
-  /sites/{siteId}/move:
+      security:
+      - ApiKeyAuth: []
+  /sites/{site_id}/move:
     post:
-      operationId: move-site
+      operationId: sites_moveSite
       summary: Move Site to Another Account
       description: 'Move a site and all its associated records to a different account.
 
@@ -280,17 +267,12 @@ paths:
       tags:
       - Sites
       parameters:
-      - name: siteId
+      - name: site_id
         in: path
         description: Site identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: The newly created site on the target account. This site has a new `id` — the original site has been deleted.
@@ -327,16 +309,47 @@ paths:
                   description: The target account ID to move the site to.
               required:
               - accountId
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    MoveSiteRequestUnauthorizedError:
+    CreateSiteRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode'
-      title: MoveSiteRequestUnauthorizedError
+          $ref: '#/components/schemas/SitesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateSiteRequestUnauthorizedError
+    ListSitesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListSitesRequestUnauthorizedError
+    GetSiteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetSiteRequestUnauthorizedError
+    SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode
+    UpdateSiteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateSiteRequestNotFoundError
     GetSiteRequestBadRequestError:
       type: object
       properties:
@@ -348,6 +361,85 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: GetSiteRequestBadRequestError
+    SitesSiteIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: SitesSiteIdDeleteResponsesContentApplicationJsonSchemaCode
+    ListSitesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListSitesRequestBadRequestError
+    UpdateSiteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateSiteRequestUnauthorizedError
+    SitesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: SitesPostResponsesContentApplicationJsonSchemaCode
+    CreateSiteRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateSiteRequestBadRequestError
+    DeleteSiteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteSiteRequestUnauthorizedError
+    SitesSiteIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: SitesSiteIdGetResponsesContentApplicationJsonSchemaCode
+    GetSiteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetSiteRequestNotFoundError
+    DeleteSiteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteSiteRequestNotFoundError
+    SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode
+    SitesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: SitesGetResponsesContentApplicationJsonSchemaCode
     SiteUpdate:
       type: object
       properties:
@@ -361,6 +453,7 @@ components:
             '
         title:
           type: string
+          maxLength: 255
         street:
           type: string
         city:
@@ -374,52 +467,75 @@ components:
           description: 'IANA timezone string (e.g. "America/Los_Angeles"). Use this to manually override the timezone if the geocoded value is incorrect or you are migrating from a system that has an explicit timezone already set.
 
             '
-      description: 'All fields are optional. To move a site to a different account, use `POST /sites/{siteId}/move` instead of setting `accountId` here.
+      description: 'All fields are optional. To move a site to a different account, use `POST /sites/{site_id}/move` instead of setting `accountId` here.
 
         '
       title: SiteUpdate
-    SitesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: SitesPostResponsesContentApplicationJsonSchemaCode
-    UpdateSiteRequestUnauthorizedError:
+    MoveSiteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode'
+      title: MoveSiteRequestNotFoundError
+    MoveSiteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode'
+      title: MoveSiteRequestUnauthorizedError
+    MoveSiteRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: MoveSiteRequestBadRequestError
+    SiteCreate:
+      type: object
+      properties:
+        accountId:
+          type: integer
+          description: ID of the account this site belongs to.
+        fullAddress:
+          type: string
+          description: Full address string. Either `fullAddress` or `geoLocation` must be provided.
+        geoLocation:
+          type: string
+          description: Latitude/longitude as "lat,lng". Either `fullAddress` or `geoLocation` must be provided.
+        title:
+          type: string
+          maxLength: 255
+          description: Human-readable label for the site.
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipcode:
+          type: string
+      required:
+      - accountId
+      title: SiteCreate
+    UpdateSiteRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateSiteRequestUnauthorizedError
-    GetSiteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
+        field:
           type: string
-        code:
-          $ref: '#/components/schemas/SitesSiteIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetSiteRequestUnauthorizedError
-    DeleteSiteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesSiteIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteSiteRequestUnauthorizedError
-    GetSiteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesSiteIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetSiteRequestNotFoundError
-    SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode
+          description: Field that caused the validation error (if applicable)
+      title: UpdateSiteRequestBadRequestError
     Site:
       type: object
       properties:
@@ -476,136 +592,6 @@ components:
           - 'null'
           format: date-time
       title: Site
-    MoveSiteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode'
-      title: MoveSiteRequestNotFoundError
-    UpdateSiteRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateSiteRequestBadRequestError
-    SitesSiteIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: SitesSiteIdGetResponsesContentApplicationJsonSchemaCode
-    MoveSiteRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: MoveSiteRequestBadRequestError
-    SiteCreate:
-      type: object
-      properties:
-        accountId:
-          type: integer
-          description: ID of the account this site belongs to.
-        fullAddress:
-          type: string
-          description: Full address string. Either `fullAddress` or `geoLocation` must be provided.
-        geoLocation:
-          type: string
-          description: Latitude/longitude as "lat,lng". Either `fullAddress` or `geoLocation` must be provided.
-        title:
-          type: string
-          description: Human-readable label for the site.
-        street:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zipcode:
-          type: string
-      required:
-      - accountId
-      title: SiteCreate
-    SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: SitesSiteIdMovePostResponsesContentApplicationJsonSchemaCode
-    CreateSiteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateSiteRequestUnauthorizedError
-    SitesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: SitesGetResponsesContentApplicationJsonSchemaCode
-    CreateSiteRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateSiteRequestBadRequestError
-    ListSitesRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: ListSitesRequestBadRequestError
-    UpdateSiteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesSiteIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateSiteRequestNotFoundError
-    SitesSiteIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: SitesSiteIdDeleteResponsesContentApplicationJsonSchemaCode
-    ListSitesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListSitesRequestUnauthorizedError
-    DeleteSiteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/SitesSiteIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteSiteRequestNotFoundError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

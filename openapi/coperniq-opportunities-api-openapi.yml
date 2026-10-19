@@ -10,7 +10,7 @@ tags:
 paths:
   /opportunities:
     get:
-      operationId: list-opportunities
+      operationId: opportunities_listOpportunities
       summary: List Opportunities
       description: 'Retrieve a paginated list of opportunities.
 
@@ -20,6 +20,8 @@ paths:
         - Pagination (`page_size`, `page`)
 
         - Date filtering (`updated_after`, `updated_before`)
+
+        - Phase entry/exit date filtering (`entered_phase_id`+`entered_after`/`entered_before`, `exited_phase_id`+`exited_after`/`exited_before`)
 
         - Sorting (`order_by`, default: desc)
 
@@ -31,7 +33,10 @@ paths:
         **Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.
 
 
-        **Note:** If an opportunity has no `title` (empty or whitespace-only), the response returns the parent account''s `title` instead. The stored value is not modified — this is a read-time fallback only.'
+        **Note:** If an opportunity has no `title` (empty or whitespace-only), the response returns the parent account''s `title` instead. The stored value is not modified — this is a read-time fallback only.
+
+
+        **Note:** `entered_phase_id`/`exited_phase_id` identify a phase *template* (shared across all deals on a workflow), not a specific phase instance. Use the `phaseTemplateId` from a `GET /opportunities/{opportunity_id}` response or the `GET /workflows` response to find the id for a given phase (e.g. "Closed - Won"). When either filter is used, each row also includes a compact `phaseTimeline` (`phaseTemplateId`, `startedAt`, `completedAt`); use `GET /opportunities/{opportunity_id}` for the full `phaseInstances` with names/positions/SLA.'
       tags:
       - Opportunities
       parameters:
@@ -41,6 +46,8 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
       - name: page
         in: query
@@ -48,21 +55,68 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
       - name: updated_after
         in: query
-        description: Filter items updated after this timestamp (ISO 8601)
+        description: Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
         required: false
         schema:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/OpportunitiesGetParametersUpdatedAfter'
       - name: updated_before
         in: query
-        description: Filter items updated before this timestamp (ISO 8601)
+        description: Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
+        required: false
+        schema:
+          $ref: '#/components/schemas/OpportunitiesGetParametersUpdatedBefore'
+      - name: entered_phase_id
+        in: query
+        description: 'Phase template ID to filter by phase-entry date. Required when `entered_after` or `entered_before` is provided. Given alone (no date bounds), matches records that ever entered this phase.
+
+          '
+        required: false
+        schema:
+          type: integer
+      - name: entered_after
+        in: query
+        description: 'Only include records that entered the phase given by `entered_phase_id` on or after this date/timestamp. Accepts a date (`2026-07-01`) or a full ISO 8601 timestamp (`2026-07-01T00:00:00Z`). Requires `entered_phase_id`.
+
+          '
         required: false
         schema:
           type: string
-          format: date-time
+      - name: entered_before
+        in: query
+        description: 'Only include records that entered the phase given by `entered_phase_id` before this date/timestamp (exclusive). Accepts a date (`2026-08-01`) or a full ISO 8601 timestamp (`2026-08-01T00:00:00Z`). Requires `entered_phase_id`.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: exited_phase_id
+        in: query
+        description: 'Phase template ID to filter by phase-exit date. Required when `exited_after` or `exited_before` is provided. Given alone (no date bounds), matches records that have exited this phase at any point.
+
+          '
+        required: false
+        schema:
+          type: integer
+      - name: exited_after
+        in: query
+        description: 'Only include records that exited the phase given by `exited_phase_id` on or after this date/timestamp. Accepts a date (`2026-07-01`) or a full ISO 8601 timestamp (`2026-07-01T00:00:00Z`). Requires `exited_phase_id`.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: exited_before
+        in: query
+        description: 'Only include records that exited the phase given by `exited_phase_id` before this date/timestamp (exclusive). Accepts a date (`2026-08-01`) or a full ISO 8601 timestamp (`2026-08-01T00:00:00Z`). Requires `exited_phase_id`. On opportunities, combine with `exited_phase_id` set to a "Closed - Won"-style phase template to find deals that closed within a date range.
+
+          '
+        required: false
+        schema:
+          type: string
       - name: order_by
         in: query
         description: Sort order for results
@@ -79,6 +133,13 @@ paths:
       - name: include_archived
         in: query
         description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: include_contacts
+        in: query
+        description: Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.
         required: false
         schema:
           type: boolean
@@ -119,11 +180,6 @@ paths:
         required: false
         schema:
           type: string
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of opportunities
@@ -133,14 +189,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Opportunity'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOpportunitiesRequestBadRequestError'
         '401':
           description: Authentication failed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListOpportunitiesRequestUnauthorizedError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-opportunity
+      operationId: opportunities_createOpportunity
       summary: Create Opportunity
       description: 'Create a new opportunity with required and optional fields.
 
@@ -201,11 +265,6 @@ paths:
         required: false
         schema:
           $ref: '#/components/schemas/OpportunitiesPostParametersMatchFoundStrategy'
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Matching opportunity found
@@ -230,9 +289,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/OpportunityUpsert'
+      security:
+      - ApiKeyAuth: []
   /opportunities/search:
     get:
-      operationId: search-opportunities
+      operationId: opportunities_searchOpportunities
       summary: Search Opportunities
       description: 'Search opportunities using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).
 
@@ -260,6 +321,8 @@ paths:
 
         - Existence: `exists` is not supported for custom properties due to performance limitations. Use `eq` or `neq` instead.
 
+        - `status` has a fixed set of values, so it supports only `eq`, `neq`, `in`, and `nin`.
+
 
         Value formats:
 
@@ -279,6 +342,8 @@ paths:
         Examples:
 
         - status equals ACTIVE: `?prop1=status&op1=eq&value1=ACTIVE`
+
+        - won or lost: `?prop1=status&op1=in&value1=WON,LOST` (opportunity status is `ACTIVE`, `ON_HOLD`, `WON`, or `LOST`)
 
         - custom id equals 1234: `?prop1=legacy_tool_project_id&op1=eq&value1=1234`
 
@@ -342,6 +407,8 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
       - name: page
         in: query
@@ -349,7 +416,56 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
+      - name: entered_phase_id
+        in: query
+        description: 'Phase template ID to filter by phase-entry date. Required when `entered_after` or `entered_before` is provided. Given alone (no date bounds), matches records that ever entered this phase.
+
+          '
+        required: false
+        schema:
+          type: integer
+      - name: entered_after
+        in: query
+        description: 'Only include records that entered the phase given by `entered_phase_id` on or after this date/timestamp. Accepts a date (`2026-07-01`) or a full ISO 8601 timestamp (`2026-07-01T00:00:00Z`). Requires `entered_phase_id`.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: entered_before
+        in: query
+        description: 'Only include records that entered the phase given by `entered_phase_id` before this date/timestamp (exclusive). Accepts a date (`2026-08-01`) or a full ISO 8601 timestamp (`2026-08-01T00:00:00Z`). Requires `entered_phase_id`.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: exited_phase_id
+        in: query
+        description: 'Phase template ID to filter by phase-exit date. Required when `exited_after` or `exited_before` is provided. Given alone (no date bounds), matches records that have exited this phase at any point.
+
+          '
+        required: false
+        schema:
+          type: integer
+      - name: exited_after
+        in: query
+        description: 'Only include records that exited the phase given by `exited_phase_id` on or after this date/timestamp. Accepts a date (`2026-07-01`) or a full ISO 8601 timestamp (`2026-07-01T00:00:00Z`). Requires `exited_phase_id`.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: exited_before
+        in: query
+        description: 'Only include records that exited the phase given by `exited_phase_id` before this date/timestamp (exclusive). Accepts a date (`2026-08-01`) or a full ISO 8601 timestamp (`2026-08-01T00:00:00Z`). Requires `exited_phase_id`. On opportunities, combine with `exited_phase_id` set to a "Closed - Won"-style phase template to find deals that closed within a date range.
+
+          '
+        required: false
+        schema:
+          type: string
       - name: order_by
         in: query
         description: Sort order for results
@@ -363,11 +479,13 @@ paths:
         schema:
           type: boolean
           default: false
-      - name: x-api-key
-        in: header
-        required: true
+      - name: include_contacts
+        in: query
+        description: Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.
+        required: false
         schema:
-          type: string
+          type: boolean
+          default: false
       responses:
         '200':
           description: List of opportunities matching filters
@@ -389,9 +507,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchOpportunitiesRequestUnauthorizedError'
-  /opportunities/{opportunityId}:
+      security:
+      - ApiKeyAuth: []
+  /opportunities/{opportunity_id}:
     get:
-      operationId: get-opportunity
+      operationId: opportunities_getOpportunity
       summary: Get Opportunity
       description: 'Retrieve a specific opportunity by ID
 
@@ -403,7 +523,7 @@ paths:
       tags:
       - Opportunities
       parameters:
-      - name: opportunityId
+      - name: opportunity_id
         in: path
         description: Opportunity identifier
         required: true
@@ -423,18 +543,20 @@ paths:
         schema:
           type: boolean
           default: false
-      - name: x-api-key
-        in: header
-        required: true
+      - name: include_contacts
+        in: query
+        description: Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.
+        required: false
         schema:
-          type: string
+          type: boolean
+          default: false
       responses:
         '200':
           description: Opportunity details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Opportunity'
+                $ref: '#/components/schemas/OpportunityWithPhaseInstances'
         '401':
           description: Authentication failed
           content:
@@ -447,8 +569,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOpportunityRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
     patch:
-      operationId: update-opportunity
+      operationId: opportunities_updateOpportunity
       summary: Update Opportunity
       description: 'Update an existing opportunity. Supports partial updates.
 
@@ -476,7 +600,7 @@ paths:
       tags:
       - Opportunities
       parameters:
-      - name: opportunityId
+      - name: opportunity_id
         in: path
         description: Opportunity identifier
         required: true
@@ -489,11 +613,6 @@ paths:
         schema:
           type: boolean
           default: false
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Opportunity updated successfully
@@ -524,8 +643,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/OpportunityUpsert'
+      security:
+      - ApiKeyAuth: []
     delete:
-      operationId: delete-opportunity
+      operationId: opportunities_deleteOpportunity
       summary: Delete Opportunity
       description: 'Delete a specific opportunity by ID
 
@@ -534,17 +655,12 @@ paths:
       tags:
       - Opportunities
       parameters:
-      - name: opportunityId
+      - name: opportunity_id
         in: path
         description: Opportunity identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Successful response
@@ -560,143 +676,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteOpportunityRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    OpportunitiesPostParametersMatchFoundStrategy:
-      type: string
-      enum:
-      - skip
-      - replace
-      - enrich
-      default: skip
-      description: '- skip: Return existing record without changes
-
-        - replace: Replace existing record with new data
-
-        - enrich: Update only empty fields in existing record
-
-        '
-      title: OpportunitiesPostParametersMatchFoundStrategy
-    CreateOpportunityRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateOpportunityRequestBadRequestError
-    OpportunitySalesRep:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phone:
-          type:
-          - string
-          - 'null'
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-      title: OpportunitySalesRep
-    GetOpportunityRequestUnauthorizedError:
+    GetOpportunityRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetOpportunityRequestUnauthorizedError
-    DeleteOpportunityRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteOpportunityRequestUnauthorizedError
-    OpportunitiesPostParametersMatchBy:
-      type: string
-      enum:
-      - title
-      - primaryEmail
-      - primaryPhone
-      - address
-      default: title
-      title: OpportunitiesPostParametersMatchBy
-    SearchOpportunitiesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
-      title: SearchOpportunitiesRequestUnauthorizedError
-    OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode
-    OpportunityProjectManager:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phone:
-          type:
-          - string
-          - 'null'
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-      title: OpportunityProjectManager
-    ListOpportunitiesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListOpportunitiesRequestUnauthorizedError
-    UpdateOpportunityRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateOpportunityRequestNotFoundError
-    OpportunitiesSearchGetParametersOp2:
-      type: string
-      enum:
-      - eq
-      - neq
-      - gt
-      - gte
-      - lt
-      - lte
-      - contains
-      - in
-      - nin
-      - between
-      title: OpportunitiesSearchGetParametersOp2
-    PhaseInstance:
+      title: GetOpportunityRequestNotFoundError
+    OpportunityWithPhaseInstancesPhaseInstancesItems:
       type: object
       properties:
         id:
@@ -704,7 +696,7 @@ components:
         name:
           type: string
         status:
-          $ref: '#/components/schemas/PhaseInstanceStatus'
+          $ref: '#/components/schemas/OpportunityWithPhaseInstancesPhaseInstancesItemsStatus'
         position:
           type: integer
         type:
@@ -713,31 +705,58 @@ components:
           type: integer
         phaseTemplate:
           $ref: '#/components/schemas/PhaseTemplateSummary'
-      title: PhaseInstance
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the phase instance started
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the phase instance completed
+      title: OpportunityWithPhaseInstancesPhaseInstancesItems
+    ListOpportunitiesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListOpportunitiesRequestUnauthorizedError
+    OpportunityPhaseTimelineItems:
+      type: object
+      properties:
+        phaseTemplateId:
+          type: integer
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the deal entered this phase template
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the deal exited this phase template
+      title: OpportunityPhaseTimelineItems
+    SearchOpportunitiesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchOpportunitiesRequestUnauthorizedError
     OpportunitiesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - UNAUTHORIZED
       title: OpportunitiesGetResponsesContentApplicationJsonSchemaCode
-    OpportunitiesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesPostResponsesContentApplicationJsonSchemaCode
-    OpportunitiesSearchGetParametersOp1:
-      type: string
-      enum:
-      - eq
-      - neq
-      - gt
-      - gte
-      - lt
-      - lte
-      - contains
-      - in
-      - nin
-      - between
-      title: OpportunitiesSearchGetParametersOp1
     OpportunityOwner:
       type: object
       properties:
@@ -758,6 +777,44 @@ components:
           - string
           - 'null'
       title: OpportunityOwner
+    PhaseTemplateSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+        redSla:
+          type:
+          - integer
+          - 'null'
+        yellowSla:
+          type:
+          - integer
+          - 'null'
+      title: PhaseTemplateSummary
+    OpportunitySalesRep:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunitySalesRep
     OpportunityUpsert:
       type: object
       properties:
@@ -777,13 +834,36 @@ components:
         trades:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/TradeType'
           description: Array of trade types
+        accountId:
+          type: integer
+          description: ID of associated account. Only accepted on create.
         workflowId:
           type:
           - integer
           - 'null'
           description: ID of associated workflow
+        phaseId:
+          type:
+          - integer
+          - 'null'
+          description: ID of associated phase template
+        ownerId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the owning user
+        salesRepId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the assigned sales rep
+        projectManagerId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the assigned project manager
         value:
           type: number
           format: double
@@ -792,8 +872,14 @@ components:
           type: number
           format: double
           description: Project size
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Deal confidence score (0-100)
         status:
-          $ref: '#/components/schemas/ProjectStatus'
+          $ref: '#/components/schemas/OpportunityStatus'
         primaryEmail:
           type: string
           format: email
@@ -805,7 +891,7 @@ components:
           type: array
           items:
             type: integer
-          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
+          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts. The first ID in the array is treated as the primary contact.
         custom:
           type: object
           additionalProperties:
@@ -819,114 +905,40 @@ components:
 
         '
       title: OpportunityUpsert
-    OpportunitiesSearchGetParametersOrderBy:
+    OpportunityStatus:
       type: string
       enum:
-      - asc
-      - desc
-      default: asc
-      title: OpportunitiesSearchGetParametersOrderBy
-    OpportunityJurisdiction:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        uuid:
-          type: string
-      title: OpportunityJurisdiction
-    OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode:
+      - ACTIVE
+      - ON_HOLD
+      - WON
+      - LOST
+      description: 'Status of the opportunity:
+
+        * `ACTIVE` - Opportunity is open
+
+        * `ON_HOLD` - Opportunity is temporarily paused
+
+        * `WON` - Opportunity was won
+
+        * `LOST` - Opportunity was lost
+
+        '
+      title: OpportunityStatus
+    OpportunitiesPostParametersMatchFoundStrategy:
       type: string
       enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode
-    SearchOpportunitiesRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: SearchOpportunitiesRequestBadRequestError
-    GetOpportunityRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetOpportunityRequestNotFoundError
-    PhaseTemplateSummary:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        type:
-          type: string
-        redSla:
-          type:
-          - integer
-          - 'null'
-        yellowSla:
-          type:
-          - integer
-          - 'null'
-      title: PhaseTemplateSummary
-    UpdateOpportunityRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateOpportunityRequestBadRequestError
-    UpdateOpportunityRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateOpportunityRequestUnauthorizedError
-    OpportunitiesSearchGetParametersLogic:
-      type: string
-      enum:
-      - and
-      - or
-      default: and
-      title: OpportunitiesSearchGetParametersLogic
-    PhaseInstanceStatus:
-      type: string
-      enum:
-      - NOT_STARTED
-      - IN_PROGRESS
-      - COMPLETED
-      title: PhaseInstanceStatus
-    DeleteOpportunityRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteOpportunityRequestNotFoundError
-    CreateOpportunityRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateOpportunityRequestUnauthorizedError
+      - skip
+      - replace
+      - enrich
+      default: skip
+      description: '- skip: Return existing record without changes
+
+        - replace: Replace existing record with new data
+
+        - enrich: Update only empty fields in existing record
+
+        '
+      title: OpportunitiesPostParametersMatchFoundStrategy
     UserSummary:
       type: object
       properties:
@@ -951,6 +963,45 @@ components:
           - 'null'
       description: Minimal user representation used in responses
       title: UserSummary
+    OpportunityWithPhaseInstancesSalesRep:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunityWithPhaseInstancesSalesRep
+    OpportunitiesGetParametersUpdatedBefore:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: OpportunitiesGetParametersUpdatedBefore
+    OpportunityWithPhaseInstancesPhaseInstancesItemsStatus:
+      type: string
+      enum:
+      - NOT_STARTED
+      - IN_PROGRESS
+      - COMPLETED
+      title: OpportunityWithPhaseInstancesPhaseInstancesItemsStatus
+    OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode
     OpportunitiesGetParametersOrderBy:
       type: string
       enum:
@@ -958,35 +1009,325 @@ components:
       - desc
       default: asc
       title: OpportunitiesGetParametersOrderBy
-    OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode
     OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
       title: OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode
-    ProjectStatus:
+    DeleteOpportunityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteOpportunityRequestNotFoundError
+    OpportunitiesGetParametersUpdatedAfter:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: OpportunitiesGetParametersUpdatedAfter
+    OpportunitiesSearchGetParametersLogic:
       type: string
       enum:
-      - ACTIVE
-      - ON_HOLD
-      - CANCELLED
-      - COMPLETED
-      description: 'Status of the project:
+      - and
+      - or
+      default: and
+      title: OpportunitiesSearchGetParametersLogic
+    OpportunitiesPostParametersMatchBy:
+      type: string
+      enum:
+      - title
+      - primaryEmail
+      - primaryPhone
+      - address
+      default: title
+      title: OpportunitiesPostParametersMatchBy
+    OpportunityWithPhaseInstancesProjectManager:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunityWithPhaseInstancesProjectManager
+    CreateOpportunityRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateOpportunityRequestBadRequestError
+    SearchOpportunitiesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesSearchGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: SearchOpportunitiesRequestBadRequestError
+    OpportunityWithPhaseInstances:
+      type: object
+      properties:
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the full opportunity location/address.
+        trades:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradeType'
+          description: Array of trade types
+        value:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Deal value
+        size:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Deal size
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Deal confidence score (0-100)
+        status:
+          $ref: '#/components/schemas/OpportunityStatus'
+        workflowId:
+          type:
+          - integer
+          - 'null'
+          description: Associated workflow ID
+        accountId:
+          type:
+          - integer
+          - 'null'
+          description: Associated account ID
+        geoLocation:
+          type: array
+          items:
+            type: string
+          description: 'Latitude/Longitude in "lat,lon" format. Read-only here — settable only via `PATCH /sites/{id}` on the linked site.
 
-        * `ACTIVE` - Project is active and in progress
+            '
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: Image URL for the opportunity. Read-only — not settable via this API.
+        streetViewUrl:
+          type:
+          - string
+          - 'null'
+          description: Street view image URL. Read-only — derived from geoLocation, not settable directly.
+        city:
+          type: string
+        zipcode:
+          type: string
+        state:
+          type: string
+        street:
+          type: string
+        phaseTimeline:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpportunityWithPhaseInstancesPhaseTimelineItems'
+          description: 'Only present on `GET /opportunities` and `/opportunities/search` when `entered_phase_id`/`exited_phase_id` is used to filter the results. Contains the deal''s full phase-transition history (not just the matched phase) in compact form — use `GET /opportunities/{opportunity_id}` for the complete `phaseInstances` with names, positions, and SLA info.
 
-        * `ON_HOLD` - Project is temporarily paused
+            '
+        owner:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityWithPhaseInstancesOwner'
+          - type: 'null'
+        salesRep:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityWithPhaseInstancesSalesRep'
+          - type: 'null'
+        projectManager:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityWithPhaseInstancesProjectManager'
+          - type: 'null'
+        jurisdiction:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityWithPhaseInstancesJurisdiction'
+          - type: 'null'
+        lastActivity:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        phaseId:
+          type:
+          - integer
+          - 'null'
+        number:
+          type: integer
+          description: Sequential opportunity number
+        workflowName:
+          type: string
+          description: 'Name of the associated workflow.
 
-        * `CANCELLED` - Project has been cancelled
-
-        * `COMPLETED` - Project has been completed
-
-        '
-      title: ProjectStatus
+            '
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactRef'
+          description: Contacts associated with this opportunity (independent of, and not inherited from, the parent account's contacts). Set on create or update via the `contacts` request field. On GET requests, only populated when include_contacts=true is passed. Always populated on POST (create) and PATCH (update) responses. Ordered with the primary contact first, capped at 20 contacts.
+        phase:
+          oneOf:
+          - $ref: '#/components/schemas/OpportunityWithPhaseInstancesPhase'
+          - type: 'null'
+          description: Current phase (get by id only)
+        phaseInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpportunityWithPhaseInstancesPhaseInstancesItems'
+          description: Ordered list of phase instances for the opportunity (get by id only)
+      title: OpportunityWithPhaseInstances
+    OpportunityWithPhaseInstancesPhaseTimelineItems:
+      type: object
+      properties:
+        phaseTemplateId:
+          type: integer
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the deal entered this phase template
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the deal exited this phase template
+      title: OpportunityWithPhaseInstancesPhaseTimelineItems
+    UpdateOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateOpportunityRequestUnauthorizedError
+    OpportunityWithPhaseInstancesJurisdiction:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        uuid:
+          type: string
+      title: OpportunityWithPhaseInstancesJurisdiction
+    OpportunityJurisdiction:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        uuid:
+          type: string
+      title: OpportunityJurisdiction
+    TradeType:
+      type: string
+      enum:
+      - EV Charger
+      - Solar
+      - Storage
+      - Boiler
+      - Chiller
+      - Ductwork
+      - HVAC
+      - Refrigeration
+      - Electrical
+      - Generator
+      - Lighting
+      - Gas Line
+      - Plumbing
+      - Water Filtration
+      - Water Heater
+      - Communications
+      - Electronic Safety & Security
+      - Integrated Automation
+      - Insulation
+      - Gutters
+      - Roofing
+      - Siding
+      - Windows
+      - Drywall
+      - General Contracting
+      - Home Improvement
+      - Landscaping
+      - R&R (Remove & Reinstall)
+      - Tenant Improvement
+      - Tree Cutting
+      description: Trade type. Matching is case-insensitive on input. `D&R` and `R&R (Repair and Renovation)` are accepted as legacy aliases and normalized to `R&R (Remove & Reinstall)`.
+      title: TradeType
+    OpportunitiesSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: OpportunitiesSearchGetParametersOp2
+    OpportunitiesSearchGetParametersOp1:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: OpportunitiesSearchGetParametersOp1
+    CreateOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityRequestUnauthorizedError
     Opportunity:
       type: object
       properties:
@@ -1000,7 +1341,7 @@ components:
         updatedAt:
           type: string
           format: date-time
-          description: Last update timestamp
+          description: Timestamp of the most recent update to the record, including changes to its custom property values.
         title:
           type: string
           description: Record title/name
@@ -1049,7 +1390,7 @@ components:
         trades:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/TradeType'
           description: Array of trade types
         value:
           type:
@@ -1069,6 +1410,8 @@ components:
           - 'null'
           format: double
           description: Deal confidence score (0-100)
+        status:
+          $ref: '#/components/schemas/OpportunityStatus'
         workflowId:
           type:
           - integer
@@ -1083,17 +1426,19 @@ components:
           type: array
           items:
             type: string
-          description: Latitude/Longitude in "lat,lon" format
+          description: 'Latitude/Longitude in "lat,lon" format. Read-only here — settable only via `PATCH /sites/{id}` on the linked site.
+
+            '
         imageUrl:
           type:
           - string
           - 'null'
-          description: Image URL for the opportunity
+          description: Image URL for the opportunity. Read-only — not settable via this API.
         streetViewUrl:
           type:
           - string
           - 'null'
-          description: Street view image URL
+          description: Street view image URL. Read-only — derived from geoLocation, not settable directly.
         city:
           type: string
         zipcode:
@@ -1102,15 +1447,13 @@ components:
           type: string
         street:
           type: string
-        phase:
-          oneOf:
-          - $ref: '#/components/schemas/OpportunityPhase'
-          - type: 'null'
-        phaseInstances:
+        phaseTimeline:
           type: array
           items:
-            $ref: '#/components/schemas/PhaseInstance'
-          description: Ordered list of phase instances for the opportunity
+            $ref: '#/components/schemas/OpportunityPhaseTimelineItems'
+          description: 'Only present on `GET /opportunities` and `/opportunities/search` when `entered_phase_id`/`exited_phase_id` is used to filter the results. Contains the deal''s full phase-transition history (not just the matched phase) in compact form — use `GET /opportunities/{opportunity_id}` for the complete `phaseInstances` with names, positions, and SLA info.
+
+            '
         owner:
           oneOf:
           - $ref: '#/components/schemas/OpportunityOwner'
@@ -1141,8 +1484,77 @@ components:
           description: 'Name of the associated workflow.
 
             '
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactRef'
+          description: Contacts associated with this opportunity (independent of, and not inherited from, the parent account's contacts). Set on create or update via the `contacts` request field. On GET requests, only populated when include_contacts=true is passed. Always populated on POST (create) and PATCH (update) responses. Ordered with the primary contact first, capped at 20 contacts.
       title: Opportunity
-    OpportunityPhase:
+    ContactRef:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type:
+          - string
+          - 'null'
+          description: Contact title (e.g. job title)
+        description:
+          type:
+          - string
+          - 'null'
+        emails:
+          type: array
+          items:
+            type: string
+        phones:
+          type: array
+          items:
+            type: string
+        isPrimary:
+          type: boolean
+          description: True for the primary contact (the first contact in the list). At most one contact is primary.
+      title: ContactRef
+    OpportunityWithPhaseInstancesOwner:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunityWithPhaseInstancesOwner
+    DeleteOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteOpportunityRequestUnauthorizedError
+    UpdateOpportunityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateOpportunityRequestNotFoundError
+    OpportunityWithPhaseInstancesPhase:
       type: object
       properties:
         id:
@@ -1151,7 +1563,80 @@ components:
           type: string
         type:
           type: string
-      title: OpportunityPhase
+      description: Current phase (get by id only)
+      title: OpportunityWithPhaseInstancesPhase
+    OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdDeleteResponsesContentApplicationJsonSchemaCode
+    UpdateOpportunityRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateOpportunityRequestBadRequestError
+    ListOpportunitiesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListOpportunitiesRequestBadRequestError
+    OpportunitiesSearchGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: OpportunitiesSearchGetParametersOrderBy
+    OpportunityProjectManager:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+      title: OpportunityProjectManager
+    OpportunitiesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesPostResponsesContentApplicationJsonSchemaCode
+    OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode
+    GetOpportunityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityRequestUnauthorizedError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

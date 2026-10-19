@@ -8,25 +8,188 @@ servers:
 tags:
 - name: Calls
 paths:
-  /projects/{projectId}/calls:
+  /calls:
     get:
-      operationId: list-project-calls
+      operationId: calls_listCalls
+      summary: List Calls
+      description: 'Retrieve a paginated list of calls across your whole company, including calls logged on
+
+        projects, opportunities and accounts. Each call has `projectId`, `opportunityId` or
+
+        `accountId` set to the record it''s logged on (all three are `null` for calls not yet
+
+        linked to a record).
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Date filtering (`updated_after`, `updated_before`)
+
+        - Filtering by `outcome`, `reason` and `disposition`
+
+        - Sorting by creation time (`order_by`, newest first by default)'
+      tags:
+      - Calls
+      parameters:
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: updated_after
+        in: query
+        description: Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
+        required: false
+        schema:
+          $ref: '#/components/schemas/CallsGetParametersUpdatedAfter'
+      - name: updated_before
+        in: query
+        description: Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
+        required: false
+        schema:
+          $ref: '#/components/schemas/CallsGetParametersUpdatedBefore'
+      - name: order_by
+        in: query
+        description: Sort by creation time. Defaults to newest first.
+        required: false
+        schema:
+          $ref: '#/components/schemas/CallsGetParametersOrderBy'
+      - name: outcome
+        in: query
+        description: Only return calls with this outcome
+        required: false
+        schema:
+          $ref: '#/components/schemas/CallsGetParametersOutcome'
+      - name: reason
+        in: query
+        description: Only return calls with exactly this reason (see `GET /calls/classification-options`)
+        required: false
+        schema:
+          type: string
+          maxLength: 255
+      - name: disposition
+        in: query
+        description: Only return calls with exactly this disposition (see `GET /calls/classification-options`)
+        required: false
+        schema:
+          type: string
+          maxLength: 255
+      responses:
+        '200':
+          description: List of calls
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CallListItem'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCallsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCallsRequestUnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCallsRequestInternalServerError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCallsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+  /calls/classification-options:
+    get:
+      operationId: calls_listCallClassificationOptions
+      summary: List Call Classification Options
+      description: 'Lists your company''s call reasons and dispositions, ordered by type and then position.
+
+        A call''s `reason` and `disposition` hold an option''s `name`. Options are company-defined,
+
+        and renaming or deleting one does not change calls already logged with it.'
+      tags:
+      - Calls
+      parameters:
+      - name: type
+        in: query
+        description: Only return options of this type. Omit to return both.
+        required: false
+        schema:
+          $ref: '#/components/schemas/CallsClassificationOptionsGetParametersType'
+      responses:
+        '200':
+          description: List of call classification options
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CallClassificationOption'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCallClassificationOptionsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCallClassificationOptionsRequestUnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCallClassificationOptionsRequestInternalServerError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCallClassificationOptionsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+  /projects/{project_id}/calls:
+    get:
+      operationId: calls_listProjectCalls
       summary: List Project Calls
       description: Retrieve all phone call records associated with a project
       tags:
       - Calls
       parameters:
-      - name: projectId
+      - name: project_id
         in: path
         description: Project identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of call records
@@ -48,20 +211,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListProjectCallsRequestNotFoundError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProjectCallsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-project-call
+      operationId: calls_createProjectCall
       summary: Create Project Call
       description: Create a new phone call record associated with a project
       tags:
       - Calls
       parameters:
-      - name: projectId
+      - name: project_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -89,9 +255,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CallCreate'
-  /opportunities/{opportunityId}/calls:
+      security:
+      - ApiKeyAuth: []
+  /opportunities/{opportunity_id}/calls:
     get:
-      operationId: list-opportunity-calls
+      operationId: calls_listOpportunityCalls
       summary: List Opportunity Calls
       description: 'Retrieve all phone call records associated with an opportunity
 
@@ -100,17 +268,12 @@ paths:
       tags:
       - Calls
       parameters:
-      - name: opportunityId
+      - name: opportunity_id
         in: path
         description: Opportunity identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of call records
@@ -132,8 +295,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListOpportunityCallsRequestNotFoundError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOpportunityCallsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-opportunity-call
+      operationId: calls_createOpportunityCall
       summary: Create Opportunity Call
       description: 'Create a new phone call record associated with an opportunity
 
@@ -142,17 +313,12 @@ paths:
       tags:
       - Calls
       parameters:
-      - name: opportunityId
+      - name: opportunity_id
         in: path
         description: Opportunity identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '201':
           description: Call record created successfully
@@ -177,9 +343,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CallCreate'
-  /accounts/{accountId}/calls:
+      security:
+      - ApiKeyAuth: []
+  /accounts/{account_id}/calls:
     get:
-      operationId: list-account-calls
+      operationId: calls_listAccountCalls
       summary: List Account Calls
       description: 'Retrieve all phone call records associated with an account
 
@@ -188,17 +356,12 @@ paths:
       tags:
       - Calls
       parameters:
-      - name: accountId
+      - name: account_id
         in: path
         description: Account identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of call records
@@ -220,8 +383,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListAccountCallsRequestNotFoundError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAccountCallsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-account-call
+      operationId: calls_createAccountCall
       summary: Create Account Call
       description: 'Create a new phone call record associated with an account
 
@@ -230,17 +401,12 @@ paths:
       tags:
       - Calls
       parameters:
-      - name: accountId
+      - name: account_id
         in: path
         description: Account identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '201':
           description: Call record created successfully
@@ -265,8 +431,498 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CallCreate'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
+    ListOpportunityCallsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListOpportunityCallsRequestBadGatewayError
+    ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode
+    CallsClassificationOptionsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: CallsClassificationOptionsGetResponsesContentApplicationJsonSchemaCode
+    CallCreate:
+      type: object
+      properties:
+        fromNumber:
+          type: string
+          description: Phone number that initiated the call
+        toNumber:
+          type: string
+          description: Phone number that received the call
+        isInbound:
+          type: boolean
+          default: false
+          description: Whether the call was inbound (true) or outbound (false)
+        outcome:
+          $ref: '#/components/schemas/CallCreateOutcome'
+          description: Call outcome
+        startTime:
+          type: string
+          format: date-time
+          description: When the call started
+        endTime:
+          type: string
+          format: date-time
+          description: When the call ended
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: 'Why the call happened. Company-defined: the value is the name of one of the company''s
+
+            call reasons (see `GET /calls/classification-options?type=REASON`), so it can be any
+
+            string up to 255 characters. Default reasons are Product, Process, Service, Accounting,
+
+            Revenue opportunity, Feedback and Other. Calls logged before custom reasons existed
+
+            hold the legacy uppercase value (e.g. `SERVICE`).
+
+            Any string is accepted; use a name from the company''s list so the call groups with others in Coperniq.
+
+            '
+        disposition:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: 'How the call ended up. Company-defined: the value is the name of one of the company''s
+
+            call dispositions (see `GET /calls/classification-options?type=DISPOSITION`), so it can
+
+            be any string up to 255 characters. Default dispositions are Info provided, Visit
+
+            scheduled, Issue resolved, Follow up, Escalation, No action, Unresponsive and Other.
+
+            Calls logged before custom dispositions existed hold the legacy uppercase value
+
+            (e.g. `INFO_PROVIDED`).
+
+            Any string is accepted; use a name from the company''s list so the call groups with others in Coperniq.
+
+            '
+        note:
+          type: string
+          description: Human-editable note about the call. May contain HTML.
+        recordingUrl:
+          type: string
+          description: URL to the call recording
+        transcriptUrl:
+          type: string
+          description: URL to an externally hosted call transcript
+        missedCount:
+          type: integer
+          description: Number of times the call was missed
+      required:
+      - fromNumber
+      - toNumber
+      - isInbound
+      - startTime
+      - endTime
+      - reason
+      - disposition
+      title: CallCreate
+    ListCallsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListCallsRequestBadGatewayError
+    CallsGetParametersOutcome:
+      type: string
+      enum:
+      - ANSWERED
+      - MISSED
+      - VOICEMAIL
+      title: CallsGetParametersOutcome
+    ListAccountCallsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListAccountCallsRequestBadGatewayError
+    CreateProjectCallRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectCallRequestUnauthorizedError
+    CreateAccountCallRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateAccountCallRequestBadRequestError
+    CreateAccountCallRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateAccountCallRequestUnauthorizedError
+    ListCallClassificationOptionsRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CallsClassificationOptionsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListCallClassificationOptionsRequestInternalServerError
+    CallClassificationOption:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Option identifier
+        type:
+          $ref: '#/components/schemas/CallClassificationOptionType'
+          description: Whether this option is a call reason or a call disposition
+        name:
+          type: string
+          description: The value stored on a call's `reason` or `disposition`
+        description:
+          type:
+          - string
+          - 'null'
+          description: Guidance on when to use this option. Coperniq AI also uses it when classifying calls.
+        position:
+          type: integer
+          description: Sort order within its type
+      required:
+      - id
+      - type
+      - name
+      - position
+      title: CallClassificationOption
+    CallOutcome:
+      type: string
+      enum:
+      - ANSWERED
+      - MISSED
+      - VOICEMAIL
+      description: Call outcome
+      title: CallOutcome
+    OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode
+    AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode
+    CallListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Call identifier
+        fromNumber:
+          type: string
+          description: Phone number that initiated the call
+        toNumber:
+          type: string
+          description: Phone number that received the call
+        isInbound:
+          type: boolean
+          description: Whether the call was inbound (true) or outbound (false)
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/CallListItemOutcome'
+          - type: 'null'
+          description: Call outcome
+        startTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the call started
+        endTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the call ended
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+          description: 'Why the call happened. Company-defined: the value is the name of one of the company''s
+
+            call reasons (see `GET /calls/classification-options?type=REASON`), so it can be any
+
+            string up to 255 characters. Default reasons are Product, Process, Service, Accounting,
+
+            Revenue opportunity, Feedback and Other. Calls logged before custom reasons existed
+
+            hold the legacy uppercase value (e.g. `SERVICE`).
+
+            '
+        disposition:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+          description: 'How the call ended up. Company-defined: the value is the name of one of the company''s
+
+            call dispositions (see `GET /calls/classification-options?type=DISPOSITION`), so it can
+
+            be any string up to 255 characters. Default dispositions are Info provided, Visit
+
+            scheduled, Issue resolved, Follow up, Escalation, No action, Unresponsive and Other.
+
+            Calls logged before custom dispositions existed hold the legacy uppercase value
+
+            (e.g. `INFO_PROVIDED`).
+
+            '
+        note:
+          type:
+          - string
+          - 'null'
+          description: Human-editable note about the call. May contain HTML.
+        summary:
+          type:
+          - string
+          - 'null'
+          description: AI-generated summary of the call. `null` when the call has no AI transcript.
+        transcriptText:
+          type:
+          - string
+          - 'null'
+          description: AI transcript of the call as plain text, one sentence per line in spoken order. `null` when the call has no AI transcript.
+        recordingUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to the call recording
+        transcriptUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to an externally hosted call transcript, if one was provided when the call was logged. For Coperniq phone calls use `transcriptText`.
+        missedCount:
+          type:
+          - integer
+          - 'null'
+          description: Number of times the call was missed
+        classificationNote:
+          type:
+          - string
+          - 'null'
+          description: For calls classified by Coperniq AI, the AI's explanation of why it chose the reason and disposition.
+        resolution:
+          oneOf:
+          - $ref: '#/components/schemas/CallListItemResolution'
+          - type: 'null'
+          description: For calls handled by a Coperniq AI agent, whether the caller's issue was resolved.
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        projectId:
+          type:
+          - integer
+          - 'null'
+          description: The project this call is logged on, if it's on a project
+        opportunityId:
+          type:
+          - integer
+          - 'null'
+          description: The opportunity this call is logged on, if it's on an opportunity
+        accountId:
+          type:
+          - integer
+          - 'null'
+          description: The account this call is logged on, if it's on an account
+      required:
+      - id
+      - fromNumber
+      - toNumber
+      - isInbound
+      - createdAt
+      - updatedAt
+      title: CallListItem
+    ListCallsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListCallsRequestBadRequestError
+    OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode
+    CreateOpportunityCallRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateOpportunityCallRequestBadRequestError
+    CallListItemOutcome:
+      type: string
+      enum:
+      - ANSWERED
+      - MISSED
+      - VOICEMAIL
+      description: Call outcome
+      title: CallListItemOutcome
+    CreateProjectCallRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateProjectCallRequestBadRequestError
+    ListOpportunityCallsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListOpportunityCallsRequestUnauthorizedError
+    ListCallsRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListCallsRequestInternalServerError
+    ListProjectCallsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectCallsRequestUnauthorizedError
+    ListAccountCallsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListAccountCallsRequestUnauthorizedError
+    ListCallsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListCallsRequestUnauthorizedError
+    ListCallClassificationOptionsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CallsClassificationOptionsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListCallClassificationOptionsRequestBadRequestError
+    CallsGetParametersUpdatedBefore:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: CallsGetParametersUpdatedBefore
+    ListCallClassificationOptionsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/CallsClassificationOptionsGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListCallClassificationOptionsRequestBadGatewayError
+    CallsClassificationOptionsGetParametersType:
+      type: string
+      enum:
+      - REASON
+      - DISPOSITION
+      title: CallsClassificationOptionsGetParametersType
+    ListAccountCallsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListAccountCallsRequestNotFoundError
+    ListCallClassificationOptionsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CallsClassificationOptionsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListCallClassificationOptionsRequestUnauthorizedError
     Call:
       type: object
       properties:
@@ -300,20 +956,54 @@ components:
           format: date-time
           description: When the call ended
         reason:
-          oneOf:
-          - $ref: '#/components/schemas/CallReason'
-          - type: 'null'
-          description: Reason for the call
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+          description: 'Why the call happened. Company-defined: the value is the name of one of the company''s
+
+            call reasons (see `GET /calls/classification-options?type=REASON`), so it can be any
+
+            string up to 255 characters. Default reasons are Product, Process, Service, Accounting,
+
+            Revenue opportunity, Feedback and Other. Calls logged before custom reasons existed
+
+            hold the legacy uppercase value (e.g. `SERVICE`).
+
+            '
         disposition:
-          oneOf:
-          - $ref: '#/components/schemas/CallDisposition'
-          - type: 'null'
-          description: Call disposition
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+          description: 'How the call ended up. Company-defined: the value is the name of one of the company''s
+
+            call dispositions (see `GET /calls/classification-options?type=DISPOSITION`), so it can
+
+            be any string up to 255 characters. Default dispositions are Info provided, Visit
+
+            scheduled, Issue resolved, Follow up, Escalation, No action, Unresponsive and Other.
+
+            Calls logged before custom dispositions existed hold the legacy uppercase value
+
+            (e.g. `INFO_PROVIDED`).
+
+            '
         note:
           type:
           - string
           - 'null'
-          description: Notes about the call
+          description: Human-editable note about the call. May contain HTML.
+        summary:
+          type:
+          - string
+          - 'null'
+          description: AI-generated summary of the call. `null` when the call has no AI transcript.
+        transcriptText:
+          type:
+          - string
+          - 'null'
+          description: AI transcript of the call as plain text, one sentence per line in spoken order. `null` when the call has no AI transcript.
         recordingUrl:
           type:
           - string
@@ -323,12 +1013,22 @@ components:
           type:
           - string
           - 'null'
-          description: URL to the call transcript
+          description: URL to an externally hosted call transcript, if one was provided when the call was logged. For Coperniq phone calls use `transcriptText`.
         missedCount:
           type:
           - integer
           - 'null'
           description: Number of times the call was missed
+        classificationNote:
+          type:
+          - string
+          - 'null'
+          description: For calls classified by Coperniq AI, the AI's explanation of why it chose the reason and disposition.
+        resolution:
+          oneOf:
+          - $ref: '#/components/schemas/CallResolution'
+          - type: 'null'
+          description: For calls handled by a Coperniq AI agent, whether the caller's issue was resolved.
         createdAt:
           type: string
           format: date-time
@@ -345,237 +1045,59 @@ components:
       - createdAt
       - updatedAt
       title: Call
-    ListProjectCallsRequestUnauthorizedError:
+    ListProjectCallsRequestBadGatewayError:
       type: object
       properties:
         message:
           type: string
+          description: Summary of the downstream service failure
         code:
           $ref: '#/components/schemas/ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectCallsRequestUnauthorizedError
-    CallCreateReason:
+      required:
+      - message
+      - code
+      title: ListProjectCallsRequestBadGatewayError
+    CallListItemResolution:
       type: string
       enum:
-      - PRODUCT
-      - PROCESS
-      - SERVICE
-      - ACCOUNTING
-      - REVENUE_OPPORTUNITY
-      - FEEDBACK
-      - OTHER
-      description: Reason for the call
-      title: CallCreateReason
-    ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode:
+      - RESOLVED
+      - ESCALATED
+      - UNRESOLVED
+      description: For calls handled by a Coperniq AI agent, whether the caller's issue was resolved.
+      title: CallListItemResolution
+    CallsGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode
-    ListOpportunityCallsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListOpportunityCallsRequestUnauthorizedError
-    AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode:
+      - GRAPHQL_ERROR
+      title: CallsGetResponsesContentApplicationJsonSchemaCode
+    CallsGetParametersOrderBy:
       type: string
       enum:
-      - NOT_FOUND
-      title: AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode
-    ListAccountCallsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListAccountCallsRequestNotFoundError
-    CreateAccountCallRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateAccountCallRequestUnauthorizedError
-    OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode
-    CallCreateOutcome:
-      type: string
-      enum:
-      - ANSWERED
-      - MISSED
-      description: Call outcome
-      title: CallCreateOutcome
-    CreateProjectCallRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateProjectCallRequestUnauthorizedError
-    CreateProjectCallRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateProjectCallRequestBadRequestError
-    CreateOpportunityCallRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateOpportunityCallRequestBadRequestError
-    CallCreateDisposition:
-      type: string
-      enum:
-      - INFO_PROVIDED
-      - VISIT_SCHEDULED
-      - ISSUE_RESOLVED
-      - FOLLOW_UP
-      - ESCALATION
-      - NO_ACTION
-      - UNRESPONSIVE
-      - OTHER
-      description: Call disposition
-      title: CallCreateDisposition
-    ListOpportunityCallsRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListOpportunityCallsRequestNotFoundError
-    CreateAccountCallRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateAccountCallRequestBadRequestError
-    CallReason:
-      type: string
-      enum:
-      - PRODUCT
-      - PROCESS
-      - SERVICE
-      - ACCOUNTING
-      - REVENUE_OPPORTUNITY
-      - FEEDBACK
-      - OTHER
-      description: Reason for the call
-      title: CallReason
-    ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ProjectsProjectIdCallsPostResponsesContentApplicationJsonSchemaCode
+      - asc
+      - desc
+      default: desc
+      title: CallsGetParametersOrderBy
     AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - UNAUTHORIZED
       title: AccountsAccountIdCallsPostResponsesContentApplicationJsonSchemaCode
-    CreateOpportunityCallRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateOpportunityCallRequestUnauthorizedError
-    CallOutcome:
+    CallResolution:
+      type: string
+      enum:
+      - RESOLVED
+      - ESCALATED
+      - UNRESOLVED
+      description: For calls handled by a Coperniq AI agent, whether the caller's issue was resolved.
+      title: CallResolution
+    CallCreateOutcome:
       type: string
       enum:
       - ANSWERED
       - MISSED
+      - VOICEMAIL
       description: Call outcome
-      title: CallOutcome
-    CallDisposition:
-      type: string
-      enum:
-      - INFO_PROVIDED
-      - VISIT_SCHEDULED
-      - ISSUE_RESOLVED
-      - FOLLOW_UP
-      - ESCALATION
-      - NO_ACTION
-      - UNRESPONSIVE
-      - OTHER
-      description: Call disposition
-      title: CallDisposition
-    CallCreate:
-      type: object
-      properties:
-        fromNumber:
-          type: string
-          description: Phone number that initiated the call
-        toNumber:
-          type: string
-          description: Phone number that received the call
-        isInbound:
-          type: boolean
-          default: false
-          description: Whether the call was inbound (true) or outbound (false)
-        outcome:
-          $ref: '#/components/schemas/CallCreateOutcome'
-          description: Call outcome
-        startTime:
-          type: string
-          format: date-time
-          description: When the call started
-        endTime:
-          type: string
-          format: date-time
-          description: When the call ended
-        reason:
-          $ref: '#/components/schemas/CallCreateReason'
-          description: Reason for the call
-        disposition:
-          $ref: '#/components/schemas/CallCreateDisposition'
-          description: Call disposition
-        note:
-          type: string
-          description: Notes about the call
-        recordingUrl:
-          type: string
-          description: URL to the call recording
-        transcriptUrl:
-          type: string
-          description: URL to the call transcript
-      required:
-      - fromNumber
-      - toNumber
-      - isInbound
-      - startTime
-      - endTime
-      - reason
-      - disposition
-      title: CallCreate
-    OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode
+      title: CallCreateOutcome
     ListProjectCallsRequestNotFoundError:
       type: object
       properties:
@@ -584,14 +1106,41 @@ components:
         code:
           $ref: '#/components/schemas/ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode'
       title: ListProjectCallsRequestNotFoundError
-    ListAccountCallsRequestUnauthorizedError:
+    ListOpportunityCallsRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/AccountsAccountIdCallsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListAccountCallsRequestUnauthorizedError
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListOpportunityCallsRequestNotFoundError
+    ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: ProjectsProjectIdCallsGetResponsesContentApplicationJsonSchemaCode
+    CreateOpportunityCallRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdCallsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityCallRequestUnauthorizedError
+    CallClassificationOptionType:
+      type: string
+      enum:
+      - REASON
+      - DISPOSITION
+      description: Whether this option is a call reason or a call disposition
+      title: CallClassificationOptionType
+    CallsGetParametersUpdatedAfter:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: CallsGetParametersUpdatedAfter
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

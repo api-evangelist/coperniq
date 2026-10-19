@@ -1,0 +1,440 @@
+openapi: 3.2.0
+info:
+  title: Reference Utilities API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: Utilities
+paths:
+  /utilities:
+    get:
+      operationId: utilities_list-utilities
+      summary: List Utilities
+      description: 'Retrieve a paginated list of utilities.
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Sorting by name (`order_by`, default: asc)
+
+        - Search by name, holding company, or state code (`q`)
+
+        - Filter by `state` (two-letter code) and `ownership_type`
+
+        - Geo mode: pass `lat`+`lng` (together) to return every utility whose service territory covers the point, ordered most-specific-first. Name/state/ownership_type filters are ignored, and an empty array is returned if none cover the point.
+
+
+        Only active utilities are returned. Utilities are seeded globally from the HIFLD catalog. Most fields are read-only; only custom fields can be updated (see PATCH /utilities/{utility_id}).'
+      tags:
+      - Utilities
+      parameters:
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: q
+        in: query
+        description: Search by utility name, holding company, or state code (case-insensitive).
+        required: false
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: Filter by two-letter state code (e.g. "CA").
+        required: false
+        schema:
+          type: string
+          minLength: 2
+          maxLength: 2
+      - name: ownership_type
+        in: query
+        description: Filter by ownership type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/UtilitiesGetParametersOwnershipType'
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/UtilitiesGetParametersOrderBy'
+      - name: lat
+        in: query
+        description: Latitude in decimal degrees. Must be used together with `lng`.
+        required: false
+        schema:
+          type: number
+          format: double
+          minimum: -90
+          maximum: 90
+      - name: lng
+        in: query
+        description: Longitude in decimal degrees. Must be used together with `lat`.
+        required: false
+        schema:
+          type: number
+          format: double
+          minimum: -180
+          maximum: 180
+      responses:
+        '200':
+          description: List of utilities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Utility'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-utilitiesRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-utilitiesRequestUnauthorizedError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-utilitiesRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+  /utilities/{utility_id}:
+    get:
+      operationId: utilities_getUtility
+      summary: Get Utility
+      description: Retrieve a specific utility by ID, including catalog metadata and custom field values.
+      tags:
+      - Utilities
+      parameters:
+      - name: utility_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Utility details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Utility'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUtilityRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUtilityRequestNotFoundError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUtilityRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: utilities_updateUtility
+      summary: Update Utility
+      description: 'Update custom property values on a utility. The body `custom` map is keyed by property `keyName` — fetch the available keys via `GET /properties?record_type=utility`.
+
+
+        Built-in utility fields (name, state, ownershipType, holdingCompany, etc.) are read-only and cannot be updated through this endpoint.
+
+
+        Pass `null` to clear a value.'
+      tags:
+      - Utilities
+      parameters:
+      - name: utility_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: allow_new_options
+        in: query
+        description: Whether to allow creation of new dropdown options during record creation
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Utility updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Utility'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUtilityRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUtilityRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUtilityRequestNotFoundError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUtilityRequestBadGatewayError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UtilityUpdate'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    List-utilitiesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesGetResponsesContentApplicationJsonSchemaCode'
+      title: List-utilitiesRequestUnauthorizedError
+    UpdateUtilityRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesUtilityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateUtilityRequestBadGatewayError
+    UpdateUtilityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesUtilityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateUtilityRequestNotFoundError
+    UtilitiesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: UtilitiesGetResponsesContentApplicationJsonSchemaCode
+    Utility:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier.
+        name:
+          type: string
+          description: Utility name.
+        state:
+          type:
+          - string
+          - 'null'
+          description: Two-letter state code (e.g. "CA").
+        stateName:
+          type:
+          - string
+          - 'null'
+          description: Full state name (e.g. "California").
+        ownershipType:
+          oneOf:
+          - $ref: '#/components/schemas/UtilityOwnershipType'
+          - type: 'null'
+        holdingCompany:
+          type:
+          - string
+          - 'null'
+        address:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+        website:
+          type:
+          - string
+          - 'null'
+        hoursOfOperation:
+          type:
+          - string
+          - 'null'
+        isActive:
+          type: boolean
+          description: Whether this utility is currently active in the catalog.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom field values keyed by property keyName. This includes only customer-defined custom columns (see GET /properties?record_type=utility). Built-in catalog utility fields (name, state, ownershipType, holdingCompany, etc.) are exposed as top-level fields on the utility object and are read-only.
+      description: A utility. Most fields are read-only catalog data sourced from the HIFLD dataset; only fields under `custom` are user-editable.
+      title: Utility
+    GetUtilityRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesUtilityIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetUtilityRequestBadGatewayError
+    UtilitiesGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: UtilitiesGetParametersOrderBy
+    UpdateUtilityRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesUtilityIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateUtilityRequestBadRequestError
+    UpdateUtilityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesUtilityIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateUtilityRequestUnauthorizedError
+    List-utilitiesRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesGetResponsesContentApplicationJsonSchemaCode'
+      title: List-utilitiesRequestBadGatewayError
+    GetUtilityRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesUtilityIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetUtilityRequestUnauthorizedError
+    UtilitiesUtilityIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: UtilitiesUtilityIdGetResponsesContentApplicationJsonSchemaCode
+    UtilitiesGetParametersOwnershipType:
+      type: string
+      enum:
+      - INVESTOR
+      - MUNICIPAL
+      - MUNICIPAL_MARKETING_AUTHORITY
+      - COOPERATIVE
+      - FEDERAL
+      - STATE
+      - POLITICAL
+      - COMMUNITY_CHOICE_AGGREGATOR
+      - WHOLESALE_POWER_MARKETER
+      - OTHER
+      title: UtilitiesGetParametersOwnershipType
+    UtilityOwnershipType:
+      type: string
+      enum:
+      - INVESTOR
+      - MUNICIPAL
+      - MUNICIPAL_MARKETING_AUTHORITY
+      - COOPERATIVE
+      - FEDERAL
+      - STATE
+      - POLITICAL
+      - COMMUNITY_CHOICE_AGGREGATOR
+      - WHOLESALE_POWER_MARKETER
+      - OTHER
+      title: UtilityOwnershipType
+    List-utilitiesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: List-utilitiesRequestBadRequestError
+    GetUtilityRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/UtilitiesUtilityIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetUtilityRequestNotFoundError
+    UtilitiesUtilityIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: UtilitiesUtilityIdPatchResponsesContentApplicationJsonSchemaCode
+    UtilityUpdate:
+      type: object
+      properties:
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom field values keyed by property keyName. Pass `null` to clear a value. Unknown keyNames are rejected with a 400 — fetch valid keys via GET /properties?record_type=utility.
+      required:
+      - custom
+      title: UtilityUpdate
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

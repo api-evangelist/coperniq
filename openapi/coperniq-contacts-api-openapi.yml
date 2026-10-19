@@ -10,7 +10,7 @@ tags:
 paths:
   /contacts:
     get:
-      operationId: list-contacts
+      operationId: contacts_listContacts
       summary: List Contacts
       description: 'Retrieve a paginated list of contacts.
 
@@ -33,6 +33,8 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
       - name: page
         in: query
@@ -40,21 +42,20 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
       - name: updated_after
         in: query
-        description: Filter items updated after this timestamp (ISO 8601)
+        description: Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
         required: false
         schema:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/ContactsGetParametersUpdatedAfter'
       - name: updated_before
         in: query
-        description: Filter items updated before this timestamp (ISO 8601)
+        description: Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
         required: false
         schema:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/ContactsGetParametersUpdatedBefore'
       - name: order_by
         in: query
         description: Sort order for results
@@ -65,11 +66,6 @@ paths:
         in: query
         description: Full text search across contact name, emails, and phones.
         required: false
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
-        required: true
         schema:
           type: string
       responses:
@@ -87,8 +83,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListContactsRequestUnauthorizedError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-contact
+      operationId: contacts_createContact
       summary: Create Contact
       description: 'Create a new contact.
 
@@ -111,12 +109,6 @@ paths:
         - `projectIds`: Array of project IDs to associate'
       tags:
       - Contacts
-      parameters:
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '201':
           description: Contact created successfully
@@ -141,25 +133,22 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ContactCreate'
-  /contacts/{contactId}:
+      security:
+      - ApiKeyAuth: []
+  /contacts/{contact_id}:
     get:
-      operationId: get-contact
+      operationId: contacts_getContact
       summary: Get Contact
       description: Retrieve a specific contact by ID
       tags:
       - Contacts
       parameters:
-      - name: contactId
+      - name: contact_id
         in: path
         description: Contact identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Contact details
@@ -179,8 +168,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetContactRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
     patch:
-      operationId: update-contact
+      operationId: contacts_updateContact
       summary: Update Contact
       description: 'Update an existing contact. Supports partial updates.
 
@@ -201,17 +192,12 @@ paths:
       tags:
       - Contacts
       parameters:
-      - name: contactId
+      - name: contact_id
         in: path
         description: Contact identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Contact updated successfully
@@ -242,24 +228,21 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ContactUpdate'
+      security:
+      - ApiKeyAuth: []
     delete:
-      operationId: delete-contact
+      operationId: contacts_deleteContact
       summary: Delete Contact
       description: Delete a specific contact by ID
       tags:
       - Contacts
       parameters:
-      - name: contactId
+      - name: contact_id
         in: path
         description: Contact identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Successful response
@@ -275,13 +258,251 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteContactRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
+    GetContactRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetContactRequestNotFoundError
+    GetContactRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetContactRequestUnauthorizedError
+    ContactsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: ContactsGetParametersOrderBy
+    ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode
+    ContactsGetParametersUpdatedBefore:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: ContactsGetParametersUpdatedBefore
+    UpdateContactRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateContactRequestBadRequestError
     ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
       title: ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode
+    ContactsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ContactsGetResponsesContentApplicationJsonSchemaCode
+    ContactsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: ContactsPostResponsesContentApplicationJsonSchemaCode
+    ContactCreatedByUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User identifier
+      title: ContactCreatedByUser
+    UpdateContactRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateContactRequestUnauthorizedError
+    ContactsGetParametersUpdatedAfter:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: ContactsGetParametersUpdatedAfter
+    CreateContactRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateContactRequestUnauthorizedError
+    ContactUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Contact's full name
+        phones:
+          type: array
+          items:
+            type: string
+          description: List of contact phone numbers
+        emails:
+          type: array
+          items:
+            type: string
+          description: List of contact email addresses
+        title:
+          type: string
+          description: Contact title
+        accountIds:
+          type: array
+          items:
+            type: integer
+          description: Account IDs to associate with the contact
+        projectIds:
+          type: array
+          items:
+            type: integer
+          description: Project IDs to associate with the contact
+      title: ContactUpdate
+    DeleteContactRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteContactRequestNotFoundError
+    CreateContactRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateContactRequestBadRequestError
+    ListContactsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListContactsRequestUnauthorizedError
+    ContactRelatedRecordRef:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Record identifier
+        title:
+          type: string
+          description: Record title
+      title: ContactRelatedRecordRef
+    UpdateContactRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateContactRequestNotFoundError
+    DeleteContactRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteContactRequestUnauthorizedError
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        name:
+          type: string
+          description: Contact's full name
+        phones:
+          type: array
+          items:
+            type: string
+          description: List of contact phone numbers
+        emails:
+          type: array
+          items:
+            type: string
+          description: List of contact email addresses
+        title:
+          type:
+          - string
+          - 'null'
+          description: Contact title
+        description:
+          type:
+          - string
+          - 'null'
+          description: Contact description
+        createdByUser:
+          $ref: '#/components/schemas/ContactCreatedByUser'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactRelatedRecordRef'
+          description: List of linked accounts
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactRelatedRecordRef'
+          description: List of linked projects
+        opportunities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactRelatedRecordRef'
+          description: List of linked opportunities
+        vendors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactRelatedRecordRef'
+          description: List of linked vendors
+      required:
+      - name
+      title: Contact
+    ContactsContactIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaCode
     ContactCreate:
       type: object
       properties:
@@ -314,212 +535,6 @@ components:
       required:
       - name
       title: ContactCreate
-    CreateContactRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateContactRequestBadRequestError
-    UpdateContactRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateContactRequestUnauthorizedError
-    ContactUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Contact's full name
-        phones:
-          type: array
-          items:
-            type: string
-          description: List of contact phone numbers
-        emails:
-          type: array
-          items:
-            type: string
-          description: List of contact email addresses
-        title:
-          type: string
-          description: Contact title
-        accountIds:
-          type: array
-          items:
-            type: integer
-          description: Account IDs to associate with the contact
-        projectIds:
-          type: array
-          items:
-            type: integer
-          description: Project IDs to associate with the contact
-      title: ContactUpdate
-    ListContactsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListContactsRequestUnauthorizedError
-    CreateContactRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateContactRequestUnauthorizedError
-    UpdateContactRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateContactRequestBadRequestError
-    Contact:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Contact's full name
-        phones:
-          type: array
-          items:
-            type: string
-          description: List of contact phone numbers
-        emails:
-          type: array
-          items:
-            type: string
-          description: List of contact email addresses
-        title:
-          type: string
-          description: Contact title
-        createdByUser:
-          $ref: '#/components/schemas/ContactCreatedByUser'
-        accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactAccountsItems'
-          description: List of account objects
-        projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactProjectsItems'
-          description: List of project objects
-      required:
-      - name
-      title: Contact
-    ContactsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: ContactsGetParametersOrderBy
-    ContactsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ContactsPostResponsesContentApplicationJsonSchemaCode
-    ContactsContactIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaCode
-    ContactAccountsItems:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Account identifier
-        title:
-          type: string
-          description: Account title
-      description: Account object
-      title: ContactAccountsItems
-    ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode
-    UpdateContactRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateContactRequestNotFoundError
-    DeleteContactRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteContactRequestNotFoundError
-    DeleteContactRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteContactRequestUnauthorizedError
-    GetContactRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetContactRequestUnauthorizedError
-    ContactCreatedByUser:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: User identifier
-      title: ContactCreatedByUser
-    ContactProjectsItems:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Project identifier
-        title:
-          type: string
-          description: Project title
-      description: Project object
-      title: ContactProjectsItems
-    GetContactRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetContactRequestNotFoundError
-    ContactsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: ContactsGetResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

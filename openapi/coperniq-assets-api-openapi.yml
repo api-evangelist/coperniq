@@ -10,7 +10,7 @@ tags:
 paths:
   /assets:
     get:
-      operationId: list-assets
+      operationId: assets_listAssets
       summary: List Assets
       description: List assets for the authenticated company. Supports pagination and filters (`account_id`, `site_id`, `status`, `type`, `manufacturer`, `is_archived`, date range on `updated_at`).
       tags:
@@ -21,12 +21,15 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
       - name: page_size
         in: query
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
       - name: order_by
         in: query
@@ -78,11 +81,6 @@ paths:
         schema:
           type: string
           format: date-time
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of assets
@@ -104,18 +102,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListAssetsRequestUnauthorizedError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-asset
+      operationId: assets_createAsset
       summary: Create Asset
       description: Create a new asset. Requires `accountId`, `siteId`, `type`, `manufacturer`, `model`, and `serialNumber`.
       tags:
       - Assets
-      parameters:
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '201':
           description: Asset created successfully
@@ -140,21 +134,18 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AssetCreate'
-  /assets/{assetId}:
+      security:
+      - ApiKeyAuth: []
+  /assets/{asset_id}:
     get:
-      operationId: get-asset
+      operationId: assets_getAsset
       summary: Get Asset
       description: Retrieve a specific asset by ID.
       tags:
       - Assets
       parameters:
-      - name: assetId
+      - name: asset_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -177,8 +168,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAssetRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
     patch:
-      operationId: update-asset
+      operationId: assets_updateAsset
       summary: Update Asset
       description: 'Update an existing asset. All fields are optional — only include what you want to change.
 
@@ -190,13 +183,8 @@ paths:
       tags:
       - Assets
       parameters:
-      - name: assetId
+      - name: asset_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -230,91 +218,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AssetUpdate'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    AssetsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AssetsGetResponsesContentApplicationJsonSchemaCode
-    AssetsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: desc
-      title: AssetsGetParametersOrderBy
-    AssetUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/AssetType'
-        status:
-          $ref: '#/components/schemas/AssetStatus'
-        manufacturer:
-          type: string
-        model:
-          type: string
-        serialNumber:
-          type: string
-        size:
-          type: number
-          format: double
-        labelIds:
-          type: array
-          items:
-            type: integer
-          description: Replaces the asset's label list.
-        installDate:
-          type:
-          - string
-          - 'null'
-          format: date
-        manufacturingDate:
-          type:
-          - string
-          - 'null'
-          format: date
-        expectedLifetime:
-          type: number
-          format: double
-          description: Expected lifetime in years
-        description:
-          type: string
-        coverImageFileId:
-          type: integer
-        nameplateImageFileId:
-          type: integer
-        isArchived:
-          type: boolean
-      description: 'Partial update body for `PATCH /assets/{assetId}`. All fields are optional.
-
-        `siteId` and `accountId` cannot be changed after creation. Including either field in the request body is rejected with a `400 Bad Request` validation error.
-
-        Set `isArchived: true` to archive the asset, or `isArchived: false` to unarchive it.
-
-        '
-      title: AssetUpdate
-    AssetsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AssetsPostResponsesContentApplicationJsonSchemaCode
-    CreateAssetRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateAssetRequestUnauthorizedError
-    AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode
     GetAssetRequestUnauthorizedError:
       type: object
       properties:
@@ -323,17 +230,74 @@ components:
         code:
           $ref: '#/components/schemas/AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetAssetRequestUnauthorizedError
-    ListAssetsRequestBadRequestError:
+    AssetsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: AssetsGetParametersOrderBy
+    AssetLabel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        color:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/AssetLabelType'
+      required:
+      - id
+      - name
+      - type
+      description: Label attached to an asset (read-only expansion of the label id).
+      title: AssetLabel
+    AssetLabelType:
+      type: string
+      enum:
+      - ASSET
+      - TASK
+      title: AssetLabelType
+    AssetsGetParametersIsArchived:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+      - '1'
+      - '0'
+      default: 'false'
+      title: AssetsGetParametersIsArchived
+    CreateAssetRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/AssetsGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/AssetsPostResponsesContentApplicationJsonSchemaCode'
         field:
           type: string
           description: Field that caused the validation error (if applicable)
-      title: ListAssetsRequestBadRequestError
+      title: CreateAssetRequestBadRequestError
+    UpdateAssetRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAssetRequestNotFoundError
+    CreateAssetRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateAssetRequestUnauthorizedError
     AssetStatus:
       type: string
       enum:
@@ -344,6 +308,16 @@ components:
       - RETIRED
       description: Asset lifecycle status.
       title: AssetStatus
+    AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode
+    AssetsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AssetsPostResponsesContentApplicationJsonSchemaCode
     AssetCreate:
       type: object
       properties:
@@ -395,6 +369,99 @@ components:
       - serialNumber
       description: Body for `POST /assets`.
       title: AssetCreate
+    UpdateAssetRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAssetRequestUnauthorizedError
+    GetAssetRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAssetRequestNotFoundError
+    AssetUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AssetType'
+        status:
+          $ref: '#/components/schemas/AssetStatus'
+        manufacturer:
+          type: string
+        model:
+          type: string
+        serialNumber:
+          type: string
+        size:
+          type: number
+          format: double
+        labelIds:
+          type: array
+          items:
+            type: integer
+          description: Replaces the asset's label list.
+        installDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        manufacturingDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        expectedLifetime:
+          type: number
+          format: double
+          description: Expected lifetime in years
+        description:
+          type: string
+        coverImageFileId:
+          type: integer
+        nameplateImageFileId:
+          type: integer
+        isArchived:
+          type: boolean
+      description: 'Partial update body for `PATCH /assets/{asset_id}`. All fields are optional.
+
+        `siteId` and `accountId` cannot be changed after creation. Including either field in the request body is rejected with a `400 Bad Request` validation error.
+
+        Set `isArchived: true` to archive the asset, or `isArchived: false` to unarchive it.
+
+        '
+      title: AssetUpdate
+    ListAssetsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListAssetsRequestUnauthorizedError
+    AssetsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AssetsGetResponsesContentApplicationJsonSchemaCode
+    UpdateAssetRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateAssetRequestBadRequestError
     Asset:
       type: object
       properties:
@@ -488,55 +555,6 @@ components:
       - labels
       - isArchived
       title: Asset
-    AssetLabel:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        color:
-          type:
-          - string
-          - 'null'
-        type:
-          $ref: '#/components/schemas/AssetLabelType'
-      required:
-      - id
-      - name
-      - type
-      description: Label attached to an asset (read-only expansion of the label id).
-      title: AssetLabel
-    AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode
-    AssetsGetParametersIsArchived:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-      - '1'
-      - '0'
-      default: 'false'
-      title: AssetsGetParametersIsArchived
-    UpdateAssetRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAssetRequestNotFoundError
-    UpdateAssetRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAssetRequestUnauthorizedError
     AssetType:
       type: string
       enum:
@@ -597,50 +615,22 @@ components:
       - OTHER
       description: Asset type enum.
       title: AssetType
-    UpdateAssetRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsAssetIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateAssetRequestBadRequestError
-    AssetLabelType:
+    AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - ASSET
-      - TASK
-      title: AssetLabelType
-    CreateAssetRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateAssetRequestBadRequestError
-    GetAssetRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAssetRequestNotFoundError
-    ListAssetsRequestUnauthorizedError:
+      - NOT_FOUND
+      title: AssetsAssetIdGetResponsesContentApplicationJsonSchemaCode
+    ListAssetsRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
           $ref: '#/components/schemas/AssetsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListAssetsRequestUnauthorizedError
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListAssetsRequestBadRequestError
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

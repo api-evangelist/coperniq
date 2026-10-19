@@ -10,7 +10,7 @@ tags:
 paths:
   /taxes:
     get:
-      operationId: list-taxes
+      operationId: taxes_listTaxes
       summary: List Taxes
       description: 'Lists tax rates configured for your company. Use these IDs when assigning taxes to quotes, invoices, and other financial documents.
 
@@ -31,6 +31,7 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
       - name: page_size
         in: query
@@ -38,12 +39,9 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of company taxes (paginated)
@@ -77,6 +75,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListTaxesRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
     ListTaxesRequestBadRequestError:
@@ -90,11 +90,6 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: ListTaxesRequestBadRequestError
-    TaxesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - GRAPHQL_ERROR
-      title: TaxesGetResponsesContentApplicationJsonSchemaCode
     ListTaxesRequestInternalServerError:
       type: object
       properties:
@@ -103,6 +98,11 @@ components:
         code:
           $ref: '#/components/schemas/TaxesGetResponsesContentApplicationJsonSchemaCode'
       title: ListTaxesRequestInternalServerError
+    TaxesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: TaxesGetResponsesContentApplicationJsonSchemaCode
     CompanyTax:
       type: object
       properties:

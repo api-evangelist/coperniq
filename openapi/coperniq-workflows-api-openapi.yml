@@ -10,7 +10,7 @@ tags:
 paths:
   /workflows:
     get:
-      operationId: list-workflows
+      operationId: workflows_listWorkflows
       summary: List Workflows
       description: 'Retrieve a paginated list of workflows.
 
@@ -22,12 +22,6 @@ paths:
         - Sorting (`order_by`, default: asc)'
       tags:
       - Workflows
-      parameters:
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of workflows
@@ -37,25 +31,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Workflow'
-  /workflows/{workflowId}:
+      security:
+      - ApiKeyAuth: []
+  /workflows/{workflow_id}:
     get:
-      operationId: get-workflow
+      operationId: workflows_getWorkflow
       summary: Get Workflow
       description: Retrieve details of a specific workflow
       tags:
       - Workflows
       parameters:
-      - name: workflowId
+      - name: workflow_id
         in: path
         description: Workflow identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Workflow details
@@ -75,37 +66,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetWorkflowRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    WorkflowCreatedBy:
+    WorkflowPhasesItems:
       type: object
       properties:
         id:
           type: integer
-          description: User identifier
-        firstName:
+          description: Phase identifier
+        name:
           type: string
-          description: User first name
-        lastName:
+          description: Phase name
+        type:
           type: string
-          description: User last name
-        avatarUrl:
+          description: Phase type
+        description:
           type:
           - string
           - 'null'
-          description: URL to user avatar image
-      title: WorkflowCreatedBy
-    WorkflowType:
-      type: string
-      enum:
-      - PROJECT
-      description: Workflow type
-      title: WorkflowType
-    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
+          description: Phase description
+        redSla:
+          type:
+          - integer
+          - 'null'
+          description: Red SLA (Service Level Agreement) in days
+        yellowSla:
+          type:
+          - integer
+          - 'null'
+          description: Yellow SLA (Service Level Agreement) in days
+      title: WorkflowPhasesItems
     Workflow:
       type: object
       properties:
@@ -140,6 +132,30 @@ components:
           items:
             $ref: '#/components/schemas/WorkflowPhasesItems'
       title: Workflow
+    WorkflowType:
+      type: string
+      enum:
+      - PROJECT
+      description: Workflow type
+      title: WorkflowType
+    WorkflowCreatedBy:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User identifier
+        firstName:
+          type: string
+          description: User first name
+        lastName:
+          type: string
+          description: User last name
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to user avatar image
+      title: WorkflowCreatedBy
     GetWorkflowRequestUnauthorizedError:
       type: object
       properties:
@@ -148,34 +164,6 @@ components:
         code:
           $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetWorkflowRequestUnauthorizedError
-    WorkflowPhasesItems:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Phase identifier
-        name:
-          type: string
-          description: Phase name
-        type:
-          type: string
-          description: Phase type
-        description:
-          type:
-          - string
-          - 'null'
-          description: Phase description
-        redSla:
-          type:
-          - integer
-          - 'null'
-          description: Red SLA (Service Level Agreement) in days
-        yellowSla:
-          type:
-          - integer
-          - 'null'
-          description: Yellow SLA (Service Level Agreement) in days
-      title: WorkflowPhasesItems
     GetWorkflowRequestNotFoundError:
       type: object
       properties:
@@ -184,6 +172,11 @@ components:
         code:
           $ref: '#/components/schemas/WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode'
       title: GetWorkflowRequestNotFoundError
+    WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: WorkflowsWorkflowIdGetResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

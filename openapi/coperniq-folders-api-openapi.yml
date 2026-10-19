@@ -1,0 +1,1237 @@
+openapi: 3.2.0
+info:
+  title: Reference Folders API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: Folders
+paths:
+  /projects/{project_id}/folders:
+    get:
+      operationId: folders_getProjectFolders
+      summary: List Project Folders
+      description: 'Retrieve the top level of a project''s Docs tab: workflow phases, plus any real doc folders that sit at the project root (not nested in another folder or scoped to a phase).
+
+
+        Each item carries a `type` field (`phase` or `folder`) telling you what it is and, for folders, matches the shape of `GET /folders/{folder_id}`.
+
+
+        **Behavior change:** this endpoint used to return every real folder flat, including ones nested under another folder or scoped to a phase. It now returns root-level folders only, alongside phase rows, matching what the UI shows at the top of the Docs tab. To see what''s inside a phase or folder, use `GET /phases/{phase_instance_id}/contents` or `GET /folders/{folder_id}/contents`.
+
+
+        Pagination (`page`/`page_size`) applies only to the folder half of the results — phase rows are returned unpaginated (bounded by the project''s workflow, not user-created volume). Pass `include_archived=true` to include archived root folders (default `false`); this doesn''t affect phase rows.'
+      tags:
+      - Folders
+      parameters:
+      - name: project_id
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FoldersListItem'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFoldersRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFoldersRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProjectFoldersRequestInternalServerError'
+      security:
+      - ApiKeyAuth: []
+    post:
+      operationId: folders_createProjectFolder
+      summary: Create Project Folder
+      description: 'Create a new doc folder in a project.
+
+
+        Notes:
+
+        - `name` is required.
+
+        - `parentId` and `phaseInstanceId` are mutually exclusive — a folder sits either at the root of a phase, or nested under another folder, not both.
+
+        - Folders nest at most 2 levels deep.'
+      tags:
+      - Folders
+      parameters:
+      - name: project_id
+        in: path
+        description: Project identifier
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: Folder created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderCreateResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectFolderRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectFolderRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectFolderRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Folder name
+                parentId:
+                  type: integer
+                  description: Optional. Parent folder id to nest this folder under.
+                phaseInstanceId:
+                  type: integer
+                  description: Optional. Phase instance id this folder should sit at the root of. You can gather phase instance ids from the Get Project endpoint.
+              required:
+              - name
+      security:
+      - ApiKeyAuth: []
+  /opportunities/{opportunity_id}/folders:
+    get:
+      operationId: folders_getOpportunityFolders
+      summary: List Opportunity Folders
+      description: 'Retrieve the top level of an opportunity''s Docs tab: workflow phases, plus any real doc folders that sit at the opportunity root (not nested in another folder or scoped to a phase). Same shape as the project version of this endpoint — opportunities have their own workflow phases too.
+
+
+        To see what''s inside a phase or folder, use `GET /phases/{phase_instance_id}/contents` or `GET /folders/{folder_id}/contents` — both are addressed by id alone, no opportunity needed in the path.'
+      tags:
+      - Folders
+      parameters:
+      - name: opportunity_id
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FoldersListItem'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOpportunityFoldersRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOpportunityFoldersRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOpportunityFoldersRequestInternalServerError'
+      security:
+      - ApiKeyAuth: []
+    post:
+      operationId: folders_createOpportunityFolder
+      summary: Create Opportunity Folder
+      description: 'Create a new doc folder in an opportunity.
+
+
+        Notes:
+
+        - `name` is required.
+
+        - `parentId` and `phaseInstanceId` are mutually exclusive — a folder sits either at the root of a phase, or nested under another folder, not both.
+
+        - Folders nest at most 2 levels deep.
+
+        - Update and delete a folder via `PATCH`/`DELETE /folders/{folder_id}`, same as project folders.'
+      tags:
+      - Folders
+      parameters:
+      - name: opportunity_id
+        in: path
+        description: Opportunity identifier
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: Folder created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderCreateResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOpportunityFolderRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOpportunityFolderRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOpportunityFolderRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Folder name
+                parentId:
+                  type: integer
+                  description: Optional. Parent folder id to nest this folder under.
+                phaseInstanceId:
+                  type: integer
+                  description: Optional. Phase instance id this folder should sit at the root of.
+              required:
+              - name
+      security:
+      - ApiKeyAuth: []
+  /folders/{folder_id}:
+    get:
+      operationId: folders_getFolderById
+      summary: Get Folder
+      description: Retrieve a specific doc folder by id.
+      tags:
+      - Folders
+      parameters:
+      - name: folder_id
+        in: path
+        description: Folder identifier
+        required: true
+        schema:
+          type: integer
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderByIdRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderByIdRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderByIdRequestInternalServerError'
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: folders_updateFolder
+      summary: Update Folder
+      description: 'Rename, move, or archive a doc folder.
+
+
+        Notes:
+
+        - All fields are optional; only fields present in the request body are applied.
+
+        - `parentId` and `phaseInstanceId` are mutually exclusive.
+
+        - Moving a folder that has subfolders is rejected.
+
+        - Archiving a folder cascades the archived state to its subfolders and their files.'
+      tags:
+      - Folders
+      parameters:
+      - name: folder_id
+        in: path
+        description: Folder identifier
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFolderRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFolderRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFolderRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: New folder name
+                parentId:
+                  type:
+                  - integer
+                  - 'null'
+                  description: New parent folder id. Pass `null` to move the folder to the root of its phase/project.
+                phaseInstanceId:
+                  type:
+                  - integer
+                  - 'null'
+                  description: New phase instance id. Pass `null` to detach from a phase.
+                isActive:
+                  type: boolean
+                  description: Set to false to archive the folder, or true to unarchive it
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: folders_deleteFolder
+      summary: Delete Folder
+      description: Delete a doc folder. Deleting a folder also deletes its subfolders and any files inside them.
+      tags:
+      - Folders
+      parameters:
+      - name: folder_id
+        in: path
+        description: Folder identifier
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders_deleteFolder_Response_200'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteFolderRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteFolderRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
+  /folders/{folder_id}/contents:
+    get:
+      operationId: folders_getFolderContents
+      summary: Get Folder Contents
+      description: 'List a folder''s direct children: subfolders, files, and forms filed directly in it (not further nested).
+
+
+        Each item carries a `type` field (`folder`, `file`, or `form`) telling you what it is. For `type: "folder"` items, call this same endpoint again with that folder''s id to walk further in. Forms are ordinary files under the hood (`isForm: true` on the underlying file) that inherit their folder/phase placement, so they appear here rather than in a separate forms listing.
+
+
+        Note: on this endpoint (and the phase-contents endpoint), the file''s MIME/category label is named `fileType` instead of `type`, to avoid colliding with the folder/file/form discriminator. This does not affect `GET /projects/{project_id}/files`, where `type` keeps its original meaning.'
+      tags:
+      - Folders
+      parameters:
+      - name: folder_id
+        in: path
+        description: Folder identifier
+        required: true
+        schema:
+          type: integer
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FolderContentsItem'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderContentsRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderContentsRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderContentsRequestInternalServerError'
+      security:
+      - ApiKeyAuth: []
+  /phases/{phase_instance_id}/contents:
+    get:
+      operationId: folders_getPhaseContents
+      summary: Get Phase Contents
+      description: 'List a workflow phase''s direct children: doc folders, files, and forms filed directly at the phase root (not nested inside a folder). Works the same whether the phase belongs to a project or an opportunity.
+
+
+        Each item carries a `type` field (`folder`, `file`, or `form`) telling you what it is. For `type: "folder"` items, call `GET /folders/{folder_id}/contents` with that folder''s id to walk further in. Forms are ordinary files under the hood (`isForm: true` on the underlying file) that inherit their folder/phase placement, so they appear here rather than in a separate forms listing.
+
+
+        Note: on this endpoint (and the folder-contents endpoint), the file''s MIME/category label is named `fileType` instead of `type`, to avoid colliding with the folder/file/form discriminator.
+
+
+        Phase instance ids come from the `type: "phase"` rows returned by `GET /projects/{project_id}/folders` or `GET /opportunities/{opportunity_id}/folders`.'
+      tags:
+      - Folders
+      parameters:
+      - name: phase_instance_id
+        in: path
+        description: 'Phase instance identifier. Gathered from the `type: "phase"` rows returned by GET /projects/{project_id}/folders or GET /opportunities/{opportunity_id}/folders.'
+        required: true
+        schema:
+          type: integer
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FolderContentsItem'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPhaseContentsRequestBadRequestError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPhaseContentsRequestNotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPhaseContentsRequestInternalServerError'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    OpportunitiesOpportunityIdFoldersGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: OpportunitiesOpportunityIdFoldersGetResponsesContentApplicationJsonSchemaCode
+    GetOpportunityFoldersRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFoldersGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityFoldersRequestInternalServerError
+    FoldersFolderIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: FoldersFolderIdPatchResponsesContentApplicationJsonSchemaCode
+    FoldersFolderIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: FoldersFolderIdDeleteResponsesContentApplicationJsonSchemaCode
+    ProjectsProjectIdFoldersGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: ProjectsProjectIdFoldersGetResponsesContentApplicationJsonSchemaCode
+    FoldersFolderIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: FoldersFolderIdGetResponsesContentApplicationJsonSchemaCode
+    GetPhaseContentsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/PhasesPhaseInstanceIdContentsGetResponsesContentApplicationJsonSchemaCode'
+      title: GetPhaseContentsRequestNotFoundError
+    GetFolderByIdRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetFolderByIdRequestInternalServerError
+    FolderContentsItem:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/FolderListItemType'
+          id:
+            type: integer
+            description: Folder identifier
+          name:
+            type: string
+            description: Folder name
+          companyId:
+            type: integer
+            description: Owning company identifier
+          projectId:
+            type: integer
+            description: Project (or opportunity/account, under the hood) this folder belongs to
+          parentId:
+            type:
+            - integer
+            - 'null'
+            description: Parent folder id, if this folder is nested under another folder. Mutually exclusive with `phaseInstanceId`. Folders nest at most 2 levels deep.
+          phaseInstanceId:
+            type:
+            - integer
+            - 'null'
+            description: Phase instance id, if this folder sits at the root of a phase. Mutually exclusive with `parentId`.
+          isActive:
+            type: boolean
+            description: Whether the folder is active (false if archived)
+          createdBy:
+            type:
+            - integer
+            - 'null'
+            description: User who created the folder
+          createdAt:
+            type: string
+            format: date-time
+            description: Creation timestamp
+          updatedAt:
+            type: string
+            format: date-time
+            description: Last update timestamp
+        required:
+        - type
+        - id
+        - name
+        - projectId
+        - isActive
+        - createdAt
+        - updatedAt
+        description: A real doc folder, as returned by GET /projects/{project_id}/folders.
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - file
+            description: 'Discriminator value: file'
+          id:
+            type: integer
+            description: File identifier
+          name:
+            type: string
+            description: File name
+          downloadUrl:
+            type: string
+            description: URL to download the file
+          fileType:
+            type: string
+            description: The file's MIME/category label (named `type` on GET /projects/{project_id}/files — renamed here to avoid colliding with this endpoint's folder/file/form discriminator).
+          formId:
+            type:
+            - integer
+            - 'null'
+            description: Linked Form entity id, present when `type` is `form`
+          updatedAt:
+            type: string
+            format: date-time
+            description: Last update timestamp
+          createdAt:
+            type: string
+            format: date-time
+            description: Creation timestamp
+          companyId:
+            type: integer
+            description: Owning company identifier
+          metaData:
+            $ref: '#/components/schemas/FolderContentsItemDiscriminatorMappingFormMetaData'
+            description: File metadata (size, MIME type, etc.) — see the `File` schema for the full shape
+          source:
+            type: string
+            description: File source (e.g., INTERNAL)
+          isArchived:
+            type: boolean
+            description: Whether the file is archived
+          createdByUser:
+            $ref: '#/components/schemas/FolderContentsItemDiscriminatorMappingFormCreatedByUser'
+        required:
+        - type
+        - id
+        - name
+        - downloadUrl
+        - fileType
+        - updatedAt
+        - createdAt
+        description: A file (or form — see `type`) inside a folder or phase's direct contents.
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - form
+            description: 'Discriminator value: form'
+          id:
+            type: integer
+            description: File identifier
+          name:
+            type: string
+            description: File name
+          downloadUrl:
+            type: string
+            description: URL to download the file
+          fileType:
+            type: string
+            description: The file's MIME/category label (named `type` on GET /projects/{project_id}/files — renamed here to avoid colliding with this endpoint's folder/file/form discriminator).
+          formId:
+            type:
+            - integer
+            - 'null'
+            description: Linked Form entity id, present when `type` is `form`
+          updatedAt:
+            type: string
+            format: date-time
+            description: Last update timestamp
+          createdAt:
+            type: string
+            format: date-time
+            description: Creation timestamp
+          companyId:
+            type: integer
+            description: Owning company identifier
+          metaData:
+            $ref: '#/components/schemas/FolderContentsItemDiscriminatorMappingFormMetaData'
+            description: File metadata (size, MIME type, etc.) — see the `File` schema for the full shape
+          source:
+            type: string
+            description: File source (e.g., INTERNAL)
+          isArchived:
+            type: boolean
+            description: Whether the file is archived
+          createdByUser:
+            $ref: '#/components/schemas/FolderContentsItemDiscriminatorMappingFormCreatedByUser'
+        required:
+        - type
+        - id
+        - name
+        - downloadUrl
+        - fileType
+        - updatedAt
+        - createdAt
+        description: A file (or form — see `type`) inside a folder or phase's direct contents.
+      discriminator:
+        propertyName: type
+      description: One row from a folder's or phase's `/contents` endpoint — a subfolder, file, or form. Discriminated by `type`.
+      title: FolderContentsItem
+    PhasesPhaseInstanceIdContentsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: PhasesPhaseInstanceIdContentsGetResponsesContentApplicationJsonSchemaCode
+    FolderContentsItemDiscriminatorMappingFormCreatedByUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+      title: FolderContentsItemDiscriminatorMappingFormCreatedByUser
+    GetFolderByIdRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetFolderByIdRequestBadRequestError
+    ProjectsProjectIdFoldersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: ProjectsProjectIdFoldersPostResponsesContentApplicationJsonSchemaCode
+    GetFolderByIdRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetFolderByIdRequestNotFoundError
+    FolderCreateResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Folder identifier
+        name:
+          type: string
+          description: Folder name
+        companyId:
+          type: integer
+          description: Owning company identifier
+        parentId:
+          type:
+          - integer
+          - 'null'
+          description: Parent folder id, if this folder is nested under another folder. Mutually exclusive with `phaseInstanceId`. Folders nest at most 2 levels deep.
+        phaseInstanceId:
+          type:
+          - integer
+          - 'null'
+          description: Phase instance id, if this folder sits at the root of a phase. Mutually exclusive with `parentId`.
+        isActive:
+          type: boolean
+          description: Whether the folder is active (false if archived)
+        createdBy:
+          type:
+          - integer
+          - 'null'
+          description: User who created the folder
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+      required:
+      - id
+      - name
+      - isActive
+      - createdAt
+      - updatedAt
+      description: Response from creating a folder. Omits `projectId` — the caller already knows it, it's in the URL they just posted to.
+      title: FolderCreateResponse
+    Folder:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Folder identifier
+        name:
+          type: string
+          description: Folder name
+        companyId:
+          type: integer
+          description: Owning company identifier
+        projectId:
+          type: integer
+          description: Project (or opportunity/account, under the hood) this folder belongs to
+        parentId:
+          type:
+          - integer
+          - 'null'
+          description: Parent folder id, if this folder is nested under another folder. Mutually exclusive with `phaseInstanceId`. Folders nest at most 2 levels deep.
+        phaseInstanceId:
+          type:
+          - integer
+          - 'null'
+          description: Phase instance id, if this folder sits at the root of a phase. Mutually exclusive with `parentId`.
+        isActive:
+          type: boolean
+          description: Whether the folder is active (false if archived)
+        createdBy:
+          type:
+          - integer
+          - 'null'
+          description: User who created the folder
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+      required:
+      - id
+      - name
+      - projectId
+      - isActive
+      - createdAt
+      - updatedAt
+      title: Folder
+    UpdateFolderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateFolderRequestBadRequestError
+    CreateProjectFolderRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFoldersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectFolderRequestInternalServerError
+    FoldersListItem:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - phase
+            description: 'Discriminator value: phase'
+          id:
+            type: integer
+            description: Phase instance identifier
+          name:
+            type: string
+            description: Phase name
+          position:
+            type: integer
+            description: Phase's position in the project's workflow
+          status:
+            type: string
+            description: Phase status
+          phaseTemplateId:
+            type: integer
+            description: Phase template this instance was created from
+          projectId:
+            type: integer
+            description: Project this phase belongs to
+          createdAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: Creation timestamp
+          updatedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: Last update timestamp
+        required:
+        - type
+        - id
+        - name
+        - position
+        - status
+        - phaseTemplateId
+        - projectId
+        description: A virtual "folder" row synthesized from a workflow phase — not a real Folder database record. Use its `id` as `phase_instance_id` on GET /phases/{phase_instance_id}/contents.
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/FolderListItemType'
+          id:
+            type: integer
+            description: Folder identifier
+          name:
+            type: string
+            description: Folder name
+          companyId:
+            type: integer
+            description: Owning company identifier
+          projectId:
+            type: integer
+            description: Project (or opportunity/account, under the hood) this folder belongs to
+          parentId:
+            type:
+            - integer
+            - 'null'
+            description: Parent folder id, if this folder is nested under another folder. Mutually exclusive with `phaseInstanceId`. Folders nest at most 2 levels deep.
+          phaseInstanceId:
+            type:
+            - integer
+            - 'null'
+            description: Phase instance id, if this folder sits at the root of a phase. Mutually exclusive with `parentId`.
+          isActive:
+            type: boolean
+            description: Whether the folder is active (false if archived)
+          createdBy:
+            type:
+            - integer
+            - 'null'
+            description: User who created the folder
+          createdAt:
+            type: string
+            format: date-time
+            description: Creation timestamp
+          updatedAt:
+            type: string
+            format: date-time
+            description: Last update timestamp
+        required:
+        - type
+        - id
+        - name
+        - projectId
+        - isActive
+        - createdAt
+        - updatedAt
+        description: A real doc folder, as returned by GET /projects/{project_id}/folders.
+      discriminator:
+        propertyName: type
+      description: One row from GET /projects/{project_id}/folders or GET /opportunities/{opportunity_id}/folders — either a phase or a root-level real folder. Discriminated by `type`.
+      title: FoldersListItem
+    CreateOpportunityFolderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFoldersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityFolderRequestNotFoundError
+    GetPhaseContentsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/PhasesPhaseInstanceIdContentsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetPhaseContentsRequestBadRequestError
+    GetOpportunityFoldersRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFoldersGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetOpportunityFoldersRequestBadRequestError
+    GetProjectFoldersRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFoldersGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFoldersRequestInternalServerError
+    GetProjectFoldersRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFoldersGetResponsesContentApplicationJsonSchemaCode'
+      title: GetProjectFoldersRequestNotFoundError
+    DeleteFolderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdDeleteResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: DeleteFolderRequestBadRequestError
+    GetFolderContentsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdContentsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetFolderContentsRequestBadRequestError
+    CreateOpportunityFolderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFoldersPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateOpportunityFolderRequestBadRequestError
+    FoldersFolderIdContentsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: FoldersFolderIdContentsGetResponsesContentApplicationJsonSchemaCode
+    CreateProjectFolderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFoldersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectFolderRequestNotFoundError
+    UpdateFolderRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateFolderRequestInternalServerError
+    FolderListItemType:
+      type: string
+      enum:
+      - folder
+      title: FolderListItemType
+    FolderContentsItemDiscriminatorMappingFormMetaData:
+      type: object
+      properties: {}
+      description: File metadata (size, MIME type, etc.) — see the `File` schema for the full shape
+      title: FolderContentsItemDiscriminatorMappingFormMetaData
+    Folders_deleteFolder_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Folders_deleteFolder_Response_200
+    DeleteFolderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteFolderRequestNotFoundError
+    GetFolderContentsRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdContentsGetResponsesContentApplicationJsonSchemaCode'
+      title: GetFolderContentsRequestInternalServerError
+    GetPhaseContentsRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/PhasesPhaseInstanceIdContentsGetResponsesContentApplicationJsonSchemaCode'
+      title: GetPhaseContentsRequestInternalServerError
+    CreateProjectFolderRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFoldersPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateProjectFolderRequestBadRequestError
+    CreateOpportunityFolderRequestInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFoldersPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateOpportunityFolderRequestInternalServerError
+    UpdateFolderRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateFolderRequestNotFoundError
+    GetOpportunityFoldersRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/OpportunitiesOpportunityIdFoldersGetResponsesContentApplicationJsonSchemaCode'
+      title: GetOpportunityFoldersRequestNotFoundError
+    GetProjectFoldersRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdFoldersGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetProjectFoldersRequestBadRequestError
+    GetFolderContentsRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/FoldersFolderIdContentsGetResponsesContentApplicationJsonSchemaCode'
+      title: GetFolderContentsRequestNotFoundError
+    OpportunitiesOpportunityIdFoldersPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - INTERNAL_SERVER_ERROR
+      title: OpportunitiesOpportunityIdFoldersPostResponsesContentApplicationJsonSchemaCode
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

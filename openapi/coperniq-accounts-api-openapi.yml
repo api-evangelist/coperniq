@@ -10,7 +10,7 @@ tags:
 paths:
   /accounts:
     get:
-      operationId: list-accounts
+      operationId: accounts_listAccounts
       summary: List Accounts
       description: 'Retrieve a paginated list of accounts.
 
@@ -38,6 +38,8 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
       - name: page
         in: query
@@ -45,21 +47,20 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
       - name: updated_after
         in: query
-        description: Filter items updated after this timestamp (ISO 8601)
+        description: Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
         required: false
         schema:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/AccountsGetParametersUpdatedAfter'
       - name: updated_before
         in: query
-        description: Filter items updated before this timestamp (ISO 8601)
+        description: Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
         required: false
         schema:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/AccountsGetParametersUpdatedBefore'
       - name: order_by
         in: query
         description: Sort order for results
@@ -123,11 +124,6 @@ paths:
         required: false
         schema:
           type: string
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of accounts
@@ -143,8 +139,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListAccountsRequestUnauthorizedError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-account
+      operationId: accounts_createAccount
       summary: Create Account
       description: 'Create a new account with required and optional fields.
 
@@ -197,11 +195,6 @@ paths:
         required: false
         schema:
           $ref: '#/components/schemas/AccountsPostParametersMatchFoundStrategy'
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Matching account found
@@ -226,9 +219,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AccountUpsert'
+      security:
+      - ApiKeyAuth: []
   /accounts/search:
     get:
-      operationId: search-accounts
+      operationId: accounts_searchAccounts
       summary: Search Accounts
       description: 'Search accounts using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).
 
@@ -335,6 +330,8 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
       - name: page
         in: query
@@ -342,6 +339,7 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
       - name: order_by
         in: query
@@ -356,11 +354,13 @@ paths:
         schema:
           type: boolean
           default: false
-      - name: x-api-key
-        in: header
-        required: true
+      - name: include_contacts
+        in: query
+        description: Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.
+        required: false
         schema:
-          type: string
+          type: boolean
+          default: false
       responses:
         '200':
           description: List of accounts matching filters
@@ -382,9 +382,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchAccountsRequestUnauthorizedError'
-  /accounts/{accountId}:
+      security:
+      - ApiKeyAuth: []
+  /accounts/{account_id}:
     get:
-      operationId: get-account
+      operationId: accounts_getAccount
       summary: Get Account
       description: 'Retrieve a specific account by ID
 
@@ -393,7 +395,7 @@ paths:
       tags:
       - Accounts
       parameters:
-      - name: accountId
+      - name: account_id
         in: path
         description: Account identifier
         required: true
@@ -420,11 +422,6 @@ paths:
         schema:
           type: boolean
           default: false
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Account details
@@ -444,8 +441,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAccountRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
     patch:
-      operationId: update-account
+      operationId: accounts_updateAccount
       summary: Update Account
       description: 'Update an existing account. Supports partial updates.
 
@@ -468,7 +467,7 @@ paths:
       tags:
       - Accounts
       parameters:
-      - name: accountId
+      - name: account_id
         in: path
         description: Account identifier
         required: true
@@ -481,11 +480,6 @@ paths:
         schema:
           type: boolean
           default: false
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Account updated successfully
@@ -516,8 +510,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AccountUpdate'
+      security:
+      - ApiKeyAuth: []
     delete:
-      operationId: delete-account
+      operationId: accounts_deleteAccount
       summary: Delete Account
       description: 'Delete a specific account by ID
 
@@ -526,17 +522,12 @@ paths:
       tags:
       - Accounts
       parameters:
-      - name: accountId
+      - name: account_id
         in: path
         description: Account identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Successful response
@@ -552,169 +543,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteAccountRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    AccountsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AccountsGetResponsesContentApplicationJsonSchemaCode
-    AccountsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AccountsPostResponsesContentApplicationJsonSchemaCode
-    UpdateAccountRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateAccountRequestBadRequestError
-    AccountUpsert:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Account name
-        description:
-          type:
-          - string
-          - 'null'
-          description: Account description
-        address:
-          type: array
-          items:
-            type: string
-          description: An array containing a single string, which represents the primary account location/address.
-        accountType:
-          $ref: '#/components/schemas/AccountUpsertAccountType'
-          description: Account type
-        primaryEmail:
-          type: string
-          format: email
-          description: Primary contact email
-        primaryPhone:
-          type: string
-          description: Primary contact phone
-        contacts:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.
-        custom:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Custom fields
-      required:
-      - title
-      - address
-      title: AccountUpsert
-    DeleteAccountRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteAccountRequestNotFoundError
-    AccountUpdateAccountType:
-      type: string
-      enum:
-      - RESIDENTIAL
-      - COMMERCIAL
-      description: Account type
-      title: AccountUpdateAccountType
-    AccountsSearchGetParametersOp2:
-      type: string
-      enum:
-      - eq
-      - neq
-      - gt
-      - gte
-      - lt
-      - lte
-      - contains
-      - in
-      - nin
-      - between
-      title: AccountsSearchGetParametersOp2
-    SearchAccountsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsSearchGetResponsesContentApplicationJsonSchemaCode'
-      title: SearchAccountsRequestUnauthorizedError
-    UpdateAccountRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAccountRequestNotFoundError
-    AccountsSearchGetParametersLogic:
-      type: string
-      enum:
-      - and
-      - or
-      default: and
-      title: AccountsSearchGetParametersLogic
-    SearchAccountsRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsSearchGetResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: SearchAccountsRequestBadRequestError
-    UpdateAccountRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateAccountRequestUnauthorizedError
-    AccountsSearchGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: AccountsSearchGetResponsesContentApplicationJsonSchemaCode
-    AccountContactsItems:
-      type: object
-      properties:
-        id:
-          type: integer
-        emails:
-          type: array
-          items:
-            type: string
-        phones:
-          type: array
-          items:
-            type: string
-      title: AccountContactsItems
-    GetAccountRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAccountRequestNotFoundError
     Account:
       type: object
       properties:
@@ -728,7 +560,7 @@ components:
         updatedAt:
           type: string
           format: date-time
-          description: Last update timestamp
+          description: Timestamp of the most recent update to the record, including changes to its custom property values.
         title:
           type: string
           description: Record title/name
@@ -782,8 +614,237 @@ components:
         contacts:
           type: array
           items:
-            $ref: '#/components/schemas/AccountContactsItems'
+            $ref: '#/components/schemas/ContactRef'
+          description: On GET requests, only populated when include_contacts=true is passed. Always populated on POST (create) and PATCH (update) responses. Ordered with the primary contact first, capped at 20 contacts.
       title: Account
+    CreateAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateAccountRequestUnauthorizedError
+    SearchAccountsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsSearchGetResponsesContentApplicationJsonSchemaCode'
+      title: SearchAccountsRequestUnauthorizedError
+    AccountsSearchGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: AccountsSearchGetParametersOrderBy
+    SearchAccountsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsSearchGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: SearchAccountsRequestBadRequestError
+    AccountsSearchGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AccountsSearchGetResponsesContentApplicationJsonSchemaCode
+    AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode
+    AccountsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: AccountsGetParametersOrderBy
+    AccountUpsertAccountType:
+      type: string
+      enum:
+      - RESIDENTIAL
+      - COMMERCIAL
+      description: Account type
+      title: AccountUpsertAccountType
+    AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode
+    UpdateAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAccountRequestUnauthorizedError
+    AccountsGetParametersUpdatedAfter:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: AccountsGetParametersUpdatedAfter
+    AccountsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AccountsGetResponsesContentApplicationJsonSchemaCode
+    AccountsPostParametersMatchBy:
+      type: string
+      enum:
+      - title
+      - primaryEmail
+      - primaryPhone
+      - address
+      default: title
+      title: AccountsPostParametersMatchBy
+    GetAccountRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAccountRequestNotFoundError
+    AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode
+    UpdateAccountRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateAccountRequestNotFoundError
+    AccountAccountType:
+      type: string
+      enum:
+      - RESIDENTIAL
+      - COMMERCIAL
+      description: Type of account (residential or commercial)
+      title: AccountAccountType
+    AccountsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: AccountsPostResponsesContentApplicationJsonSchemaCode
+    DeleteAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAccountRequestUnauthorizedError
+    UpdateAccountRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateAccountRequestBadRequestError
+    CreateAccountRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateAccountRequestBadRequestError
+    AccountsSearchGetParametersOp2:
+      type: string
+      enum:
+      - eq
+      - neq
+      - gt
+      - gte
+      - lt
+      - lte
+      - contains
+      - in
+      - nin
+      - between
+      title: AccountsSearchGetParametersOp2
+    GetAccountRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetAccountRequestUnauthorizedError
+    DeleteAccountRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteAccountRequestNotFoundError
+    ContactRef:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type:
+          - string
+          - 'null'
+          description: Contact title (e.g. job title)
+        description:
+          type:
+          - string
+          - 'null'
+        emails:
+          type: array
+          items:
+            type: string
+        phones:
+          type: array
+          items:
+            type: string
+        isPrimary:
+          type: boolean
+          description: True for the primary contact (the first contact in the list). At most one contact is primary.
+      title: ContactRef
+    AccountsPostParametersMatchFoundStrategy:
+      type: string
+      enum:
+      - skip
+      - replace
+      - enrich
+      default: skip
+      description: '- skip: Return existing record without changes
+
+        - replace: Replace existing record with new data
+
+        - enrich: Update only empty fields in existing record
+
+        '
+      title: AccountsPostParametersMatchFoundStrategy
     AccountsSearchGetParametersOp1:
       type: string
       enum:
@@ -798,32 +859,60 @@ components:
       - nin
       - between
       title: AccountsSearchGetParametersOp1
-    ListAccountsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListAccountsRequestUnauthorizedError
-    AccountUpsertAccountType:
+    AccountUpdateAccountType:
       type: string
       enum:
       - RESIDENTIAL
       - COMMERCIAL
       description: Account type
-      title: AccountUpsertAccountType
-    CreateAccountRequestBadRequestError:
+      title: AccountUpdateAccountType
+    AccountUpsert:
       type: object
       properties:
-        message:
+        title:
           type: string
-        code:
-          $ref: '#/components/schemas/AccountsPostResponsesContentApplicationJsonSchemaCode'
-        field:
+          description: Account name
+        description:
+          type:
+          - string
+          - 'null'
+          description: Account description
+        address:
+          type: array
+          items:
+            type: string
+          description: An array containing a single string, which represents the primary account location/address.
+        accountType:
+          $ref: '#/components/schemas/AccountUpsertAccountType'
+          description: Account type
+        ownerId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the owning user
+        primaryEmail:
           type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateAccountRequestBadRequestError
+          format: email
+          description: Primary contact email
+        primaryPhone:
+          type: string
+          description: Primary contact phone
+        contacts:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          description: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts. The first ID in the array is treated as the primary contact.
+        custom:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Custom fields
+      required:
+      - title
+      - address
+      title: AccountUpsert
     AccountUpdate:
       type: object
       properties:
@@ -845,6 +934,11 @@ components:
           - $ref: '#/components/schemas/AccountUpdateAccountType'
           - type: 'null'
           description: Account type
+        ownerId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the owning user
         primaryEmail:
           type:
           - string
@@ -862,7 +956,7 @@ components:
           - 'null'
           items:
             type: integer
-          description: Contact IDs to associate with this account. The contacts must be created first via POST /contacts.
+          description: Contact IDs to associate with this account. The contacts must be created first via POST /contacts. The first ID in the array is treated as the primary contact.
         isActive:
           type: boolean
           description: Whether the account is active
@@ -873,62 +967,21 @@ components:
           description: Custom fields
       description: Partial update payload for an account. All fields are optional.
       title: AccountUpdate
-    GetAccountRequestUnauthorizedError:
+    AccountsGetParametersUpdatedBefore:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: AccountsGetParametersUpdatedBefore
+    ListAccountsRequestUnauthorizedError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetAccountRequestUnauthorizedError
-    AccountsGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: AccountsGetParametersOrderBy
-    AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AccountsAccountIdGetResponsesContentApplicationJsonSchemaCode
-    AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: AccountsAccountIdPatchResponsesContentApplicationJsonSchemaCode
-    AccountsPostParametersMatchBy:
-      type: string
-      enum:
-      - title
-      - primaryEmail
-      - primaryPhone
-      - address
-      default: title
-      title: AccountsPostParametersMatchBy
-    AccountAccountType:
-      type: string
-      enum:
-      - RESIDENTIAL
-      - COMMERCIAL
-      description: Type of account (residential or commercial)
-      title: AccountAccountType
-    AccountsPostParametersMatchFoundStrategy:
-      type: string
-      enum:
-      - skip
-      - replace
-      - enrich
-      default: skip
-      description: '- skip: Return existing record without changes
-
-        - replace: Replace existing record with new data
-
-        - enrich: Update only empty fields in existing record
-
-        '
-      title: AccountsPostParametersMatchFoundStrategy
+          $ref: '#/components/schemas/AccountsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListAccountsRequestUnauthorizedError
     UserSummary:
       type: object
       properties:
@@ -953,34 +1006,13 @@ components:
           - 'null'
       description: Minimal user representation used in responses
       title: UserSummary
-    CreateAccountRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateAccountRequestUnauthorizedError
-    AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode:
+    AccountsSearchGetParametersLogic:
       type: string
       enum:
-      - NOT_FOUND
-      title: AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode
-    DeleteAccountRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/AccountsAccountIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteAccountRequestUnauthorizedError
-    AccountsSearchGetParametersOrderBy:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-      title: AccountsSearchGetParametersOrderBy
+      - and
+      - or
+      default: and
+      title: AccountsSearchGetParametersLogic
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -1,0 +1,727 @@
+openapi: 3.2.0
+info:
+  title: Reference Timesheets API
+  version: 1.0.0
+servers:
+- url: https://api.coperniq.io/v1
+  description: Production server
+tags:
+- name: Timesheets
+paths:
+  /timesheets:
+    get:
+      operationId: timesheets_list-timesheets
+      summary: List Timesheets
+      description: 'Retrieve a paginated list of timesheets (time entries).
+
+
+        Supports:
+
+        - Pagination (`page_size`, `page`)
+
+        - Sorting by last updated (`order_by`, default: desc)
+
+        - Filter by `project_id` / `account_id` / `opportunity_id` (aliases — projects, accounts, and opportunities share the same underlying record), `work_order_id`, `user_id`, and `type`
+
+        - Filter by the entry''s own date range (`start_date`, `end_date`) or by last-updated time (`updated_after`, `updated_before`)
+
+
+        Archived timesheets are excluded unless `include_archived=true` is passed.'
+      tags:
+      - Timesheets
+      parameters:
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: order_by
+        in: query
+        description: Sort order for results
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimesheetsGetParametersOrderBy'
+      - name: project_id
+        in: query
+        description: Filter by project ID. Alias of account_id/opportunity_id.
+        required: false
+        schema:
+          type: integer
+      - name: account_id
+        in: query
+        description: Filter by account ID. Alias of project_id/opportunity_id.
+        required: false
+        schema:
+          type: integer
+      - name: opportunity_id
+        in: query
+        description: Filter by opportunity ID. Alias of project_id/account_id.
+        required: false
+        schema:
+          type: integer
+      - name: work_order_id
+        in: query
+        description: Filter by work order ID.
+        required: false
+        schema:
+          type: integer
+      - name: user_id
+        in: query
+        description: Filter by the worker the time entry is logged for.
+        required: false
+        schema:
+          type: integer
+      - name: type
+        in: query
+        description: Filter by time entry type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimesheetsGetParametersType'
+      - name: status
+        in: query
+        description: Filter by processing status.
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimesheetsGetParametersStatus'
+      - name: include_archived
+        in: query
+        description: Include archived timesheets in the results.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: start_date
+        in: query
+        description: Only return timesheets whose start time is at or after this timestamp.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        description: Only return timesheets whose end time is at or before this timestamp.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_after
+        in: query
+        description: Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimesheetsGetParametersUpdatedAfter'
+      - name: updated_before
+        in: query
+        description: Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimesheetsGetParametersUpdatedBefore'
+      responses:
+        '200':
+          description: List of timesheets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Timesheet'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-timesheetsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-timesheetsRequestUnauthorizedError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-timesheetsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+    post:
+      operationId: timesheets_createTimesheet
+      summary: Create Timesheet
+      description: Create a new timesheet (time entry) for a worker on a project, account, or opportunity (and optionally a work order).
+      tags:
+      - Timesheets
+      responses:
+        '201':
+          description: Timesheet created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timesheet'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTimesheetRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTimesheetRequestUnauthorizedError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTimesheetRequestBadGatewayError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimesheetCreate'
+      security:
+      - ApiKeyAuth: []
+  /timesheets/{timesheet_id}:
+    get:
+      operationId: timesheets_getTimesheet
+      summary: Get Timesheet
+      description: Retrieve a specific timesheet by ID. Returns 404 if archived unless `include_archived=true` is passed.
+      tags:
+      - Timesheets
+      parameters:
+      - name: timesheet_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include_archived
+        in: query
+        description: Return the timesheet even if it has been archived.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Timesheet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timesheet'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTimesheetRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTimesheetRequestNotFoundError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTimesheetRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: timesheets_updateTimesheet
+      summary: Update Timesheet
+      description: 'Update a timesheet''s fields, and/or archive or unarchive it.
+
+
+        Set `isArchived` to `true`/`false` to archive/unarchive the timesheet; this is applied independently of any other fields present in the same request.'
+      tags:
+      - Timesheets
+      parameters:
+      - name: timesheet_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Timesheet updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timesheet'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTimesheetRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTimesheetRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTimesheetRequestNotFoundError'
+        '502':
+          description: Bad gateway — an upstream service request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTimesheetRequestBadGatewayError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimesheetUpdate'
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: timesheets_deleteTimesheet
+      summary: Delete Timesheet
+      description: Delete a timesheet (time entry) by ID.
+      tags:
+      - Timesheets
+      parameters:
+      - name: timesheet_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTimesheetRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTimesheetRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    List-timesheetsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsGetResponsesContentApplicationJsonSchemaCode'
+      title: List-timesheetsRequestUnauthorizedError
+    TimesheetsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: TimesheetsGetResponsesContentApplicationJsonSchemaCode
+    TimesheetsGetParametersOrderBy:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      title: TimesheetsGetParametersOrderBy
+    TimesheetsTimesheetIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: TimesheetsTimesheetIdPatchResponsesContentApplicationJsonSchemaCode
+    CreateTimesheetRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateTimesheetRequestBadRequestError
+    TimesheetCreateType:
+      type: string
+      enum:
+      - WORKING
+      - TRAVEL
+      title: TimesheetCreateType
+    UpdateTimesheetRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateTimesheetRequestUnauthorizedError
+    TimesheetsTimesheetIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: TimesheetsTimesheetIdDeleteResponsesContentApplicationJsonSchemaCode
+    UpdateTimesheetRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateTimesheetRequestNotFoundError
+    TimesheetsGetParametersStatus:
+      type: string
+      enum:
+      - PROCESSING
+      - PROCESSED
+      - FAILED
+      title: TimesheetsGetParametersStatus
+    TimesheetUpdate:
+      type: object
+      properties:
+        projectId:
+          type: integer
+          description: Reassign to a different project. At most one of projectId, accountId, or opportunityId may be provided.
+        accountId:
+          type: integer
+          description: Reassign to a different account. At most one of projectId, accountId, or opportunityId may be provided.
+        opportunityId:
+          type: integer
+          description: Reassign to a different opportunity. At most one of projectId, accountId, or opportunityId may be provided.
+        workOrderId:
+          type:
+          - integer
+          - 'null'
+        targetUserId:
+          type: integer
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        distance:
+          type:
+          - number
+          - 'null'
+          format: double
+        laborHourlyRate:
+          type:
+          - number
+          - 'null'
+          format: double
+        note:
+          type:
+          - string
+          - 'null'
+        isArchived:
+          type: boolean
+          description: Set true to archive, false to unarchive. Handled independently of the other fields.
+      description: At most one of `projectId`, `accountId`, or `opportunityId` may be provided, to reassign the timesheet's parent record.
+      title: TimesheetUpdate
+    CreateTimesheetRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateTimesheetRequestBadGatewayError
+    TimesheetsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: TimesheetsPostResponsesContentApplicationJsonSchemaCode
+    TimesheetType:
+      type: string
+      enum:
+      - WORKING
+      - TRAVEL
+      description: Time entry type.
+      title: TimesheetType
+    UpdateTimesheetRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateTimesheetRequestBadGatewayError
+    DeleteTimesheetRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteTimesheetRequestNotFoundError
+    TimesheetStatus:
+      type: string
+      enum:
+      - PROCESSING
+      - PROCESSED
+      - FAILED
+      description: Processing status of the time entry.
+      title: TimesheetStatus
+    GetTimesheetRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetTimesheetRequestUnauthorizedError
+    CreateTimesheetRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateTimesheetRequestUnauthorizedError
+    List-timesheetsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsGetResponsesContentApplicationJsonSchemaCode'
+      title: List-timesheetsRequestBadGatewayError
+    TimesheetCreate:
+      type: object
+      properties:
+        projectId:
+          type: integer
+          description: Project this time entry belongs to. Exactly one of projectId, accountId, or opportunityId is required.
+        accountId:
+          type: integer
+          description: Account this time entry belongs to. Exactly one of projectId, accountId, or opportunityId is required.
+        opportunityId:
+          type: integer
+          description: Opportunity this time entry belongs to. Exactly one of projectId, accountId, or opportunityId is required.
+        workOrderId:
+          type:
+          - integer
+          - 'null'
+          description: Work order this time entry is logged against, if any.
+        targetUserId:
+          type: integer
+          description: Worker the time entry is logged for.
+        type:
+          $ref: '#/components/schemas/TimesheetCreateType'
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+          description: Must be after startDate.
+        distance:
+          type:
+          - number
+          - 'null'
+          format: double
+        laborHourlyRate:
+          type:
+          - number
+          - 'null'
+          format: double
+        note:
+          type:
+          - string
+          - 'null'
+      required:
+      - targetUserId
+      - type
+      - startDate
+      - endDate
+      description: Exactly one of `projectId`, `accountId`, or `opportunityId` is required.
+      title: TimesheetCreate
+    GetTimesheetRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetTimesheetRequestBadGatewayError
+    List-timesheetsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: List-timesheetsRequestBadRequestError
+    GetTimesheetRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetTimesheetRequestNotFoundError
+    UpdateTimesheetRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateTimesheetRequestBadRequestError
+    TimesheetsGetParametersType:
+      type: string
+      enum:
+      - WORKING
+      - TRAVEL
+      title: TimesheetsGetParametersType
+    Timesheet:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier.
+        type:
+          oneOf:
+          - $ref: '#/components/schemas/TimesheetType'
+          - type: 'null'
+          description: Time entry type.
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/TimesheetStatus'
+          - type: 'null'
+          description: Processing status of the time entry.
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        distance:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Distance traveled, for TRAVEL entries.
+        note:
+          type:
+          - string
+          - 'null'
+        isArchived:
+          type:
+          - boolean
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        projectId:
+          type:
+          - integer
+          - 'null'
+          description: Set when the linked record is a Project. Null when it is an Account (see accountId) or Opportunity (see opportunityId).
+        accountId:
+          type:
+          - integer
+          - 'null'
+          description: Set when the linked record is an Account. Null otherwise.
+        opportunityId:
+          type:
+          - integer
+          - 'null'
+          description: Set when the linked record is an Opportunity. Null otherwise.
+        workOrderId:
+          type:
+          - integer
+          - 'null'
+        targetUserId:
+          type:
+          - integer
+          - 'null'
+          description: The worker the time entry is logged for.
+        createdBy:
+          type:
+          - integer
+          - 'null'
+        updatedBy:
+          type:
+          - integer
+          - 'null'
+        laborHourlyRate:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Labor cost ($/hr). Only visible with the appropriate financial privilege.
+        laborTotalCost:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Only visible with the appropriate financial privilege.
+      description: A timesheet (time entry) logged by a worker against a project and, optionally, a work order.
+      title: Timesheet
+    TimesheetsTimesheetIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - BAD_GATEWAY
+      title: TimesheetsTimesheetIdGetResponsesContentApplicationJsonSchemaCode
+    DeleteTimesheetRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/TimesheetsTimesheetIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteTimesheetRequestUnauthorizedError
+    TimesheetsGetParametersUpdatedAfter:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: TimesheetsGetParametersUpdatedAfter
+    TimesheetsGetParametersUpdatedBefore:
+      oneOf:
+      - type: string
+        format: date
+      - type: string
+        format: date-time
+      title: TimesheetsGetParametersUpdatedBefore
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

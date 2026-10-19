@@ -10,14 +10,14 @@ tags:
 paths:
   /properties:
     get:
-      operationId: list-properties
+      operationId: properties_listProperties
       summary: List Properties
       description: 'Retrieve list of properties organized by record type.
 
 
         When `record_type` is **omitted**, the response includes all keys: `account`, `opportunity`,
 
-        `project`, `vendor`, and `ahj` — plus the deprecated alias keys `client` and `request`.
+        `project`, `vendor`, `ahj`, and `utility` — plus the deprecated alias keys `client` and `request`.
 
 
         When `record_type` is **provided**, the response contains only the requested key(s). Filtering
@@ -30,7 +30,23 @@ paths:
         > **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They will continue to be returned until all users have migrated.
 
 
-        > **AHJ:** The `ahj` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in AHJ fields are not included here — they are exposed directly on the AHJ object instead, and are not updatable via the public API.'
+        > **AHJ:** The `ahj` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in AHJ fields are not included here — they are exposed directly on the AHJ object instead, and are not updatable via the public API.
+
+
+        > **Utility:** The `utility` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in utility fields are not included here — they are exposed directly on the utility object instead, and are not updatable via the public API.
+
+
+        > **keyName semantics:** For built-in properties (`isCustom: false`), `keyName` is the public
+
+        > field name used on the record''s create/update/read endpoints (e.g. `address`, `isActive`,
+
+        > `createdAt`) — not the internal storage key. Use the `readOnly` flag to tell which built-in
+
+        > fields can be sent on create/update (`readOnly: false`) versus which are system/derived
+
+        > fields you can only read (`readOnly: true`). For custom properties, `keyName` is the key
+
+        > used under the `custom` object, and `readOnly` is always `false`.'
       tags:
       - Properties
       parameters:
@@ -56,11 +72,6 @@ paths:
         required: false
         schema:
           $ref: '#/components/schemas/PropertiesGetParametersRecordType'
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of properties
@@ -68,6 +79,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Properties_listProperties_Response_200'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
     PropertiesGetParametersRecordType:
@@ -78,6 +91,7 @@ components:
       - project
       - vendor
       - ahj
+      - utility
       title: PropertiesGetParametersRecordType
     Property:
       type: object
@@ -90,7 +104,9 @@ components:
           description: Property type
         keyName:
           type: string
-          description: Property key name
+          description: 'For built-in (isCustom: false) properties, this is the public field name used on the record''s create/update/read endpoints (e.g. `address`, `isActive`, `createdAt`). For custom (isCustom: true) properties, this is the key used under the `custom` object.
+
+            '
         isMultiple:
           type: boolean
           description: Whether the property is a multiple value property
@@ -107,6 +123,11 @@ components:
         isCustom:
           type: boolean
           description: True for customer-defined custom columns, false for built-in standard properties.
+        readOnly:
+          type: boolean
+          description: 'True if this property cannot be sent on create/update — it is a system or derived field. Custom properties are always readOnly: false.
+
+            '
       title: Property
     Properties_listProperties_Response_200:
       type: object
@@ -137,11 +158,13 @@ components:
           items:
             $ref: '#/components/schemas/Property'
           description: Deprecated alias for `account`. Contains identical data.
+          deprecated: true
         request:
           type: array
           items:
             $ref: '#/components/schemas/Property'
           description: Deprecated alias for `opportunity`. Contains identical data.
+          deprecated: true
       title: Properties_listProperties_Response_200
   securitySchemes:
     ApiKeyAuth:

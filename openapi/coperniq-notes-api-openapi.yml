@@ -8,28 +8,23 @@ servers:
 tags:
 - name: Notes
 paths:
-  /projects/{projectId}/notes:
+  /projects/{project_id}/notes:
     get:
-      operationId: list-project-notes
+      operationId: notes_listProjectNotes
       summary: List Project Notes
       description: 'Retrieve notes for a specific project
 
 
-        **Note:** The `/projects/{projectId}/comments` path will continue to work until users are individually notified and migrated to the new naming.'
+        **Note:** The `/projects/{project_id}/comments` path will continue to work until users are individually notified and migrated to the new naming.'
       tags:
       - Notes
       parameters:
-      - name: projectId
+      - name: project_id
         in: path
         description: Project identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of notes
@@ -49,27 +44,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListProjectNotesRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-project-note
+      operationId: notes_createProjectNote
       summary: Create Project Note
       description: 'Create a new note on a project
 
 
-        **Note:** The `/projects/{projectId}/comments` path will continue to work until users are notified and migrated to the new naming.'
+        **Note:** The `/projects/{project_id}/comments` path will continue to work until users are notified and migrated to the new naming.'
       tags:
       - Notes
       parameters:
-      - name: projectId
+      - name: project_id
         in: path
         description: Project identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '201':
           description: Note created successfully
@@ -100,28 +92,25 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NoteCreate'
-  /opportunities/{opportunityId}/notes:
+      security:
+      - ApiKeyAuth: []
+  /opportunities/{opportunity_id}/notes:
     get:
-      operationId: list-opportunity-notes
+      operationId: notes_listOpportunityNotes
       summary: List Opportunity Notes
       description: 'Retrieve notes for a specific opportunity
 
 
-        **Note:** The `/requests/{requestId}/comments` path will continue to work until users are notified and migrated to the new naming.'
+        **Note:** The `/requests/{request_id}/comments` path will continue to work until users are notified and migrated to the new naming.'
       tags:
       - Notes
       parameters:
-      - name: opportunityId
+      - name: opportunity_id
         in: path
         description: Opportunity identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of notes
@@ -129,27 +118,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListNotesResponse'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-opportunity-note
+      operationId: notes_createOpportunityNote
       summary: Create Opportunity Note
       description: 'Add a new note on an opportunity
 
 
-        **Note:** The `/requests/{requestId}/comments` path will continue to work until users are notified and migrated to the new naming.'
+        **Note:** The `/requests/{request_id}/comments` path will continue to work until users are notified and migrated to the new naming.'
       tags:
       - Notes
       parameters:
-      - name: opportunityId
+      - name: opportunity_id
         in: path
         description: Opportunity identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '201':
           description: Note created successfully
@@ -162,28 +148,25 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NoteCreate'
-  /accounts/{accountId}/notes:
+      security:
+      - ApiKeyAuth: []
+  /accounts/{account_id}/notes:
     get:
-      operationId: list-account-notes
+      operationId: notes_listAccountNotes
       summary: List Account Notes
       description: 'Retrieve notes for a specific account
 
 
-        **Note:** The `/clients/{clientId}/comments` path will continue to work until users are notified and migrated to the new naming.'
+        **Note:** The `/clients/{client_id}/comments` path will continue to work until users are notified and migrated to the new naming.'
       tags:
       - Notes
       parameters:
-      - name: accountId
+      - name: account_id
         in: path
         description: Account identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of notes
@@ -191,27 +174,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListNotesResponse'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-account-note
+      operationId: notes_createAccountNote
       summary: Create Account Note
       description: 'Add a new note on an account
 
 
-        **Note:** The `/clients/{clientId}/comments` path will continue to work until users are notified and migrated to the new naming.'
+        **Note:** The `/clients/{client_id}/comments` path will continue to work until users are notified and migrated to the new naming.'
       tags:
       - Notes
       parameters:
-      - name: accountId
+      - name: account_id
         in: path
         description: Account identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '201':
           description: Note created successfully
@@ -224,15 +204,17 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NoteCreate'
-  /work-orders/{workOrderId}/notes:
+      security:
+      - ApiKeyAuth: []
+  /work-orders/{work_order_id}/notes:
     get:
-      operationId: list-work-order-notes
+      operationId: notes_listWorkOrderNotes
       summary: List Work Order Notes
       description: Returns paginated notes (comments) for a specific work order, sorted by creation date descending (newest first).
       tags:
       - Notes
       parameters:
-      - name: workOrderId
+      - name: work_order_id
         in: path
         required: true
         schema:
@@ -243,6 +225,7 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
           default: 1
       - name: page_size
         in: query
@@ -250,12 +233,9 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1
+          maximum: 100
           default: 20
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Paginated list of notes
@@ -281,8 +261,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListWorkOrderNotesRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-work-order-note
+      operationId: notes_createWorkOrderNote
       summary: Create Work Order Note
       description: 'Add a note (comment) to a specific work order.
 
@@ -293,13 +275,8 @@ paths:
       tags:
       - Notes
       parameters:
-      - name: workOrderId
+      - name: work_order_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -348,6 +325,8 @@ paths:
               properties:
                 body:
                   type: string
+                  minLength: 1
+                  maxLength: 5000
                   description: 'Note text content (1–5000 characters).
 
 
@@ -364,9 +343,11 @@ paths:
                   description: ID of the note to reply to. Creates a threaded reply on the parent note.
               required:
               - body
-  /notes/{noteId}:
+      security:
+      - ApiKeyAuth: []
+  /notes/{note_id}:
     patch:
-      operationId: update-note
+      operationId: notes_updateNote
       summary: Update Note
       description: 'Update an existing note. The note being updated must be authored by the connected user.
 
@@ -381,13 +362,8 @@ paths:
       tags:
       - Notes
       parameters:
-      - name: noteId
+      - name: note_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -421,8 +397,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NoteUpdate'
+      security:
+      - ApiKeyAuth: []
     delete:
-      operationId: delete-note
+      operationId: notes_deleteNote
       summary: Delete Note
       description: 'Delete a note by its ID.
 
@@ -434,13 +412,8 @@ paths:
       tags:
       - Notes
       parameters:
-      - name: noteId
+      - name: note_id
         in: path
-        required: true
-        schema:
-          type: string
-      - name: x-api-key
-        in: header
         required: true
         schema:
           type: string
@@ -465,19 +438,99 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteNoteRequestNotFoundError'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    ListWorkOrderNotesRequestBadRequestError:
+    UpdateNoteRequestBadRequestError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode'
+          $ref: '#/components/schemas/NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode'
         field:
           type: string
           description: Field that caused the validation error (if applicable)
-      title: ListWorkOrderNotesRequestBadRequestError
+      title: UpdateNoteRequestBadRequestError
+    CreateWorkOrderNoteRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateWorkOrderNoteRequestBadRequestError
+    NoteListItemCreatedByUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+      title: NoteListItemCreatedByUser
+    CreateProjectNoteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdNotesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectNoteRequestUnauthorizedError
+    ListNotesResponse:
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoteListItem'
+        totalCount:
+          type: integer
+      title: ListNotesResponse
+    NoteListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        note:
+          type: string
+        createdByUser:
+          $ref: '#/components/schemas/NoteListItemCreatedByUser'
+        createdAt:
+          type: string
+          format: date-time
+      title: NoteListItem
+    Notes_listWorkOrderNotes_Response_200:
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkOrderNoteListItem'
+        totalCount:
+          type: integer
+          description: Total number of notes for this work order
+      title: Notes_listWorkOrderNotes_Response_200
+    WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode
+    CreateWorkOrderNoteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateWorkOrderNoteRequestNotFoundError
     CreateProjectNoteRequestBadRequestError:
       type: object
       properties:
@@ -489,14 +542,74 @@ components:
           type: string
           description: Field that caused the validation error (if applicable)
       title: CreateProjectNoteRequestBadRequestError
-    UpdateNoteRequestUnauthorizedError:
+    WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - RATE_LIMIT_EXCEEDED
+      title: WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode
+    ListWorkOrderNotesRequestNotFoundError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateNoteRequestUnauthorizedError
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListWorkOrderNotesRequestNotFoundError
+    NoteUpdate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: 'Updated note text content.
+
+
+            Mention (@) tokens are supported in the body string using the format `[Display Name|~id:USER_ID]` (users), `[Team Name|~team:TEAM_ID]` (teams, notifies all members), or `[Name|~agent:slug]` (AI agents). The display-name portion is cosmetic; the trailing token drives the mention. A valid mention creates a feed notification for the mentioned recipient(s). The author is excluded from their own mention notifications.
+
+            '
+      required:
+      - body
+      title: NoteUpdate
+    DeleteNoteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteNoteRequestUnauthorizedError
+    CreateWorkOrderNoteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateWorkOrderNoteRequestUnauthorizedError
+    CreateProjectNoteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdNotesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateProjectNoteRequestNotFoundError
+    WorkOrderNoteListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        note:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        createdByUser:
+          oneOf:
+          - $ref: '#/components/schemas/WorkOrderNoteAuthor'
+          - type: 'null'
+      title: WorkOrderNoteListItem
     NoteAuthor:
       type: object
       properties:
@@ -519,263 +632,11 @@ components:
           type: string
           description: Author avatar URL
       title: NoteAuthor
-    WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - RATE_LIMIT_EXCEEDED
-      title: WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode
-    NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode
-    UpdateNoteRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateNoteRequestBadRequestError
-    ListProjectNotesRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdNotesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListProjectNotesRequestNotFoundError
-    WorkOrderNoteListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        note:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        createdByUser:
-          oneOf:
-          - $ref: '#/components/schemas/WorkOrderNoteAuthor'
-          - type: 'null'
-      title: WorkOrderNoteListItem
-    CreateWorkOrderNoteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateWorkOrderNoteRequestNotFoundError
-    CreateProjectNoteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdNotesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateProjectNoteRequestUnauthorizedError
-    Notes_listWorkOrderNotes_Response_200:
-      type: object
-      properties:
-        notes:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkOrderNoteListItem'
-        totalCount:
-          type: integer
-          description: Total number of notes for this work order
-      title: Notes_listWorkOrderNotes_Response_200
-    NoteUpdate:
-      type: object
-      properties:
-        body:
-          type: string
-          description: 'Updated note text content.
-
-
-            Mention (@) tokens are supported in the body string using the format `[Display Name|~id:USER_ID]` (users), `[Team Name|~team:TEAM_ID]` (teams, notifies all members), or `[Name|~agent:slug]` (AI agents). The display-name portion is cosmetic; the trailing token drives the mention. A valid mention creates a feed notification for the mentioned recipient(s). The author is excluded from their own mention notifications.
-
-            '
-      required:
-      - body
-      title: NoteUpdate
-    CreateWorkOrderNoteRequestForbiddenError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateWorkOrderNoteRequestForbiddenError
-    NoteListItemCreatedByUser:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-      title: NoteListItemCreatedByUser
-    NoteCreateResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Note identifier
-        note:
-          type: string
-          description: Note text content
-        createdAt:
-          type: string
-          format: date-time
-          description: Creation timestamp
-        updatedAt:
-          type: string
-          format: date-time
-          description: Last update timestamp
-      required:
-      - id
-      - note
-      - createdAt
-      - updatedAt
-      description: Response returned when a note is created. Does not include author details; retrieve them from the corresponding note list endpoint (e.g., GET `/projects/{projectId}/notes` or GET `/accounts/{accountId}/notes`).
-      title: NoteCreateResponse
-    DeleteNoteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteNoteRequestUnauthorizedError
-    DeleteNoteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteNoteRequestNotFoundError
-    CreateProjectNoteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/ProjectsProjectIdNotesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateProjectNoteRequestNotFoundError
-    CreateWorkOrderNoteRequestTooManyRequestsError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateWorkOrderNoteRequestTooManyRequestsError
-    ListNotesResponse:
-      type: object
-      properties:
-        notes:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoteListItem'
-        totalCount:
-          type: integer
-      title: ListNotesResponse
-    NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode
-    ProjectsProjectIdNotesGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: ProjectsProjectIdNotesGetResponsesContentApplicationJsonSchemaCode
-    CreateWorkOrderNoteRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateWorkOrderNoteRequestBadRequestError
-    CreateWorkOrderNoteRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateWorkOrderNoteRequestUnauthorizedError
-    NoteCreateOnWorkOrderResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Note identifier
-        note:
-          type: string
-          description: Note text content
-        createdAt:
-          type: string
-          format: date-time
-          description: ISO 8601 creation timestamp
-        updatedAt:
-          type: string
-          format: date-time
-          description: ISO 8601 last-updated timestamp
-      required:
-      - id
-      - note
-      - createdAt
-      - updatedAt
-      description: Response returned when a note is created on a work order.
-      title: NoteCreateOnWorkOrderResponse
-    ListWorkOrderNotesRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListWorkOrderNotesRequestUnauthorizedError
     ProjectsProjectIdNotesPostResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
       title: ProjectsProjectIdNotesPostResponsesContentApplicationJsonSchemaCode
-    WorkOrderNoteAuthor:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-      title: WorkOrderNoteAuthor
     DeleteNoteRequestForbiddenError:
       type: object
       properties:
@@ -784,11 +645,67 @@ components:
         code:
           $ref: '#/components/schemas/NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode'
       title: DeleteNoteRequestForbiddenError
-    WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode:
+    UpdateNoteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateNoteRequestNotFoundError
+    ListWorkOrderNotesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListWorkOrderNotesRequestUnauthorizedError
+    ProjectsProjectIdNotesGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
       - NOT_FOUND
-      title: WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode
+      title: ProjectsProjectIdNotesGetResponsesContentApplicationJsonSchemaCode
+    NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode
+    ListProjectNotesRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/ProjectsProjectIdNotesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListProjectNotesRequestNotFoundError
+    CreateWorkOrderNoteRequestForbiddenError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateWorkOrderNoteRequestForbiddenError
+    ListWorkOrderNotesRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListWorkOrderNotesRequestBadRequestError
+    UpdateNoteRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateNoteRequestUnauthorizedError
     Note:
       type: object
       properties:
@@ -814,6 +731,14 @@ components:
       - createdAt
       - updatedAt
       title: Note
+    DeleteNoteRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/NotesNoteIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteNoteRequestNotFoundError
     ListProjectNotesRequestUnauthorizedError:
       type: object
       properties:
@@ -822,35 +747,38 @@ components:
         code:
           $ref: '#/components/schemas/ProjectsProjectIdNotesGetResponsesContentApplicationJsonSchemaCode'
       title: ListProjectNotesRequestUnauthorizedError
-    ListWorkOrderNotesRequestNotFoundError:
+    CreateWorkOrderNoteRequestTooManyRequestsError:
       type: object
       properties:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesGetResponsesContentApplicationJsonSchemaCode'
-      title: ListWorkOrderNotesRequestNotFoundError
-    UpdateNoteRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateNoteRequestNotFoundError
-    NoteListItem:
+          $ref: '#/components/schemas/WorkOrdersWorkOrderIdNotesPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateWorkOrderNoteRequestTooManyRequestsError
+    NoteCreateResponse:
       type: object
       properties:
         id:
           type: integer
+          description: Note identifier
         note:
           type: string
-        createdByUser:
-          $ref: '#/components/schemas/NoteListItemCreatedByUser'
+          description: Note text content
         createdAt:
           type: string
           format: date-time
-      title: NoteListItem
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+      required:
+      - id
+      - note
+      - createdAt
+      - updatedAt
+      description: Response returned when a note is created. Does not include author details; retrieve them from the corresponding note list endpoint (e.g., GET `/projects/{project_id}/notes` or GET `/accounts/{account_id}/notes`).
+      title: NoteCreateResponse
     NoteCreate:
       type: object
       properties:
@@ -880,6 +808,53 @@ components:
       required:
       - body
       title: NoteCreate
+    NoteCreateOnWorkOrderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Note identifier
+        note:
+          type: string
+          description: Note text content
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 last-updated timestamp
+      required:
+      - id
+      - note
+      - createdAt
+      - updatedAt
+      description: Response returned when a note is created on a work order.
+      title: NoteCreateOnWorkOrderResponse
+    WorkOrderNoteAuthor:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+      title: WorkOrderNoteAuthor
+    NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: NotesNoteIdPatchResponsesContentApplicationJsonSchemaCode
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

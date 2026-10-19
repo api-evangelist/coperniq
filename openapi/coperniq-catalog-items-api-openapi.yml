@@ -10,17 +10,11 @@ tags:
 paths:
   /catalog-items:
     get:
-      operationId: list-catalog-items
+      operationId: catalogItems_listCatalogItems
       summary: List Catalog Items
       description: Lists catalog items (products and services).
       tags:
       - Catalog Items
-      parameters:
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: List of catalog items
@@ -36,18 +30,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListCatalogItemsRequestUnauthorizedError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCatalogItemsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
     post:
-      operationId: create-catalog-item
+      operationId: catalogItems_createCatalogItem
       summary: Create Catalog Item
       description: Create a new catalog item.
       tags:
       - Catalog Items
-      parameters:
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '201':
           description: Catalog item created successfully
@@ -67,30 +63,124 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateCatalogItemRequestUnauthorizedError'
+        '502':
+          description: 'The catalog item was created, but could not be read back afterwards, so the full response (including any `unit` and `measurements` links) is unavailable. Use the returned `id` to fetch it with `GET /catalog-items/{catalog_item_id}` — do not retry this POST, which would create a duplicate. `id` is omitted only when the upstream write response itself contained no usable id.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCatalogItemRequestBadGatewayError'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CatalogItemCreate'
-  /catalog-items/{catalogItemId}:
+      security:
+      - ApiKeyAuth: []
+  /catalog-categories:
     get:
-      operationId: get-catalog-item
+      operationId: catalogItems_listCatalogCategories
+      summary: List Catalog Categories
+      description: 'Lists the valid category codes for catalog items, grouped by PRODUCT/SERVICE, along with the
+
+        available trade groups. Use these values to populate `category` and `tradeGroup` on
+
+        POST/PATCH /catalog-items.'
+      tags:
+      - Catalog Items
+      responses:
+        '200':
+          description: Available catalog categories and trade groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogCategoriesResponse'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCatalogCategoriesRequestUnauthorizedError'
+      security:
+      - ApiKeyAuth: []
+  /catalog-units:
+    get:
+      operationId: catalogItems_listCatalogUnits
+      summary: List Catalog Units
+      description: 'Lists the units of measure available to your company (e.g. Each, Square Feet, Linear Feet).
+
+        Use these IDs when setting `unitId` on a catalog item, or when linking measurements.'
+      tags:
+      - Catalog Items
+      parameters:
+      - name: include_archived
+        in: query
+        description: Whether to include archived (inactive) records in the response. By default only active records are returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: page
+        in: query
+        description: Page number (1-based)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: page_size
+        in: query
+        description: Number of items per page (max 100)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      responses:
+        '200':
+          description: List of catalog units
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CatalogUnit'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCatalogUnitsRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCatalogUnitsRequestUnauthorizedError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCatalogUnitsRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+  /catalog-items/{catalog_item_id}:
+    get:
+      operationId: catalogItems_getCatalogItem
       summary: Get Catalog Item
       description: Retrieve a specific catalog item by ID.
       tags:
       - Catalog Items
       parameters:
-      - name: catalogItemId
+      - name: catalog_item_id
         in: path
         description: Catalog item identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Catalog item details
@@ -98,6 +188,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CatalogItem'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCatalogItemRequestBadRequestError'
         '401':
           description: Authentication failed
           content:
@@ -110,24 +206,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCatalogItemRequestNotFoundError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCatalogItemRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
     patch:
-      operationId: update-catalog-item
+      operationId: catalogItems_updateCatalogItem
       summary: Update Catalog Item
       description: Update an existing catalog item.
       tags:
       - Catalog Items
       parameters:
-      - name: catalogItemId
+      - name: catalog_item_id
         in: path
         description: Catalog item identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Catalog item updated successfully
@@ -153,32 +252,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UpdateCatalogItemRequestNotFoundError'
+        '502':
+          description: 'The catalog item was updated, but could not be read back afterwards, so the full response (including any `unit` and `measurements` links) is unavailable. The update itself did apply. If this request did not archive the item, fetch the current state with `GET /catalog-items/{catalog_item_id}`. If it set `isArchived: true`, that endpoint (and the list endpoint) excludes archived catalog items by design, so it will return 404 even though the archive succeeded — treat that 404 as confirmation, not a failure, and do not retry the PATCH.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCatalogItemRequestBadGatewayError'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CatalogItemUpdate'
+      security:
+      - ApiKeyAuth: []
     delete:
-      operationId: delete-catalog-item
+      operationId: catalogItems_deleteCatalogItem
       summary: Delete Catalog Item
       description: Archives the catalog item (soft delete). The item is marked as archived and will no longer appear in list or lookup responses, but is not permanently removed.
       tags:
       - Catalog Items
       parameters:
-      - name: catalogItemId
+      - name: catalog_item_id
         in: path
         description: Catalog item identifier
         required: true
         schema:
           type: integer
-      - name: x-api-key
-        in: header
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: Successful response
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCatalogItemRequestBadRequestError'
         '401':
           description: Authentication failed
           content:
@@ -191,63 +301,512 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteCatalogItemRequestNotFoundError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCatalogItemRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
+  /catalog-units/{catalog_unit_id}:
+    get:
+      operationId: catalogItems_getCatalogUnit
+      summary: Get Catalog Unit
+      description: Retrieve a specific catalog unit by ID.
+      tags:
+      - Catalog Items
+      parameters:
+      - name: catalog_unit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Catalog unit details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogUnit'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCatalogUnitRequestBadRequestError'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCatalogUnitRequestUnauthorizedError'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCatalogUnitRequestNotFoundError'
+        '502':
+          description: Bad Gateway — downstream GraphQL service returned errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCatalogUnitRequestBadGatewayError'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    CatalogItemCreate:
+    CreateCatalogItemRequestBadRequestError:
       type: object
       properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: CreateCatalogItemRequestBadRequestError
+    TradeGroup:
+      type: string
+      enum:
+      - ENERGY
+      - MECHANICAL
+      - ELECTRICAL
+      - PLUMBING
+      - LOW_VOLTAGE
+      - ENVELOPE
+      - OTHER
+      description: High-level trade group for catalog items.
+      title: TradeGroup
+    Measurement:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Measurement identifier
+        name:
+          type: string
+          description: Measurement name
+        type:
+          $ref: '#/components/schemas/MeasurementType'
+          description: A plain MEASUREMENT is a raw input value; a SUB_CALCULATION ("sub-measurement") derives its value from a formula over other measurements.
+        unit:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogUnit'
+          - type: 'null'
+          description: The unit this measurement is expressed in, if any.
+        minimumValue:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Minimum allowed value. Only meaningful for type MEASUREMENT.
+        formula:
+          $ref: '#/components/schemas/MeasurementFormula'
+        isArchived:
+          type: boolean
+          description: Whether this measurement has been archived.
+      required:
+      - id
+      - name
+      - type
+      description: 'A named measurement or sub-calculation that a catalog item can link to (via `measurementIds`) to drive its quantity. A "sub-measurement" is simply a Measurement with `type: SUB_CALCULATION` — not a separate structure.
+
+        '
+      title: Measurement
+    MeasurementFormula:
+      type: object
+      properties:
+        operands:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementFormulaOperandsItems'
+        ast:
+          $ref: '#/components/schemas/MeasurementFormulaAst'
+          description: Binary-operation AST node or leaf. See the formula description above.
+        sourceText:
+          type: string
+          description: The formula as originally authored (e.g. "( m1 + m2 ) / 100")
+      description: 'The formula driving a SUB_CALCULATION measurement''s quantity. Read-only — there is no API to create or edit a measurement''s formula; it can only be authored in the app. Shape: `operands` names each referenced measurement (`{name, measurementId}`); `ast` is a binary-operation tree (`ADD`/`SUB`/`MUL`/`DIV`) whose leaves are either `{operandRef}` (referencing an entry in `operands` by name) or `{constant}` (a literal number); `sourceText` is the original formula text as authored.
+
+        '
+      title: MeasurementFormula
+    UpdateCatalogItemRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: UpdateCatalogItemRequestBadRequestError
+    DeleteCatalogItemRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: DeleteCatalogItemRequestBadGatewayError
+    CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UPSTREAM_ERROR
+      title: CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode
+    CatalogItemCreateType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      description: Catalog item type
+      title: CatalogItemCreateType
+    CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode
+    ListCatalogItemsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListCatalogItemsRequestUnauthorizedError
+    ListCatalogUnitsRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogUnitsGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: ListCatalogUnitsRequestBadRequestError
+    CatalogItemCreateWasteFactorMode:
+      type: string
+      enum:
+      - STATIC
+      description: Waste factor mode. Must be set together with wasteFactorValue — both, or neither.
+      title: CatalogItemCreateWasteFactorMode
+    GetCatalogItemRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetCatalogItemRequestUnauthorizedError
+    CategoryOptionType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      description: Whether this category applies to PRODUCT or SERVICE catalog items
+      title: CategoryOptionType
+    DeleteCatalogItemRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteCatalogItemRequestUnauthorizedError
+    GetCatalogItemRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetCatalogItemRequestBadRequestError
+    DeleteCatalogItemRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
+      title: DeleteCatalogItemRequestNotFoundError
+    CreateCatalogItemRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
+      title: CreateCatalogItemRequestUnauthorizedError
+    CatalogUnit:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Catalog unit identifier
+        code:
+          type: string
+          description: Stable short code for the unit (e.g. "SF", "EA")
+        label:
+          type: string
+          description: Human-readable label for the unit (e.g. "Square Feet")
+        dimension:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogUnitDimension'
+          - type: 'null'
+          description: The physical dimension this unit measures, if any. Null for packaging-style units (e.g. bundle, roll) that can't be used on a measurement.
+        isCustom:
+          type: boolean
+          description: Whether this unit was defined by the company, as opposed to one of the seeded defaults.
+        isArchived:
+          type: boolean
+          description: Whether this unit has been archived.
+      required:
+      - id
+      - code
+      - label
+      description: A unit of measure from the company's unit registry (e.g. Each, Square Feet, Linear Feet). Referenced by catalog items and measurements via `unitId`.
+      title: CatalogUnit
+    GetCatalogUnitRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogUnitsCatalogUnitIdGetResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: GetCatalogUnitRequestBadRequestError
+    CatalogUnitDimension:
+      type: string
+      enum:
+      - LENGTH
+      - AREA
+      - COUNT
+      description: The physical dimension this unit measures, if any. Null for packaging-style units (e.g. bundle, roll) that can't be used on a measurement.
+      title: CatalogUnitDimension
+    DeleteCatalogItemRequestBadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
+        field:
+          type: string
+          description: Field that caused the validation error (if applicable)
+      title: DeleteCatalogItemRequestBadRequestError
+    UpdateCatalogItemRequestBadGatewayError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
+        message:
+          type: string
+        id:
+          type: integer
+          description: The id of the catalog item that was updated.
+      title: UpdateCatalogItemRequestBadGatewayError
+    CatalogItemWasteFactorMode:
+      type: string
+      enum:
+      - STATIC
+      description: Waste factor mode applied when computing this item's quantity. Currently only STATIC is supported. Paired with wasteFactorValue — both are set, or neither.
+      title: CatalogItemWasteFactorMode
+    CatalogItemsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: CatalogItemsGetResponsesContentApplicationJsonSchemaCode
+    CatalogUnitsGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: CatalogUnitsGetResponsesContentApplicationJsonSchemaCode
+    CatalogItemUpdate:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CatalogItemUpdateType'
+          description: Catalog item type
         name:
           type: string
           description: Catalog item name
-        type:
-          $ref: '#/components/schemas/CatalogItemCreateType'
-          description: Catalog item type
         category:
           $ref: '#/components/schemas/CatalogCategoryCode'
-          description: Catalog item category code. Must be a valid ProductCategory when type is PRODUCT or ServiceCategory when type is SERVICE.
-        cost:
-          type: number
-          format: double
-          description: Catalog item cost
-        price:
-          type: number
-          format: double
-          description: Catalog item price
-        tradeGroup:
-          $ref: '#/components/schemas/TradeGroup'
-          description: High-level trade group for this item. Defaults to OTHER if not provided. When provided, it must be consistent with the category (for products, the category must belong to this trade group; category OTHER is allowed under any trade group).
-        manufacturer:
-          type:
-          - string
-          - 'null'
-          description: Catalog item manufacturer
-        sku:
-          type:
-          - string
-          - 'null'
-          description: Catalog item SKU
+          description: Catalog item category code. Must be a valid ProductCategory or ServiceCategory value.
         code:
-          type:
-          - string
-          - 'null'
+          type: string
           description: Catalog item code
         description:
           type:
           - string
           - 'null'
           description: Catalog item description
+        cost:
+          type: number
+          format: double
+          minimum: 0
+          description: Catalog item cost
+        price:
+          type: number
+          format: double
+          minimum: 0
+          description: Catalog item price
+        tradeGroup:
+          $ref: '#/components/schemas/TradeGroup'
+          description: High-level trade group for this item.
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: Catalog item manufacturer. PRODUCT items only.
+        sku:
+          type:
+          - string
+          - 'null'
+          description: 'Catalog item SKU. PRODUCT items only — sending an SKU while the item is, or is becoming, a SERVICE returns 400. Converting a PRODUCT that has an SKU into a SERVICE is allowed and does not require clearing it first: services have no SKU, so it is dropped as part of the conversion. Pass null to clear a PRODUCT SKU or during that conversion; an already-SERVICE item with a legacy SKU cannot change or clear it through this API and returns 400.
+
+            '
+        isArchived:
+          type: boolean
+          description: 'Set true to archive the item, or false to restore an archived one. Archiving via this field is equivalent to DELETE /catalog-items/{catalog_item_id}.
+
+            '
         preferredVendorId:
           type:
           - integer
           - 'null'
-          description: ID of the preferred vendor (must be an existing active vendor for this company)
+          description: ID of the preferred vendor. Pass null to clear the preferred vendor.
+        unitId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the unit this item is sold/measured in. Pass null to clear it.
+        measurementIds:
+          type: array
+          items:
+            type: integer
+          description: 'Replaces the full set of measurement/sub-calculation links driving this item''s quantity. Omit this field to leave existing links unchanged; pass an empty array to clear all links. This is NOT a merge/append — any previously linked measurement not included here is unlinked. At most one linked measurement may be a sub-measurement (type SUB_CALCULATION), and it must be the only one linked.
+
+            '
+        coverage:
+          type:
+          - number
+          - 'null'
+          format: double
+          exclusiveMinimum: 0
+          description: Measurement units covered per item unit. Must be greater than zero.
+        wasteFactorMode:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogItemUpdateWasteFactorMode'
+          - type: 'null'
+          description: Waste factor mode. Must be set together with wasteFactorValue — both, or neither.
+        wasteFactorValue:
+          type:
+          - number
+          - 'null'
+          format: double
+          minimum: 0
+          maximum: 100
+          description: Waste factor percentage (0-100). Must be set together with wasteFactorMode.
+      title: CatalogItemUpdate
+    GetCatalogUnitRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/CatalogUnitsCatalogUnitIdGetResponsesContentApplicationJsonSchemaCode'
       required:
-      - name
-      - type
-      - category
-      - cost
-      - price
-      title: CatalogItemCreate
+      - message
+      - code
+      title: GetCatalogUnitRequestBadGatewayError
+    ListCatalogCategoriesRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogCategoriesGetResponsesContentApplicationJsonSchemaCode'
+      title: ListCatalogCategoriesRequestUnauthorizedError
+    CreateCatalogItemRequestBadGatewayError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
+        message:
+          type: string
+        id:
+          type: integer
+          description: The id of the catalog item that was created.
+      title: CreateCatalogItemRequestBadGatewayError
+    CatalogCategoriesResponse:
+      type: object
+      properties:
+        productCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryOption'
+        serviceCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryOption'
+        tradeGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradeGroup'
+      required:
+      - productCategories
+      - serviceCategories
+      - tradeGroups
+      title: CatalogCategoriesResponse
+    ListCatalogUnitsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/CatalogUnitsGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListCatalogUnitsRequestBadGatewayError
+    ListCatalogUnitsRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogUnitsGetResponsesContentApplicationJsonSchemaCode'
+      title: ListCatalogUnitsRequestUnauthorizedError
+    CatalogCategoryCode:
+      oneOf:
+      - $ref: '#/components/schemas/ProductCategory'
+      - $ref: '#/components/schemas/ServiceCategory'
+      description: 'Catalog item category code.
+
+        Must be:
+
+        - one of `ProductCategory` when `type` is `PRODUCT`, or
+
+        - one of `ServiceCategory` when `type` is `SERVICE`.
+
+        '
+      title: CatalogCategoryCode
     CatalogItem:
       type: object
       properties:
@@ -288,12 +847,14 @@ components:
           - number
           - 'null'
           format: double
+          minimum: 0
           description: Catalog item cost
         price:
           type:
           - number
           - 'null'
           format: double
+          minimum: 0
           description: Catalog item price
         description:
           type:
@@ -327,6 +888,33 @@ components:
           - integer
           - 'null'
           description: ID of the preferred vendor (must be an existing active vendor for this company)
+        unit:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogUnit'
+          - type: 'null'
+          description: The unit this item is sold/measured in, if any. Set on write via `unitId`.
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measurement'
+          description: Measurements (and sub-measurements) linked to this item to drive its quantity calculation. A sub-measurement is a linked Measurement with `type SUB_CALCULATION`; at most one may be linked, and it must be the only link when present.
+        coverage:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Measurement units covered per item unit (e.g. a bundle covering ~33.33 SF). Used to size quantity from summed linked measurements; not used when the item is linked to a sub-calculation, which derives quantity from its own formula.
+        wasteFactorMode:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogItemWasteFactorMode'
+          - type: 'null'
+          description: Waste factor mode applied when computing this item's quantity. Currently only STATIC is supported. Paired with wasteFactorValue — both are set, or neither.
+        wasteFactorValue:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Waste factor percentage (0-100) applied when computing this item's quantity. Paired with wasteFactorMode.
       required:
       - id
       - name
@@ -336,241 +924,11 @@ components:
       - cost
       - price
       title: CatalogItem
-    CatalogItemImage:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          description: URL to download the image
-      title: CatalogItemImage
-    ListCatalogItemsRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsGetResponsesContentApplicationJsonSchemaCode'
-      title: ListCatalogItemsRequestUnauthorizedError
-    UpdateCatalogItemRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateCatalogItemRequestUnauthorizedError
-    CatalogItemUpdate:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CatalogItemUpdateType'
-          description: Catalog item type
-        name:
-          type: string
-          description: Catalog item name
-        category:
-          $ref: '#/components/schemas/CatalogCategoryCode'
-          description: Catalog item category code. Must be a valid ProductCategory or ServiceCategory value.
-        code:
-          type: string
-          description: Catalog item code
-        description:
-          type:
-          - string
-          - 'null'
-          description: Catalog item description
-        cost:
-          type: number
-          format: double
-          description: Catalog item cost
-        price:
-          type: number
-          format: double
-          description: Catalog item price
-        tradeGroup:
-          $ref: '#/components/schemas/TradeGroup'
-          description: High-level trade group for this item.
-        preferredVendorId:
-          type:
-          - integer
-          - 'null'
-          description: ID of the preferred vendor. Pass null to clear the preferred vendor.
-      title: CatalogItemUpdate
-    DeleteCatalogItemRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteCatalogItemRequestNotFoundError
-    UpdateCatalogItemRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
-      title: UpdateCatalogItemRequestNotFoundError
-    CatalogItemCreateType:
+    CatalogUnitsCatalogUnitIdGetResponsesContentApplicationJsonSchemaCode:
       type: string
       enum:
-      - PRODUCT
-      - SERVICE
-      description: Catalog item type
-      title: CatalogItemCreateType
-    UpdateCatalogItemRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: UpdateCatalogItemRequestBadRequestError
-    TradeGroup:
-      type: string
-      enum:
-      - ENERGY
-      - MECHANICAL
-      - ELECTRICAL
-      - PLUMBING
-      - LOW_VOLTAGE
-      - ENVELOPE
-      - OTHER
-      description: High-level trade group for catalog items.
-      title: TradeGroup
-    CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode
-    GetCatalogItemRequestNotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetCatalogItemRequestNotFoundError
-    CatalogCategoryCode:
-      oneOf:
-      - $ref: '#/components/schemas/ProductCategory'
-      - $ref: '#/components/schemas/ServiceCategory'
-      description: 'Catalog item category code.
-
-        Must be:
-
-        - one of `ProductCategory` when `type` is `PRODUCT`, or
-
-        - one of `ServiceCategory` when `type` is `SERVICE`.
-
-        '
-      title: CatalogCategoryCode
-    CatalogItemsGetResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: CatalogItemsGetResponsesContentApplicationJsonSchemaCode
-    CatalogItemType:
-      type: string
-      enum:
-      - PRODUCT
-      - SERVICE
-      description: Catalog item type
-      title: CatalogItemType
-    CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode
-    DeleteCatalogItemRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode'
-      title: DeleteCatalogItemRequestUnauthorizedError
-    CatalogItemsPostResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: CatalogItemsPostResponsesContentApplicationJsonSchemaCode
-    CatalogItemUpdateType:
-      type: string
-      enum:
-      - PRODUCT
-      - SERVICE
-      description: Catalog item type
-      title: CatalogItemUpdateType
-    CreateCatalogItemRequestBadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
-        field:
-          type: string
-          description: Field that caused the validation error (if applicable)
-      title: CreateCatalogItemRequestBadRequestError
-    ServiceCategory:
-      type: string
-      enum:
-      - ADJUSTMENT
-      - BALANCING
-      - CALIBRATION
-      - CLEANING
-      - COMMISSIONING
-      - DECOMMISSIONING
-      - DIAGNOSTICS
-      - ENGINEERING
-      - EQUIPMENT_RENTAL
-      - INSPECTION
-      - INSTALLATION
-      - MAINTENANCE
-      - MONITORING
-      - OPTIMIZATION
-      - PERMITTING
-      - RELOCATION
-      - REMOVAL
-      - REPAIR
-      - REPLACEMENT
-      - RETROFIT
-      - SITE_SURVEY
-      - TESTING
-      - TRAINING
-      - OTHER
-      description: Service catalog category.
-      title: ServiceCategory
-    CreateCatalogItemRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsPostResponsesContentApplicationJsonSchemaCode'
-      title: CreateCatalogItemRequestUnauthorizedError
-    GetCatalogItemRequestUnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
-      title: GetCatalogItemRequestUnauthorizedError
-    CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: CatalogItemsCatalogItemIdDeleteResponsesContentApplicationJsonSchemaCode
+      - GRAPHQL_ERROR
+      title: CatalogUnitsCatalogUnitIdGetResponsesContentApplicationJsonSchemaCode
     ProductCategory:
       type: string
       enum:
@@ -653,6 +1011,270 @@ components:
       - OTHER
       description: Product catalog category.
       title: ProductCategory
+    UpdateCatalogItemRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateCatalogItemRequestUnauthorizedError
+    CatalogItemType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      description: Catalog item type
+      title: CatalogItemType
+    CatalogItemUpdateType:
+      type: string
+      enum:
+      - PRODUCT
+      - SERVICE
+      description: Catalog item type
+      title: CatalogItemUpdateType
+    CatalogCategoriesGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: CatalogCategoriesGetResponsesContentApplicationJsonSchemaCode
+    CatalogItemsPostResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - UPSTREAM_ERROR
+      title: CatalogItemsPostResponsesContentApplicationJsonSchemaCode
+    UpdateCatalogItemRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdPatchResponsesContentApplicationJsonSchemaCode'
+      title: UpdateCatalogItemRequestNotFoundError
+    ListCatalogItemsRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/CatalogItemsGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: ListCatalogItemsRequestBadGatewayError
+    GetCatalogItemRequestBadGatewayError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Summary of the downstream service failure
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
+      required:
+      - message
+      - code
+      title: GetCatalogItemRequestBadGatewayError
+    MeasurementFormulaOperandsItems:
+      type: object
+      properties:
+        name:
+          type: string
+        measurementId:
+          type: integer
+      title: MeasurementFormulaOperandsItems
+    MeasurementType:
+      type: string
+      enum:
+      - MEASUREMENT
+      - SUB_CALCULATION
+      description: A plain MEASUREMENT is a raw input value; a SUB_CALCULATION ("sub-measurement") derives its value from a formula over other measurements.
+      title: MeasurementType
+    CatalogItemImage:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          description: URL to download the image
+      title: CatalogItemImage
+    GetCatalogUnitRequestUnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogUnitsCatalogUnitIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetCatalogUnitRequestUnauthorizedError
+    CatalogItemUpdateWasteFactorMode:
+      type: string
+      enum:
+      - STATIC
+      description: Waste factor mode. Must be set together with wasteFactorValue — both, or neither.
+      title: CatalogItemUpdateWasteFactorMode
+    CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode:
+      type: string
+      enum:
+      - GRAPHQL_ERROR
+      title: CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode
+    CatalogItemCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Catalog item name
+        type:
+          $ref: '#/components/schemas/CatalogItemCreateType'
+          description: Catalog item type
+        category:
+          $ref: '#/components/schemas/CatalogCategoryCode'
+          description: Catalog item category code. Must be a valid ProductCategory when type is PRODUCT or ServiceCategory when type is SERVICE.
+        cost:
+          type: number
+          format: double
+          minimum: 0
+          description: Catalog item cost
+        price:
+          type: number
+          format: double
+          minimum: 0
+          description: Catalog item price
+        tradeGroup:
+          $ref: '#/components/schemas/TradeGroup'
+          description: High-level trade group for this item. If omitted, it is derived from the category — a product category resolves to the trade group it belongs to (for example ROOF_COVERING resolves to ENVELOPE), and services or category OTHER resolve to OTHER. When provided, it must be consistent with the category (for products, the category must belong to this trade group; category OTHER is allowed under any trade group).
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: Catalog item manufacturer
+        sku:
+          type:
+          - string
+          - 'null'
+          description: Catalog item SKU
+        code:
+          type:
+          - string
+          - 'null'
+          description: Catalog item code
+        description:
+          type:
+          - string
+          - 'null'
+          description: Catalog item description
+        preferredVendorId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the preferred vendor (must be an existing active vendor for this company)
+        unitId:
+          type:
+          - integer
+          - 'null'
+          description: ID of the unit this item is sold/measured in. Must reference a unit belonging to your company (see GET /catalog-units).
+        measurementIds:
+          type: array
+          items:
+            type: integer
+          description: IDs of measurements (and/or a single sub-measurement) to link to this item, driving its quantity calculation. At most one linked measurement may be a sub-measurement (type SUB_CALCULATION), and it must be the only one linked. Multiple plain measurement links must share the same unit (or be unitless) — their values are summed.
+        coverage:
+          type:
+          - number
+          - 'null'
+          format: double
+          exclusiveMinimum: 0
+          description: Measurement units covered per item unit. Must be greater than zero. Not compatible with a linked sub-calculation, which derives quantity from its own formula.
+        wasteFactorMode:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogItemCreateWasteFactorMode'
+          - type: 'null'
+          description: Waste factor mode. Must be set together with wasteFactorValue — both, or neither.
+        wasteFactorValue:
+          type:
+          - number
+          - 'null'
+          format: double
+          minimum: 0
+          maximum: 100
+          description: Waste factor percentage (0-100). Must be set together with wasteFactorMode.
+      required:
+      - name
+      - type
+      - category
+      - cost
+      - price
+      title: CatalogItemCreate
+    GetCatalogItemRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogItemsCatalogItemIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetCatalogItemRequestNotFoundError
+    CategoryOption:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The category code (a ProductCategory or ServiceCategory value)
+        description:
+          type:
+          - string
+          - 'null'
+          description: Human-readable description of the category, if available
+        type:
+          $ref: '#/components/schemas/CategoryOptionType'
+          description: Whether this category applies to PRODUCT or SERVICE catalog items
+      required:
+      - code
+      - type
+      title: CategoryOption
+    ServiceCategory:
+      type: string
+      enum:
+      - ADJUSTMENT
+      - BALANCING
+      - CALIBRATION
+      - CLEANING
+      - COMMISSIONING
+      - DECOMMISSIONING
+      - DIAGNOSTICS
+      - ENGINEERING
+      - EQUIPMENT_RENTAL
+      - INSPECTION
+      - INSTALLATION
+      - MAINTENANCE
+      - MONITORING
+      - OPTIMIZATION
+      - PERMITTING
+      - RELOCATION
+      - REMOVAL
+      - REPAIR
+      - REPLACEMENT
+      - RETROFIT
+      - SITE_SURVEY
+      - TESTING
+      - TRAINING
+      - OTHER
+      description: Service catalog category.
+      title: ServiceCategory
+    GetCatalogUnitRequestNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: '#/components/schemas/CatalogUnitsCatalogUnitIdGetResponsesContentApplicationJsonSchemaCode'
+      title: GetCatalogUnitRequestNotFoundError
+    MeasurementFormulaAst:
+      type: object
+      properties: {}
+      description: Binary-operation AST node or leaf. See the formula description above.
+      title: MeasurementFormulaAst
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
