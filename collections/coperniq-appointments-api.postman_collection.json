@@ -1,1262 +1,1365 @@
 {
+  "info": {
+    "_postman_id": "55526267-5625-4c9b-aa04-aed4f668d926",
+    "name": "Reference Appointments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:14:28.000Z",
+    "updatedAt": "2026-10-22T02:14:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-55526267-5625-4c9b-aa04-aed4f668d926"
+  },
   "item": [
     {
-      "id": "ac31b188-bf49-4af5-9a19-de08e4f58a61",
-      "name": "appointments",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "opportunities",
       "item": [
         {
-          "id": "d3c77174-c1e8-4ec8-94aa-bd8d76984c36",
-          "name": "Get Opportunity Appointments",
-          "request": {
-            "name": "Get Opportunity Appointments",
-            "description": {
-              "content": "Retrieve appointments for a specific opportunity.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`)\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "opportunities",
-                ":opportunityId",
-                "appointments"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
-                },
-                {
-                  "disabled": false,
-                  "key": "order_by",
-                  "value": "asc",
-                  "description": "Sort order for results"
-                },
-                {
-                  "disabled": false,
-                  "key": "updated_after",
-                  "value": "<dateTime>",
-                  "description": "Filter items updated after this timestamp (ISO 8601)"
-                },
-                {
-                  "disabled": false,
-                  "key": "updated_before",
-                  "value": "<dateTime>",
-                  "description": "Filter items updated before this timestamp (ISO 8601)"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "opportunityId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{opportunity_id}",
+          "item": [
             {
-              "id": "1eb500b0-f9cf-4d03-aa14-d43e0979af45",
-              "name": "List of appointments for the opportunity",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "appointments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "updated_after",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "updated_before",
-                      "value": "<dateTime>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "opportunityId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "appointments",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "Get Opportunity Appointments",
+                  "id": "fef3b187-5e0f-4ce8-9b00-cbbeff74d758",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/opportunities/:opportunity_id/appointments?page_size=20&page=1&order_by=asc&updated_after=<date>&updated_before=<date>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "opportunities",
+                        ":opportunity_id",
+                        "appointments"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Sort order for results",
+                          "key": "order_by",
+                          "value": "asc"
+                        },
+                        {
+                          "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                          "key": "updated_after",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                          "key": "updated_before",
+                          "value": "<date>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "9d4faa9b-1887-4ce9-b880-88f62eecc90d",
+                          "key": "opportunity_id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Retrieve appointments for a specific opportunity.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`)"
+                  },
+                  "response": [
+                    {
+                      "id": "29a173e8-c9a5-4fc1-a9e1-fd56bd9741d1",
+                      "name": "List of appointments for the opportunity",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/appointments?page_size=20&page=1&order_by=asc&updated_after=<date>&updated_before=<date>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "appointments"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Sort order for results",
+                              "key": "order_by",
+                              "value": "asc"
+                            },
+                            {
+                              "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                              "key": "updated_after",
+                              "value": "<date>"
+                            },
+                            {
+                              "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                              "key": "updated_before",
+                              "value": "<date>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"appointments\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"dueDate\": \"<string,null-date-time>\",\n      \"isCompleted\": \"<boolean>\",\n      \"completedAt\": \"<string,null-date-time>\",\n      \"assigneeId\": \"<integer,null>\",\n      \"opportunityId\": \"<integer,null>\",\n      \"createdBy\": \"<integer,null>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"dueDate\": \"<string,null-date-time>\",\n      \"isCompleted\": \"<boolean>\",\n      \"completedAt\": \"<string,null-date-time>\",\n      \"assigneeId\": \"<integer,null>\",\n      \"opportunityId\": \"<integer,null>\",\n      \"createdBy\": \"<integer,null>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ],\n  \"totalCount\": \"<integer>\"\n}",
+                      "createdAt": "2026-10-22T02:14:29.000Z",
+                      "updatedAt": "2026-10-22T02:14:29.000Z",
+                      "uid": "35240-29a173e8-c9a5-4fc1-a9e1-fd56bd9741d1"
+                    },
+                    {
+                      "id": "f31a0943-0ed8-45c9-b73f-45364c857f32",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/appointments?page_size=20&page=1&order_by=asc&updated_after=<date>&updated_before=<date>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "appointments"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Sort order for results",
+                              "key": "order_by",
+                              "value": "asc"
+                            },
+                            {
+                              "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                              "key": "updated_after",
+                              "value": "<date>"
+                            },
+                            {
+                              "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                              "key": "updated_before",
+                              "value": "<date>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:14:29.000Z",
+                      "updatedAt": "2026-10-22T02:14:29.000Z",
+                      "uid": "35240-f31a0943-0ed8-45c9-b73f-45364c857f32"
+                    },
+                    {
+                      "id": "dc76f3b4-d958-4363-8a4e-cc6f14a5c74d",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/appointments?page_size=20&page=1&order_by=asc&updated_after=<date>&updated_before=<date>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "appointments"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Sort order for results",
+                              "key": "order_by",
+                              "value": "asc"
+                            },
+                            {
+                              "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                              "key": "updated_after",
+                              "value": "<date>"
+                            },
+                            {
+                              "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                              "key": "updated_before",
+                              "value": "<date>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+                      "createdAt": "2026-10-22T02:14:29.000Z",
+                      "updatedAt": "2026-10-22T02:14:29.000Z",
+                      "uid": "35240-dc76f3b4-d958-4363-8a4e-cc6f14a5c74d"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-fef3b187-5e0f-4ce8-9b00-cbbeff74d758"
+                },
+                {
+                  "name": "Create Opportunity Appointment",
+                  "id": "50eb76f1-e472-4a5a-9a72-369bcc1313ec",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<dateTime>\",\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/opportunities/:opportunity_id/appointments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "opportunities",
+                        ":opportunity_id",
+                        "appointments"
+                      ],
+                      "variable": [
+                        {
+                          "id": "86111bb9-efdc-4aaa-a270-46c5243b0569",
+                          "key": "opportunity_id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Create a new appointment associated with an opportunity."
+                  },
+                  "response": [
+                    {
+                      "id": "9b451e57-533d-45a0-a5ff-b5971704e91b",
+                      "name": "Appointment created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<dateTime>\",\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/appointments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "appointments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"isCompleted\": \"<boolean>\",\n  \"completedAt\": \"<string,null-date-time>\",\n  \"assigneeId\": \"<integer,null>\",\n  \"opportunityId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-22T02:14:29.000Z",
+                      "updatedAt": "2026-10-22T02:14:29.000Z",
+                      "uid": "35240-9b451e57-533d-45a0-a5ff-b5971704e91b"
+                    },
+                    {
+                      "id": "7d9a919b-d564-41e5-85b6-5b1b86ccc8b8",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<dateTime>\",\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/appointments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "appointments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:14:29.000Z",
+                      "updatedAt": "2026-10-22T02:14:29.000Z",
+                      "uid": "35240-7d9a919b-d564-41e5-85b6-5b1b86ccc8b8"
+                    },
+                    {
+                      "id": "ab36015b-a7d2-4640-b16c-558132f77bdb",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<dateTime>\",\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/appointments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "appointments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+                      "createdAt": "2026-10-22T02:14:29.000Z",
+                      "updatedAt": "2026-10-22T02:14:29.000Z",
+                      "uid": "35240-ab36015b-a7d2-4640-b16c-558132f77bdb"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-50eb76f1-e472-4a5a-9a72-369bcc1313ec"
                 }
               ],
-              "body": "{\n  \"appointments\": [\n    {\n      \"id\": 664,\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"dueDate\": \"1949-11-08T06:51:48.963Z\",\n      \"isCompleted\": true,\n      \"completedAt\": \"2006-04-06T21:39:19.054Z\",\n      \"assigneeId\": 3892,\n      \"opportunityId\": 6219,\n      \"createdBy\": 8678,\n      \"createdAt\": \"2014-03-08T06:31:53.131Z\",\n      \"updatedAt\": \"2002-12-17T18:16:13.991Z\"\n    },\n    {\n      \"id\": 8672,\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"dueDate\": \"1994-11-04T02:42:25.388Z\",\n      \"isCompleted\": true,\n      \"completedAt\": \"1996-06-13T21:57:04.482Z\",\n      \"assigneeId\": 1165,\n      \"opportunityId\": 3450,\n      \"createdBy\": 2362,\n      \"createdAt\": \"1973-04-29T00:36:57.847Z\",\n      \"updatedAt\": \"1956-09-13T12:26:08.442Z\"\n    }\n  ],\n  \"totalCount\": 8226\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "915c1084-55fa-4b20-98d3-c1d7bb8eda3d",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "appointments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "updated_after",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "updated_before",
-                      "value": "<dateTime>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "opportunityId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d1063edf-8a2a-4742-ae1d-d1b38b462bb8",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "appointments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "updated_after",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "updated_before",
-                      "value": "<dateTime>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "opportunityId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "c36acef0-7663-4a26-a8bc-534b7d262fe0",
+              "createdAt": "2026-10-22T02:14:29.000Z",
+              "updatedAt": "2026-10-22T02:14:29.000Z",
+              "uid": "35240-c36acef0-7663-4a26-a8bc-534b7d262fe0"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "35063b40-0f89-4eea-bd78-b1aed97b8008",
-          "name": "Create Opportunity Appointment",
-          "request": {
-            "name": "Create Opportunity Appointment",
-            "description": {
-              "content": "Create a new appointment associated with an opportunity.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "opportunities",
-                ":opportunityId",
-                "appointments"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "opportunityId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<dateTime>\",\n  \"description\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "d6008469-e572-407e-b580-002429fa895c",
-              "name": "Appointment created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "appointments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "opportunityId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<dateTime>\",\n  \"description\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 1986,\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"dueDate\": \"1986-05-07T07:20:39.869Z\",\n  \"isCompleted\": true,\n  \"completedAt\": \"2003-04-14T08:40:41.682Z\",\n  \"assigneeId\": 9332,\n  \"opportunityId\": 671,\n  \"createdBy\": 9923,\n  \"createdAt\": \"1950-11-17T14:34:10.611Z\",\n  \"updatedAt\": \"1955-04-14T00:54:07.617Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "573bdde4-d734-4a7f-ae1f-2274f88ea918",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "appointments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "opportunityId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<dateTime>\",\n  \"description\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8f2fb3b2-871f-44ba-aa4f-b54bcc55c4ee",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "appointments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "opportunityId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<dateTime>\",\n  \"description\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "c8422385-51aa-4404-a1b3-9667c3baec7e",
-          "name": "Get Appointment",
-          "request": {
-            "name": "Get Appointment",
-            "description": {
-              "content": "Retrieve a specific appointment by ID.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "appointments",
-                ":appointmentId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "appointmentId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "8914bb33-89ea-4721-9801-51a561dd2524",
-              "name": "Appointment details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 1986,\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"dueDate\": \"1986-05-07T07:20:39.869Z\",\n  \"isCompleted\": true,\n  \"completedAt\": \"2003-04-14T08:40:41.682Z\",\n  \"assigneeId\": 9332,\n  \"opportunityId\": 671,\n  \"createdBy\": 9923,\n  \"createdAt\": \"1950-11-17T14:34:10.611Z\",\n  \"updatedAt\": \"1955-04-14T00:54:07.617Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "10a15a1a-8fc5-4202-b929-da044b733380",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "c34f930f-4eec-42f6-b916-9a15a916caa5",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a354a933-eddc-41de-a586-00f1b8123867",
-          "name": "Update Appointment",
-          "request": {
-            "name": "Update Appointment",
-            "description": {
-              "content": "Update an existing appointment.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "appointments",
-                ":appointmentId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "appointmentId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PATCH",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "d1aab6fe-320c-4efd-8ffb-bac2fd578118",
-              "name": "Appointment updated successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 1986,\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"dueDate\": \"1986-05-07T07:20:39.869Z\",\n  \"isCompleted\": true,\n  \"completedAt\": \"2003-04-14T08:40:41.682Z\",\n  \"assigneeId\": 9332,\n  \"opportunityId\": 671,\n  \"createdBy\": 9923,\n  \"createdAt\": \"1950-11-17T14:34:10.611Z\",\n  \"updatedAt\": \"1955-04-14T00:54:07.617Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "42c7ffdb-caa7-4db6-a303-cdebb3492fe6",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e521123c-7e02-4cda-be8a-0acc5e8f346c",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "355a6563-862d-47e4-bac7-890f996328c0",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "c61d7b72-b226-40d6-8e8f-0cb82c482ee0",
-          "name": "Delete Appointment",
-          "request": {
-            "name": "Delete Appointment",
-            "description": {
-              "content": "Delete a specific appointment by ID.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "appointments",
-                ":appointmentId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "appointmentId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "45ad62ad-e330-4668-80b3-ce0ba3cf2ae7",
-              "name": "Successful response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "6755c032-d4dd-439b-ba8b-5d03342a6e24",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9f43d739-7877-448b-a58d-c72fe6af50b4",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "appointments",
-                    ":appointmentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "appointmentId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "a7070a55-3541-456f-89dd-769901673425",
+          "createdAt": "2026-10-22T02:14:29.000Z",
+          "updatedAt": "2026-10-22T02:14:29.000Z",
+          "uid": "35240-a7070a55-3541-456f-89dd-769901673425"
         }
       ],
-      "event": []
+      "id": "db8a6331-b66e-4c56-bcaa-dfa9c9b91d30",
+      "createdAt": "2026-10-22T02:14:29.000Z",
+      "updatedAt": "2026-10-22T02:14:29.000Z",
+      "uid": "35240-db8a6331-b66e-4c56-bcaa-dfa9c9b91d30"
+    },
+    {
+      "name": "appointments",
+      "item": [
+        {
+          "name": "{appointment_id}",
+          "item": [
+            {
+              "name": "Get Appointment",
+              "id": "f60eb6c7-727d-447b-9cd8-896d5203c09c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/appointments/:appointment_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "appointments",
+                    ":appointment_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "0cc6cb23-de3a-487f-a7a9-2f5ebf3cc483",
+                      "key": "appointment_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific appointment by ID."
+              },
+              "response": [
+                {
+                  "id": "496d5fd4-0b5e-4617-94af-945663b78908",
+                  "name": "Appointment details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"isCompleted\": \"<boolean>\",\n  \"completedAt\": \"<string,null-date-time>\",\n  \"assigneeId\": \"<integer,null>\",\n  \"opportunityId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-496d5fd4-0b5e-4617-94af-945663b78908"
+                },
+                {
+                  "id": "8ca7792c-a324-4d2e-b202-d5ee78ec54d8",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-8ca7792c-a324-4d2e-b202-d5ee78ec54d8"
+                },
+                {
+                  "id": "bb7e9ac4-633e-41ac-9b66-f3ec36d147e3",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-bb7e9ac4-633e-41ac-9b66-f3ec36d147e3"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:29.000Z",
+              "updatedAt": "2026-10-22T02:14:29.000Z",
+              "uid": "35240-f60eb6c7-727d-447b-9cd8-896d5203c09c"
+            },
+            {
+              "name": "Update Appointment",
+              "id": "242adf3d-9f49-4169-b1c1-5a1ab4799bed",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/appointments/:appointment_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "appointments",
+                    ":appointment_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "0f67c982-4119-4e4b-89ce-92152640a562",
+                      "key": "appointment_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update an existing appointment."
+              },
+              "response": [
+                {
+                  "id": "4605b8f7-565c-416d-a0c0-2740e8fdc31e",
+                  "name": "Appointment updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"isCompleted\": \"<boolean>\",\n  \"completedAt\": \"<string,null-date-time>\",\n  \"assigneeId\": \"<integer,null>\",\n  \"opportunityId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-4605b8f7-565c-416d-a0c0-2740e8fdc31e"
+                },
+                {
+                  "id": "5cc3d328-1bbc-402b-a42f-26e5aeacc9c8",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-5cc3d328-1bbc-402b-a42f-26e5aeacc9c8"
+                },
+                {
+                  "id": "b0468f24-faf6-4a5b-bf35-5de46929a5d7",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-b0468f24-faf6-4a5b-bf35-5de46929a5d7"
+                },
+                {
+                  "id": "58110a6a-9eb9-4a62-b46e-b25458a31c6c",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"assigneeId\": \"<integer>\",\n  \"dueDate\": \"<string,null-date-time>\",\n  \"description\": \"<string,null>\",\n  \"isCompleted\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-58110a6a-9eb9-4a62-b46e-b25458a31c6c"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:29.000Z",
+              "updatedAt": "2026-10-22T02:14:29.000Z",
+              "uid": "35240-242adf3d-9f49-4169-b1c1-5a1ab4799bed"
+            },
+            {
+              "name": "Delete Appointment",
+              "id": "24b24423-d651-4fa1-945d-7917411f48c0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/appointments/:appointment_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "appointments",
+                    ":appointment_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d1fc41af-83fb-4524-b65f-3b8cc0d99b2e",
+                      "key": "appointment_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Delete a specific appointment by ID."
+              },
+              "response": [
+                {
+                  "id": "3a1f5d09-8a68-43f7-b4e8-cdd483743d64",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-3a1f5d09-8a68-43f7-b4e8-cdd483743d64"
+                },
+                {
+                  "id": "aaa5c965-b164-409b-89ed-77a77f235b95",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-aaa5c965-b164-409b-89ed-77a77f235b95"
+                },
+                {
+                  "id": "3e45c8fc-2586-4e4d-8888-1a9cdf692875",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/appointments/:appointment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointments",
+                        ":appointment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "appointment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:29.000Z",
+                  "updatedAt": "2026-10-22T02:14:29.000Z",
+                  "uid": "35240-3e45c8fc-2586-4e4d-8888-1a9cdf692875"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:29.000Z",
+              "updatedAt": "2026-10-22T02:14:29.000Z",
+              "uid": "35240-24b24423-d651-4fa1-945d-7917411f48c0"
+            }
+          ],
+          "id": "13baeeac-abe2-4e99-97a2-552c33367d70",
+          "createdAt": "2026-10-22T02:14:29.000Z",
+          "updatedAt": "2026-10-22T02:14:29.000Z",
+          "uid": "35240-13baeeac-abe2-4e99-97a2-552c33367d70"
+        }
+      ],
+      "id": "99babaf1-0444-43e6-99ff-ecfdf0a678a3",
+      "createdAt": "2026-10-22T02:14:29.000Z",
+      "updatedAt": "2026-10-22T02:14:29.000Z",
+      "uid": "35240-99babaf1-0444-43e6-99ff-ecfdf0a678a3"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "83e580a9-39de-4306-b9d5-b134aff2ca57",
-    "name": "API Key accounts appointments API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

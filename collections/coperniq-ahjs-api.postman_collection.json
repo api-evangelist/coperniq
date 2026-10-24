@@ -1,1075 +1,1169 @@
 {
+  "info": {
+    "_postman_id": "f48e687e-78ab-4615-801b-ae52c5e9a365",
+    "name": "Reference Ah Js API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:14:22.000Z",
+    "updatedAt": "2026-10-22T02:14:22.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-f48e687e-78ab-4615-801b-ae52c5e9a365"
+  },
   "item": [
     {
-      "id": "8a9c8ad8-0130-43c8-a326-2eb1b2d6f353",
-      "name": "ahJs",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "ahjs",
       "item": [
         {
-          "id": "eb7f7dde-09c9-40ae-ac5d-8e026e367f91",
-          "name": "List AHJs",
-          "request": {
-            "name": "List AHJs",
-            "description": {
-              "content": "Retrieve a paginated list of Authorities Having Jurisdiction (AHJs).\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Sorting by name (`order_by`, default: asc)\n- Search by name or state code (`q`) — when `q` is exactly two characters it also matches the two-letter state code\n- Filter by `state` (two-letter code), `type`, and `country` (default: `US`)\n- Geo mode: pass `lat`+`lng` (together) to return every AHJ whose boundary covers the point — e.g. city, county, and state — ordered most-specific-first. Name/state/type filters are ignored, and an empty array is returned if none cover the point.\n\nOnly active jurisdictions are returned. AHJs are seeded globally from the US Census TIGER catalog plus per-company private records. Most fields are read-only; only custom fields can be updated (see PATCH /ahjs/{id}).\n",
-              "type": "text/plain"
+          "name": "{ahj_id}",
+          "item": [
+            {
+              "name": "Get AHJ",
+              "id": "edee82fe-e7d7-425a-b64b-13ed49504cd9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ahjs/:ahj_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ahjs",
+                    ":ahj_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "8f6e84a2-fdb7-48b4-acba-a161df23c244",
+                      "key": "ahj_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific AHJ by ID, including catalog metadata and custom field values."
+              },
+              "response": [
+                {
+                  "id": "72dfc495-0a0e-4343-85a6-a11450bd944c",
+                  "name": "AHJ details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"uuid\": \"<string,null>\",\n  \"name\": \"<string>\",\n  \"type\": \"MUNICIPALITY\",\n  \"country\": \"<string>\",\n  \"state\": \"<string,null>\",\n  \"stateName\": \"<string,null>\",\n  \"parentCounty\": \"<string,null>\",\n  \"geoId\": \"<string,null>\",\n  \"ahjRegistryCode\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"isPrivate\": \"<boolean,null>\",\n  \"pointOfContact\": \"<string,null>\",\n  \"submissionMethod\": \"<string,null>\",\n  \"emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string,null>\",\n  \"website\": \"<string,null>\",\n  \"portal\": \"<string,null>\",\n  \"turnaround\": \"<integer,null>\",\n  \"fees\": \"<string,null>\",\n  \"notes\": \"<string,null>\",\n  \"permitSubmissionNotes\": \"<string,null>\",\n  \"buildingCodeModel\": \"<string,null>\",\n  \"buildingCodeLocal\": \"<string,null>\",\n  \"residentialCodeModel\": \"<string,null>\",\n  \"residentialCodeLocal\": \"<string,null>\",\n  \"fireCodeModel\": \"<string,null>\",\n  \"fireCodeLocal\": \"<string,null>\",\n  \"electricalCodeModel\": \"<string,null>\",\n  \"electricalCodeLocal\": \"<string,null>\",\n  \"windCodeModel\": \"<string,null>\",\n  \"windCodeLocal\": \"<string,null>\",\n  \"codesOther\": \"<string,null>\",\n  \"firePathwaysEnforced\": \"<boolean,null>\",\n  \"electricalEngineerStampRequired\": \"<boolean,null>\",\n  \"structuralStampRequired\": \"<boolean,null>\",\n  \"climateZone\": \"<string,null>\",\n  \"ashraeMinTempC\": \"<number,null-double>\",\n  \"ashraeMaxTempC\": \"<number,null-double>\",\n  \"ashraeMinTempF\": \"<number,null-double>\",\n  \"ashraeMaxTempF\": \"<number,null-double>\",\n  \"centroidLatitude\": \"<number,null-double>\",\n  \"centroidLongitude\": \"<number,null-double>\",\n  \"landAreaSqMiles\": \"<number,null-double>\",\n  \"specialZones\": \"<array,null>\",\n  \"buildingDeptHours\": \"<array,null>\",\n  \"tigerYear\": \"<integer,null>\",\n  \"funcstat\": \"<string,null>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"custom\": {\n    \"laborum_e6e\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-72dfc495-0a0e-4343-85a6-a11450bd944c"
+                },
+                {
+                  "id": "a34209a0-d4ab-48b7-8352-cba2474b53db",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-a34209a0-d4ab-48b7-8352-cba2474b53db"
+                },
+                {
+                  "id": "04836ce4-a15d-457a-b90c-b4aa6bdd58a4",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-04836ce4-a15d-457a-b90c-b4aa6bdd58a4"
+                },
+                {
+                  "id": "3d40880e-61cb-42ed-aae8-63847017a9c7",
+                  "name": "Bad gateway \u2014 an upstream service request failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-3d40880e-61cb-42ed-aae8-63847017a9c7"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:22.000Z",
+              "updatedAt": "2026-10-22T02:14:22.000Z",
+              "uid": "35240-edee82fe-e7d7-425a-b64b-13ed49504cd9"
             },
+            {
+              "name": "Update AHJ",
+              "id": "aed6d93f-1cdb-4c17-bf4d-c6e65964e103",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom\": {\n    \"est35\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ahjs/:ahj_id?allow_new_options=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ahjs",
+                    ":ahj_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "c46b83c2-4edc-4f1c-a677-174d589123f4",
+                      "key": "ahj_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update custom property values on an AHJ. The body `custom` map is keyed by property `keyName` \u2014 fetch the available keys via `GET /properties?record_type=ahj`.\n\nBuilt-in AHJ fields (under `Community Data` in the UI) are read-only and cannot be updated through this endpoint.\n\nPass `null` to clear a value."
+              },
+              "response": [
+                {
+                  "id": "9b4ee64b-ec9a-461c-a4ea-188a4122f0a9",
+                  "name": "AHJ updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"est35\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"uuid\": \"<string,null>\",\n  \"name\": \"<string>\",\n  \"type\": \"MUNICIPALITY\",\n  \"country\": \"<string>\",\n  \"state\": \"<string,null>\",\n  \"stateName\": \"<string,null>\",\n  \"parentCounty\": \"<string,null>\",\n  \"geoId\": \"<string,null>\",\n  \"ahjRegistryCode\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"isPrivate\": \"<boolean,null>\",\n  \"pointOfContact\": \"<string,null>\",\n  \"submissionMethod\": \"<string,null>\",\n  \"emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string,null>\",\n  \"website\": \"<string,null>\",\n  \"portal\": \"<string,null>\",\n  \"turnaround\": \"<integer,null>\",\n  \"fees\": \"<string,null>\",\n  \"notes\": \"<string,null>\",\n  \"permitSubmissionNotes\": \"<string,null>\",\n  \"buildingCodeModel\": \"<string,null>\",\n  \"buildingCodeLocal\": \"<string,null>\",\n  \"residentialCodeModel\": \"<string,null>\",\n  \"residentialCodeLocal\": \"<string,null>\",\n  \"fireCodeModel\": \"<string,null>\",\n  \"fireCodeLocal\": \"<string,null>\",\n  \"electricalCodeModel\": \"<string,null>\",\n  \"electricalCodeLocal\": \"<string,null>\",\n  \"windCodeModel\": \"<string,null>\",\n  \"windCodeLocal\": \"<string,null>\",\n  \"codesOther\": \"<string,null>\",\n  \"firePathwaysEnforced\": \"<boolean,null>\",\n  \"electricalEngineerStampRequired\": \"<boolean,null>\",\n  \"structuralStampRequired\": \"<boolean,null>\",\n  \"climateZone\": \"<string,null>\",\n  \"ashraeMinTempC\": \"<number,null-double>\",\n  \"ashraeMaxTempC\": \"<number,null-double>\",\n  \"ashraeMinTempF\": \"<number,null-double>\",\n  \"ashraeMaxTempF\": \"<number,null-double>\",\n  \"centroidLatitude\": \"<number,null-double>\",\n  \"centroidLongitude\": \"<number,null-double>\",\n  \"landAreaSqMiles\": \"<number,null-double>\",\n  \"specialZones\": \"<array,null>\",\n  \"buildingDeptHours\": \"<array,null>\",\n  \"tigerYear\": \"<integer,null>\",\n  \"funcstat\": \"<string,null>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"custom\": {\n    \"laborum_e6e\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-9b4ee64b-ec9a-461c-a4ea-188a4122f0a9"
+                },
+                {
+                  "id": "79694b47-ca97-485e-9552-51c700663cbd",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"est35\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-79694b47-ca97-485e-9552-51c700663cbd"
+                },
+                {
+                  "id": "65e639fb-d14b-4ad5-9d1a-871e2f5cc1d9",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"est35\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-65e639fb-d14b-4ad5-9d1a-871e2f5cc1d9"
+                },
+                {
+                  "id": "e5289040-3801-4f7f-8ae8-cc36cb1e21ff",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"est35\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-e5289040-3801-4f7f-8ae8-cc36cb1e21ff"
+                },
+                {
+                  "id": "e85f41ae-59e7-48b2-a786-5a1b422b98ea",
+                  "name": "Bad gateway \u2014 an upstream service request failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"est35\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/ahjs/:ahj_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ahjs",
+                        ":ahj_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "ahj_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:14:23.000Z",
+                  "updatedAt": "2026-10-22T02:14:23.000Z",
+                  "uid": "35240-e85f41ae-59e7-48b2-a786-5a1b422b98ea"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:22.000Z",
+              "updatedAt": "2026-10-22T02:14:22.000Z",
+              "uid": "35240-aed6d93f-1cdb-4c17-bf4d-c6e65964e103"
+            }
+          ],
+          "id": "619f4582-ca75-4cdf-893b-7ef290c31a50",
+          "createdAt": "2026-10-22T02:14:22.000Z",
+          "updatedAt": "2026-10-22T02:14:22.000Z",
+          "uid": "35240-619f4582-ca75-4cdf-893b-7ef290c31a50"
+        },
+        {
+          "name": "List AHJs",
+          "id": "5902c69c-26c1-4415-b735-31d0f326dab1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
             "url": {
+              "raw": "{{baseUrl}}/ahjs?page_size=20&page=1&q=<string>&state=<string>&type=TRIBAL&country=US&order_by=asc&lat=<double>&lng=<double>",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "ahjs"
               ],
-              "host": [
-                "{{baseUrl}}"
-              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "Number of items per page (max 100)",
                   "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
+                  "value": "20"
                 },
                 {
-                  "disabled": false,
+                  "description": "Page number (1-based)",
                   "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
+                  "value": "1"
                 },
                 {
-                  "disabled": false,
+                  "description": "Search by AHJ name (case-insensitive). If exactly two characters, also matches the state code.",
                   "key": "q",
-                  "value": "<string>",
-                  "description": "Search by AHJ name (case-insensitive). If exactly two characters, also matches the state code."
+                  "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter by two-letter state code (e.g. \"CA\").",
                   "key": "state",
-                  "value": "<string>",
-                  "description": "Filter by two-letter state code (e.g. \"CA\")."
+                  "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter by jurisdiction type.",
                   "key": "type",
-                  "value": "<string>",
-                  "description": "Filter by jurisdiction type."
+                  "value": "TRIBAL"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter by country code.",
                   "key": "country",
-                  "value": "US",
-                  "description": "Filter by country code."
+                  "value": "US"
                 },
                 {
-                  "disabled": false,
+                  "description": "Sort order for results",
                   "key": "order_by",
-                  "value": "asc",
-                  "description": "Sort order for results"
+                  "value": "asc"
                 },
                 {
-                  "disabled": false,
+                  "description": "Latitude in decimal degrees. Must be used together with `lng`.",
                   "key": "lat",
-                  "value": "<double>",
-                  "description": "Latitude in decimal degrees. Must be used together with `lng`."
+                  "value": "<double>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Longitude in decimal degrees. Must be used together with `lat`.",
                   "key": "lng",
-                  "value": "<double>",
-                  "description": "Longitude in decimal degrees. Must be used together with `lat`."
+                  "value": "<double>"
                 }
-              ],
-              "variable": []
+              ]
             },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
+            "description": "Retrieve a paginated list of Authorities Having Jurisdiction (AHJs).\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Sorting by name (`order_by`, default: asc)\n- Search by name or state code (`q`) \u2014 when `q` is exactly two characters it also matches the two-letter state code\n- Filter by `state` (two-letter code), `type`, and `country` (default: `US`)\n- Geo mode: pass `lat`+`lng` (together) to return every AHJ whose boundary covers the point \u2014 e.g. city, county, and state \u2014 ordered most-specific-first. Name/state/type filters are ignored, and an empty array is returned if none cover the point.\n\nOnly active jurisdictions are returned. AHJs are seeded globally from the US Census TIGER catalog plus per-company private records. Most fields are read-only; only custom fields can be updated (see PATCH /ahjs/{ahj_id})."
           },
           "response": [
             {
-              "id": "2af0088e-e7cf-4273-8eac-67e5dfa5fb57",
+              "id": "f12bc1b3-3146-4be6-96af-4273c11a1942",
               "name": "List of AHJs",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "ahjs"
-                  ],
+                  "raw": "{{baseUrl}}/ahjs?page_size=20&page=1&q=<string>&state=<string>&type=TRIBAL&country=US&order_by=asc&lat=<double>&lng=<double>",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "ahjs"
+                  ],
                   "query": [
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Search by AHJ name (case-insensitive). If exactly two characters, also matches the state code.",
                       "key": "q",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by two-letter state code (e.g. \"CA\").",
                       "key": "state",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by jurisdiction type.",
                       "key": "type",
-                      "value": "COUNTY"
+                      "value": "TRIBAL"
                     },
                     {
+                      "description": "Filter by country code.",
                       "key": "country",
                       "value": "US"
                     },
                     {
+                      "description": "Sort order for results",
                       "key": "order_by",
                       "value": "asc"
                     },
                     {
+                      "description": "Latitude in decimal degrees. Must be used together with `lng`.",
                       "key": "lat",
                       "value": "<double>"
                     },
                     {
+                      "description": "Longitude in decimal degrees. Must be used together with `lat`.",
                       "key": "lng",
                       "value": "<double>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 7066,\n    \"uuid\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"COUNTY\",\n    \"country\": \"string\",\n    \"state\": \"string\",\n    \"stateName\": \"string\",\n    \"parentCounty\": \"string\",\n    \"geoId\": \"string\",\n    \"ahjRegistryCode\": \"string\",\n    \"isActive\": true,\n    \"isPrivate\": false,\n    \"pointOfContact\": \"string\",\n    \"submissionMethod\": \"string\",\n    \"emails\": [\n      \"OiY5-8lsePZloZ@Z.smu\",\n      \"0cH@IFqwMrKTsVOxfKXtBG.lo\"\n    ],\n    \"phones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": \"string\",\n    \"website\": \"string\",\n    \"portal\": \"string\",\n    \"turnaround\": 4595,\n    \"fees\": \"string\",\n    \"notes\": \"string\",\n    \"permitSubmissionNotes\": \"string\",\n    \"buildingCodeModel\": \"string\",\n    \"buildingCodeLocal\": \"string\",\n    \"residentialCodeModel\": \"string\",\n    \"residentialCodeLocal\": \"string\",\n    \"fireCodeModel\": \"string\",\n    \"fireCodeLocal\": \"string\",\n    \"electricalCodeModel\": \"string\",\n    \"electricalCodeLocal\": \"string\",\n    \"windCodeModel\": \"string\",\n    \"windCodeLocal\": \"string\",\n    \"codesOther\": \"string\",\n    \"firePathwaysEnforced\": false,\n    \"electricalEngineerStampRequired\": false,\n    \"structuralStampRequired\": true,\n    \"climateZone\": \"string\",\n    \"ashraeMinTempC\": 4342.411439451628,\n    \"ashraeMaxTempC\": 9347.627456391147,\n    \"ashraeMinTempF\": 9409.534539238204,\n    \"ashraeMaxTempF\": 7133.12615743072,\n    \"centroidLatitude\": 4952.67828604445,\n    \"centroidLongitude\": 7801.67393565689,\n    \"landAreaSqMiles\": 7608.94526933829,\n    \"specialZones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"buildingDeptHours\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tigerYear\": 4188,\n    \"funcstat\": \"string\",\n    \"createdAt\": \"1999-12-23T05:54:12.680Z\",\n    \"updatedAt\": \"1986-06-07T20:24:17.618Z\",\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  {\n    \"id\": 1210,\n    \"uuid\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"STATE\",\n    \"country\": \"string\",\n    \"state\": \"string\",\n    \"stateName\": \"string\",\n    \"parentCounty\": \"string\",\n    \"geoId\": \"string\",\n    \"ahjRegistryCode\": \"string\",\n    \"isActive\": false,\n    \"isPrivate\": false,\n    \"pointOfContact\": \"string\",\n    \"submissionMethod\": \"string\",\n    \"emails\": [\n      \"mfG4@DBlOpfwuFDWsxNn.mv\",\n      \"pd-rhqK5xT@qJfuNHtkmEeYfOdVjCH.vjfq\"\n    ],\n    \"phones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": \"string\",\n    \"website\": \"string\",\n    \"portal\": \"string\",\n    \"turnaround\": 7662,\n    \"fees\": \"string\",\n    \"notes\": \"string\",\n    \"permitSubmissionNotes\": \"string\",\n    \"buildingCodeModel\": \"string\",\n    \"buildingCodeLocal\": \"string\",\n    \"residentialCodeModel\": \"string\",\n    \"residentialCodeLocal\": \"string\",\n    \"fireCodeModel\": \"string\",\n    \"fireCodeLocal\": \"string\",\n    \"electricalCodeModel\": \"string\",\n    \"electricalCodeLocal\": \"string\",\n    \"windCodeModel\": \"string\",\n    \"windCodeLocal\": \"string\",\n    \"codesOther\": \"string\",\n    \"firePathwaysEnforced\": false,\n    \"electricalEngineerStampRequired\": true,\n    \"structuralStampRequired\": false,\n    \"climateZone\": \"string\",\n    \"ashraeMinTempC\": 4874.584304038854,\n    \"ashraeMaxTempC\": 4914.3700293654965,\n    \"ashraeMinTempF\": 9206.874895330118,\n    \"ashraeMaxTempF\": 9754.019068592368,\n    \"centroidLatitude\": 2439.382439182346,\n    \"centroidLongitude\": 1641.938903596092,\n    \"landAreaSqMiles\": 7639.321019240477,\n    \"specialZones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"buildingDeptHours\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tigerYear\": 5052,\n    \"funcstat\": \"string\",\n    \"createdAt\": \"1978-01-27T07:59:32.964Z\",\n    \"updatedAt\": \"2007-07-05T14:40:46.894Z\",\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  }\n]",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"uuid\": \"<string,null>\",\n    \"name\": \"<string>\",\n    \"type\": \"COUNTY\",\n    \"country\": \"<string>\",\n    \"state\": \"<string,null>\",\n    \"stateName\": \"<string,null>\",\n    \"parentCounty\": \"<string,null>\",\n    \"geoId\": \"<string,null>\",\n    \"ahjRegistryCode\": \"<string,null>\",\n    \"isActive\": \"<boolean>\",\n    \"isPrivate\": \"<boolean,null>\",\n    \"pointOfContact\": \"<string,null>\",\n    \"submissionMethod\": \"<string,null>\",\n    \"emails\": [\n      \"<email>\",\n      \"<email>\"\n    ],\n    \"phones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"address\": \"<string,null>\",\n    \"website\": \"<string,null>\",\n    \"portal\": \"<string,null>\",\n    \"turnaround\": \"<integer,null>\",\n    \"fees\": \"<string,null>\",\n    \"notes\": \"<string,null>\",\n    \"permitSubmissionNotes\": \"<string,null>\",\n    \"buildingCodeModel\": \"<string,null>\",\n    \"buildingCodeLocal\": \"<string,null>\",\n    \"residentialCodeModel\": \"<string,null>\",\n    \"residentialCodeLocal\": \"<string,null>\",\n    \"fireCodeModel\": \"<string,null>\",\n    \"fireCodeLocal\": \"<string,null>\",\n    \"electricalCodeModel\": \"<string,null>\",\n    \"electricalCodeLocal\": \"<string,null>\",\n    \"windCodeModel\": \"<string,null>\",\n    \"windCodeLocal\": \"<string,null>\",\n    \"codesOther\": \"<string,null>\",\n    \"firePathwaysEnforced\": \"<boolean,null>\",\n    \"electricalEngineerStampRequired\": \"<boolean,null>\",\n    \"structuralStampRequired\": \"<boolean,null>\",\n    \"climateZone\": \"<string,null>\",\n    \"ashraeMinTempC\": \"<number,null-double>\",\n    \"ashraeMaxTempC\": \"<number,null-double>\",\n    \"ashraeMinTempF\": \"<number,null-double>\",\n    \"ashraeMaxTempF\": \"<number,null-double>\",\n    \"centroidLatitude\": \"<number,null-double>\",\n    \"centroidLongitude\": \"<number,null-double>\",\n    \"landAreaSqMiles\": \"<number,null-double>\",\n    \"specialZones\": \"<array,null>\",\n    \"buildingDeptHours\": \"<array,null>\",\n    \"tigerYear\": \"<integer,null>\",\n    \"funcstat\": \"<string,null>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"custom\": {\n      \"ut42\": {\n        \"description\": \"Any type\"\n      },\n      \"quis33\": {\n        \"description\": \"Any type\"\n      }\n    }\n  },\n  {\n    \"id\": \"<integer>\",\n    \"uuid\": \"<string,null>\",\n    \"name\": \"<string>\",\n    \"type\": \"CITY\",\n    \"country\": \"<string>\",\n    \"state\": \"<string,null>\",\n    \"stateName\": \"<string,null>\",\n    \"parentCounty\": \"<string,null>\",\n    \"geoId\": \"<string,null>\",\n    \"ahjRegistryCode\": \"<string,null>\",\n    \"isActive\": \"<boolean>\",\n    \"isPrivate\": \"<boolean,null>\",\n    \"pointOfContact\": \"<string,null>\",\n    \"submissionMethod\": \"<string,null>\",\n    \"emails\": [\n      \"<email>\",\n      \"<email>\"\n    ],\n    \"phones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"address\": \"<string,null>\",\n    \"website\": \"<string,null>\",\n    \"portal\": \"<string,null>\",\n    \"turnaround\": \"<integer,null>\",\n    \"fees\": \"<string,null>\",\n    \"notes\": \"<string,null>\",\n    \"permitSubmissionNotes\": \"<string,null>\",\n    \"buildingCodeModel\": \"<string,null>\",\n    \"buildingCodeLocal\": \"<string,null>\",\n    \"residentialCodeModel\": \"<string,null>\",\n    \"residentialCodeLocal\": \"<string,null>\",\n    \"fireCodeModel\": \"<string,null>\",\n    \"fireCodeLocal\": \"<string,null>\",\n    \"electricalCodeModel\": \"<string,null>\",\n    \"electricalCodeLocal\": \"<string,null>\",\n    \"windCodeModel\": \"<string,null>\",\n    \"windCodeLocal\": \"<string,null>\",\n    \"codesOther\": \"<string,null>\",\n    \"firePathwaysEnforced\": \"<boolean,null>\",\n    \"electricalEngineerStampRequired\": \"<boolean,null>\",\n    \"structuralStampRequired\": \"<boolean,null>\",\n    \"climateZone\": \"<string,null>\",\n    \"ashraeMinTempC\": \"<number,null-double>\",\n    \"ashraeMaxTempC\": \"<number,null-double>\",\n    \"ashraeMinTempF\": \"<number,null-double>\",\n    \"ashraeMaxTempF\": \"<number,null-double>\",\n    \"centroidLatitude\": \"<number,null-double>\",\n    \"centroidLongitude\": \"<number,null-double>\",\n    \"landAreaSqMiles\": \"<number,null-double>\",\n    \"specialZones\": \"<array,null>\",\n    \"buildingDeptHours\": \"<array,null>\",\n    \"tigerYear\": \"<integer,null>\",\n    \"funcstat\": \"<string,null>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"custom\": {\n      \"sed49\": {\n        \"description\": \"Any type\"\n      }\n    }\n  }\n]",
+              "createdAt": "2026-10-22T02:14:23.000Z",
+              "updatedAt": "2026-10-22T02:14:23.000Z",
+              "uid": "35240-f12bc1b3-3146-4be6-96af-4273c11a1942"
             },
             {
-              "id": "6e9e7885-c0c7-48f5-a379-4d7713dff689",
+              "id": "37584c4f-c232-42cf-b2de-c17efa30ad14",
               "name": "Invalid request",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "ahjs"
-                  ],
+                  "raw": "{{baseUrl}}/ahjs?page_size=20&page=1&q=<string>&state=<string>&type=TRIBAL&country=US&order_by=asc&lat=<double>&lng=<double>",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "ahjs"
+                  ],
                   "query": [
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Search by AHJ name (case-insensitive). If exactly two characters, also matches the state code.",
                       "key": "q",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by two-letter state code (e.g. \"CA\").",
                       "key": "state",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by jurisdiction type.",
                       "key": "type",
-                      "value": "COUNTY"
+                      "value": "TRIBAL"
                     },
                     {
+                      "description": "Filter by country code.",
                       "key": "country",
                       "value": "US"
                     },
                     {
+                      "description": "Sort order for results",
                       "key": "order_by",
                       "value": "asc"
                     },
                     {
+                      "description": "Latitude in decimal degrees. Must be used together with `lng`.",
                       "key": "lat",
                       "value": "<double>"
                     },
                     {
+                      "description": "Longitude in decimal degrees. Must be used together with `lat`.",
                       "key": "lng",
                       "value": "<double>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "49b789aa-bb41-41c4-a5ed-4ffde06dd753",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "q",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "state",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "type",
-                      "value": "COUNTY"
-                    },
-                    {
-                      "key": "country",
-                      "value": "US"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "lat",
-                      "value": "<double>"
-                    },
-                    {
-                      "key": "lng",
-                      "value": "<double>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ae7278b5-53b9-4100-8f59-adea02244ed9",
-              "name": "Bad gateway — an upstream service request failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "q",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "state",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "type",
-                      "value": "COUNTY"
-                    },
-                    {
-                      "key": "country",
-                      "value": "US"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "lat",
-                      "value": "<double>"
-                    },
-                    {
-                      "key": "lng",
-                      "value": "<double>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Gateway",
-              "code": 502,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "636b4a6a-3e51-4dab-ad3f-f0c9fdc9b527",
-          "name": "Get AHJ",
-          "request": {
-            "name": "Get AHJ",
-            "description": {
-              "content": "Retrieve a specific AHJ by ID, including catalog metadata and custom field values.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "ahjs",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "id",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "9b792769-bb53-4174-915f-4348fdb5c962",
-              "name": "AHJ details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
                   ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 2114,\n  \"uuid\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"TOWNSHIP\",\n  \"country\": \"string\",\n  \"state\": \"string\",\n  \"stateName\": \"string\",\n  \"parentCounty\": \"string\",\n  \"geoId\": \"string\",\n  \"ahjRegistryCode\": \"string\",\n  \"isActive\": false,\n  \"isPrivate\": false,\n  \"pointOfContact\": \"string\",\n  \"submissionMethod\": \"string\",\n  \"emails\": [\n    \"5g0X@bcpoj.ofpc\",\n    \"hxhh4b61RNyYo@XHseVigd.ek\"\n  ],\n  \"phones\": [\n    \"string\",\n    \"string\"\n  ],\n  \"address\": \"string\",\n  \"website\": \"string\",\n  \"portal\": \"string\",\n  \"turnaround\": 1038,\n  \"fees\": \"string\",\n  \"notes\": \"string\",\n  \"permitSubmissionNotes\": \"string\",\n  \"buildingCodeModel\": \"string\",\n  \"buildingCodeLocal\": \"string\",\n  \"residentialCodeModel\": \"string\",\n  \"residentialCodeLocal\": \"string\",\n  \"fireCodeModel\": \"string\",\n  \"fireCodeLocal\": \"string\",\n  \"electricalCodeModel\": \"string\",\n  \"electricalCodeLocal\": \"string\",\n  \"windCodeModel\": \"string\",\n  \"windCodeLocal\": \"string\",\n  \"codesOther\": \"string\",\n  \"firePathwaysEnforced\": true,\n  \"electricalEngineerStampRequired\": false,\n  \"structuralStampRequired\": false,\n  \"climateZone\": \"string\",\n  \"ashraeMinTempC\": 1937.0293487891943,\n  \"ashraeMaxTempC\": 2517.6629984634037,\n  \"ashraeMinTempF\": 3266.1259961511723,\n  \"ashraeMaxTempF\": 2000.2534124682136,\n  \"centroidLatitude\": 8640.0721330441,\n  \"centroidLongitude\": 7963.432222162391,\n  \"landAreaSqMiles\": 7993.339529475522,\n  \"specialZones\": [\n    \"string\",\n    \"string\"\n  ],\n  \"buildingDeptHours\": [\n    \"string\",\n    \"string\"\n  ],\n  \"tigerYear\": 4142,\n  \"funcstat\": \"string\",\n  \"createdAt\": \"1957-05-31T14:39:04.684Z\",\n  \"updatedAt\": \"1990-04-20T13:19:54.849Z\",\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "854dc356-2258-49f6-bb93-0ac7669faf22",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ea3687d3-803e-471d-a936-fca99c7d3438",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5293f0f5-304d-4b04-bf3f-6450127d627a",
-              "name": "Bad gateway — an upstream service request failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Gateway",
-              "code": 502,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a7890f5b-55bd-4ad8-8079-ecd90c8fb0eb",
-          "name": "Update AHJ",
-          "request": {
-            "name": "Update AHJ",
-            "description": {
-              "content": "Update custom property values on an AHJ. The body `custom` map is keyed by property `keyName` — fetch the available keys via `GET /properties?record_type=ahj`.\n\nBuilt-in AHJ fields (under `Community Data` in the UI) are read-only and cannot be updated through this endpoint.\n\nPass `null` to clear a value.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "ahjs",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "allow_new_options",
-                  "value": "false",
-                  "description": "Whether to allow creation of new dropdown options during record creation"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "id",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PATCH",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "a2899a94-0309-4cf3-9a5e-81d753e64f25",
-              "name": "AHJ updated successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 2114,\n  \"uuid\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"TOWNSHIP\",\n  \"country\": \"string\",\n  \"state\": \"string\",\n  \"stateName\": \"string\",\n  \"parentCounty\": \"string\",\n  \"geoId\": \"string\",\n  \"ahjRegistryCode\": \"string\",\n  \"isActive\": false,\n  \"isPrivate\": false,\n  \"pointOfContact\": \"string\",\n  \"submissionMethod\": \"string\",\n  \"emails\": [\n    \"5g0X@bcpoj.ofpc\",\n    \"hxhh4b61RNyYo@XHseVigd.ek\"\n  ],\n  \"phones\": [\n    \"string\",\n    \"string\"\n  ],\n  \"address\": \"string\",\n  \"website\": \"string\",\n  \"portal\": \"string\",\n  \"turnaround\": 1038,\n  \"fees\": \"string\",\n  \"notes\": \"string\",\n  \"permitSubmissionNotes\": \"string\",\n  \"buildingCodeModel\": \"string\",\n  \"buildingCodeLocal\": \"string\",\n  \"residentialCodeModel\": \"string\",\n  \"residentialCodeLocal\": \"string\",\n  \"fireCodeModel\": \"string\",\n  \"fireCodeLocal\": \"string\",\n  \"electricalCodeModel\": \"string\",\n  \"electricalCodeLocal\": \"string\",\n  \"windCodeModel\": \"string\",\n  \"windCodeLocal\": \"string\",\n  \"codesOther\": \"string\",\n  \"firePathwaysEnforced\": true,\n  \"electricalEngineerStampRequired\": false,\n  \"structuralStampRequired\": false,\n  \"climateZone\": \"string\",\n  \"ashraeMinTempC\": 1937.0293487891943,\n  \"ashraeMaxTempC\": 2517.6629984634037,\n  \"ashraeMinTempF\": 3266.1259961511723,\n  \"ashraeMaxTempF\": 2000.2534124682136,\n  \"centroidLatitude\": 8640.0721330441,\n  \"centroidLongitude\": 7963.432222162391,\n  \"landAreaSqMiles\": 7993.339529475522,\n  \"specialZones\": [\n    \"string\",\n    \"string\"\n  ],\n  \"buildingDeptHours\": [\n    \"string\",\n    \"string\"\n  ],\n  \"tigerYear\": 4142,\n  \"funcstat\": \"string\",\n  \"createdAt\": \"1957-05-31T14:39:04.684Z\",\n  \"updatedAt\": \"1990-04-20T13:19:54.849Z\",\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e955d3bf-1e9c-4d5e-91c8-5cff4862fa3e",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:14:23.000Z",
+              "updatedAt": "2026-10-22T02:14:23.000Z",
+              "uid": "35240-37584c4f-c232-42cf-b2de-c17efa30ad14"
             },
             {
-              "id": "7882f646-98ab-4fdc-a89c-7e732571cd00",
+              "id": "b6652054-6f76-4980-9a43-2da96574023b",
               "name": "Authentication failed",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                "url": {
+                  "raw": "{{baseUrl}}/ahjs?page_size=20&page=1&q=<string>&state=<string>&type=TRIBAL&country=US&order_by=asc&lat=<double>&lng=<double>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ahjs"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Search by AHJ name (case-insensitive). If exactly two characters, also matches the state code.",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by two-letter state code (e.g. \"CA\").",
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by jurisdiction type.",
+                      "key": "type",
+                      "value": "TRIBAL"
+                    },
+                    {
+                      "description": "Filter by country code.",
+                      "key": "country",
+                      "value": "US"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Latitude in decimal degrees. Must be used together with `lng`.",
+                      "key": "lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "description": "Longitude in decimal degrees. Must be used together with `lat`.",
+                      "key": "lng",
+                      "value": "<double>"
                     }
-                  }
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+              "createdAt": "2026-10-22T02:14:23.000Z",
+              "updatedAt": "2026-10-22T02:14:23.000Z",
+              "uid": "35240-b6652054-6f76-4980-9a43-2da96574023b"
             },
             {
-              "id": "a4c4bbf4-c03b-4475-83bc-89592c3e0b2f",
-              "name": "Resource not found",
+              "id": "6dcbee4f-103c-439f-8a25-e8de0dcfb69f",
+              "name": "Bad gateway \u2014 an upstream service request failed",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "debbbaf2-f9a0-4fda-b6e2-8559041c78e4",
-              "name": "Bad gateway — an upstream service request failed",
-              "originalRequest": {
                 "url": {
-                  "path": [
-                    "ahjs",
-                    ":id"
-                  ],
+                  "raw": "{{baseUrl}}/ahjs?page_size=20&page=1&q=<string>&state=<string>&type=TRIBAL&country=US&order_by=asc&lat=<double>&lng=<double>",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "ahjs"
+                  ],
                   "query": [
                     {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) "
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Search by AHJ name (case-insensitive). If exactly two characters, also matches the state code.",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by two-letter state code (e.g. \"CA\").",
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by jurisdiction type.",
+                      "key": "type",
+                      "value": "TRIBAL"
+                    },
+                    {
+                      "description": "Filter by country code.",
+                      "key": "country",
+                      "value": "US"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Latitude in decimal degrees. Must be used together with `lng`.",
+                      "key": "lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "description": "Longitude in decimal degrees. Must be used together with `lat`.",
+                      "key": "lng",
+                      "value": "<double>"
                     }
                   ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
               "status": "Bad Gateway",
               "code": 502,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"BAD_GATEWAY\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+              "createdAt": "2026-10-22T02:14:23.000Z",
+              "updatedAt": "2026-10-22T02:14:23.000Z",
+              "uid": "35240-6dcbee4f-103c-439f-8a25-e8de0dcfb69f"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:14:22.000Z",
+          "updatedAt": "2026-10-22T02:14:22.000Z",
+          "uid": "35240-5902c69c-26c1-4415-b735-31d0f326dab1"
         }
       ],
-      "event": []
+      "id": "5c030e4e-bd18-4a09-be2f-5d8534a499ea",
+      "createdAt": "2026-10-22T02:14:22.000Z",
+      "updatedAt": "2026-10-22T02:14:22.000Z",
+      "uid": "35240-5c030e4e-bd18-4a09-be2f-5d8534a499ea"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "6b4f5492-6f94-4b1b-b0d8-998a06788aaf",
-    "name": "API Key accounts ahJs API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

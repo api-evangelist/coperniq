@@ -1,2249 +1,2511 @@
 {
+  "info": {
+    "_postman_id": "38097f5e-79f6-41c5-a9c4-21da9153cc24",
+    "name": "Reference Notes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:15:41.000Z",
+    "updatedAt": "2026-10-22T02:15:41.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-38097f5e-79f6-41c5-a9c4-21da9153cc24"
+  },
   "item": [
     {
-      "id": "a09e79bd-96a2-4aab-9f0d-3426e640225d",
-      "name": "notes",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "projects",
       "item": [
         {
-          "id": "ea3658b6-5aa4-475b-bb6c-d9a3817eb2d3",
-          "name": "List Project Notes",
-          "request": {
-            "name": "List Project Notes",
-            "description": {
-              "content": "Retrieve notes for a specific project\n\n**Note:** The `/projects/{projectId}/comments` path will continue to work until users are individually notified and migrated to the new naming.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "projects",
-                ":projectId",
-                "notes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "projectId",
-                  "description": "(Required) Project identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{project_id}",
+          "item": [
             {
-              "id": "33e87613-35d1-4685-acd9-dc42f84db38d",
-              "name": "List of notes",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+              "name": "notes",
+              "item": [
+                {
+                  "name": "List Project Notes",
+                  "id": "4c5862a0-10ad-448d-8cf6-129368663e4e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"notes\": [\n    {\n      \"id\": 7370,\n      \"note\": \"string\",\n      \"createdByUser\": {\n        \"id\": 8519,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"string\"\n      },\n      \"createdAt\": \"1958-06-06T03:21:00.137Z\"\n    },\n    {\n      \"id\": 6048,\n      \"note\": \"string\",\n      \"createdByUser\": {\n        \"id\": 5460,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"string\"\n      },\n      \"createdAt\": \"1947-12-24T02:25:55.103Z\"\n    }\n  ],\n  \"totalCount\": 1126\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b089d5a1-6741-406e-9b60-9bcf98efd2a0",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/projects/:project_id/notes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "projects",
+                        ":project_id",
+                        "notes"
+                      ],
+                      "variable": [
+                        {
+                          "id": "43adcf6b-7df4-4bf1-b3a2-04ad98d3039c",
+                          "key": "project_id",
+                          "value": "<integer>",
+                          "description": "(Required) Project identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve notes for a specific project\n\n**Note:** The `/projects/{project_id}/comments` path will continue to work until users are individually notified and migrated to the new naming."
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b4a79b51-5c50-402c-8519-e9780cd024a0",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
+                  "response": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "ef477f52-8219-4150-9f2e-9745d6ca3edd",
-          "name": "Create Project Note",
-          "request": {
-            "name": "Create Project Note",
-            "description": {
-              "content": "Create a new note on a project\n\n**Note:** The `/projects/{projectId}/comments` path will continue to work until users are notified and migrated to the new naming.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "projects",
-                ":projectId",
-                "notes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "projectId",
-                  "description": "(Required) Project identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "775be985-5c07-4f62-a180-193e79b26c9e",
-              "name": "Note created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 6353,\n  \"note\": \"string\",\n  \"createdAt\": \"2016-03-22T13:38:16.624Z\",\n  \"updatedAt\": \"1953-11-26T14:26:03.580Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a495de83-ba11-4e71-a322-ed5944bc1e08",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "dc94f662-3c53-40e9-a813-a1c26c2922db",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3e9f7460-ad03-4fb3-8c11-158d5b687872",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "5e2691a2-daee-4e87-b6ca-ed83b477823d",
-          "name": "List Opportunity Notes",
-          "request": {
-            "name": "List Opportunity Notes",
-            "description": {
-              "content": "Retrieve notes for a specific opportunity\n\n**Note:** The `/requests/{requestId}/comments` path will continue to work until users are notified and migrated to the new naming.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "opportunities",
-                ":opportunityId",
-                "notes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "opportunityId",
-                  "description": "(Required) Opportunity identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "7e77c11b-d99b-43ee-8a5c-7d9f3e1cca0a",
-              "name": "List of notes",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "opportunityId",
-                      "description": "(Required) Opportunity identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"notes\": [\n    {\n      \"id\": 7370,\n      \"note\": \"string\",\n      \"createdByUser\": {\n        \"id\": 8519,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"string\"\n      },\n      \"createdAt\": \"1958-06-06T03:21:00.137Z\"\n    },\n    {\n      \"id\": 6048,\n      \"note\": \"string\",\n      \"createdByUser\": {\n        \"id\": 5460,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"string\"\n      },\n      \"createdAt\": \"1947-12-24T02:25:55.103Z\"\n    }\n  ],\n  \"totalCount\": 1126\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "40327362-2fae-4fae-baa3-46f1bbba5cdc",
-          "name": "Create Opportunity Note",
-          "request": {
-            "name": "Create Opportunity Note",
-            "description": {
-              "content": "Add a new note on an opportunity\n\n**Note:** The `/requests/{requestId}/comments` path will continue to work until users are notified and migrated to the new naming.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "opportunities",
-                ":opportunityId",
-                "notes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "opportunityId",
-                  "description": "(Required) Opportunity identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "fe0f724e-3387-45a0-a0a2-1875bfcc09ca",
-              "name": "Note created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "opportunityId",
-                      "description": "(Required) Opportunity identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 6353,\n  \"note\": \"string\",\n  \"createdAt\": \"2016-03-22T13:38:16.624Z\",\n  \"updatedAt\": \"1953-11-26T14:26:03.580Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "41753952-e7f4-4777-ad56-047a710634aa",
-          "name": "List Account Notes",
-          "request": {
-            "name": "List Account Notes",
-            "description": {
-              "content": "Retrieve notes for a specific account\n\n**Note:** The `/clients/{clientId}/comments` path will continue to work until users are notified and migrated to the new naming.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId",
-                "notes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "27a76eed-037b-461f-a462-2794dd842bd9",
-              "name": "List of notes",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"notes\": [\n    {\n      \"id\": 7370,\n      \"note\": \"string\",\n      \"createdByUser\": {\n        \"id\": 8519,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"string\"\n      },\n      \"createdAt\": \"1958-06-06T03:21:00.137Z\"\n    },\n    {\n      \"id\": 6048,\n      \"note\": \"string\",\n      \"createdByUser\": {\n        \"id\": 5460,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"string\"\n      },\n      \"createdAt\": \"1947-12-24T02:25:55.103Z\"\n    }\n  ],\n  \"totalCount\": 1126\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a3433d05-bbf9-4381-8b1c-b4c07f5e01a5",
-          "name": "Create Account Note",
-          "request": {
-            "name": "Create Account Note",
-            "description": {
-              "content": "Add a new note on an account\n\n**Note:** The `/clients/{clientId}/comments` path will continue to work until users are notified and migrated to the new naming.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId",
-                "notes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "c7f0b4a4-db21-4c27-89ab-c84d3173b4db",
-              "name": "Note created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 6353,\n  \"note\": \"string\",\n  \"createdAt\": \"2016-03-22T13:38:16.624Z\",\n  \"updatedAt\": \"1953-11-26T14:26:03.580Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "688c04f5-e800-418f-8532-c074de277fc4",
-          "name": "List Work Order Notes",
-          "request": {
-            "name": "List Work Order Notes",
-            "description": {
-              "content": "Returns paginated notes (comments) for a specific work order, sorted by creation date descending (newest first).\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "work-orders",
-                ":workOrderId",
-                "notes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "workOrderId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "a65aaae0-1945-47ec-9bd6-dd604cb4c2e9",
-              "name": "Paginated list of notes",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
+                      "id": "6e550d0d-8cd7-458e-87c9-44c73c7d650b",
+                      "name": "List of notes",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"notes\": [\n    {\n      \"id\": \"<integer>\",\n      \"note\": \"<string>\",\n      \"createdByUser\": {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<string>\"\n      },\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"note\": \"<string>\",\n      \"createdByUser\": {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<string>\"\n      },\n      \"createdAt\": \"<dateTime>\"\n    }\n  ],\n  \"totalCount\": \"<integer>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-6e550d0d-8cd7-458e-87c9-44c73c7d650b"
                     },
                     {
-                      "key": "page_size",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"notes\": [\n    {\n      \"id\": 8461,\n      \"note\": \"string\",\n      \"createdAt\": \"1997-12-25T21:47:55.709Z\",\n      \"createdByUser\": {\n        \"id\": 3943,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"string\"\n      }\n    },\n    {\n      \"id\": 9443,\n      \"note\": \"string\",\n      \"createdAt\": \"1997-12-31T23:29:43.778Z\",\n      \"createdByUser\": {\n        \"id\": 8137,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"string\"\n      }\n    }\n  ],\n  \"totalCount\": 1759\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "32b51bb4-16f2-4658-b1c5-7f3684d769b7",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
+                      "id": "d88aaa51-4295-45a5-8c90-921fd1ba7b42",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-d88aaa51-4295-45a5-8c90-921fd1ba7b42"
                     },
                     {
-                      "key": "page_size",
-                      "value": "20"
+                      "id": "8751ff07-73ee-4f15-b0a5-779d4a8badad",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-8751ff07-73ee-4f15-b0a5-779d4a8badad"
                     }
                   ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-4c5862a0-10ad-448d-8cf6-129368663e4e"
                 },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "700be5dd-2b29-4a70-9635-b20fb5464f04",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "name": "Create Project Note",
+                  "id": "4f8575c7-d4e7-49a6-905b-757610810bc8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/projects/:project_id/notes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "projects",
+                        ":project_id",
+                        "notes"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1e7f9fc2-7780-47c4-814b-caff4b8aebbf",
+                          "key": "project_id",
+                          "value": "<integer>",
+                          "description": "(Required) Project identifier"
+                        }
+                      ]
+                    },
+                    "description": "Create a new note on a project\n\n**Note:** The `/projects/{project_id}/comments` path will continue to work until users are notified and migrated to the new naming."
+                  },
+                  "response": [
                     {
-                      "key": "page",
-                      "value": "1"
+                      "id": "41667f46-b0ed-4039-83a0-84ed412a5431",
+                      "name": "Note created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"note\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-41667f46-b0ed-4039-83a0-84ed412a5431"
                     },
                     {
-                      "key": "page_size",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e00ebbcc-cc30-4d34-8fea-bf6c3a877a68",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "1"
+                      "id": "2b31c181-088d-44b5-bbb4-15bce1f879e4",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-2b31c181-088d-44b5-bbb4-15bce1f879e4"
                     },
                     {
-                      "key": "page_size",
-                      "value": "20"
+                      "id": "98540d73-e0e5-4559-a6af-0b831b750341",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-98540d73-e0e5-4559-a6af-0b831b750341"
+                    },
+                    {
+                      "id": "a2b9aafb-1390-4da0-9b37-331b5d6b779e",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-a2b9aafb-1390-4da0-9b37-331b5d6b779e"
                     }
                   ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-4f8575c7-d4e7-49a6-905b-757610810bc8"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "18700591-3762-4672-9aee-818847d8327b",
+              "createdAt": "2026-10-22T02:15:42.000Z",
+              "updatedAt": "2026-10-22T02:15:42.000Z",
+              "uid": "35240-18700591-3762-4672-9aee-818847d8327b"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "65f17087-1595-4fab-b3d7-538379a7bc76",
-          "name": "Create Work Order Note",
-          "request": {
-            "name": "Create Work Order Note",
-            "description": {
-              "content": "Add a note (comment) to a specific work order.\n\nNotes are stored as internal comments linked to the work order. They trigger\nthe same notification and feed pipeline as comments created in the Coperniq UI.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "work-orders",
-                ":workOrderId",
-                "notes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "workOrderId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "6876e4a0-2386-4f56-b588-843827371ece",
-              "name": "Note created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 7243,\n  \"note\": \"string\",\n  \"createdAt\": \"1957-08-26T04:13:03.355Z\",\n  \"updatedAt\": \"1991-10-08T17:28:19.777Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4fa57360-fe4d-4776-9ecf-427f69df76a3",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7e48f3e2-9265-4e69-9cbc-07a419971e8c",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f994f08e-3949-4133-bf0c-0d0d629cbcb6",
-              "name": "API key valid but does not have access to this resource",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f4a4d031-cfba-4f03-bc20-3b75a57a1187",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0bdc628d-b770-4c59-aace-5487fd8cd9b6",
-              "name": "Rate limit exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "work-orders",
-                    ":workOrderId",
-                    "notes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "workOrderId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "74ae4afb-5961-45ea-9ad4-b433a9d80341",
-          "name": "Update Note",
-          "request": {
-            "name": "Update Note",
-            "description": {
-              "content": "Update an existing note. The note being updated must be authored by the connected user.\n\n**Note:** The following legacy paths will continue to work until users are notified and migrated to the new naming:\n- `/projects/{projectId}/comments/{commentId}`\n- `/requests/{requestId}/comments/{commentId}`\n- `/clients/{clientId}/comments/{commentId}`\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "notes",
-                ":noteId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "noteId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PATCH",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"body\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "40d47a38-0a7c-4569-abcc-b6367bb82252",
-              "name": "Note updated successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "notes",
-                    ":noteId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "noteId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 1392,\n  \"note\": \"string\",\n  \"createdAt\": \"1990-01-25T12:19:47.301Z\",\n  \"updatedAt\": \"1986-11-03T05:24:31.048Z\",\n  \"author\": {\n    \"id\": 203,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"string\",\n    \"phone\": \"string\",\n    \"avatarUrl\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5ff37e8d-d707-4943-810a-c4bdd729232e",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "notes",
-                    ":noteId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "noteId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0f78069b-bf41-4af1-ae82-9e86ef8e82b5",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "notes",
-                    ":noteId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "noteId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "488fbbb4-5875-4168-a619-7ef31231fc9c",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "notes",
-                    ":noteId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "noteId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"body\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "b1b5ca10-af13-4d5d-b337-a97a81ed53de",
-          "name": "Delete Note",
-          "request": {
-            "name": "Delete Note",
-            "description": {
-              "content": "Delete a note by its ID.\n\nIf the note has replies, it is soft-deleted — the text is replaced with \"This communication was deleted.\" and the thread is preserved. If the note has no replies, both the Communication and Comment records are hard-deleted.\n\nReturns `204 No Content` on success.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "notes",
-                ":noteId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "noteId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "619802ce-0c55-454c-a040-6d188928113e",
-              "name": "Successful response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "notes",
-                    ":noteId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "noteId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "fdbe17de-c674-45a2-82fc-aaf01dec35d3",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "notes",
-                    ":noteId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "noteId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "edbd9ce7-8850-4f41-a017-84acbb79b01e",
-              "name": "API key valid but does not have access to this resource",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "notes",
-                    ":noteId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "noteId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b272564a-8e69-4389-8d60-6884a56374f3",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "notes",
-                    ":noteId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "noteId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "161c0ab9-a2ba-4dee-b097-88073a448152",
+          "createdAt": "2026-10-22T02:15:42.000Z",
+          "updatedAt": "2026-10-22T02:15:42.000Z",
+          "uid": "35240-161c0ab9-a2ba-4dee-b097-88073a448152"
         }
       ],
-      "event": []
+      "id": "295bbcb4-1d84-40d0-b004-63d0d9114954",
+      "createdAt": "2026-10-22T02:15:42.000Z",
+      "updatedAt": "2026-10-22T02:15:42.000Z",
+      "uid": "35240-295bbcb4-1d84-40d0-b004-63d0d9114954"
+    },
+    {
+      "name": "opportunities",
+      "item": [
+        {
+          "name": "{opportunity_id}",
+          "item": [
+            {
+              "name": "notes",
+              "item": [
+                {
+                  "name": "List Opportunity Notes",
+                  "id": "c6ccbb97-73f6-4acb-9fbb-6c55676a4129",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/opportunities/:opportunity_id/notes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "opportunities",
+                        ":opportunity_id",
+                        "notes"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e66f2e69-0851-43d4-a75b-e7e1760a1169",
+                          "key": "opportunity_id",
+                          "value": "<integer>",
+                          "description": "(Required) Opportunity identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve notes for a specific opportunity\n\n**Note:** The `/requests/{request_id}/comments` path will continue to work until users are notified and migrated to the new naming."
+                  },
+                  "response": [
+                    {
+                      "id": "efe4b620-a9ba-4a09-b9ff-20380c803b5d",
+                      "name": "List of notes",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"notes\": [\n    {\n      \"id\": \"<integer>\",\n      \"note\": \"<string>\",\n      \"createdByUser\": {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<string>\"\n      },\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"note\": \"<string>\",\n      \"createdByUser\": {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<string>\"\n      },\n      \"createdAt\": \"<dateTime>\"\n    }\n  ],\n  \"totalCount\": \"<integer>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-efe4b620-a9ba-4a09-b9ff-20380c803b5d"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-c6ccbb97-73f6-4acb-9fbb-6c55676a4129"
+                },
+                {
+                  "name": "Create Opportunity Note",
+                  "id": "21667b26-10e4-45f3-b802-28aac6742bb8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/opportunities/:opportunity_id/notes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "opportunities",
+                        ":opportunity_id",
+                        "notes"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1191651c-4801-4ace-8d66-e11f4428905e",
+                          "key": "opportunity_id",
+                          "value": "<integer>",
+                          "description": "(Required) Opportunity identifier"
+                        }
+                      ]
+                    },
+                    "description": "Add a new note on an opportunity\n\n**Note:** The `/requests/{request_id}/comments` path will continue to work until users are notified and migrated to the new naming."
+                  },
+                  "response": [
+                    {
+                      "id": "1d6a12af-919f-461d-b601-73a438fc2fc8",
+                      "name": "Note created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"note\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-1d6a12af-919f-461d-b601-73a438fc2fc8"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-21667b26-10e4-45f3-b802-28aac6742bb8"
+                }
+              ],
+              "id": "dfeb4e53-5059-4261-8d54-b1e40fba26f8",
+              "createdAt": "2026-10-22T02:15:42.000Z",
+              "updatedAt": "2026-10-22T02:15:42.000Z",
+              "uid": "35240-dfeb4e53-5059-4261-8d54-b1e40fba26f8"
+            }
+          ],
+          "id": "d09abca0-8ce8-4dba-b8fd-0faddb5b3659",
+          "createdAt": "2026-10-22T02:15:42.000Z",
+          "updatedAt": "2026-10-22T02:15:42.000Z",
+          "uid": "35240-d09abca0-8ce8-4dba-b8fd-0faddb5b3659"
+        }
+      ],
+      "id": "c06b8737-e52d-4e0f-841d-480eb41cd2be",
+      "createdAt": "2026-10-22T02:15:42.000Z",
+      "updatedAt": "2026-10-22T02:15:42.000Z",
+      "uid": "35240-c06b8737-e52d-4e0f-841d-480eb41cd2be"
+    },
+    {
+      "name": "accounts",
+      "item": [
+        {
+          "name": "{account_id}",
+          "item": [
+            {
+              "name": "notes",
+              "item": [
+                {
+                  "name": "List Account Notes",
+                  "id": "9fbb0d60-52b9-454b-b5e2-ec7d4c939caa",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id/notes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id",
+                        "notes"
+                      ],
+                      "variable": [
+                        {
+                          "id": "15d26ad4-1c16-4d23-b04f-a3b100d26c28",
+                          "key": "account_id",
+                          "value": "<integer>",
+                          "description": "(Required) Account identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve notes for a specific account\n\n**Note:** The `/clients/{client_id}/comments` path will continue to work until users are notified and migrated to the new naming."
+                  },
+                  "response": [
+                    {
+                      "id": "7770073b-e2a5-4259-94a1-7cbdb4e04582",
+                      "name": "List of notes",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"notes\": [\n    {\n      \"id\": \"<integer>\",\n      \"note\": \"<string>\",\n      \"createdByUser\": {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<string>\"\n      },\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"note\": \"<string>\",\n      \"createdByUser\": {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<string>\"\n      },\n      \"createdAt\": \"<dateTime>\"\n    }\n  ],\n  \"totalCount\": \"<integer>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-7770073b-e2a5-4259-94a1-7cbdb4e04582"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-9fbb0d60-52b9-454b-b5e2-ec7d4c939caa"
+                },
+                {
+                  "name": "Create Account Note",
+                  "id": "93513e29-e3bb-4006-b5ac-22ae7cfd750f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id/notes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id",
+                        "notes"
+                      ],
+                      "variable": [
+                        {
+                          "id": "88b2d726-6f51-42c5-8305-5001e3aa208d",
+                          "key": "account_id",
+                          "value": "<integer>",
+                          "description": "(Required) Account identifier"
+                        }
+                      ]
+                    },
+                    "description": "Add a new note on an account\n\n**Note:** The `/clients/{client_id}/comments` path will continue to work until users are notified and migrated to the new naming."
+                  },
+                  "response": [
+                    {
+                      "id": "14b7f391-2590-45e9-bc48-e45188cca2f3",
+                      "name": "Note created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"note\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-14b7f391-2590-45e9-bc48-e45188cca2f3"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-93513e29-e3bb-4006-b5ac-22ae7cfd750f"
+                }
+              ],
+              "id": "bc2f8f26-3227-411a-9e2a-47eed9746284",
+              "createdAt": "2026-10-22T02:15:42.000Z",
+              "updatedAt": "2026-10-22T02:15:42.000Z",
+              "uid": "35240-bc2f8f26-3227-411a-9e2a-47eed9746284"
+            }
+          ],
+          "id": "0923c3aa-b29a-400d-962e-bfae216c502f",
+          "createdAt": "2026-10-22T02:15:42.000Z",
+          "updatedAt": "2026-10-22T02:15:42.000Z",
+          "uid": "35240-0923c3aa-b29a-400d-962e-bfae216c502f"
+        }
+      ],
+      "id": "f3110a44-1b3b-4c65-9e9a-9e7a3dde69f4",
+      "createdAt": "2026-10-22T02:15:42.000Z",
+      "updatedAt": "2026-10-22T02:15:42.000Z",
+      "uid": "35240-f3110a44-1b3b-4c65-9e9a-9e7a3dde69f4"
+    },
+    {
+      "name": "work-orders",
+      "item": [
+        {
+          "name": "{work_order_id}",
+          "item": [
+            {
+              "name": "notes",
+              "item": [
+                {
+                  "name": "List Work Order Notes",
+                  "id": "9098dc14-efe1-4fd4-8187-f849107c28c7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/work-orders/:work_order_id/notes?page=1&page_size=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "work-orders",
+                        ":work_order_id",
+                        "notes"
+                      ],
+                      "query": [
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "5e31c3e1-c24e-407d-aaf4-20dad066ab70",
+                          "key": "work_order_id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Returns paginated notes (comments) for a specific work order, sorted by creation date descending (newest first)."
+                  },
+                  "response": [
+                    {
+                      "id": "ff07fba2-6b6d-4a77-a98a-d9fd4ed0488e",
+                      "name": "Paginated list of notes",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes?page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "query": [
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"notes\": [\n    {\n      \"id\": \"<integer>\",\n      \"note\": \"<string,null>\",\n      \"createdAt\": \"<dateTime>\",\n      \"createdByUser\": {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string,null>\",\n        \"lastName\": \"<string,null>\",\n        \"email\": \"<string,null>\"\n      }\n    },\n    {\n      \"id\": \"<integer>\",\n      \"note\": \"<string,null>\",\n      \"createdAt\": \"<dateTime>\",\n      \"createdByUser\": {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string,null>\",\n        \"lastName\": \"<string,null>\",\n        \"email\": \"<string,null>\"\n      }\n    }\n  ],\n  \"totalCount\": \"<integer>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-ff07fba2-6b6d-4a77-a98a-d9fd4ed0488e"
+                    },
+                    {
+                      "id": "8f7545af-caf5-495f-a6f0-5e022d1a2635",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes?page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "query": [
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-8f7545af-caf5-495f-a6f0-5e022d1a2635"
+                    },
+                    {
+                      "id": "85c06cde-7994-42d4-acac-dd4aa2f5a5a6",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes?page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "query": [
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-85c06cde-7994-42d4-acac-dd4aa2f5a5a6"
+                    },
+                    {
+                      "id": "8c523296-ddce-4cee-a28c-782cb6e62f33",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes?page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "query": [
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-8c523296-ddce-4cee-a28c-782cb6e62f33"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-9098dc14-efe1-4fd4-8187-f849107c28c7"
+                },
+                {
+                  "name": "Create Work Order Note",
+                  "id": "e26f468f-cb05-4dcf-aa86-c84f4488dadb",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/work-orders/:work_order_id/notes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "work-orders",
+                        ":work_order_id",
+                        "notes"
+                      ],
+                      "variable": [
+                        {
+                          "id": "fc7500b2-ed12-472d-84b4-e3f23eab0c4f",
+                          "key": "work_order_id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Add a note (comment) to a specific work order.\n\nNotes are stored as internal comments linked to the work order. They trigger\nthe same notification and feed pipeline as comments created in the Coperniq UI."
+                  },
+                  "response": [
+                    {
+                      "id": "3a119639-9b64-41d2-874e-1ca50a58ba26",
+                      "name": "Note created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"note\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-3a119639-9b64-41d2-874e-1ca50a58ba26"
+                    },
+                    {
+                      "id": "1f96c685-1e8d-4f9a-8045-9cd095b2dca1",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-1f96c685-1e8d-4f9a-8045-9cd095b2dca1"
+                    },
+                    {
+                      "id": "fb74fddf-a13c-4520-ba59-1870c9ceaa80",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-fb74fddf-a13c-4520-ba59-1870c9ceaa80"
+                    },
+                    {
+                      "id": "a34f72df-e7fe-48db-9710-ca8c2cfbfad5",
+                      "name": "API key valid but does not have access to this resource",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-a34f72df-e7fe-48db-9710-ca8c2cfbfad5"
+                    },
+                    {
+                      "id": "a34b8ba5-e823-433a-bfd2-adb76e143a05",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-a34b8ba5-e823-433a-bfd2-adb76e143a05"
+                    },
+                    {
+                      "id": "3c495b25-6c50-4e2d-bdf5-552be6dde967",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"body\": \"<string>\",\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"replyToId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/notes",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "notes"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"RATE_LIMIT_EXCEEDED\"\n}",
+                      "createdAt": "2026-10-22T02:15:42.000Z",
+                      "updatedAt": "2026-10-22T02:15:42.000Z",
+                      "uid": "35240-3c495b25-6c50-4e2d-bdf5-552be6dde967"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-e26f468f-cb05-4dcf-aa86-c84f4488dadb"
+                }
+              ],
+              "id": "b3175545-a8e3-4d32-891b-559f498367fe",
+              "createdAt": "2026-10-22T02:15:42.000Z",
+              "updatedAt": "2026-10-22T02:15:42.000Z",
+              "uid": "35240-b3175545-a8e3-4d32-891b-559f498367fe"
+            }
+          ],
+          "id": "b8155ae3-72a3-4faf-a6e0-a57765e621f3",
+          "createdAt": "2026-10-22T02:15:42.000Z",
+          "updatedAt": "2026-10-22T02:15:42.000Z",
+          "uid": "35240-b8155ae3-72a3-4faf-a6e0-a57765e621f3"
+        }
+      ],
+      "id": "8fd3f4c0-2c81-4d47-a8bf-71e2663bf26e",
+      "createdAt": "2026-10-22T02:15:42.000Z",
+      "updatedAt": "2026-10-22T02:15:42.000Z",
+      "uid": "35240-8fd3f4c0-2c81-4d47-a8bf-71e2663bf26e"
+    },
+    {
+      "name": "notes",
+      "item": [
+        {
+          "name": "{note_id}",
+          "item": [
+            {
+              "name": "Update Note",
+              "id": "205eb1df-ae3b-4eca-8fbc-72cb77921a2b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/notes/:note_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "notes",
+                    ":note_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "e98ececf-45d2-42b7-b901-6b0667e276e2",
+                      "key": "note_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update an existing note. The note being updated must be authored by the connected user.\n\n**Note:** The following legacy paths will continue to work until users are notified and migrated to the new naming:\n- `/projects/{projectId}/comments/{commentId}`\n- `/requests/{requestId}/comments/{commentId}`\n- `/clients/{clientId}/comments/{commentId}`"
+              },
+              "response": [
+                {
+                  "id": "b744e31e-a2b5-42f9-aaeb-a5c1121ff2b4",
+                  "name": "Note updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"body\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/notes/:note_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "notes",
+                        ":note_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "note_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"note\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"author\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"avatarUrl\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-b744e31e-a2b5-42f9-aaeb-a5c1121ff2b4"
+                },
+                {
+                  "id": "6e769d04-be26-43fb-a91d-9e8e7ca8d6b1",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"body\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/notes/:note_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "notes",
+                        ":note_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "note_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-6e769d04-be26-43fb-a91d-9e8e7ca8d6b1"
+                },
+                {
+                  "id": "c47adfb3-0f61-4a42-9adb-50addef88ea4",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"body\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/notes/:note_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "notes",
+                        ":note_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "note_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-c47adfb3-0f61-4a42-9adb-50addef88ea4"
+                },
+                {
+                  "id": "0b0d2f26-36ee-4892-a580-f735d5f12690",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"body\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/notes/:note_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "notes",
+                        ":note_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "note_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-0b0d2f26-36ee-4892-a580-f735d5f12690"
+                }
+              ],
+              "createdAt": "2026-10-22T02:15:42.000Z",
+              "updatedAt": "2026-10-22T02:15:42.000Z",
+              "uid": "35240-205eb1df-ae3b-4eca-8fbc-72cb77921a2b"
+            },
+            {
+              "name": "Delete Note",
+              "id": "71556c80-b596-4c1f-8f73-cce028b6239f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/notes/:note_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "notes",
+                    ":note_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "88704694-ead6-4672-80c8-bf684a628523",
+                      "key": "note_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Delete a note by its ID.\n\nIf the note has replies, it is soft-deleted \u2014 the text is replaced with \"This communication was deleted.\" and the thread is preserved. If the note has no replies, both the Communication and Comment records are hard-deleted.\n\nReturns `204 No Content` on success."
+              },
+              "response": [
+                {
+                  "id": "0798341a-e06c-4557-99b0-5d4c6afe5058",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/notes/:note_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "notes",
+                        ":note_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "note_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-0798341a-e06c-4557-99b0-5d4c6afe5058"
+                },
+                {
+                  "id": "a8a8fc0a-42fc-47e0-98ee-fd91431b46fa",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/notes/:note_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "notes",
+                        ":note_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "note_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-a8a8fc0a-42fc-47e0-98ee-fd91431b46fa"
+                },
+                {
+                  "id": "0da3fdbb-ea11-4f93-b746-c55234d6918b",
+                  "name": "API key valid but does not have access to this resource",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/notes/:note_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "notes",
+                        ":note_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "note_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-0da3fdbb-ea11-4f93-b746-c55234d6918b"
+                },
+                {
+                  "id": "fbbe8cf0-9f27-4b5b-9fef-5430e2e3f787",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/notes/:note_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "notes",
+                        ":note_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "note_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:42.000Z",
+                  "updatedAt": "2026-10-22T02:15:42.000Z",
+                  "uid": "35240-fbbe8cf0-9f27-4b5b-9fef-5430e2e3f787"
+                }
+              ],
+              "createdAt": "2026-10-22T02:15:42.000Z",
+              "updatedAt": "2026-10-22T02:15:42.000Z",
+              "uid": "35240-71556c80-b596-4c1f-8f73-cce028b6239f"
+            }
+          ],
+          "id": "1f445372-fe75-4419-8a2b-07e826209818",
+          "createdAt": "2026-10-22T02:15:42.000Z",
+          "updatedAt": "2026-10-22T02:15:42.000Z",
+          "uid": "35240-1f445372-fe75-4419-8a2b-07e826209818"
+        }
+      ],
+      "id": "22e9fc29-ab04-4529-9284-26c7e5ebb73c",
+      "createdAt": "2026-10-22T02:15:42.000Z",
+      "updatedAt": "2026-10-22T02:15:42.000Z",
+      "uid": "35240-22e9fc29-ab04-4529-9284-26c7e5ebb73c"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "ba31a72d-1139-4276-b087-1426015badb0",
-    "name": "API Key accounts notes API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

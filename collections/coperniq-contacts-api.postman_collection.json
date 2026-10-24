@@ -1,249 +1,1007 @@
 {
+  "info": {
+    "_postman_id": "3d80f232-c813-427d-b694-7a0067f85412",
+    "name": "Reference Contacts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:15:04.000Z",
+    "updatedAt": "2026-10-22T02:15:04.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3d80f232-c813-427d-b694-7a0067f85412"
+  },
   "item": [
     {
-      "id": "4ace032e-6b22-4a54-b733-6dffd9e3254d",
       "name": "contacts",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "e6f14a70-eed8-4492-87fc-fc610852ac9a",
-          "name": "List Contacts",
-          "request": {
-            "name": "List Contacts",
-            "description": {
-              "content": "Retrieve a paginated list of contacts.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`)\n- Search (`q`)\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "contacts"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+          "name": "{contact_id}",
+          "item": [
+            {
+              "name": "Get Contact",
+              "id": "4b48818c-337c-422e-8196-e7729dd1fe21",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts/:contact_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "269e182b-4274-45c3-a1f7-17f16297df1c",
+                      "key": "contact_id",
+                      "value": "<integer>",
+                      "description": "(Required) Contact identifier"
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific contact by ID"
+              },
+              "response": [
                 {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
+                  "id": "ecd34d39-a7d4-4e29-a13d-e92d3cb6281e",
+                  "name": "Contact details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"createdByUser\": {\n    \"id\": \"<integer>\"\n  },\n  \"accounts\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"projects\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"vendors\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-ecd34d39-a7d4-4e29-a13d-e92d3cb6281e"
                 },
                 {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
+                  "id": "66b66ad6-e6c6-4e56-a521-fc65fa014763",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-66b66ad6-e6c6-4e56-a521-fc65fa014763"
                 },
                 {
-                  "disabled": false,
-                  "key": "updated_after",
-                  "value": "<dateTime>",
-                  "description": "Filter items updated after this timestamp (ISO 8601)"
-                },
-                {
-                  "disabled": false,
-                  "key": "updated_before",
-                  "value": "<dateTime>",
-                  "description": "Filter items updated before this timestamp (ISO 8601)"
-                },
-                {
-                  "disabled": false,
-                  "key": "order_by",
-                  "value": "asc",
-                  "description": "Sort order for results"
-                },
-                {
-                  "disabled": false,
-                  "key": "q",
-                  "value": "<string>",
-                  "description": "Full text search across contact name, emails, and phones."
+                  "id": "e7cd1cff-f88a-4a10-8d42-8726e9632a3e",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-e7cd1cff-f88a-4a10-8d42-8726e9632a3e"
                 }
               ],
-              "variable": []
+              "createdAt": "2026-10-22T02:15:05.000Z",
+              "updatedAt": "2026-10-22T02:15:05.000Z",
+              "uid": "35240-4b48818c-337c-422e-8196-e7729dd1fe21"
             },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
+            {
+              "name": "Update Contact",
+              "id": "f921d099-cb34-4585-89a7-5033b5b30975",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
               },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/contacts/:contact_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6b23b9b4-7b78-40e2-a167-f1c437476c20",
+                      "key": "contact_id",
+                      "value": "<integer>",
+                      "description": "(Required) Contact identifier"
+                    }
+                  ]
+                },
+                "description": "Update an existing contact. Supports partial updates.\n\nUpdatable fields:\n- `name`: Contact's full name\n- `phones`: Array of contact phone numbers\n- `emails`: Array of contact email addresses\n- `title`: Contact title\n- `accountIds`: Array of account IDs to associate\n- `projectIds`: Array of project IDs to associate"
+              },
+              "response": [
+                {
+                  "id": "2ae9d764-93f5-4b4e-9530-04756509ece0",
+                  "name": "Contact updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"createdByUser\": {\n    \"id\": \"<integer>\"\n  },\n  \"accounts\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"projects\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"vendors\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-2ae9d764-93f5-4b4e-9530-04756509ece0"
+                },
+                {
+                  "id": "a3c6eaa0-3c3e-4358-aa78-d603a33dfece",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-a3c6eaa0-3c3e-4358-aa78-d603a33dfece"
+                },
+                {
+                  "id": "1907a878-14ee-4474-bd89-fdbf034a5553",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-1907a878-14ee-4474-bd89-fdbf034a5553"
+                },
+                {
+                  "id": "2c4ccfcd-7346-4d23-abbd-42cc4965ae64",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-2c4ccfcd-7346-4d23-abbd-42cc4965ae64"
+                }
+              ],
+              "createdAt": "2026-10-22T02:15:05.000Z",
+              "updatedAt": "2026-10-22T02:15:05.000Z",
+              "uid": "35240-f921d099-cb34-4585-89a7-5033b5b30975"
+            },
+            {
+              "name": "Delete Contact",
+              "id": "043a6828-7dbf-4cc3-9686-a47784baa664",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts/:contact_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a502dd3c-59d4-4dd1-9716-36b289668b96",
+                      "key": "contact_id",
+                      "value": "<integer>",
+                      "description": "(Required) Contact identifier"
+                    }
+                  ]
+                },
+                "description": "Delete a specific contact by ID"
+              },
+              "response": [
+                {
+                  "id": "121d2e02-15e5-4b09-afa2-4f793556f687",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-121d2e02-15e5-4b09-afa2-4f793556f687"
+                },
+                {
+                  "id": "5330058e-1868-4ea6-b30b-0c96990e0c3f",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-5330058e-1868-4ea6-b30b-0c96990e0c3f"
+                },
+                {
+                  "id": "df690f80-5926-4291-8fba-6ed8ed8ba4df",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:contact_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":contact_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "contact_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:05.000Z",
+                  "updatedAt": "2026-10-22T02:15:05.000Z",
+                  "uid": "35240-df690f80-5926-4291-8fba-6ed8ed8ba4df"
+                }
+              ],
+              "createdAt": "2026-10-22T02:15:05.000Z",
+              "updatedAt": "2026-10-22T02:15:05.000Z",
+              "uid": "35240-043a6828-7dbf-4cc3-9686-a47784baa664"
+            }
+          ],
+          "id": "7b7b6480-d03c-4986-9af2-04b86bc63a01",
+          "createdAt": "2026-10-22T02:15:05.000Z",
+          "updatedAt": "2026-10-22T02:15:05.000Z",
+          "uid": "35240-7b7b6480-d03c-4986-9af2-04b86bc63a01"
+        },
+        {
+          "name": "List Contacts",
+          "id": "884ee02d-b6d8-4160-97e3-d438452ba8e6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "b8443571-b99b-4edd-ba66-edb010dfd216",
-              "name": "List of contacts",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "updated_after",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "updated_before",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "q",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"name\": \"string\",\n    \"phones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"emails\": [\n      \"string\",\n      \"string\"\n    ],\n    \"title\": \"string\",\n    \"createdByUser\": {\n      \"id\": 4459\n    },\n    \"accounts\": [\n      {\n        \"id\": 5126,\n        \"title\": \"string\"\n      },\n      {\n        \"id\": 545,\n        \"title\": \"string\"\n      }\n    ],\n    \"projects\": [\n      {\n        \"id\": 6976,\n        \"title\": \"string\"\n      },\n      {\n        \"id\": 3284,\n        \"title\": \"string\"\n      }\n    ]\n  },\n  {\n    \"name\": \"string\",\n    \"phones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"emails\": [\n      \"string\",\n      \"string\"\n    ],\n    \"title\": \"string\",\n    \"createdByUser\": {\n      \"id\": 2824\n    },\n    \"accounts\": [\n      {\n        \"id\": 5795,\n        \"title\": \"string\"\n      },\n      {\n        \"id\": 5877,\n        \"title\": \"string\"\n      }\n    ],\n    \"projects\": [\n      {\n        \"id\": 8099,\n        \"title\": \"string\"\n      },\n      {\n        \"id\": 7228,\n        \"title\": \"string\"\n      }\n    ]\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "59c4469c-1568-4834-b392-56cad050932b",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "updated_after",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "updated_before",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "q",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a48a705e-7521-4463-a1f0-4a2d690dada1",
-          "name": "Create Contact",
-          "request": {
-            "name": "Create Contact",
-            "description": {
-              "content": "Create a new contact.\n\nRequired fields:\n- `name`: Contact's full name\n\nOptional fields:\n- `phones`: Array of contact phone numbers\n- `emails`: Array of contact email addresses\n- `title`: Contact title\n- `accountIds`: Array of account IDs to associate\n- `projectIds`: Array of project IDs to associate\n",
-              "type": "text/plain"
-            },
             "url": {
-              "path": [
-                "contacts"
-              ],
+              "raw": "{{baseUrl}}/contacts?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&q=<string>",
               "host": [
                 "{{baseUrl}}"
               ],
-              "query": [],
-              "variable": []
+              "path": [
+                "contacts"
+              ],
+              "query": [
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_after",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_before",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Sort order for results",
+                  "key": "order_by",
+                  "value": "asc"
+                },
+                {
+                  "description": "Full text search across contact name, emails, and phones.",
+                  "key": "q",
+                  "value": "<string>"
+                }
+              ]
             },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
+            "description": "Retrieve a paginated list of contacts.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`)\n- Search (`q`)"
+          },
+          "response": [
+            {
+              "id": "6cacc3b9-0fac-49b4-b84f-ec860c634d23",
+              "name": "List of contacts",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&q=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Full text search across contact name, emails, and phones.",
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ]
+                }
               },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"name\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"phones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"emails\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"title\": \"<string,null>\",\n    \"description\": \"<string,null>\",\n    \"createdByUser\": {\n      \"id\": \"<integer>\"\n    },\n    \"accounts\": [\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      }\n    ],\n    \"projects\": [\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      }\n    ],\n    \"opportunities\": [\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      }\n    ],\n    \"vendors\": [\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"name\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"phones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"emails\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"title\": \"<string,null>\",\n    \"description\": \"<string,null>\",\n    \"createdByUser\": {\n      \"id\": \"<integer>\"\n    },\n    \"accounts\": [\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      }\n    ],\n    \"projects\": [\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      }\n    ],\n    \"opportunities\": [\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      }\n    ],\n    \"vendors\": [\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"title\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "createdAt": "2026-10-22T02:15:05.000Z",
+              "updatedAt": "2026-10-22T02:15:05.000Z",
+              "uid": "35240-6cacc3b9-0fac-49b4-b84f-ec860c634d23"
+            },
+            {
+              "id": "89b9817e-396a-4741-a665-d258ae1a668e",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&q=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Full text search across contact name, emails, and phones.",
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "createdAt": "2026-10-22T02:15:05.000Z",
+              "updatedAt": "2026-10-22T02:15:05.000Z",
+              "uid": "35240-89b9817e-396a-4741-a665-d258ae1a668e"
+            }
+          ],
+          "createdAt": "2026-10-22T02:15:05.000Z",
+          "updatedAt": "2026-10-22T02:15:05.000Z",
+          "uid": "35240-884ee02d-b6d8-4160-97e3-d438452ba8e6"
+        },
+        {
+          "name": "Create Contact",
+          "id": "0b473122-e1d9-4e57-9732-d23fc1dffae4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -253,882 +1011,212 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": null,
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/contacts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            },
+            "description": "Create a new contact.\n\nRequired fields:\n- `name`: Contact's full name\n\nOptional fields:\n- `phones`: Array of contact phone numbers\n- `emails`: Array of contact email addresses\n- `title`: Contact title\n- `accountIds`: Array of account IDs to associate\n- `projectIds`: Array of project IDs to associate"
           },
           "response": [
             {
-              "id": "421bb911-e5e8-4a71-aa01-4fa39b9a3770",
+              "id": "90b9e9eb-8f30-4941-956c-140171548407",
               "name": "Contact created successfully",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/contacts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
                 }
               },
               "status": "Created",
               "code": 201,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"name\": \"string\",\n  \"phones\": [\n    \"string\",\n    \"string\"\n  ],\n  \"emails\": [\n    \"string\",\n    \"string\"\n  ],\n  \"title\": \"string\",\n  \"createdByUser\": {\n    \"id\": 7122\n  },\n  \"accounts\": [\n    {\n      \"id\": 1604,\n      \"title\": \"string\"\n    },\n    {\n      \"id\": 3594,\n      \"title\": \"string\"\n    }\n  ],\n  \"projects\": [\n    {\n      \"id\": 2420,\n      \"title\": \"string\"\n    },\n    {\n      \"id\": 7425,\n      \"title\": \"string\"\n    }\n  ]\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"createdByUser\": {\n    \"id\": \"<integer>\"\n  },\n  \"accounts\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"projects\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"vendors\": [\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"title\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T02:15:05.000Z",
+              "updatedAt": "2026-10-22T02:15:05.000Z",
+              "uid": "35240-90b9e9eb-8f30-4941-956c-140171548407"
             },
             {
-              "id": "b89cdc13-16a2-48bc-b88f-220c745dc692",
+              "id": "d5b99acc-7e41-431d-adfe-58141c97c445",
               "name": "Invalid request",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/contacts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:15:05.000Z",
+              "updatedAt": "2026-10-22T02:15:05.000Z",
+              "uid": "35240-d5b99acc-7e41-431d-adfe-58141c97c445"
             },
             {
-              "id": "6c994acc-ccac-4bea-803a-2a0c45da54b7",
+              "id": "8afba34f-1690-49ea-a51b-d3ab09f6ad02",
               "name": "Authentication failed",
               "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
+                  "raw": "{{baseUrl}}/contacts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "contacts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "createdAt": "2026-10-22T02:15:05.000Z",
+              "updatedAt": "2026-10-22T02:15:05.000Z",
+              "uid": "35240-8afba34f-1690-49ea-a51b-d3ab09f6ad02"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "528f0b0d-cfbd-4ae2-9e84-a88f32690b0a",
-          "name": "Get Contact",
-          "request": {
-            "name": "Get Contact",
-            "description": {
-              "content": "Retrieve a specific contact by ID",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "contacts",
-                ":contactId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "contactId",
-                  "description": "(Required) Contact identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "b5f5de3a-bfd7-42db-9f11-7a466e8edb82",
-              "name": "Contact details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"name\": \"string\",\n  \"phones\": [\n    \"string\",\n    \"string\"\n  ],\n  \"emails\": [\n    \"string\",\n    \"string\"\n  ],\n  \"title\": \"string\",\n  \"createdByUser\": {\n    \"id\": 7122\n  },\n  \"accounts\": [\n    {\n      \"id\": 1604,\n      \"title\": \"string\"\n    },\n    {\n      \"id\": 3594,\n      \"title\": \"string\"\n    }\n  ],\n  \"projects\": [\n    {\n      \"id\": 2420,\n      \"title\": \"string\"\n    },\n    {\n      \"id\": 7425,\n      \"title\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f53f8bb2-cbea-48ff-9f84-4684666f6291",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5bfa11c0-ad4c-443a-971a-6566433c4e4e",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "267e9b26-9524-4c1d-95ea-7c4bc116af5c",
-          "name": "Update Contact",
-          "request": {
-            "name": "Update Contact",
-            "description": {
-              "content": "Update an existing contact. Supports partial updates.\n\nUpdatable fields:\n- `name`: Contact's full name\n- `phones`: Array of contact phone numbers\n- `emails`: Array of contact email addresses\n- `title`: Contact title\n- `accountIds`: Array of account IDs to associate\n- `projectIds`: Array of project IDs to associate\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "contacts",
-                ":contactId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "contactId",
-                  "description": "(Required) Contact identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PATCH",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "527eac26-8315-4b5d-b7e8-409357361367",
-              "name": "Contact updated successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"name\": \"string\",\n  \"phones\": [\n    \"string\",\n    \"string\"\n  ],\n  \"emails\": [\n    \"string\",\n    \"string\"\n  ],\n  \"title\": \"string\",\n  \"createdByUser\": {\n    \"id\": 7122\n  },\n  \"accounts\": [\n    {\n      \"id\": 1604,\n      \"title\": \"string\"\n    },\n    {\n      \"id\": 3594,\n      \"title\": \"string\"\n    }\n  ],\n  \"projects\": [\n    {\n      \"id\": 2420,\n      \"title\": \"string\"\n    },\n    {\n      \"id\": 7425,\n      \"title\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0bf39a8c-4b1c-48d5-ba16-212afbdf6ff0",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "baccd6e1-475e-4e40-ae81-c13d9258a238",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "c8832acf-73f7-431b-90f4-5ee8f665d544",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"accountIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "3e8366de-06c1-47f3-aa2c-db4c9b6c4a11",
-          "name": "Delete Contact",
-          "request": {
-            "name": "Delete Contact",
-            "description": {
-              "content": "Delete a specific contact by ID",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "contacts",
-                ":contactId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "contactId",
-                  "description": "(Required) Contact identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "ccba121f-7689-40d2-b263-2a4334028b8c",
-              "name": "Successful response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "f42b5b2a-409b-45b4-b3da-10b1fd7e071e",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "04988ca4-cc89-4623-99a0-c9e64cbd52c2",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "contacts",
-                    ":contactId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "contactId",
-                      "description": "(Required) Contact identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:15:05.000Z",
+          "updatedAt": "2026-10-22T02:15:05.000Z",
+          "uid": "35240-0b473122-e1d9-4e57-9732-d23fc1dffae4"
         }
       ],
-      "event": []
+      "id": "79c54542-74c6-4356-95c3-866b37a3eb58",
+      "createdAt": "2026-10-22T02:15:05.000Z",
+      "updatedAt": "2026-10-22T02:15:05.000Z",
+      "uid": "35240-79c54542-74c6-4356-95c3-866b37a3eb58"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "bf85fbc8-ae1d-4e89-9dea-b877d6c96710",
-    "name": "API Key accounts contacts API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

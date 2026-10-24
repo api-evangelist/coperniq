@@ -1,0 +1,1144 @@
+{
+  "info": {
+    "_postman_id": "f621e8a8-e3ce-4c15-bf9f-7ed4db61758f",
+    "name": "Reference Utilities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:17:25.000Z",
+    "updatedAt": "2026-10-22T02:17:25.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-f621e8a8-e3ce-4c15-bf9f-7ed4db61758f"
+  },
+  "item": [
+    {
+      "name": "utilities",
+      "item": [
+        {
+          "name": "{utility_id}",
+          "item": [
+            {
+              "name": "Get Utility",
+              "id": "6f5aefca-00ec-4c45-a406-9ed4af0a2408",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/utilities/:utility_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "utilities",
+                    ":utility_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "986b5565-9140-4936-b83d-aaaa96d18add",
+                      "key": "utility_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific utility by ID, including catalog metadata and custom field values."
+              },
+              "response": [
+                {
+                  "id": "b1ad6716-35ab-4b56-8565-585a521dc71d",
+                  "name": "Utility details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"state\": \"<string,null>\",\n  \"stateName\": \"<string,null>\",\n  \"ownershipType\": \"MUNICIPAL\",\n  \"holdingCompany\": \"<string,null>\",\n  \"address\": \"<string,null>\",\n  \"phone\": \"<string,null>\",\n  \"website\": \"<string,null>\",\n  \"hoursOfOperation\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"custom\": {\n    \"labore3_8\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-b1ad6716-35ab-4b56-8565-585a521dc71d"
+                },
+                {
+                  "id": "c5242045-ac75-4e55-b2c2-f19855ed34d3",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-c5242045-ac75-4e55-b2c2-f19855ed34d3"
+                },
+                {
+                  "id": "af324bbd-6f51-4292-b2c1-26eb0245b216",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-af324bbd-6f51-4292-b2c1-26eb0245b216"
+                },
+                {
+                  "id": "5a2c95b0-945e-4b27-bcf8-a98545837196",
+                  "name": "Bad gateway \u2014 an upstream service request failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-5a2c95b0-945e-4b27-bcf8-a98545837196"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:26.000Z",
+              "updatedAt": "2026-10-22T02:17:26.000Z",
+              "uid": "35240-6f5aefca-00ec-4c45-a406-9ed4af0a2408"
+            },
+            {
+              "name": "Update Utility",
+              "id": "3afdd155-19ba-45e4-8474-9dd2439832d5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom\": {\n    \"voluptate8f\": {\n      \"description\": \"Any type\"\n    },\n    \"exercitationc_\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/utilities/:utility_id?allow_new_options=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "utilities",
+                    ":utility_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "cd6115b0-b0db-4784-b9ee-58b369ac934b",
+                      "key": "utility_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update custom property values on a utility. The body `custom` map is keyed by property `keyName` \u2014 fetch the available keys via `GET /properties?record_type=utility`.\n\nBuilt-in utility fields (name, state, ownershipType, holdingCompany, etc.) are read-only and cannot be updated through this endpoint.\n\nPass `null` to clear a value."
+              },
+              "response": [
+                {
+                  "id": "a3c8177f-c3eb-45a1-8ada-562df5667ac4",
+                  "name": "Utility updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"voluptate8f\": {\n      \"description\": \"Any type\"\n    },\n    \"exercitationc_\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"state\": \"<string,null>\",\n  \"stateName\": \"<string,null>\",\n  \"ownershipType\": \"MUNICIPAL\",\n  \"holdingCompany\": \"<string,null>\",\n  \"address\": \"<string,null>\",\n  \"phone\": \"<string,null>\",\n  \"website\": \"<string,null>\",\n  \"hoursOfOperation\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"custom\": {\n    \"labore3_8\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-a3c8177f-c3eb-45a1-8ada-562df5667ac4"
+                },
+                {
+                  "id": "905eb6c5-fd0b-4ae1-8461-8792fb3641dd",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"voluptate8f\": {\n      \"description\": \"Any type\"\n    },\n    \"exercitationc_\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-905eb6c5-fd0b-4ae1-8461-8792fb3641dd"
+                },
+                {
+                  "id": "059a2a2f-0b46-4257-b250-45c801afa360",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"voluptate8f\": {\n      \"description\": \"Any type\"\n    },\n    \"exercitationc_\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-059a2a2f-0b46-4257-b250-45c801afa360"
+                },
+                {
+                  "id": "07e23dd5-41f6-4e79-9355-29f17f6f9533",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"voluptate8f\": {\n      \"description\": \"Any type\"\n    },\n    \"exercitationc_\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-07e23dd5-41f6-4e79-9355-29f17f6f9533"
+                },
+                {
+                  "id": "8ce82a25-b6b3-48d3-8f48-3263028310c6",
+                  "name": "Bad gateway \u2014 an upstream service request failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"custom\": {\n    \"voluptate8f\": {\n      \"description\": \"Any type\"\n    },\n    \"exercitationc_\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/utilities/:utility_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "utilities",
+                        ":utility_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "utility_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:26.000Z",
+                  "updatedAt": "2026-10-22T02:17:26.000Z",
+                  "uid": "35240-8ce82a25-b6b3-48d3-8f48-3263028310c6"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:26.000Z",
+              "updatedAt": "2026-10-22T02:17:26.000Z",
+              "uid": "35240-3afdd155-19ba-45e4-8474-9dd2439832d5"
+            }
+          ],
+          "id": "d9f69568-e96f-435e-879c-0b9b29fe6773",
+          "createdAt": "2026-10-22T02:17:26.000Z",
+          "updatedAt": "2026-10-22T02:17:26.000Z",
+          "uid": "35240-d9f69568-e96f-435e-879c-0b9b29fe6773"
+        },
+        {
+          "name": "List Utilities",
+          "id": "a89475f6-6a9b-4628-8297-f1a65fde0fb1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/utilities?page_size=20&page=1&q=<string>&state=<string>&ownership_type=COOPERATIVE&order_by=asc&lat=<double>&lng=<double>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "utilities"
+              ],
+              "query": [
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Search by utility name, holding company, or state code (case-insensitive).",
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter by two-letter state code (e.g. \"CA\").",
+                  "key": "state",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter by ownership type.",
+                  "key": "ownership_type",
+                  "value": "COOPERATIVE"
+                },
+                {
+                  "description": "Sort order for results",
+                  "key": "order_by",
+                  "value": "asc"
+                },
+                {
+                  "description": "Latitude in decimal degrees. Must be used together with `lng`.",
+                  "key": "lat",
+                  "value": "<double>"
+                },
+                {
+                  "description": "Longitude in decimal degrees. Must be used together with `lat`.",
+                  "key": "lng",
+                  "value": "<double>"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of utilities.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Sorting by name (`order_by`, default: asc)\n- Search by name, holding company, or state code (`q`)\n- Filter by `state` (two-letter code) and `ownership_type`\n- Geo mode: pass `lat`+`lng` (together) to return every utility whose service territory covers the point, ordered most-specific-first. Name/state/ownership_type filters are ignored, and an empty array is returned if none cover the point.\n\nOnly active utilities are returned. Utilities are seeded globally from the HIFLD catalog. Most fields are read-only; only custom fields can be updated (see PATCH /utilities/{utility_id})."
+          },
+          "response": [
+            {
+              "id": "d1cc4438-0fcf-48d0-a61d-612dab473b4d",
+              "name": "List of utilities",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/utilities?page_size=20&page=1&q=<string>&state=<string>&ownership_type=COOPERATIVE&order_by=asc&lat=<double>&lng=<double>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "utilities"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Search by utility name, holding company, or state code (case-insensitive).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by two-letter state code (e.g. \"CA\").",
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by ownership type.",
+                      "key": "ownership_type",
+                      "value": "COOPERATIVE"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Latitude in decimal degrees. Must be used together with `lng`.",
+                      "key": "lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "description": "Longitude in decimal degrees. Must be used together with `lat`.",
+                      "key": "lng",
+                      "value": "<double>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"state\": \"<string,null>\",\n    \"stateName\": \"<string,null>\",\n    \"ownershipType\": \"MUNICIPAL_MARKETING_AUTHORITY\",\n    \"holdingCompany\": \"<string,null>\",\n    \"address\": \"<string,null>\",\n    \"phone\": \"<string,null>\",\n    \"website\": \"<string,null>\",\n    \"hoursOfOperation\": \"<string,null>\",\n    \"isActive\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"custom\": {\n      \"proidentf9c\": {\n        \"description\": \"Any type\"\n      },\n      \"irure_d2\": {\n        \"description\": \"Any type\"\n      }\n    }\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"state\": \"<string,null>\",\n    \"stateName\": \"<string,null>\",\n    \"ownershipType\": \"POLITICAL\",\n    \"holdingCompany\": \"<string,null>\",\n    \"address\": \"<string,null>\",\n    \"phone\": \"<string,null>\",\n    \"website\": \"<string,null>\",\n    \"hoursOfOperation\": \"<string,null>\",\n    \"isActive\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"custom\": {\n      \"Ut_c0\": {\n        \"description\": \"Any type\"\n      },\n      \"ullamco_3f\": {\n        \"description\": \"Any type\"\n      },\n      \"amet_5\": {\n        \"description\": \"Any type\"\n      }\n    }\n  }\n]",
+              "createdAt": "2026-10-22T02:17:26.000Z",
+              "updatedAt": "2026-10-22T02:17:26.000Z",
+              "uid": "35240-d1cc4438-0fcf-48d0-a61d-612dab473b4d"
+            },
+            {
+              "id": "8da460f4-957f-411c-bb57-4b9da5780602",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/utilities?page_size=20&page=1&q=<string>&state=<string>&ownership_type=COOPERATIVE&order_by=asc&lat=<double>&lng=<double>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "utilities"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Search by utility name, holding company, or state code (case-insensitive).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by two-letter state code (e.g. \"CA\").",
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by ownership type.",
+                      "key": "ownership_type",
+                      "value": "COOPERATIVE"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Latitude in decimal degrees. Must be used together with `lng`.",
+                      "key": "lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "description": "Longitude in decimal degrees. Must be used together with `lat`.",
+                      "key": "lng",
+                      "value": "<double>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:17:26.000Z",
+              "updatedAt": "2026-10-22T02:17:26.000Z",
+              "uid": "35240-8da460f4-957f-411c-bb57-4b9da5780602"
+            },
+            {
+              "id": "43a8cf03-3dea-4642-8c8f-a66fdc93b561",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/utilities?page_size=20&page=1&q=<string>&state=<string>&ownership_type=COOPERATIVE&order_by=asc&lat=<double>&lng=<double>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "utilities"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Search by utility name, holding company, or state code (case-insensitive).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by two-letter state code (e.g. \"CA\").",
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by ownership type.",
+                      "key": "ownership_type",
+                      "value": "COOPERATIVE"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Latitude in decimal degrees. Must be used together with `lng`.",
+                      "key": "lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "description": "Longitude in decimal degrees. Must be used together with `lat`.",
+                      "key": "lng",
+                      "value": "<double>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+              "createdAt": "2026-10-22T02:17:26.000Z",
+              "updatedAt": "2026-10-22T02:17:26.000Z",
+              "uid": "35240-43a8cf03-3dea-4642-8c8f-a66fdc93b561"
+            },
+            {
+              "id": "2a2fe4fd-9245-419d-b2a9-dbf532d57e1d",
+              "name": "Bad gateway \u2014 an upstream service request failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/utilities?page_size=20&page=1&q=<string>&state=<string>&ownership_type=COOPERATIVE&order_by=asc&lat=<double>&lng=<double>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "utilities"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Search by utility name, holding company, or state code (case-insensitive).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by two-letter state code (e.g. \"CA\").",
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by ownership type.",
+                      "key": "ownership_type",
+                      "value": "COOPERATIVE"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Latitude in decimal degrees. Must be used together with `lng`.",
+                      "key": "lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "description": "Longitude in decimal degrees. Must be used together with `lat`.",
+                      "key": "lng",
+                      "value": "<double>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+              "createdAt": "2026-10-22T02:17:26.000Z",
+              "updatedAt": "2026-10-22T02:17:26.000Z",
+              "uid": "35240-2a2fe4fd-9245-419d-b2a9-dbf532d57e1d"
+            }
+          ],
+          "createdAt": "2026-10-22T02:17:26.000Z",
+          "updatedAt": "2026-10-22T02:17:26.000Z",
+          "uid": "35240-a89475f6-6a9b-4628-8297-f1a65fde0fb1"
+        }
+      ],
+      "id": "5da2bbf3-c5a3-417a-a96b-6779791a40e6",
+      "createdAt": "2026-10-22T02:17:26.000Z",
+      "updatedAt": "2026-10-22T02:17:26.000Z",
+      "uid": "35240-5da2bbf3-c5a3-417a-a96b-6779791a40e6"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
+    }
+  ]
+}

@@ -1,1759 +1,1951 @@
 {
+  "info": {
+    "_postman_id": "ae474a5e-43d4-43f4-be00-f9864f0535f8",
+    "name": "Reference Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:14:15.000Z",
+    "updatedAt": "2026-10-22T02:14:16.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ae474a5e-43d4-43f4-be00-f9864f0535f8"
+  },
   "item": [
     {
-      "id": "94eb17de-14b7-4966-a0af-3b8e132fffdb",
       "name": "accounts",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "e7f7ff6a-c1ec-4052-843f-a92af723242b",
-          "name": "List Accounts",
-          "request": {
-            "name": "List Accounts",
-            "description": {
-              "content": "Retrieve a paginated list of accounts.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`, default: desc)\n- Field search (`title`, `address`, `primaryName`, `primaryPhone`, `primaryEmail`)\n- Full text search (`q`)\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+          "name": "search",
+          "item": [
+            {
+              "name": "Search Accounts",
+              "id": "ad7a7485-a4cf-4ce9-83b1-b1855b5af670",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/search?prop1=<string>&op1=contains&value1=<string>&logic=and&prop2=<string>&op2=nin&value2=<string>&page_size=20&page=1&order_by=asc&include_archived=false&include_contacts=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) First field to filter (standard or custom keyName)",
+                      "key": "prop1",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) Operator for prop1",
+                      "key": "op1",
+                      "value": "contains"
+                    },
+                    {
+                      "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)",
+                      "key": "value1",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Logical combination when both prop1 and prop2 are provided",
+                      "key": "logic",
+                      "value": "and"
+                    },
+                    {
+                      "description": "Optional second field to filter",
+                      "key": "prop2",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Operator for prop2",
+                      "key": "op2",
+                      "value": "nin"
+                    },
+                    {
+                      "description": "Value for prop2 (comma-separated values for in/nin or between)",
+                      "key": "value2",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                      "key": "include_contacts",
+                      "value": "false"
+                    }
+                  ]
+                },
+                "description": "Search accounts using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `status`, `title`, `city`, `type`, `accountId`, etc.) or a custom property key name.\n- Use the `property key` from your company settings.\n- Filter by parent account with `accountId`. `clientId` is accepted as a deprecated alias for backwards compatibility.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Numeric/datetime comparisons: `gt`, `gte`, `lt`, `lte`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)\n- Ranges: `between` (use `valueX` as `from,to`)\n- Existence: `exists` is not supported for custom properties due to performance limitations. Use `eq` or `neq` instead.\n\nValue formats:\n- `in`/`nin`: lists can be provided as:\n- Plain CSV: `value1=OPEN,ACTIVE`\n- Quoted CSV (to include commas inside a value): `value1=\"Last, First\",Other`\n- JSON array: `value1=[\"Last, First\",\"Other\"]`\n- `between`: `from,to` (e.g., `value1=2025-01-01,2025-12-31` or `value1=10,20`)\n- Dates should be ISO 8601 strings; numeric-like values on custom properties are matched against both numeric and text representations.\n\nExamples:\n- status equals ACTIVE: `?prop1=status&op1=eq&value1=ACTIVE`\n- custom id equals 1234: `?prop1=legacy_tool_project_id&op1=eq&value1=1234`\n- title contains \"Solar\": `?prop1=name&op1=contains&value1=Solar`\n- status IN (ACTIVE, ON_HOLD) AND city = Austin: `?prop1=status&op1=in&value1=ACTIVE,ON_HOLD&logic=and&prop2=city&op2=eq&value2=Austin`\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated."
+              },
+              "response": [
                 {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
+                  "id": "90e2a629-6aa9-4fda-8968-507676bf6775",
+                  "name": "List of accounts matching filters",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/search?prop1=<string>&op1=contains&value1=<string>&logic=and&prop2=<string>&op2=nin&value2=<string>&page_size=20&page=1&order_by=asc&include_archived=false&include_contacts=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) First field to filter (standard or custom keyName)",
+                          "key": "prop1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Operator for prop1",
+                          "key": "op1",
+                          "value": "contains"
+                        },
+                        {
+                          "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)",
+                          "key": "value1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Logical combination when both prop1 and prop2 are provided",
+                          "key": "logic",
+                          "value": "and"
+                        },
+                        {
+                          "description": "Optional second field to filter",
+                          "key": "prop2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Operator for prop2",
+                          "key": "op2",
+                          "value": "nin"
+                        },
+                        {
+                          "description": "Value for prop2 (comma-separated values for in/nin or between)",
+                          "key": "value2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Sort order for results",
+                          "key": "order_by",
+                          "value": "asc"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"address\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isActive\": \"<boolean>\",\n    \"primaryEmail\": \"<string,null-email>\",\n    \"primaryPhone\": \"<string,null>\",\n    \"number\": \"<integer>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\",\n      \"email\": \"<string,null-email>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"updatedBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\",\n      \"email\": \"<string,null-email>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"custom\": {\n      \"ind4f\": {\n        \"description\": \"Any type\"\n      }\n    },\n    \"accountType\": \"COMMERCIAL\",\n    \"contacts\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"title\": \"<string,null>\",\n        \"description\": \"<string,null>\",\n        \"emails\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"phones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isPrimary\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"title\": \"<string,null>\",\n        \"description\": \"<string,null>\",\n        \"emails\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"phones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isPrimary\": \"<boolean>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"address\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isActive\": \"<boolean>\",\n    \"primaryEmail\": \"<string,null-email>\",\n    \"primaryPhone\": \"<string,null>\",\n    \"number\": \"<integer>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\",\n      \"email\": \"<string,null-email>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"updatedBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\",\n      \"email\": \"<string,null-email>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"custom\": {\n      \"consectetur07\": {\n        \"description\": \"Any type\"\n      },\n      \"veniam8e\": {\n        \"description\": \"Any type\"\n      }\n    },\n    \"accountType\": \"RESIDENTIAL\",\n    \"contacts\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"title\": \"<string,null>\",\n        \"description\": \"<string,null>\",\n        \"emails\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"phones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isPrimary\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"title\": \"<string,null>\",\n        \"description\": \"<string,null>\",\n        \"emails\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"phones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isPrimary\": \"<boolean>\"\n      }\n    ]\n  }\n]",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-90e2a629-6aa9-4fda-8968-507676bf6775"
                 },
                 {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
+                  "id": "0871a86c-b564-4acf-8659-e58edc515f01",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/search?prop1=<string>&op1=contains&value1=<string>&logic=and&prop2=<string>&op2=nin&value2=<string>&page_size=20&page=1&order_by=asc&include_archived=false&include_contacts=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) First field to filter (standard or custom keyName)",
+                          "key": "prop1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Operator for prop1",
+                          "key": "op1",
+                          "value": "contains"
+                        },
+                        {
+                          "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)",
+                          "key": "value1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Logical combination when both prop1 and prop2 are provided",
+                          "key": "logic",
+                          "value": "and"
+                        },
+                        {
+                          "description": "Optional second field to filter",
+                          "key": "prop2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Operator for prop2",
+                          "key": "op2",
+                          "value": "nin"
+                        },
+                        {
+                          "description": "Value for prop2 (comma-separated values for in/nin or between)",
+                          "key": "value2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Sort order for results",
+                          "key": "order_by",
+                          "value": "asc"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-0871a86c-b564-4acf-8659-e58edc515f01"
                 },
                 {
-                  "disabled": false,
-                  "key": "updated_after",
-                  "value": "<dateTime>",
-                  "description": "Filter items updated after this timestamp (ISO 8601)"
-                },
-                {
-                  "disabled": false,
-                  "key": "updated_before",
-                  "value": "<dateTime>",
-                  "description": "Filter items updated before this timestamp (ISO 8601)"
-                },
-                {
-                  "disabled": false,
-                  "key": "order_by",
-                  "value": "asc",
-                  "description": "Sort order for results"
-                },
-                {
-                  "disabled": false,
-                  "key": "include_virtual_properties",
-                  "value": "false",
-                  "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true."
-                },
-                {
-                  "disabled": false,
-                  "key": "include_contacts",
-                  "value": "false",
-                  "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true."
-                },
-                {
-                  "disabled": false,
-                  "key": "include_archived",
-                  "value": "false",
-                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
-                },
-                {
-                  "disabled": false,
-                  "key": "q",
-                  "value": "<string>",
-                  "description": "Full text search query"
-                },
-                {
-                  "disabled": false,
-                  "key": "title",
-                  "value": "<string>",
-                  "description": "Title search query"
-                },
-                {
-                  "disabled": false,
-                  "key": "address",
-                  "value": "<string>",
-                  "description": "Address search query"
-                },
-                {
-                  "disabled": false,
-                  "key": "primaryName",
-                  "value": "<string>",
-                  "description": "Contact name search query"
-                },
-                {
-                  "disabled": false,
-                  "key": "primaryPhone",
-                  "value": "<string>",
-                  "description": "Contact phone search query"
-                },
-                {
-                  "disabled": false,
-                  "key": "primaryEmail",
-                  "value": "<string>",
-                  "description": "Contact email search query"
+                  "id": "5dba282c-4dfd-4b96-ba12-eefd1232f250",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/search?prop1=<string>&op1=contains&value1=<string>&logic=and&prop2=<string>&op2=nin&value2=<string>&page_size=20&page=1&order_by=asc&include_archived=false&include_contacts=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) First field to filter (standard or custom keyName)",
+                          "key": "prop1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Operator for prop1",
+                          "key": "op1",
+                          "value": "contains"
+                        },
+                        {
+                          "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)",
+                          "key": "value1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Logical combination when both prop1 and prop2 are provided",
+                          "key": "logic",
+                          "value": "and"
+                        },
+                        {
+                          "description": "Optional second field to filter",
+                          "key": "prop2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Operator for prop2",
+                          "key": "op2",
+                          "value": "nin"
+                        },
+                        {
+                          "description": "Value for prop2 (comma-separated values for in/nin or between)",
+                          "key": "value2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Sort order for results",
+                          "key": "order_by",
+                          "value": "asc"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-5dba282c-4dfd-4b96-ba12-eefd1232f250"
                 }
               ],
-              "variable": []
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-ad7a7485-a4cf-4ce9-83b1-b1855b5af670"
+            }
+          ],
+          "id": "2a0431c8-280a-42d1-aa72-0dc817d7ad50",
+          "createdAt": "2026-10-22T02:14:16.000Z",
+          "updatedAt": "2026-10-22T02:14:16.000Z",
+          "uid": "35240-2a0431c8-280a-42d1-aa72-0dc817d7ad50"
+        },
+        {
+          "name": "{account_id}",
+          "item": [
+            {
+              "name": "Get Account",
+              "id": "fb7fcb0a-5375-4d9e-a92b-5489a5542ba7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
               },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/:account_id?include_virtual_properties=false&include_contacts=false&include_archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    ":account_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.",
+                      "key": "include_virtual_properties",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                      "key": "include_contacts",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "440b73f1-8e44-4f41-8942-1d69466e0ee3",
+                      "key": "account_id",
+                      "value": "<integer>",
+                      "description": "(Required) Account identifier"
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific account by ID\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated."
+              },
+              "response": [
+                {
+                  "id": "fb3310ca-3e37-4dd0-892e-936dc5ca0e83",
+                  "name": "Account details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id?include_virtual_properties=false&include_contacts=false&include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_virtual_properties",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"number\": \"<integer>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\",\n    \"email\": \"<string,null-email>\",\n    \"avatarUrl\": \"<string,null>\"\n  },\n  \"updatedBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\",\n    \"email\": \"<string,null-email>\",\n    \"avatarUrl\": \"<string,null>\"\n  },\n  \"custom\": {\n    \"veniam3a5\": {\n      \"description\": \"Any type\"\n    },\n    \"eiusmod0eb\": {\n      \"description\": \"Any type\"\n    }\n  },\n  \"accountType\": \"RESIDENTIAL\",\n  \"contacts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"title\": \"<string,null>\",\n      \"description\": \"<string,null>\",\n      \"emails\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"phones\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isPrimary\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"title\": \"<string,null>\",\n      \"description\": \"<string,null>\",\n      \"emails\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"phones\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isPrimary\": \"<boolean>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-fb3310ca-3e37-4dd0-892e-936dc5ca0e83"
+                },
+                {
+                  "id": "91872db3-4e65-46d4-af6e-9ff3ad2ffb8a",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id?include_virtual_properties=false&include_contacts=false&include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_virtual_properties",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-91872db3-4e65-46d4-af6e-9ff3ad2ffb8a"
+                },
+                {
+                  "id": "575bbeaa-dcfb-4a88-b72f-105ad9adeec1",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id?include_virtual_properties=false&include_contacts=false&include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_virtual_properties",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-575bbeaa-dcfb-4a88-b72f-105ad9adeec1"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-fb7fcb0a-5375-4d9e-a92b-5489a5542ba7"
+            },
+            {
+              "name": "Update Account",
+              "id": "f0b53cfa-3df8-44ce-bacd-209ac0240a2b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": \"<array,null>\",\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"cillum62\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/:account_id?allow_new_options=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    ":account_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "c5e7abba-5ccc-4417-8a4a-9a6717b87272",
+                      "key": "account_id",
+                      "value": "<integer>",
+                      "description": "(Required) Account identifier"
+                    }
+                  ]
+                },
+                "description": "Update an existing account. Supports partial updates.\n\nUpdatable fields:\n- Standard fields (title, description, address, accountType, isActive)\n- Contact information (primaryEmail, primaryPhone)\n- `contacts`: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.\n- Custom fields (through custom object)\n\nNote: Updates are atomic - either all fields update or none do.\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated."
+              },
+              "response": [
+                {
+                  "id": "232ce48b-01c0-4cd4-9e16-36d21b38690e",
+                  "name": "Account updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": \"<array,null>\",\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"cillum62\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"number\": \"<integer>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\",\n    \"email\": \"<string,null-email>\",\n    \"avatarUrl\": \"<string,null>\"\n  },\n  \"updatedBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\",\n    \"email\": \"<string,null-email>\",\n    \"avatarUrl\": \"<string,null>\"\n  },\n  \"custom\": {\n    \"veniam3a5\": {\n      \"description\": \"Any type\"\n    },\n    \"eiusmod0eb\": {\n      \"description\": \"Any type\"\n    }\n  },\n  \"accountType\": \"RESIDENTIAL\",\n  \"contacts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"title\": \"<string,null>\",\n      \"description\": \"<string,null>\",\n      \"emails\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"phones\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isPrimary\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"title\": \"<string,null>\",\n      \"description\": \"<string,null>\",\n      \"emails\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"phones\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isPrimary\": \"<boolean>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-232ce48b-01c0-4cd4-9e16-36d21b38690e"
+                },
+                {
+                  "id": "4b8fbbb4-8500-4888-b1b4-e02cf5161e24",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": \"<array,null>\",\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"cillum62\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-4b8fbbb4-8500-4888-b1b4-e02cf5161e24"
+                },
+                {
+                  "id": "094c8a97-f4db-43d9-bb13-b48a332aec53",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": \"<array,null>\",\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"cillum62\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-094c8a97-f4db-43d9-bb13-b48a332aec53"
+                },
+                {
+                  "id": "904d19bb-1856-4b07-9f36-5fb0ecb46057",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": \"<array,null>\",\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"cillum62\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-904d19bb-1856-4b07-9f36-5fb0ecb46057"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-f0b53cfa-3df8-44ce-bacd-209ac0240a2b"
+            },
+            {
+              "name": "Delete Account",
+              "id": "8363abe0-c9b4-4c7a-b711-fc491778bc83",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/:account_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    ":account_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "68483c5e-2b34-40c0-9733-a790f987ae40",
+                      "key": "account_id",
+                      "value": "<integer>",
+                      "description": "(Required) Account identifier"
+                    }
+                  ]
+                },
+                "description": "Delete a specific account by ID\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated."
+              },
+              "response": [
+                {
+                  "id": "6ec1cb77-0f63-4a6a-ada5-1de55cd3ea45",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-6ec1cb77-0f63-4a6a-ada5-1de55cd3ea45"
+                },
+                {
+                  "id": "983a1e3e-43d2-46f9-8738-8c9daaa07dff",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-983a1e3e-43d2-46f9-8738-8c9daaa07dff"
+                },
+                {
+                  "id": "91669b54-92eb-4a96-99d9-58bbe97bcf36",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "account_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:14:16.000Z",
+                  "updatedAt": "2026-10-22T02:14:16.000Z",
+                  "uid": "35240-91669b54-92eb-4a96-99d9-58bbe97bcf36"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-8363abe0-c9b4-4c7a-b711-fc491778bc83"
+            }
+          ],
+          "id": "3302ecd3-201f-481d-9711-0480816d0d72",
+          "createdAt": "2026-10-22T02:14:16.000Z",
+          "updatedAt": "2026-10-22T02:14:16.000Z",
+          "uid": "35240-3302ecd3-201f-481d-9711-0480816d0d72"
+        },
+        {
+          "name": "List Accounts",
+          "id": "a414d5ab-33f8-4782-8c6b-71933acdb967",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/accounts?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&include_virtual_properties=false&include_contacts=false&include_archived=false&q=<string>&title=<string>&address=<string>&primaryName=<string>&primaryPhone=<string>&primaryEmail=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts"
+              ],
+              "query": [
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_after",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_before",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Sort order for results",
+                  "key": "order_by",
+                  "value": "asc"
+                },
+                {
+                  "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.",
+                  "key": "include_virtual_properties",
+                  "value": "false"
+                },
+                {
+                  "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                  "key": "include_contacts",
+                  "value": "false"
+                },
+                {
+                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                  "key": "include_archived",
+                  "value": "false"
+                },
+                {
+                  "description": "Full text search query",
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Title search query",
+                  "key": "title",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Address search query",
+                  "key": "address",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Contact name search query",
+                  "key": "primaryName",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Contact phone search query",
+                  "key": "primaryPhone",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Contact email search query",
+                  "key": "primaryEmail",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of accounts.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`, default: desc)\n- Field search (`title`, `address`, `primaryName`, `primaryPhone`, `primaryEmail`)\n- Full text search (`q`)\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated."
           },
           "response": [
             {
-              "id": "58afa503-1bfe-4314-a432-205545538f86",
+              "id": "45160136-7eb0-4c8b-b031-b64e824f9b02",
               "name": "List of accounts",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "accounts"
-                  ],
+                  "raw": "{{baseUrl}}/accounts?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&include_virtual_properties=false&include_contacts=false&include_archived=false&q=<string>&title=<string>&address=<string>&primaryName=<string>&primaryPhone=<string>&primaryEmail=<string>",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "accounts"
+                  ],
                   "query": [
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
                       "key": "updated_after",
-                      "value": "<dateTime>"
+                      "value": "<date>"
                     },
                     {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
                       "key": "updated_before",
-                      "value": "<dateTime>"
+                      "value": "<date>"
                     },
                     {
+                      "description": "Sort order for results",
                       "key": "order_by",
                       "value": "asc"
                     },
                     {
+                      "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.",
                       "key": "include_virtual_properties",
                       "value": "false"
                     },
                     {
+                      "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
                       "key": "include_contacts",
                       "value": "false"
                     },
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Full text search query",
                       "key": "q",
                       "value": "<string>"
                     },
                     {
+                      "description": "Title search query",
                       "key": "title",
                       "value": "<string>"
                     },
                     {
+                      "description": "Address search query",
                       "key": "address",
                       "value": "<string>"
                     },
                     {
+                      "description": "Contact name search query",
                       "key": "primaryName",
                       "value": "<string>"
                     },
                     {
+                      "description": "Contact phone search query",
                       "key": "primaryPhone",
                       "value": "<string>"
                     },
                     {
+                      "description": "Contact email search query",
                       "key": "primaryEmail",
                       "value": "<string>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 161,\n    \"createdAt\": \"2021-02-03T01:31:08.225Z\",\n    \"updatedAt\": \"2011-07-31T08:19:51.567Z\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"GlI@uKNSGNgUZZJOFkfJLQEqErFruPqcfmJw.wji\",\n    \"primaryPhone\": \"string\",\n    \"number\": 8950,\n    \"createdBy\": {\n      \"id\": 5266,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"sOuJEvA@BqOiIPGRURiWLbKK.ffh\",\n      \"avatarUrl\": \"string\"\n    },\n    \"updatedBy\": {\n      \"id\": 9438,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"MDnRMavg@GwapvHEYssueSF.lr\",\n      \"avatarUrl\": \"string\"\n    },\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"accountType\": \"RESIDENTIAL\",\n    \"contacts\": [\n      {\n        \"id\": 4153,\n        \"emails\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": 8910,\n        \"emails\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  },\n  {\n    \"id\": 1640,\n    \"createdAt\": \"2015-07-07T07:03:20.628Z\",\n    \"updatedAt\": \"1951-05-23T07:15:15.701Z\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"MoImKxC0P9Cy7g@QPyyYrDyItlOClFNbDgCYePsYEuB.dhhe\",\n    \"primaryPhone\": \"string\",\n    \"number\": 4976,\n    \"createdBy\": {\n      \"id\": 7914,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"18JAbAV@xKdH.lf\",\n      \"avatarUrl\": \"string\"\n    },\n    \"updatedBy\": {\n      \"id\": 4216,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"slxxWGvfFTIDMl1@gnRXxpEbHSvQUTtTEUJrxurUOLbbmV.ag\",\n      \"avatarUrl\": \"string\"\n    },\n    \"custom\": {\n      \"key_0\": {}\n    },\n    \"accountType\": \"RESIDENTIAL\",\n    \"contacts\": [\n      {\n        \"id\": 4609,\n        \"emails\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": 4432,\n        \"emails\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  }\n]",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"address\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isActive\": \"<boolean>\",\n    \"primaryEmail\": \"<string,null-email>\",\n    \"primaryPhone\": \"<string,null>\",\n    \"number\": \"<integer>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\",\n      \"email\": \"<string,null-email>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"updatedBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\",\n      \"email\": \"<string,null-email>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"custom\": {\n      \"ind4f\": {\n        \"description\": \"Any type\"\n      }\n    },\n    \"accountType\": \"COMMERCIAL\",\n    \"contacts\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"title\": \"<string,null>\",\n        \"description\": \"<string,null>\",\n        \"emails\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"phones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isPrimary\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"title\": \"<string,null>\",\n        \"description\": \"<string,null>\",\n        \"emails\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"phones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isPrimary\": \"<boolean>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"address\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isActive\": \"<boolean>\",\n    \"primaryEmail\": \"<string,null-email>\",\n    \"primaryPhone\": \"<string,null>\",\n    \"number\": \"<integer>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\",\n      \"email\": \"<string,null-email>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"updatedBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\",\n      \"email\": \"<string,null-email>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"custom\": {\n      \"consectetur07\": {\n        \"description\": \"Any type\"\n      },\n      \"veniam8e\": {\n        \"description\": \"Any type\"\n      }\n    },\n    \"accountType\": \"RESIDENTIAL\",\n    \"contacts\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"title\": \"<string,null>\",\n        \"description\": \"<string,null>\",\n        \"emails\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"phones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isPrimary\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"title\": \"<string,null>\",\n        \"description\": \"<string,null>\",\n        \"emails\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"phones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isPrimary\": \"<boolean>\"\n      }\n    ]\n  }\n]",
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-45160136-7eb0-4c8b-b031-b64e824f9b02"
             },
             {
-              "id": "c1edee3f-d3b0-4f92-9ff1-ccba4a7918f3",
+              "id": "140adb16-a154-42b0-8249-735b14906b2f",
               "name": "Authentication failed",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "accounts"
-                  ],
+                  "raw": "{{baseUrl}}/accounts?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&include_virtual_properties=false&include_contacts=false&include_archived=false&q=<string>&title=<string>&address=<string>&primaryName=<string>&primaryPhone=<string>&primaryEmail=<string>",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "accounts"
+                  ],
                   "query": [
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
                       "key": "updated_after",
-                      "value": "<dateTime>"
+                      "value": "<date>"
                     },
                     {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
                       "key": "updated_before",
-                      "value": "<dateTime>"
+                      "value": "<date>"
                     },
                     {
+                      "description": "Sort order for results",
                       "key": "order_by",
                       "value": "asc"
                     },
                     {
+                      "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true.",
                       "key": "include_virtual_properties",
                       "value": "false"
                     },
                     {
+                      "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
                       "key": "include_contacts",
                       "value": "false"
                     },
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Full text search query",
                       "key": "q",
                       "value": "<string>"
                     },
                     {
+                      "description": "Title search query",
                       "key": "title",
                       "value": "<string>"
                     },
                     {
+                      "description": "Address search query",
                       "key": "address",
                       "value": "<string>"
                     },
                     {
+                      "description": "Contact name search query",
                       "key": "primaryName",
                       "value": "<string>"
                     },
                     {
+                      "description": "Contact phone search query",
                       "key": "primaryPhone",
                       "value": "<string>"
                     },
                     {
+                      "description": "Contact email search query",
                       "key": "primaryEmail",
                       "value": "<string>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-140adb16-a154-42b0-8249-735b14906b2f"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:14:16.000Z",
+          "updatedAt": "2026-10-22T02:14:16.000Z",
+          "uid": "35240-a414d5ab-33f8-4782-8c6b-71933acdb967"
         },
         {
-          "id": "64367fd4-a79f-48c9-9dd2-a90f4befea3d",
           "name": "Create Account",
+          "id": "a431ebb4-53e5-4243-9a3c-97c1fc5d5e28",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Create Account",
-            "description": {
-              "content": "Create a new account with required and optional fields.\n\nRequired fields:\n- `title`: Account name\n- `address`: Account location\n\nOptional fields:\n- `accountType`: Account type (RESIDENTIAL/COMMERCIAL)\n- `value`: Account value\n- `size`: Account size\n- `primaryEmail`/`primaryPhone`: Contact information\n- `contacts`: Contact IDs only (no name, email, phone, etc.). **The contacts must be created first via POST /contacts.**\n- `custom`: Custom fields object\n\nNote: If primaryEmail or primaryPhone is provided and no contacts are provided, a contact will be automatically created or matched.\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": \"<array,null>\",\n  \"custom\": {\n    \"nostrude66\": {\n      \"description\": \"Any type\"\n    },\n    \"amet070\": {\n      \"description\": \"Any type\"\n    },\n    \"ipsum_7\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
             },
             "url": {
+              "raw": "{{baseUrl}}/accounts?allow_new_options=false&match_by=title&match_found_strategy=skip",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "accounts"
               ],
-              "host": [
-                "{{baseUrl}}"
-              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "Whether to allow creation of new dropdown options during record creation",
                   "key": "allow_new_options",
-                  "value": "false",
-                  "description": "Whether to allow creation of new dropdown options during record creation"
+                  "value": "false"
                 },
                 {
-                  "disabled": false,
+                  "description": "Field to use for matching existing records",
                   "key": "match_by",
-                  "value": "title",
-                  "description": "Field to use for matching existing records"
+                  "value": "title"
                 },
                 {
-                  "disabled": false,
+                  "description": "Strategy to use when a match is found",
                   "key": "match_found_strategy",
-                  "value": "skip",
-                  "description": "Strategy to use when a match is found"
+                  "value": "skip"
                 }
-              ],
-              "variable": []
+              ]
             },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"accountType\": \"<string>\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
+            "description": "Create a new account with required and optional fields.\n\nRequired fields:\n- `title`: Account name\n- `address`: Account location\n\nOptional fields:\n- `accountType`: Account type (RESIDENTIAL/COMMERCIAL)\n- `value`: Account value\n- `size`: Account size\n- `primaryEmail`/`primaryPhone`: Contact information\n- `contacts`: Contact IDs only (no name, email, phone, etc.). **The contacts must be created first via POST /contacts.**\n- `custom`: Custom fields object\n\nNote: If primaryEmail or primaryPhone is provided and no contacts are provided, a contact will be automatically created or matched.\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated."
           },
           "response": [
             {
-              "id": "4c32ee25-91c8-4758-9ebd-361191100c70",
+              "id": "225c083b-4375-40f3-8131-d86fbf0e85e7",
               "name": "Matching account found",
               "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": \"<array,null>\",\n  \"custom\": {\n    \"nostrude66\": {\n      \"description\": \"Any type\"\n    },\n    \"amet070\": {\n      \"description\": \"Any type\"\n    },\n    \"ipsum_7\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "path": [
-                    "accounts"
-                  ],
+                  "raw": "{{baseUrl}}/accounts?allow_new_options=false&match_by=title&match_found_strategy=skip",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "accounts"
+                  ],
                   "query": [
                     {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
                       "key": "allow_new_options",
                       "value": "false"
                     },
                     {
+                      "description": "Field to use for matching existing records",
                       "key": "match_by",
                       "value": "title"
                     },
                     {
+                      "description": "Strategy to use when a match is found",
                       "key": "match_found_strategy",
                       "value": "skip"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"accountType\": \"COMMERCIAL\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+                  ]
                 }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": 4269,\n  \"createdAt\": \"2018-03-04T14:11:34.726Z\",\n  \"updatedAt\": \"2019-01-11T21:02:10.411Z\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": true,\n  \"primaryEmail\": \"9Oj3-N6of@WyGSAOHj.peh\",\n  \"primaryPhone\": \"string\",\n  \"number\": 9253,\n  \"createdBy\": {\n    \"id\": 4533,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"PgD9UBhC@ZtRCg.dwey\",\n    \"avatarUrl\": \"string\"\n  },\n  \"updatedBy\": {\n    \"id\": 704,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"JADd@dmvMXbquERqCmBATQkEFro.dau\",\n    \"avatarUrl\": \"string\"\n  },\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"accountType\": \"RESIDENTIAL\",\n  \"contacts\": [\n    {\n      \"id\": 5825,\n      \"emails\": [\n        \"string\",\n        \"string\"\n      ],\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": 3803,\n      \"emails\": [\n        \"string\",\n        \"string\"\n      ],\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"number\": \"<integer>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\",\n    \"email\": \"<string,null-email>\",\n    \"avatarUrl\": \"<string,null>\"\n  },\n  \"updatedBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\",\n    \"email\": \"<string,null-email>\",\n    \"avatarUrl\": \"<string,null>\"\n  },\n  \"custom\": {\n    \"veniam3a5\": {\n      \"description\": \"Any type\"\n    },\n    \"eiusmod0eb\": {\n      \"description\": \"Any type\"\n    }\n  },\n  \"accountType\": \"RESIDENTIAL\",\n  \"contacts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"title\": \"<string,null>\",\n      \"description\": \"<string,null>\",\n      \"emails\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"phones\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isPrimary\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"title\": \"<string,null>\",\n      \"description\": \"<string,null>\",\n      \"emails\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"phones\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isPrimary\": \"<boolean>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-225c083b-4375-40f3-8131-d86fbf0e85e7"
             },
             {
-              "id": "e0ef6a07-d48e-4e1c-a0f1-2692e0b4aff6",
+              "id": "43b6c32c-cefe-4514-91c8-5aedf6f8b87a",
               "name": "Invalid request",
               "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": \"<array,null>\",\n  \"custom\": {\n    \"nostrude66\": {\n      \"description\": \"Any type\"\n    },\n    \"amet070\": {\n      \"description\": \"Any type\"\n    },\n    \"ipsum_7\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "path": [
-                    "accounts"
-                  ],
+                  "raw": "{{baseUrl}}/accounts?allow_new_options=false&match_by=title&match_found_strategy=skip",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "accounts"
+                  ],
                   "query": [
                     {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
                       "key": "allow_new_options",
                       "value": "false"
                     },
                     {
+                      "description": "Field to use for matching existing records",
                       "key": "match_by",
                       "value": "title"
                     },
                     {
+                      "description": "Strategy to use when a match is found",
                       "key": "match_found_strategy",
                       "value": "skip"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"accountType\": \"COMMERCIAL\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-43b6c32c-cefe-4514-91c8-5aedf6f8b87a"
             },
             {
-              "id": "2fd307d8-4cb8-4a14-a773-13c11a241537",
+              "id": "e6b71a87-132a-4d78-b758-3bf987f26662",
               "name": "Authentication failed",
               "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"accountType\": \"RESIDENTIAL\",\n  \"ownerId\": \"<integer,null>\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": \"<array,null>\",\n  \"custom\": {\n    \"nostrude66\": {\n      \"description\": \"Any type\"\n    },\n    \"amet070\": {\n      \"description\": \"Any type\"\n    },\n    \"ipsum_7\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "path": [
-                    "accounts"
-                  ],
+                  "raw": "{{baseUrl}}/accounts?allow_new_options=false&match_by=title&match_found_strategy=skip",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "accounts"
+                  ],
                   "query": [
                     {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
                       "key": "allow_new_options",
                       "value": "false"
                     },
                     {
+                      "description": "Field to use for matching existing records",
                       "key": "match_by",
                       "value": "title"
                     },
                     {
+                      "description": "Strategy to use when a match is found",
                       "key": "match_found_strategy",
                       "value": "skip"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string,null>\",\n  \"accountType\": \"COMMERCIAL\",\n  \"primaryEmail\": \"<email>\",\n  \"primaryPhone\": \"<string>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "createdAt": "2026-10-22T02:14:16.000Z",
+              "updatedAt": "2026-10-22T02:14:16.000Z",
+              "uid": "35240-e6b71a87-132a-4d78-b758-3bf987f26662"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "ca719df2-f4d6-4341-8e99-6ff25ff5fe7e",
-          "name": "Search Accounts",
-          "request": {
-            "name": "Search Accounts",
-            "description": {
-              "content": "Search accounts using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `status`, `title`, `city`, `type`, `accountId`, etc.) or a custom property key name.\n- Use the `property key` from your company settings.\n- Filter by parent account with `accountId`. `clientId` is accepted as a deprecated alias for backwards compatibility.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Numeric/datetime comparisons: `gt`, `gte`, `lt`, `lte`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)\n- Ranges: `between` (use `valueX` as `from,to`)\n- Existence: `exists` is not supported for custom properties due to performance limitations. Use `eq` or `neq` instead.\n\nValue formats:\n- `in`/`nin`: lists can be provided as:\n  - Plain CSV: `value1=OPEN,ACTIVE`\n  - Quoted CSV (to include commas inside a value): `value1=\"Last, First\",Other`\n  - JSON array: `value1=[\"Last, First\",\"Other\"]`\n- `between`: `from,to` (e.g., `value1=2025-01-01,2025-12-31` or `value1=10,20`)\n- Dates should be ISO 8601 strings; numeric-like values on custom properties are matched against both numeric and text representations.\n\nExamples:\n- status equals ACTIVE: `?prop1=status&op1=eq&value1=ACTIVE`\n- custom id equals 1234: `?prop1=legacy_tool_project_id&op1=eq&value1=1234`\n- title contains \"Solar\": `?prop1=name&op1=contains&value1=Solar`\n- status IN (ACTIVE, ON_HOLD) AND city = Austin: `?prop1=status&op1=in&value1=ACTIVE,ON_HOLD&logic=and&prop2=city&op2=eq&value2=Austin`\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                "search"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "prop1",
-                  "value": "<string>",
-                  "description": "(Required) First field to filter (standard or custom keyName)"
-                },
-                {
-                  "disabled": false,
-                  "key": "op1",
-                  "value": "<string>",
-                  "description": "(Required) Operator for prop1"
-                },
-                {
-                  "disabled": false,
-                  "key": "value1",
-                  "value": "<string>",
-                  "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)"
-                },
-                {
-                  "disabled": false,
-                  "key": "logic",
-                  "value": "and",
-                  "description": "Logical combination when both prop1 and prop2 are provided"
-                },
-                {
-                  "disabled": false,
-                  "key": "prop2",
-                  "value": "<string>",
-                  "description": "Optional second field to filter"
-                },
-                {
-                  "disabled": false,
-                  "key": "op2",
-                  "value": "<string>",
-                  "description": "Operator for prop2"
-                },
-                {
-                  "disabled": false,
-                  "key": "value2",
-                  "value": "<string>",
-                  "description": "Value for prop2 (comma-separated values for in/nin or between)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
-                },
-                {
-                  "disabled": false,
-                  "key": "order_by",
-                  "value": "asc",
-                  "description": "Sort order for results"
-                },
-                {
-                  "disabled": false,
-                  "key": "include_archived",
-                  "value": "false",
-                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "b89a8215-ec87-4819-9468-dcea29ed9e38",
-              "name": "List of accounts matching filters",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "prop1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op1",
-                      "value": "nin"
-                    },
-                    {
-                      "key": "value1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "logic",
-                      "value": "and"
-                    },
-                    {
-                      "key": "prop2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op2",
-                      "value": "lte"
-                    },
-                    {
-                      "key": "value2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 161,\n    \"createdAt\": \"2021-02-03T01:31:08.225Z\",\n    \"updatedAt\": \"2011-07-31T08:19:51.567Z\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"GlI@uKNSGNgUZZJOFkfJLQEqErFruPqcfmJw.wji\",\n    \"primaryPhone\": \"string\",\n    \"number\": 8950,\n    \"createdBy\": {\n      \"id\": 5266,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"sOuJEvA@BqOiIPGRURiWLbKK.ffh\",\n      \"avatarUrl\": \"string\"\n    },\n    \"updatedBy\": {\n      \"id\": 9438,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"MDnRMavg@GwapvHEYssueSF.lr\",\n      \"avatarUrl\": \"string\"\n    },\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"accountType\": \"RESIDENTIAL\",\n    \"contacts\": [\n      {\n        \"id\": 4153,\n        \"emails\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": 8910,\n        \"emails\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  },\n  {\n    \"id\": 1640,\n    \"createdAt\": \"2015-07-07T07:03:20.628Z\",\n    \"updatedAt\": \"1951-05-23T07:15:15.701Z\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"MoImKxC0P9Cy7g@QPyyYrDyItlOClFNbDgCYePsYEuB.dhhe\",\n    \"primaryPhone\": \"string\",\n    \"number\": 4976,\n    \"createdBy\": {\n      \"id\": 7914,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"18JAbAV@xKdH.lf\",\n      \"avatarUrl\": \"string\"\n    },\n    \"updatedBy\": {\n      \"id\": 4216,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"slxxWGvfFTIDMl1@gnRXxpEbHSvQUTtTEUJrxurUOLbbmV.ag\",\n      \"avatarUrl\": \"string\"\n    },\n    \"custom\": {\n      \"key_0\": {}\n    },\n    \"accountType\": \"RESIDENTIAL\",\n    \"contacts\": [\n      {\n        \"id\": 4609,\n        \"emails\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": 4432,\n        \"emails\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5c234b4a-0d53-4048-99ea-352c08e1f976",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "prop1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op1",
-                      "value": "nin"
-                    },
-                    {
-                      "key": "value1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "logic",
-                      "value": "and"
-                    },
-                    {
-                      "key": "prop2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op2",
-                      "value": "lte"
-                    },
-                    {
-                      "key": "value2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "33236912-8597-497d-b0de-12d08a347cb4",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "prop1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op1",
-                      "value": "nin"
-                    },
-                    {
-                      "key": "value1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "logic",
-                      "value": "and"
-                    },
-                    {
-                      "key": "prop2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op2",
-                      "value": "lte"
-                    },
-                    {
-                      "key": "value2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "order_by",
-                      "value": "asc"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "e4360289-8f03-4dbc-a548-bfd1689a6f78",
-          "name": "Get Account",
-          "request": {
-            "name": "Get Account",
-            "description": {
-              "content": "Retrieve a specific account by ID\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "include_virtual_properties",
-                  "value": "false",
-                  "description": "Whether to include virtual properties in the response. Defaults to false unless explicitly set to true."
-                },
-                {
-                  "disabled": false,
-                  "key": "include_contacts",
-                  "value": "false",
-                  "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true."
-                },
-                {
-                  "disabled": false,
-                  "key": "include_archived",
-                  "value": "false",
-                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "39a5c6a6-0d6c-4c5b-8fb9-7de254643857",
-              "name": "Account details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "include_virtual_properties",
-                      "value": "false"
-                    },
-                    {
-                      "key": "include_contacts",
-                      "value": "false"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 4269,\n  \"createdAt\": \"2018-03-04T14:11:34.726Z\",\n  \"updatedAt\": \"2019-01-11T21:02:10.411Z\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": true,\n  \"primaryEmail\": \"9Oj3-N6of@WyGSAOHj.peh\",\n  \"primaryPhone\": \"string\",\n  \"number\": 9253,\n  \"createdBy\": {\n    \"id\": 4533,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"PgD9UBhC@ZtRCg.dwey\",\n    \"avatarUrl\": \"string\"\n  },\n  \"updatedBy\": {\n    \"id\": 704,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"JADd@dmvMXbquERqCmBATQkEFro.dau\",\n    \"avatarUrl\": \"string\"\n  },\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"accountType\": \"RESIDENTIAL\",\n  \"contacts\": [\n    {\n      \"id\": 5825,\n      \"emails\": [\n        \"string\",\n        \"string\"\n      ],\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": 3803,\n      \"emails\": [\n        \"string\",\n        \"string\"\n      ],\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2e469311-f640-4520-a595-7e9395cf5027",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "include_virtual_properties",
-                      "value": "false"
-                    },
-                    {
-                      "key": "include_contacts",
-                      "value": "false"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d020bd5f-6104-46aa-a940-e26d2b92a2d7",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "include_virtual_properties",
-                      "value": "false"
-                    },
-                    {
-                      "key": "include_contacts",
-                      "value": "false"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "ab4ad379-5ea3-4429-bc0a-69fc50187674",
-          "name": "Update Account",
-          "request": {
-            "name": "Update Account",
-            "description": {
-              "content": "Update an existing account. Supports partial updates.\n\nUpdatable fields:\n- Standard fields (title, description, address, accountType, isActive)\n- Contact information (primaryEmail, primaryPhone)\n- `contacts`: Contact IDs only (no name, email, phone, etc.). The contacts must be created first via POST /contacts.\n- Custom fields (through custom object)\n\nNote: Updates are atomic - either all fields update or none do.\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "allow_new_options",
-                  "value": "false",
-                  "description": "Whether to allow creation of new dropdown options during record creation"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PATCH",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"<string>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "584e5c30-6c32-4e57-b7f3-129770398e26",
-              "name": "Account updated successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 4269,\n  \"createdAt\": \"2018-03-04T14:11:34.726Z\",\n  \"updatedAt\": \"2019-01-11T21:02:10.411Z\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": true,\n  \"primaryEmail\": \"9Oj3-N6of@WyGSAOHj.peh\",\n  \"primaryPhone\": \"string\",\n  \"number\": 9253,\n  \"createdBy\": {\n    \"id\": 4533,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"PgD9UBhC@ZtRCg.dwey\",\n    \"avatarUrl\": \"string\"\n  },\n  \"updatedBy\": {\n    \"id\": 704,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"JADd@dmvMXbquERqCmBATQkEFro.dau\",\n    \"avatarUrl\": \"string\"\n  },\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"accountType\": \"RESIDENTIAL\",\n  \"contacts\": [\n    {\n      \"id\": 5825,\n      \"emails\": [\n        \"string\",\n        \"string\"\n      ],\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": 3803,\n      \"emails\": [\n        \"string\",\n        \"string\"\n      ],\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e33016d8-da96-494b-8cd3-b101b87393e1",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a96c0174-3e89-4d81-8153-fc9ca9e74fe3",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "6dcc65c6-3598-432b-ba5a-22862c42111d",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accountType\": \"RESIDENTIAL\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "e781a33a-042f-4969-8381-771a99208199",
-          "name": "Delete Account",
-          "request": {
-            "name": "Delete Account",
-            "description": {
-              "content": "Delete a specific account by ID\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "36960551-659c-455b-b57e-26c9f3cf9c71",
-              "name": "Successful response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "10a76f6a-c3e9-49da-a042-e83561c0b2bb",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "02f34974-42e9-46de-ba26-a72cf11c7b45",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:14:16.000Z",
+          "updatedAt": "2026-10-22T02:14:16.000Z",
+          "uid": "35240-a431ebb4-53e5-4243-9a3c-97c1fc5d5e28"
         }
       ],
-      "event": []
+      "id": "af113c26-c4d9-42f0-8dad-8bd1e2c565b1",
+      "createdAt": "2026-10-22T02:14:16.000Z",
+      "updatedAt": "2026-10-22T02:14:16.000Z",
+      "uid": "35240-af113c26-c4d9-42f0-8dad-8bd1e2c565b1"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "6fddd573-9046-4b89-ac54-ddc2b7077abe",
-    "name": "API Key accounts API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

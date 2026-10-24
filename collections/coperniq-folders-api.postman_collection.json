@@ -1,0 +1,2862 @@
+{
+  "info": {
+    "_postman_id": "b94d9942-7e50-4576-8a85-aac9e469decd",
+    "name": "Reference Folders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:17:01.000Z",
+    "updatedAt": "2026-10-22T02:17:01.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b94d9942-7e50-4576-8a85-aac9e469decd"
+  },
+  "item": [
+    {
+      "name": "projects",
+      "item": [
+        {
+          "name": "{project_id}",
+          "item": [
+            {
+              "name": "folders",
+              "item": [
+                {
+                  "name": "List Project Folders",
+                  "id": "f272a159-7e7f-4cba-8d03-f08c8339a521",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/projects/:project_id/folders?include_archived=false&page=1&page_size=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "projects",
+                        ":project_id",
+                        "folders"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "85ccd805-d937-41c9-ba70-a87eb2fb053c",
+                          "key": "project_id",
+                          "value": "<integer>",
+                          "description": "(Required) Project identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve the top level of a project's Docs tab: workflow phases, plus any real doc folders that sit at the project root (not nested in another folder or scoped to a phase).\n\nEach item carries a `type` field (`phase` or `folder`) telling you what it is and, for folders, matches the shape of `GET /folders/{folder_id}`.\n\n**Behavior change:** this endpoint used to return every real folder flat, including ones nested under another folder or scoped to a phase. It now returns root-level folders only, alongside phase rows, matching what the UI shows at the top of the Docs tab. To see what's inside a phase or folder, use `GET /phases/{phase_instance_id}/contents` or `GET /folders/{folder_id}/contents`.\n\nPagination (`page`/`page_size`) applies only to the folder half of the results \u2014 phase rows are returned unpaginated (bounded by the project's workflow, not user-created volume). Pass `include_archived=true` to include archived root folders (default `false`); this doesn't affect phase rows."
+                  },
+                  "response": [
+                    {
+                      "id": "e0ae052b-8efc-4ec1-8dba-8450f8000b5e",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/folders?include_archived=false&page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "folders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"type\": \"phase\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"position\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"phaseTemplateId\": \"<integer>\",\n    \"projectId\": \"<integer>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\"\n  },\n  {\n    \"type\": \"phase\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"position\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"phaseTemplateId\": \"<integer>\",\n    \"projectId\": \"<integer>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-e0ae052b-8efc-4ec1-8dba-8450f8000b5e"
+                    },
+                    {
+                      "id": "bc3d0b12-6e2b-4fad-9449-e08b405965d4",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/folders?include_archived=false&page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "folders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-bc3d0b12-6e2b-4fad-9449-e08b405965d4"
+                    },
+                    {
+                      "id": "19aadde9-84c2-4bac-8cf2-a9149d252fa6",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/folders?include_archived=false&page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "folders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-19aadde9-84c2-4bac-8cf2-a9149d252fa6"
+                    },
+                    {
+                      "id": "eb3e25d5-90f5-4b27-8f5f-d6745e00ae5b",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/folders?include_archived=false&page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "folders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-eb3e25d5-90f5-4b27-8f5f-d6745e00ae5b"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-f272a159-7e7f-4cba-8d03-f08c8339a521"
+                },
+                {
+                  "name": "Create Project Folder",
+                  "id": "fe5ecc9c-f563-4b80-869e-60cba1ce5ccc",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/projects/:project_id/folders",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "projects",
+                        ":project_id",
+                        "folders"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d1a00dbe-a2cc-4f04-9021-d40e7db97828",
+                          "key": "project_id",
+                          "value": "<integer>",
+                          "description": "(Required) Project identifier"
+                        }
+                      ]
+                    },
+                    "description": "Create a new doc folder in a project.\n\nNotes:\n- `name` is required.\n- `parentId` and `phaseInstanceId` are mutually exclusive \u2014 a folder sits either at the root of a phase, or nested under another folder, not both.\n- Folders nest at most 2 levels deep."
+                  },
+                  "response": [
+                    {
+                      "id": "c1a18eda-8131-489c-9b72-c54a8c483085",
+                      "name": "Folder created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"isActive\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"companyId\": \"<integer>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-c1a18eda-8131-489c-9b72-c54a8c483085"
+                    },
+                    {
+                      "id": "85edf5e5-ce9e-4b83-80ff-8ad09062d07d",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-85edf5e5-ce9e-4b83-80ff-8ad09062d07d"
+                    },
+                    {
+                      "id": "0e0c3ba3-0f00-4ef2-8db9-ca8f8c24173b",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-0e0c3ba3-0f00-4ef2-8db9-ca8f8c24173b"
+                    },
+                    {
+                      "id": "473122dc-eb9a-456d-bddf-6c34ec24461e",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-473122dc-eb9a-456d-bddf-6c34ec24461e"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-fe5ecc9c-f563-4b80-869e-60cba1ce5ccc"
+                }
+              ],
+              "id": "8123ea11-b2df-4368-a7d0-f888a4adecc2",
+              "createdAt": "2026-10-22T02:17:01.000Z",
+              "updatedAt": "2026-10-22T02:17:01.000Z",
+              "uid": "35240-8123ea11-b2df-4368-a7d0-f888a4adecc2"
+            }
+          ],
+          "id": "51cb0c9b-8be3-4aca-8fb8-53bf42005b98",
+          "createdAt": "2026-10-22T02:17:01.000Z",
+          "updatedAt": "2026-10-22T02:17:01.000Z",
+          "uid": "35240-51cb0c9b-8be3-4aca-8fb8-53bf42005b98"
+        }
+      ],
+      "id": "f9095ef2-e608-44c2-bdb9-5dc1fdf5dafd",
+      "createdAt": "2026-10-22T02:17:01.000Z",
+      "updatedAt": "2026-10-22T02:17:01.000Z",
+      "uid": "35240-f9095ef2-e608-44c2-bdb9-5dc1fdf5dafd"
+    },
+    {
+      "name": "opportunities",
+      "item": [
+        {
+          "name": "{opportunity_id}",
+          "item": [
+            {
+              "name": "folders",
+              "item": [
+                {
+                  "name": "List Opportunity Folders",
+                  "id": "b41b42f7-e0a9-42df-b3a7-8b91a44f1bbf",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders?include_archived=false&page=1&page_size=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "opportunities",
+                        ":opportunity_id",
+                        "folders"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "849dff0c-37b9-47fe-993e-d31fdf4d98f6",
+                          "key": "opportunity_id",
+                          "value": "<integer>",
+                          "description": "(Required) Opportunity identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve the top level of an opportunity's Docs tab: workflow phases, plus any real doc folders that sit at the opportunity root (not nested in another folder or scoped to a phase). Same shape as the project version of this endpoint \u2014 opportunities have their own workflow phases too.\n\nTo see what's inside a phase or folder, use `GET /phases/{phase_instance_id}/contents` or `GET /folders/{folder_id}/contents` \u2014 both are addressed by id alone, no opportunity needed in the path."
+                  },
+                  "response": [
+                    {
+                      "id": "09e88121-57e3-4c97-b884-396cc0d63427",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders?include_archived=false&page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "folders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"type\": \"phase\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"position\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"phaseTemplateId\": \"<integer>\",\n    \"projectId\": \"<integer>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\"\n  },\n  {\n    \"type\": \"phase\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"position\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"phaseTemplateId\": \"<integer>\",\n    \"projectId\": \"<integer>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-09e88121-57e3-4c97-b884-396cc0d63427"
+                    },
+                    {
+                      "id": "2dc47471-2711-4c98-867f-d9158bcf6fbc",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders?include_archived=false&page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "folders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-2dc47471-2711-4c98-867f-d9158bcf6fbc"
+                    },
+                    {
+                      "id": "4e7833de-65c7-4262-aadd-e73f1dd66e87",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders?include_archived=false&page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "folders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-4e7833de-65c7-4262-aadd-e73f1dd66e87"
+                    },
+                    {
+                      "id": "09b45d1b-d1c9-4ac1-acf6-798e386001f4",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders?include_archived=false&page=1&page_size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "folders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Page number (1-based)",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Number of items per page (max 100)",
+                              "key": "page_size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-09b45d1b-d1c9-4ac1-acf6-798e386001f4"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-b41b42f7-e0a9-42df-b3a7-8b91a44f1bbf"
+                },
+                {
+                  "name": "Create Opportunity Folder",
+                  "id": "609889be-24f9-444c-9314-3353de24999c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "opportunities",
+                        ":opportunity_id",
+                        "folders"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b6ef7913-76a4-478c-af65-4e0e46bb003d",
+                          "key": "opportunity_id",
+                          "value": "<integer>",
+                          "description": "(Required) Opportunity identifier"
+                        }
+                      ]
+                    },
+                    "description": "Create a new doc folder in an opportunity.\n\nNotes:\n- `name` is required.\n- `parentId` and `phaseInstanceId` are mutually exclusive \u2014 a folder sits either at the root of a phase, or nested under another folder, not both.\n- Folders nest at most 2 levels deep.\n- Update and delete a folder via `PATCH`/`DELETE /folders/{folder_id}`, same as project folders."
+                  },
+                  "response": [
+                    {
+                      "id": "6f11a9fe-9a90-498e-914c-bfdb795b2f71",
+                      "name": "Folder created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"isActive\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"companyId\": \"<integer>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-6f11a9fe-9a90-498e-914c-bfdb795b2f71"
+                    },
+                    {
+                      "id": "55582c19-2edb-4739-83e1-0ee65925d859",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-55582c19-2edb-4739-83e1-0ee65925d859"
+                    },
+                    {
+                      "id": "42a8e504-25ec-4f02-b702-66e18eb04284",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-42a8e504-25ec-4f02-b702-66e18eb04284"
+                    },
+                    {
+                      "id": "6706f5fb-8032-4bbe-aa7c-15df0c11dd9b",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer>\",\n  \"phaseInstanceId\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-6706f5fb-8032-4bbe-aa7c-15df0c11dd9b"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-609889be-24f9-444c-9314-3353de24999c"
+                }
+              ],
+              "id": "3d2563dd-f246-408d-b11f-a1de6c7222df",
+              "createdAt": "2026-10-22T02:17:01.000Z",
+              "updatedAt": "2026-10-22T02:17:01.000Z",
+              "uid": "35240-3d2563dd-f246-408d-b11f-a1de6c7222df"
+            }
+          ],
+          "id": "c6ec716b-7611-454f-86c4-7ce2d4245001",
+          "createdAt": "2026-10-22T02:17:01.000Z",
+          "updatedAt": "2026-10-22T02:17:01.000Z",
+          "uid": "35240-c6ec716b-7611-454f-86c4-7ce2d4245001"
+        }
+      ],
+      "id": "b232f6b8-beae-464b-81da-e7df73e2d3ed",
+      "createdAt": "2026-10-22T02:17:01.000Z",
+      "updatedAt": "2026-10-22T02:17:01.000Z",
+      "uid": "35240-b232f6b8-beae-464b-81da-e7df73e2d3ed"
+    },
+    {
+      "name": "folders",
+      "item": [
+        {
+          "name": "{folder_id}",
+          "item": [
+            {
+              "name": "contents",
+              "item": [
+                {
+                  "name": "Get Folder Contents",
+                  "id": "2c83c777-6bb7-4b60-8173-e55d14fee74e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id/contents?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id",
+                        "contents"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "8ec52cfd-6b05-4c92-9f2d-b0aa3621679f",
+                          "key": "folder_id",
+                          "value": "<integer>",
+                          "description": "(Required) Folder identifier"
+                        }
+                      ]
+                    },
+                    "description": "List a folder's direct children: subfolders, files, and forms filed directly in it (not further nested).\n\nEach item carries a `type` field (`folder`, `file`, or `form`) telling you what it is. For `type: \"folder\"` items, call this same endpoint again with that folder's id to walk further in. Forms are ordinary files under the hood (`isForm: true` on the underlying file) that inherit their folder/phase placement, so they appear here rather than in a separate forms listing.\n\nNote: on this endpoint (and the phase-contents endpoint), the file's MIME/category label is named `fileType` instead of `type`, to avoid colliding with the folder/file/form discriminator. This does not affect `GET /projects/{project_id}/files`, where `type` keeps its original meaning."
+                  },
+                  "response": [
+                    {
+                      "id": "9aec4b4a-987b-43a2-932a-1d7bf5d7810a",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/folders/:folder_id/contents?include_archived=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "folders",
+                            ":folder_id",
+                            "contents"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "folder_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"type\": \"folder\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"projectId\": \"<integer>\",\n    \"isActive\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"companyId\": \"<integer>\",\n    \"parentId\": \"<integer,null>\",\n    \"phaseInstanceId\": \"<integer,null>\",\n    \"createdBy\": \"<integer,null>\"\n  },\n  {\n    \"type\": \"folder\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"projectId\": \"<integer>\",\n    \"isActive\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"companyId\": \"<integer>\",\n    \"parentId\": \"<integer,null>\",\n    \"phaseInstanceId\": \"<integer,null>\",\n    \"createdBy\": \"<integer,null>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-9aec4b4a-987b-43a2-932a-1d7bf5d7810a"
+                    },
+                    {
+                      "id": "c4faf56d-2033-49f8-bd31-bbc0cb46a607",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/folders/:folder_id/contents?include_archived=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "folders",
+                            ":folder_id",
+                            "contents"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "folder_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-c4faf56d-2033-49f8-bd31-bbc0cb46a607"
+                    },
+                    {
+                      "id": "94f10e0e-6f58-47ee-b13c-0a7838593d91",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/folders/:folder_id/contents?include_archived=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "folders",
+                            ":folder_id",
+                            "contents"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "folder_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-94f10e0e-6f58-47ee-b13c-0a7838593d91"
+                    },
+                    {
+                      "id": "c7cd737d-0f92-4bc6-8ab8-cbf6bd1d4f10",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/folders/:folder_id/contents?include_archived=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "folders",
+                            ":folder_id",
+                            "contents"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "folder_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-c7cd737d-0f92-4bc6-8ab8-cbf6bd1d4f10"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-2c83c777-6bb7-4b60-8173-e55d14fee74e"
+                }
+              ],
+              "id": "771fb0e0-2f93-4aa0-bd4f-841d65cb422d",
+              "createdAt": "2026-10-22T02:17:01.000Z",
+              "updatedAt": "2026-10-22T02:17:01.000Z",
+              "uid": "35240-771fb0e0-2f93-4aa0-bd4f-841d65cb422d"
+            },
+            {
+              "name": "Get Folder",
+              "id": "1cf0ae1b-de47-436a-b7e5-e219122a5cac",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/folders/:folder_id?include_archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "folders",
+                    ":folder_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "cfc6985a-0443-4730-8e3f-5fb454f3a278",
+                      "key": "folder_id",
+                      "value": "<integer>",
+                      "description": "(Required) Folder identifier"
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific doc folder by id."
+              },
+              "response": [
+                {
+                  "id": "027297a4-a11d-41dc-b4cb-874e20fda162",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"isActive\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"companyId\": \"<integer>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-027297a4-a11d-41dc-b4cb-874e20fda162"
+                },
+                {
+                  "id": "72a59f4f-077b-45e1-913d-a181321c3750",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-72a59f4f-077b-45e1-913d-a181321c3750"
+                },
+                {
+                  "id": "d231bcfb-b445-41cf-9491-11cb488b2127",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-d231bcfb-b445-41cf-9491-11cb488b2127"
+                },
+                {
+                  "id": "f4c2caee-e3e0-44ba-803a-f4f504eef754",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-f4c2caee-e3e0-44ba-803a-f4f504eef754"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:01.000Z",
+              "updatedAt": "2026-10-22T02:17:01.000Z",
+              "uid": "35240-1cf0ae1b-de47-436a-b7e5-e219122a5cac"
+            },
+            {
+              "name": "Update Folder",
+              "id": "066fe2d3-80b0-4e67-9e85-df4694165ffa",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"isActive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/folders/:folder_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "folders",
+                    ":folder_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "094711ea-d12a-4434-a10d-4956eb902910",
+                      "key": "folder_id",
+                      "value": "<integer>",
+                      "description": "(Required) Folder identifier"
+                    }
+                  ]
+                },
+                "description": "Rename, move, or archive a doc folder.\n\nNotes:\n- All fields are optional; only fields present in the request body are applied.\n- `parentId` and `phaseInstanceId` are mutually exclusive.\n- Moving a folder that has subfolders is rejected.\n- Archiving a folder cascades the archived state to its subfolders and their files."
+              },
+              "response": [
+                {
+                  "id": "4ebc1b6f-22af-4c6b-bb29-3a323fab30c2",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"isActive\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"isActive\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"companyId\": \"<integer>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-4ebc1b6f-22af-4c6b-bb29-3a323fab30c2"
+                },
+                {
+                  "id": "c3e5bb80-b0c3-44d3-ac4f-b067838d039c",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"isActive\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-c3e5bb80-b0c3-44d3-ac4f-b067838d039c"
+                },
+                {
+                  "id": "c6c4288d-c4ab-4c75-a189-e0b8a9c31d91",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"isActive\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-c6c4288d-c4ab-4c75-a189-e0b8a9c31d91"
+                },
+                {
+                  "id": "541c9dbf-8cf0-4ce8-b2c3-ccfa75fd898d",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<integer,null>\",\n  \"phaseInstanceId\": \"<integer,null>\",\n  \"isActive\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-541c9dbf-8cf0-4ce8-b2c3-ccfa75fd898d"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:01.000Z",
+              "updatedAt": "2026-10-22T02:17:01.000Z",
+              "uid": "35240-066fe2d3-80b0-4e67-9e85-df4694165ffa"
+            },
+            {
+              "name": "Delete Folder",
+              "id": "69555f32-4da8-4d11-8342-ceb5751b6aa1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/folders/:folder_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "folders",
+                    ":folder_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "5fb98ae1-f8ca-40aa-aed4-7e48f1ec7476",
+                      "key": "folder_id",
+                      "value": "<integer>",
+                      "description": "(Required) Folder identifier"
+                    }
+                  ]
+                },
+                "description": "Delete a doc folder. Deleting a folder also deletes its subfolders and any files inside them."
+              },
+              "response": [
+                {
+                  "id": "5fb6b1e6-c8fc-4a92-af76-bce11bcd7d98",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-5fb6b1e6-c8fc-4a92-af76-bce11bcd7d98"
+                },
+                {
+                  "id": "92d5696d-4da4-4787-a653-d81f28dc404d",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-92d5696d-4da4-4787-a653-d81f28dc404d"
+                },
+                {
+                  "id": "b13dc221-079a-4d19-a5f1-034dfe65f8ea",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/folders/:folder_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "folders",
+                        ":folder_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folder_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-b13dc221-079a-4d19-a5f1-034dfe65f8ea"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:01.000Z",
+              "updatedAt": "2026-10-22T02:17:01.000Z",
+              "uid": "35240-69555f32-4da8-4d11-8342-ceb5751b6aa1"
+            }
+          ],
+          "id": "5c18c032-1c34-4273-8c05-805f08e23a12",
+          "createdAt": "2026-10-22T02:17:01.000Z",
+          "updatedAt": "2026-10-22T02:17:01.000Z",
+          "uid": "35240-5c18c032-1c34-4273-8c05-805f08e23a12"
+        }
+      ],
+      "id": "ee55f882-75af-4622-9dd4-7b3b925fccc6",
+      "createdAt": "2026-10-22T02:17:01.000Z",
+      "updatedAt": "2026-10-22T02:17:01.000Z",
+      "uid": "35240-ee55f882-75af-4622-9dd4-7b3b925fccc6"
+    },
+    {
+      "name": "phases",
+      "item": [
+        {
+          "name": "{phase_instance_id}",
+          "item": [
+            {
+              "name": "contents",
+              "item": [
+                {
+                  "name": "Get Phase Contents",
+                  "id": "5cc10fde-ee20-4afd-9f21-c2fc616bd899",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/phases/:phase_instance_id/contents?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "phases",
+                        ":phase_instance_id",
+                        "contents"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "f2ba8a9b-5201-437f-b889-1cbd01ad3a97",
+                          "key": "phase_instance_id",
+                          "value": "<integer>",
+                          "description": "(Required) Phase instance identifier. Gathered from the `type: \"phase\"` rows returned by GET /projects/{project_id}/folders or GET /opportunities/{opportunity_id}/folders."
+                        }
+                      ]
+                    },
+                    "description": "List a workflow phase's direct children: doc folders, files, and forms filed directly at the phase root (not nested inside a folder). Works the same whether the phase belongs to a project or an opportunity.\n\nEach item carries a `type` field (`folder`, `file`, or `form`) telling you what it is. For `type: \"folder\"` items, call `GET /folders/{folder_id}/contents` with that folder's id to walk further in. Forms are ordinary files under the hood (`isForm: true` on the underlying file) that inherit their folder/phase placement, so they appear here rather than in a separate forms listing.\n\nNote: on this endpoint (and the folder-contents endpoint), the file's MIME/category label is named `fileType` instead of `type`, to avoid colliding with the folder/file/form discriminator.\n\nPhase instance ids come from the `type: \"phase\"` rows returned by `GET /projects/{project_id}/folders` or `GET /opportunities/{opportunity_id}/folders`."
+                  },
+                  "response": [
+                    {
+                      "id": "24057396-40be-4548-8c03-24aeb4af40b4",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/phases/:phase_instance_id/contents?include_archived=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "phases",
+                            ":phase_instance_id",
+                            "contents"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "phase_instance_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"type\": \"folder\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"projectId\": \"<integer>\",\n    \"isActive\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"companyId\": \"<integer>\",\n    \"parentId\": \"<integer,null>\",\n    \"phaseInstanceId\": \"<integer,null>\",\n    \"createdBy\": \"<integer,null>\"\n  },\n  {\n    \"type\": \"folder\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"projectId\": \"<integer>\",\n    \"isActive\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"companyId\": \"<integer>\",\n    \"parentId\": \"<integer,null>\",\n    \"phaseInstanceId\": \"<integer,null>\",\n    \"createdBy\": \"<integer,null>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-24057396-40be-4548-8c03-24aeb4af40b4"
+                    },
+                    {
+                      "id": "9018d72f-10d9-4805-8f72-265440b8b02d",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/phases/:phase_instance_id/contents?include_archived=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "phases",
+                            ":phase_instance_id",
+                            "contents"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "phase_instance_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-9018d72f-10d9-4805-8f72-265440b8b02d"
+                    },
+                    {
+                      "id": "935f2451-df0a-4812-94c0-c078032675ef",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/phases/:phase_instance_id/contents?include_archived=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "phases",
+                            ":phase_instance_id",
+                            "contents"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "phase_instance_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-935f2451-df0a-4812-94c0-c078032675ef"
+                    },
+                    {
+                      "id": "f538f22f-34c7-4924-9dcd-000b02c03bd6",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/phases/:phase_instance_id/contents?include_archived=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "phases",
+                            ":phase_instance_id",
+                            "contents"
+                          ],
+                          "query": [
+                            {
+                              "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                              "key": "include_archived",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "phase_instance_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:01.000Z",
+                      "updatedAt": "2026-10-22T02:17:01.000Z",
+                      "uid": "35240-f538f22f-34c7-4924-9dcd-000b02c03bd6"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:01.000Z",
+                  "updatedAt": "2026-10-22T02:17:01.000Z",
+                  "uid": "35240-5cc10fde-ee20-4afd-9f21-c2fc616bd899"
+                }
+              ],
+              "id": "43cb6efb-ac1a-4c57-ba74-2f55b8ddb29e",
+              "createdAt": "2026-10-22T02:17:01.000Z",
+              "updatedAt": "2026-10-22T02:17:01.000Z",
+              "uid": "35240-43cb6efb-ac1a-4c57-ba74-2f55b8ddb29e"
+            }
+          ],
+          "id": "e9c13012-051d-4943-9cd6-d4d72b5c4319",
+          "createdAt": "2026-10-22T02:17:01.000Z",
+          "updatedAt": "2026-10-22T02:17:01.000Z",
+          "uid": "35240-e9c13012-051d-4943-9cd6-d4d72b5c4319"
+        }
+      ],
+      "id": "3e830ec3-becf-4439-a2c2-27597c2000be",
+      "createdAt": "2026-10-22T02:17:01.000Z",
+      "updatedAt": "2026-10-22T02:17:01.000Z",
+      "uid": "35240-3e830ec3-becf-4439-a2c2-27597c2000be"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
+    }
+  ]
+}

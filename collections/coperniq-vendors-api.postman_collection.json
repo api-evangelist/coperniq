@@ -1,2057 +1,2231 @@
 {
+  "info": {
+    "_postman_id": "c17af44d-e3fc-49f2-ba3d-7b507f43890e",
+    "name": "Reference Vendors API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:16:49.000Z",
+    "updatedAt": "2026-10-22T02:16:49.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c17af44d-e3fc-49f2-ba3d-7b507f43890e"
+  },
   "item": [
     {
-      "id": "83985cb0-aaab-47ec-9ee1-5987706fa247",
       "name": "vendors",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "5f0c3371-6f66-401c-a32d-5eb83498a2ff",
-          "name": "List Vendors",
-          "request": {
-            "name": "List Vendors",
-            "description": {
-              "content": "Retrieve a paginated list of vendors.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`, default: desc)\n- Vendor type filter (`vendor_type`)\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "vendors"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+          "name": "search",
+          "item": [
+            {
+              "name": "Search Vendors",
+              "id": "af899276-c6a3-42a6-a59b-dba045ffdf89",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/vendors/search?prop1=<string>&op1=between&value1=<string>&logic=and&prop2=<string>&op2=eq&value2=<string>&page_size=20&page=1&include_archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vendors",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) First field to filter (e.g. `name`, `vendorType`, `website` or custom keyName)",
+                      "key": "prop1",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) Operator for prop1",
+                      "key": "op1",
+                      "value": "between"
+                    },
+                    {
+                      "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)",
+                      "key": "value1",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Logical combination when both prop1 and prop2 are provided",
+                      "key": "logic",
+                      "value": "and"
+                    },
+                    {
+                      "description": "Optional second field to filter",
+                      "key": "prop2",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Operator for prop2",
+                      "key": "op2",
+                      "value": "eq"
+                    },
+                    {
+                      "description": "Value for prop2 (comma-separated values for in/nin or between)",
+                      "key": "value2",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ]
+                },
+                "description": "Search vendors using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `name`, `website`, `vendorType`) or a custom property key name.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)"
+              },
+              "response": [
                 {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
+                  "id": "1490e350-9d3f-469b-8b25-adafbfece625",
+                  "name": "Matching vendors",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/search?prop1=<string>&op1=between&value1=<string>&logic=and&prop2=<string>&op2=eq&value2=<string>&page_size=20&page=1&include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) First field to filter (e.g. `name`, `vendorType`, `website` or custom keyName)",
+                          "key": "prop1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Operator for prop1",
+                          "key": "op1",
+                          "value": "between"
+                        },
+                        {
+                          "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)",
+                          "key": "value1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Logical combination when both prop1 and prop2 are provided",
+                          "key": "logic",
+                          "value": "and"
+                        },
+                        {
+                          "description": "Optional second field to filter",
+                          "key": "prop2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Operator for prop2",
+                          "key": "op2",
+                          "value": "eq"
+                        },
+                        {
+                          "description": "Value for prop2 (comma-separated values for in/nin or between)",
+                          "key": "value2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"address\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isActive\": \"<boolean>\",\n    \"primaryEmail\": \"<string,null-email>\",\n    \"primaryPhone\": \"<string,null>\",\n    \"number\": \"<integer>\",\n    \"vendorType\": \"LOGISTICS\",\n    \"website\": \"<string,null>\",\n    \"projectIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"custom\": {\n      \"dolora2a\": {\n        \"description\": \"Any type\"\n      }\n    }\n  },\n  {\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"address\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isActive\": \"<boolean>\",\n    \"primaryEmail\": \"<string,null-email>\",\n    \"primaryPhone\": \"<string,null>\",\n    \"number\": \"<integer>\",\n    \"vendorType\": \"MANUFACTURER\",\n    \"website\": \"<string,null>\",\n    \"projectIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"custom\": {\n      \"culpa8\": {\n        \"description\": \"Any type\"\n      },\n      \"commodo_15\": {\n        \"description\": \"Any type\"\n      },\n      \"culpae9\": {\n        \"description\": \"Any type\"\n      },\n      \"irure_5\": {\n        \"description\": \"Any type\"\n      }\n    }\n  }\n]",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-1490e350-9d3f-469b-8b25-adafbfece625"
                 },
                 {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
+                  "id": "f7c1024d-3a0f-4e44-98af-f95149418399",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/search?prop1=<string>&op1=between&value1=<string>&logic=and&prop2=<string>&op2=eq&value2=<string>&page_size=20&page=1&include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) First field to filter (e.g. `name`, `vendorType`, `website` or custom keyName)",
+                          "key": "prop1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Operator for prop1",
+                          "key": "op1",
+                          "value": "between"
+                        },
+                        {
+                          "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)",
+                          "key": "value1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Logical combination when both prop1 and prop2 are provided",
+                          "key": "logic",
+                          "value": "and"
+                        },
+                        {
+                          "description": "Optional second field to filter",
+                          "key": "prop2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Operator for prop2",
+                          "key": "op2",
+                          "value": "eq"
+                        },
+                        {
+                          "description": "Value for prop2 (comma-separated values for in/nin or between)",
+                          "key": "value2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-f7c1024d-3a0f-4e44-98af-f95149418399"
                 },
                 {
-                  "disabled": false,
-                  "key": "updated_after",
-                  "value": "<dateTime>",
-                  "description": "Filter items updated after this timestamp (ISO 8601)"
-                },
-                {
-                  "disabled": false,
-                  "key": "updated_before",
-                  "value": "<dateTime>",
-                  "description": "Filter items updated before this timestamp (ISO 8601)"
-                },
-                {
-                  "disabled": false,
-                  "key": "order_by",
-                  "value": "asc",
-                  "description": "Sort order for results"
-                },
-                {
-                  "disabled": false,
-                  "key": "include_archived",
-                  "value": "false",
-                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
-                },
-                {
-                  "disabled": false,
-                  "key": "include_contacts",
-                  "value": "false",
-                  "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true."
-                },
-                {
-                  "disabled": false,
-                  "key": "vendor_type",
-                  "value": "<string>",
-                  "description": "Filter by vendor type"
+                  "id": "97f7db2e-41f8-44ce-8cad-011740be4673",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/search?prop1=<string>&op1=between&value1=<string>&logic=and&prop2=<string>&op2=eq&value2=<string>&page_size=20&page=1&include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) First field to filter (e.g. `name`, `vendorType`, `website` or custom keyName)",
+                          "key": "prop1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Operator for prop1",
+                          "key": "op1",
+                          "value": "between"
+                        },
+                        {
+                          "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)",
+                          "key": "value1",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Logical combination when both prop1 and prop2 are provided",
+                          "key": "logic",
+                          "value": "and"
+                        },
+                        {
+                          "description": "Optional second field to filter",
+                          "key": "prop2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Operator for prop2",
+                          "key": "op2",
+                          "value": "eq"
+                        },
+                        {
+                          "description": "Value for prop2 (comma-separated values for in/nin or between)",
+                          "key": "value2",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Number of items per page (max 100)",
+                          "key": "page_size",
+                          "value": "20"
+                        },
+                        {
+                          "description": "Page number (1-based)",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-97f7db2e-41f8-44ce-8cad-011740be4673"
                 }
               ],
-              "variable": []
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-af899276-c6a3-42a6-a59b-dba045ffdf89"
+            }
+          ],
+          "id": "c1ea1eda-5857-49a5-b66e-3c9db6650061",
+          "createdAt": "2026-10-22T02:16:49.000Z",
+          "updatedAt": "2026-10-22T02:16:49.000Z",
+          "uid": "35240-c1ea1eda-5857-49a5-b66e-3c9db6650061"
+        },
+        {
+          "name": "{vendor_id}",
+          "item": [
+            {
+              "name": "Get Vendor",
+              "id": "d1b3df2a-7814-4083-9f1a-19b6d8a45884",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
               },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/vendors/:vendor_id?include_contacts=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vendors",
+                    ":vendor_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                      "key": "include_contacts",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "2ba1dc66-aee2-47ab-a168-7d2aaf947a99",
+                      "key": "vendor_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific vendor by ID."
+              },
+              "response": [
+                {
+                  "id": "3596cc2c-94d7-4930-84c9-c9082b9b417f",
+                  "name": "Vendor details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id?include_contacts=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"number\": \"<integer>\",\n  \"vendorType\": \"LOGISTICS\",\n  \"website\": \"<string,null>\",\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"veniam_f30\": {\n      \"description\": \"Any type\"\n    },\n    \"magna_1\": {\n      \"description\": \"Any type\"\n    },\n    \"minim3\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-3596cc2c-94d7-4930-84c9-c9082b9b417f"
+                },
+                {
+                  "id": "1f467b21-66eb-40c3-8cc0-94b1bb8bab66",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id?include_contacts=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-1f467b21-66eb-40c3-8cc0-94b1bb8bab66"
+                },
+                {
+                  "id": "76fab265-bcbf-48b8-ba88-cef937ec916b",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id?include_contacts=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                          "key": "include_contacts",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-76fab265-bcbf-48b8-ba88-cef937ec916b"
+                }
+              ],
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-d1b3df2a-7814-4083-9f1a-19b6d8a45884"
+            },
+            {
+              "name": "Update Vendor",
+              "id": "9e7ee970-88ff-499d-b1f9-01bc07f228d4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"MANUFACTURER\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"pariaturcd7\": {\n      \"description\": \"Any type\"\n    },\n    \"tempor_6d\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/vendors/:vendor_id?allow_new_options=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vendors",
+                    ":vendor_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "9cb0a6db-d7a3-4351-a69a-6aa994654f28",
+                      "key": "vendor_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update an existing vendor. All fields are optional \u2014 only include what you want to change.\n\nPass `null` to clear a nullable field (e.g. `website`, `description`)."
+              },
+              "response": [
+                {
+                  "id": "ae97149f-9afd-43cb-9876-dd57946c764c",
+                  "name": "Vendor updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"MANUFACTURER\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"pariaturcd7\": {\n      \"description\": \"Any type\"\n    },\n    \"tempor_6d\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"number\": \"<integer>\",\n  \"vendorType\": \"LOGISTICS\",\n  \"website\": \"<string,null>\",\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"veniam_f30\": {\n      \"description\": \"Any type\"\n    },\n    \"magna_1\": {\n      \"description\": \"Any type\"\n    },\n    \"minim3\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-ae97149f-9afd-43cb-9876-dd57946c764c"
+                },
+                {
+                  "id": "bd6fa9d9-df0b-4261-9d19-6bddc17e4453",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"MANUFACTURER\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"pariaturcd7\": {\n      \"description\": \"Any type\"\n    },\n    \"tempor_6d\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-bd6fa9d9-df0b-4261-9d19-6bddc17e4453"
+                },
+                {
+                  "id": "6e4da664-115f-42b1-a71a-4184cf3a3583",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"MANUFACTURER\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"pariaturcd7\": {\n      \"description\": \"Any type\"\n    },\n    \"tempor_6d\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-6e4da664-115f-42b1-a71a-4184cf3a3583"
+                },
+                {
+                  "id": "f22694a4-3f73-400c-b6ae-2bd46c5c8f1e",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"MANUFACTURER\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"pariaturcd7\": {\n      \"description\": \"Any type\"\n    },\n    \"tempor_6d\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id?allow_new_options=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to allow creation of new dropdown options during record creation",
+                          "key": "allow_new_options",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-f22694a4-3f73-400c-b6ae-2bd46c5c8f1e"
+                }
+              ],
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-9e7ee970-88ff-499d-b1f9-01bc07f228d4"
+            },
+            {
+              "name": "Delete Vendor",
+              "id": "7f17691e-1d9c-4748-8654-aa0be366ebf6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/vendors/:vendor_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vendors",
+                    ":vendor_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "259ae2e5-0510-4be6-8968-bf37cef2dd14",
+                      "key": "vendor_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Permanently delete a vendor by ID."
+              },
+              "response": [
+                {
+                  "id": "000da553-a3bd-4dce-970c-b1f5151424b0",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-000da553-a3bd-4dce-970c-b1f5151424b0"
+                },
+                {
+                  "id": "48c6294b-a7c5-4a93-b2c6-43084939ce87",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-48c6294b-a7c5-4a93-b2c6-43084939ce87"
+                },
+                {
+                  "id": "6d32ba97-1401-4a8c-a755-7fb7de3cf92b",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vendors/:vendor_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vendors",
+                        ":vendor_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "vendor_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-6d32ba97-1401-4a8c-a755-7fb7de3cf92b"
+                }
+              ],
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-7f17691e-1d9c-4748-8654-aa0be366ebf6"
+            }
+          ],
+          "id": "e4a9c1df-b89b-4509-abfc-23d42e8cd56e",
+          "createdAt": "2026-10-22T02:16:49.000Z",
+          "updatedAt": "2026-10-22T02:16:49.000Z",
+          "uid": "35240-e4a9c1df-b89b-4509-abfc-23d42e8cd56e"
+        },
+        {
+          "name": "List Vendors",
+          "id": "a6b181b2-0dc5-4d17-aec5-f92adddb99c3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/vendors?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&include_archived=false&include_contacts=false&vendor_type=SUBCONTRACTOR",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vendors"
+              ],
+              "query": [
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_after",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_before",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Sort order for results",
+                  "key": "order_by",
+                  "value": "asc"
+                },
+                {
+                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                  "key": "include_archived",
+                  "value": "false"
+                },
+                {
+                  "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
+                  "key": "include_contacts",
+                  "value": "false"
+                },
+                {
+                  "description": "Filter by vendor type",
+                  "key": "vendor_type",
+                  "value": "SUBCONTRACTOR"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of vendors.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Sorting (`order_by`, default: desc)\n- Vendor type filter (`vendor_type`)"
           },
           "response": [
             {
-              "id": "30d5c331-49f1-433a-a520-2b6a08d31080",
+              "id": "11176de6-e609-4cf9-9064-2078b62690ed",
               "name": "List of vendors",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "vendors"
-                  ],
+                  "raw": "{{baseUrl}}/vendors?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&include_archived=false&include_contacts=false&vendor_type=SUBCONTRACTOR",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "vendors"
+                  ],
                   "query": [
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
                       "key": "updated_after",
-                      "value": "<dateTime>"
+                      "value": "<date>"
                     },
                     {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
                       "key": "updated_before",
-                      "value": "<dateTime>"
+                      "value": "<date>"
                     },
                     {
+                      "description": "Sort order for results",
                       "key": "order_by",
                       "value": "asc"
                     },
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
                       "key": "include_contacts",
                       "value": "false"
                     },
                     {
+                      "description": "Filter by vendor type",
                       "key": "vendor_type",
                       "value": "SUBCONTRACTOR"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 2050,\n    \"createdAt\": \"1973-05-15T04:54:25.822Z\",\n    \"updatedAt\": \"1978-06-16T20:57:09.890Z\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": true,\n    \"primaryEmail\": \"qM3AX2nbp9kX@hqlqJgGbO.hc\",\n    \"primaryPhone\": \"string\",\n    \"number\": 6810,\n    \"vendorType\": \"FINANCING\",\n    \"website\": \"string\",\n    \"projectIds\": [\n      125,\n      5983\n    ],\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  },\n  {\n    \"id\": 5331,\n    \"createdAt\": \"1959-09-25T05:45:20.759Z\",\n    \"updatedAt\": \"1985-03-14T09:47:59.932Z\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"tHZs@TJtDnsOERHpYpTLvKoAFhzdSZPsBa.uwwn\",\n    \"primaryPhone\": \"string\",\n    \"number\": 4280,\n    \"vendorType\": \"MANUFACTURER\",\n    \"website\": \"string\",\n    \"projectIds\": [\n      8969,\n      9947\n    ],\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n]",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"address\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isActive\": \"<boolean>\",\n    \"primaryEmail\": \"<string,null-email>\",\n    \"primaryPhone\": \"<string,null>\",\n    \"number\": \"<integer>\",\n    \"vendorType\": \"LOGISTICS\",\n    \"website\": \"<string,null>\",\n    \"projectIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"custom\": {\n      \"dolora2a\": {\n        \"description\": \"Any type\"\n      }\n    }\n  },\n  {\n    \"id\": \"<integer>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"address\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isActive\": \"<boolean>\",\n    \"primaryEmail\": \"<string,null-email>\",\n    \"primaryPhone\": \"<string,null>\",\n    \"number\": \"<integer>\",\n    \"vendorType\": \"MANUFACTURER\",\n    \"website\": \"<string,null>\",\n    \"projectIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"custom\": {\n      \"culpa8\": {\n        \"description\": \"Any type\"\n      },\n      \"commodo_15\": {\n        \"description\": \"Any type\"\n      },\n      \"culpae9\": {\n        \"description\": \"Any type\"\n      },\n      \"irure_5\": {\n        \"description\": \"Any type\"\n      }\n    }\n  }\n]",
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-11176de6-e609-4cf9-9064-2078b62690ed"
             },
             {
-              "id": "2cc86853-d856-493d-9463-8c76ddb5cbaf",
+              "id": "9a00ced1-b971-4152-b253-7d8e1e0f796a",
               "name": "Authentication failed",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "vendors"
-                  ],
+                  "raw": "{{baseUrl}}/vendors?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=asc&include_archived=false&include_contacts=false&vendor_type=SUBCONTRACTOR",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "vendors"
+                  ],
                   "query": [
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
                       "key": "updated_after",
-                      "value": "<dateTime>"
+                      "value": "<date>"
                     },
                     {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
                       "key": "updated_before",
-                      "value": "<dateTime>"
+                      "value": "<date>"
                     },
                     {
+                      "description": "Sort order for results",
                       "key": "order_by",
                       "value": "asc"
                     },
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true.",
                       "key": "include_contacts",
                       "value": "false"
                     },
                     {
+                      "description": "Filter by vendor type",
                       "key": "vendor_type",
                       "value": "SUBCONTRACTOR"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-9a00ced1-b971-4152-b253-7d8e1e0f796a"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:16:49.000Z",
+          "updatedAt": "2026-10-22T02:16:49.000Z",
+          "uid": "35240-a6b181b2-0dc5-4d17-aec5-f92adddb99c3"
         },
         {
-          "id": "6f95c576-737a-401b-8dba-aaca5761496b",
           "name": "Create Vendor",
+          "id": "a6abb8e6-4a56-48be-8f55-c96611a94ec5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Create Vendor",
-            "description": {
-              "content": "Create a new vendor.\n\nRequired fields:\n- `name`: Vendor name\n- `vendorType`: One of `CONSULTANT`, `FINANCING`, `LOGISTICS`, `MANUFACTURER`, `SUBCONTRACTOR`, `SUPPLIER`\n\nOptional fields:\n- `address`: Array containing a single string for the full vendor location/address\n- `website`: Vendor website URL (max 2048 chars)\n- `description`: Vendor description\n- `isActive`: Whether the vendor is active (default: true)\n- `contacts`: Array of contact IDs to associate\n- `projectIds`: Array of project IDs to link this vendor to\n- `custom`: Custom fields object\n",
-              "type": "text/plain"
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUBCONTRACTOR\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": true,\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"ad_33\": {\n      \"description\": \"Any type\"\n    },\n    \"minim_0\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
             },
             "url": {
+              "raw": "{{baseUrl}}/vendors?allow_new_options=false",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "vendors"
               ],
-              "host": [
-                "{{baseUrl}}"
-              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "Whether to allow creation of new dropdown options during record creation",
                   "key": "allow_new_options",
-                  "value": "false",
-                  "description": "Whether to allow creation of new dropdown options during record creation"
+                  "value": "false"
                 }
-              ],
-              "variable": []
+              ]
             },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": true,\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
+            "description": "Create a new vendor.\n\nRequired fields:\n- `name`: Vendor name\n- `vendorType`: One of `CONSULTANT`, `FINANCING`, `LOGISTICS`, `MANUFACTURER`, `SUBCONTRACTOR`, `SUPPLIER`\n\nOptional fields:\n- `address`: Array containing a single string for the full vendor location/address\n- `website`: Vendor website URL (max 2048 chars)\n- `description`: Vendor description\n- `isActive`: Whether the vendor is active (default: true)\n- `contacts`: Array of contact IDs to associate\n- `projectIds`: Array of project IDs to link this vendor to\n- `custom`: Custom fields object"
           },
           "response": [
             {
-              "id": "be5648b3-58d1-4e72-9812-86a0c07f87c6",
+              "id": "9f3eed5c-6c59-4050-956b-e198e540e22f",
               "name": "Matching vendor found (upsert)",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUPPLIER\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": true,\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUBCONTRACTOR\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": true,\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"ad_33\": {\n      \"description\": \"Any type\"\n    },\n    \"minim_0\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/vendors?allow_new_options=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vendors"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ]
                 }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": 362,\n  \"createdAt\": \"1988-02-13T00:32:57.963Z\",\n  \"updatedAt\": \"2012-12-14T17:17:04.778Z\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": false,\n  \"primaryEmail\": \"afq@OQEGpPXPanliWosjknhKXEOjjStmDCGrZ.vtfp\",\n  \"primaryPhone\": \"string\",\n  \"number\": 6984,\n  \"vendorType\": \"CONSULTANT\",\n  \"website\": \"string\",\n  \"projectIds\": [\n    2816,\n    2636\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<integer>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isActive\": \"<boolean>\",\n  \"primaryEmail\": \"<string,null-email>\",\n  \"primaryPhone\": \"<string,null>\",\n  \"number\": \"<integer>\",\n  \"vendorType\": \"LOGISTICS\",\n  \"website\": \"<string,null>\",\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"veniam_f30\": {\n      \"description\": \"Any type\"\n    },\n    \"magna_1\": {\n      \"description\": \"Any type\"\n    },\n    \"minim3\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-9f3eed5c-6c59-4050-956b-e198e540e22f"
             },
             {
-              "id": "9b2c7bc9-717b-47f3-b69d-691b0e746fa2",
+              "id": "4cc7b561-0ae9-45cc-b142-6c11660d0131",
               "name": "Invalid request",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUPPLIER\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": true,\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUBCONTRACTOR\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": true,\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"ad_33\": {\n      \"description\": \"Any type\"\n    },\n    \"minim_0\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/vendors?allow_new_options=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vendors"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
+                      "key": "allow_new_options",
+                      "value": "false"
+                    }
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-4cc7b561-0ae9-45cc-b142-6c11660d0131"
             },
             {
-              "id": "c7d65873-0463-40b1-a753-04d5c643805b",
+              "id": "70b72ffa-5efe-4975-9ad3-dce2a4532455",
               "name": "Authentication failed",
               "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUBCONTRACTOR\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": true,\n  \"contacts\": \"<array,null>\",\n  \"projectIds\": \"<array,null>\",\n  \"custom\": {\n    \"ad_33\": {\n      \"description\": \"Any type\"\n    },\n    \"minim_0\": {\n      \"description\": \"Any type\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
+                  "raw": "{{baseUrl}}/vendors?allow_new_options=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "vendors"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "Whether to allow creation of new dropdown options during record creation",
                       "key": "allow_new_options",
                       "value": "false"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUPPLIER\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": true,\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-70b72ffa-5efe-4975-9ad3-dce2a4532455"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "f59e40e2-fdce-4c47-93cc-1a80ebd2e8cb",
-          "name": "Search Vendors",
-          "request": {
-            "name": "Search Vendors",
-            "description": {
-              "content": "Search vendors using up to two filters (prop1/op1/value1 and optionally prop2/op2/value2), combined with `logic` (AND/OR).\n\nProperties:\n- `propX` can be a standard field (e.g., `name`, `website`, `vendorType`) or a custom property key name.\n\nOperators (`opX`):\n- Equality: `eq`, `neq`\n- Text/string matching: `contains` (case-insensitive)\n- Lists: `in`, `nin` (CSV list in `valueX`)\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "vendors",
-                "search"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "prop1",
-                  "value": "<string>",
-                  "description": "(Required) First field to filter (e.g. `name`, `vendorType`, `website` or custom keyName)"
-                },
-                {
-                  "disabled": false,
-                  "key": "op1",
-                  "value": "<string>",
-                  "description": "(Required) Operator for prop1"
-                },
-                {
-                  "disabled": false,
-                  "key": "value1",
-                  "value": "<string>",
-                  "description": "(Required) Value for prop1 (comma-separated values for in/nin or between)"
-                },
-                {
-                  "disabled": false,
-                  "key": "logic",
-                  "value": "and",
-                  "description": "Logical combination when both prop1 and prop2 are provided"
-                },
-                {
-                  "disabled": false,
-                  "key": "prop2",
-                  "value": "<string>",
-                  "description": "Optional second field to filter"
-                },
-                {
-                  "disabled": false,
-                  "key": "op2",
-                  "value": "<string>",
-                  "description": "Operator for prop2"
-                },
-                {
-                  "disabled": false,
-                  "key": "value2",
-                  "value": "<string>",
-                  "description": "Value for prop2 (comma-separated values for in/nin or between)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
-                },
-                {
-                  "disabled": false,
-                  "key": "include_archived",
-                  "value": "false",
-                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "8f9c06e8-2570-4133-a3ca-30c8b21e66b1",
-              "name": "Matching vendors",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "prop1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op1",
-                      "value": "nin"
-                    },
-                    {
-                      "key": "value1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "logic",
-                      "value": "and"
-                    },
-                    {
-                      "key": "prop2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op2",
-                      "value": "between"
-                    },
-                    {
-                      "key": "value2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 2050,\n    \"createdAt\": \"1973-05-15T04:54:25.822Z\",\n    \"updatedAt\": \"1978-06-16T20:57:09.890Z\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": true,\n    \"primaryEmail\": \"qM3AX2nbp9kX@hqlqJgGbO.hc\",\n    \"primaryPhone\": \"string\",\n    \"number\": 6810,\n    \"vendorType\": \"FINANCING\",\n    \"website\": \"string\",\n    \"projectIds\": [\n      125,\n      5983\n    ],\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  },\n  {\n    \"id\": 5331,\n    \"createdAt\": \"1959-09-25T05:45:20.759Z\",\n    \"updatedAt\": \"1985-03-14T09:47:59.932Z\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"address\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isActive\": false,\n    \"primaryEmail\": \"tHZs@TJtDnsOERHpYpTLvKoAFhzdSZPsBa.uwwn\",\n    \"primaryPhone\": \"string\",\n    \"number\": 4280,\n    \"vendorType\": \"MANUFACTURER\",\n    \"website\": \"string\",\n    \"projectIds\": [\n      8969,\n      9947\n    ],\n    \"custom\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a05f8bd4-e68e-42c7-b173-ab14ef770741",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "prop1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op1",
-                      "value": "nin"
-                    },
-                    {
-                      "key": "value1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "logic",
-                      "value": "and"
-                    },
-                    {
-                      "key": "prop2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op2",
-                      "value": "between"
-                    },
-                    {
-                      "key": "value2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7cb95631-6a0a-4adb-ab6e-bd2c5c94851a",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "prop1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op1",
-                      "value": "nin"
-                    },
-                    {
-                      "key": "value1",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "logic",
-                      "value": "and"
-                    },
-                    {
-                      "key": "prop2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "op2",
-                      "value": "between"
-                    },
-                    {
-                      "key": "value2",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "include_archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "64cf2702-dc55-49b0-9cbb-9860215ba02c",
-          "name": "Get Vendor",
-          "request": {
-            "name": "Get Vendor",
-            "description": {
-              "content": "Retrieve a specific vendor by ID.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "vendors",
-                ":vendorId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "include_contacts",
-                  "value": "false",
-                  "description": "Whether to include associated contacts in the response. Defaults to false unless explicitly set to true."
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "vendorId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "db1e229a-9b8f-4522-90fc-853e63d9ce2a",
-              "name": "Vendor details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "include_contacts",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 362,\n  \"createdAt\": \"1988-02-13T00:32:57.963Z\",\n  \"updatedAt\": \"2012-12-14T17:17:04.778Z\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": false,\n  \"primaryEmail\": \"afq@OQEGpPXPanliWosjknhKXEOjjStmDCGrZ.vtfp\",\n  \"primaryPhone\": \"string\",\n  \"number\": 6984,\n  \"vendorType\": \"CONSULTANT\",\n  \"website\": \"string\",\n  \"projectIds\": [\n    2816,\n    2636\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a541e82d-4eaf-4cb9-acd2-7e1f1494f696",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "include_contacts",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "85bde349-74c9-4bf4-b1e3-d0d00a1e9cec",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "include_contacts",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "ba5b4c48-87d6-467e-80cc-8fa0c0c9449b",
-          "name": "Update Vendor",
-          "request": {
-            "name": "Update Vendor",
-            "description": {
-              "content": "Update an existing vendor. All fields are optional — only include what you want to change.\n\nPass `null` to clear a nullable field (e.g. `website`, `description`).\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "vendors",
-                ":vendorId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "allow_new_options",
-                  "value": "false",
-                  "description": "Whether to allow creation of new dropdown options during record creation"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "vendorId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PATCH",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"<string>\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {}\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "aa5515fc-0853-47aa-896a-cecb3837ccd7",
-              "name": "Vendor updated successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUBCONTRACTOR\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 362,\n  \"createdAt\": \"1988-02-13T00:32:57.963Z\",\n  \"updatedAt\": \"2012-12-14T17:17:04.778Z\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"address\": [\n    \"string\",\n    \"string\"\n  ],\n  \"isActive\": false,\n  \"primaryEmail\": \"afq@OQEGpPXPanliWosjknhKXEOjjStmDCGrZ.vtfp\",\n  \"primaryPhone\": \"string\",\n  \"number\": 6984,\n  \"vendorType\": \"CONSULTANT\",\n  \"website\": \"string\",\n  \"projectIds\": [\n    2816,\n    2636\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3edff38c-2f4b-4494-99ea-b7242b6fc4f6",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUBCONTRACTOR\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ac04f9c7-07f9-43a0-8c51-5bb274ec9067",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUBCONTRACTOR\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "6a6b2be2-29f9-486f-8f92-21d423beb47e",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "allow_new_options",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"vendorType\": \"SUBCONTRACTOR\",\n  \"address\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"website\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"isActive\": \"<boolean>\",\n  \"contacts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"custom\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "febd70f1-5bd7-449d-aac9-e07a288aa7fa",
-          "name": "Delete Vendor",
-          "request": {
-            "name": "Delete Vendor",
-            "description": {
-              "content": "Permanently delete a vendor by ID.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "vendors",
-                ":vendorId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "vendorId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "5ecf27da-844e-4b9b-b84e-3a843e3a415a",
-              "name": "Successful response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "ad1aa926-b6a1-4ee3-ab19-a3ea119f76cc",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "838df1b1-174b-4728-bdcf-b35e85a9229e",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "d1cc4d9e-8d62-4228-9e2b-d762a86cfef5",
-          "name": "Create Vendor-Project Link",
-          "request": {
-            "name": "Create Vendor-Project Link",
-            "description": {
-              "content": "Associate a vendor with a project (many-to-many relationship).\n\nA vendor can be linked to multiple projects and a project can have multiple vendors.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "projects",
-                ":projectId",
-                "vendors",
-                ":vendorId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "projectId",
-                  "description": "(Required) "
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "vendorId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "eda77d26-27f9-40c2-b780-a05dd6e8ab45",
-              "name": "Vendor linked successfully to project",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "98877e12-0e65-40d6-9720-b1ac5dc3359b",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "aff9391c-e778-48b6-b55a-35a1a999112e",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "7178b82c-07fb-4137-be8e-b0d979e21e8c",
-          "name": "Delete Vendor-Project Link",
-          "request": {
-            "name": "Delete Vendor-Project Link",
-            "description": {
-              "content": "Remove the association between a vendor and a project.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "projects",
-                ":projectId",
-                "vendors",
-                ":vendorId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "projectId",
-                  "description": "(Required) "
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "vendorId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "ec8bfdd0-3c74-40dc-828f-4607bb5e62df",
-              "name": "Vendor-Project link deleted successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "844bb467-d9ad-4978-98a3-1c481ab8954f",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "209f6991-f9d5-41fb-ad24-e53b451088ba",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "vendors",
-                    ":vendorId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vendorId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:16:49.000Z",
+          "updatedAt": "2026-10-22T02:16:49.000Z",
+          "uid": "35240-a6abb8e6-4a56-48be-8f55-c96611a94ec5"
         }
       ],
-      "event": []
+      "id": "1d284424-ae96-47c9-9c0d-07b6ab135f2e",
+      "createdAt": "2026-10-22T02:16:49.000Z",
+      "updatedAt": "2026-10-22T02:16:49.000Z",
+      "uid": "35240-1d284424-ae96-47c9-9c0d-07b6ab135f2e"
+    },
+    {
+      "name": "projects",
+      "item": [
+        {
+          "name": "{project_id}",
+          "item": [
+            {
+              "name": "vendors",
+              "item": [
+                {
+                  "name": "{vendor_id}",
+                  "item": [
+                    {
+                      "name": "Create Vendor-Project Link",
+                      "id": "b9d10680-cd24-417a-a440-46a13a7592b5",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "apikey",
+                          "apikey": [
+                            {
+                              "key": "key",
+                              "value": "x-api-key",
+                              "type": "string"
+                            },
+                            {
+                              "key": "value",
+                              "value": "{{apiKey}}",
+                              "type": "string"
+                            },
+                            {
+                              "key": "in",
+                              "value": "header",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/vendors/:vendor_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "vendors",
+                            ":vendor_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "ac07b652-bc7c-4c26-9dd9-058ebf7af1cb",
+                              "key": "project_id",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "00b68049-49b5-416f-9f5c-0afb97047d80",
+                              "key": "vendor_id",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Associate a vendor with a project (many-to-many relationship).\n\nA vendor can be linked to multiple projects and a project can have multiple vendors."
+                      },
+                      "response": [
+                        {
+                          "id": "b10bb1d5-5794-4445-86cc-e327be426daa",
+                          "name": "Vendor linked successfully to project",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/projects/:project_id/vendors/:vendor_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "projects",
+                                ":project_id",
+                                "vendors",
+                                ":vendor_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                },
+                                {
+                                  "key": "vendor_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T02:16:49.000Z",
+                          "updatedAt": "2026-10-22T02:16:49.000Z",
+                          "uid": "35240-b10bb1d5-5794-4445-86cc-e327be426daa"
+                        },
+                        {
+                          "id": "a7fa5635-fd85-44f9-a5d2-d003759cfef5",
+                          "name": "Authentication failed",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/projects/:project_id/vendors/:vendor_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "projects",
+                                ":project_id",
+                                "vendors",
+                                ":vendor_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                },
+                                {
+                                  "key": "vendor_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                          "createdAt": "2026-10-22T02:16:49.000Z",
+                          "updatedAt": "2026-10-22T02:16:49.000Z",
+                          "uid": "35240-a7fa5635-fd85-44f9-a5d2-d003759cfef5"
+                        },
+                        {
+                          "id": "e22214a0-036d-4dd9-a56a-a7c8732fae48",
+                          "name": "Resource not found",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/projects/:project_id/vendors/:vendor_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "projects",
+                                ":project_id",
+                                "vendors",
+                                ":vendor_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                },
+                                {
+                                  "key": "vendor_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                          "createdAt": "2026-10-22T02:16:49.000Z",
+                          "updatedAt": "2026-10-22T02:16:49.000Z",
+                          "uid": "35240-e22214a0-036d-4dd9-a56a-a7c8732fae48"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T02:16:49.000Z",
+                      "updatedAt": "2026-10-22T02:16:49.000Z",
+                      "uid": "35240-b9d10680-cd24-417a-a440-46a13a7592b5"
+                    },
+                    {
+                      "name": "Delete Vendor-Project Link",
+                      "id": "d0af8e16-771b-4f25-bd23-45c3c2778fb1",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "apikey",
+                          "apikey": [
+                            {
+                              "key": "key",
+                              "value": "x-api-key",
+                              "type": "string"
+                            },
+                            {
+                              "key": "value",
+                              "value": "{{apiKey}}",
+                              "type": "string"
+                            },
+                            {
+                              "key": "in",
+                              "value": "header",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/vendors/:vendor_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "vendors",
+                            ":vendor_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "d68f98f4-f9f0-4295-95bb-f72b0846cb94",
+                              "key": "project_id",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "f4422707-a236-491c-b671-acefa93ae0f9",
+                              "key": "vendor_id",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Remove the association between a vendor and a project."
+                      },
+                      "response": [
+                        {
+                          "id": "726a391f-c4df-4f3a-b496-8939bea3bc7a",
+                          "name": "Vendor-Project link deleted successfully",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/projects/:project_id/vendors/:vendor_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "projects",
+                                ":project_id",
+                                "vendors",
+                                ":vendor_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                },
+                                {
+                                  "key": "vendor_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T02:16:49.000Z",
+                          "updatedAt": "2026-10-22T02:16:49.000Z",
+                          "uid": "35240-726a391f-c4df-4f3a-b496-8939bea3bc7a"
+                        },
+                        {
+                          "id": "2c734490-856c-40c9-b7f1-c8b1bcba3c7e",
+                          "name": "Authentication failed",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/projects/:project_id/vendors/:vendor_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "projects",
+                                ":project_id",
+                                "vendors",
+                                ":vendor_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                },
+                                {
+                                  "key": "vendor_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                          "createdAt": "2026-10-22T02:16:49.000Z",
+                          "updatedAt": "2026-10-22T02:16:49.000Z",
+                          "uid": "35240-2c734490-856c-40c9-b7f1-c8b1bcba3c7e"
+                        },
+                        {
+                          "id": "da218104-12a8-4b06-a6c0-4a4a01119792",
+                          "name": "Resource not found",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/projects/:project_id/vendors/:vendor_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "projects",
+                                ":project_id",
+                                "vendors",
+                                ":vendor_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                },
+                                {
+                                  "key": "vendor_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                          "createdAt": "2026-10-22T02:16:49.000Z",
+                          "updatedAt": "2026-10-22T02:16:49.000Z",
+                          "uid": "35240-da218104-12a8-4b06-a6c0-4a4a01119792"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T02:16:49.000Z",
+                      "updatedAt": "2026-10-22T02:16:49.000Z",
+                      "uid": "35240-d0af8e16-771b-4f25-bd23-45c3c2778fb1"
+                    }
+                  ],
+                  "id": "43ba6476-5f70-485c-8b75-16539dfa942f",
+                  "createdAt": "2026-10-22T02:16:49.000Z",
+                  "updatedAt": "2026-10-22T02:16:49.000Z",
+                  "uid": "35240-43ba6476-5f70-485c-8b75-16539dfa942f"
+                }
+              ],
+              "id": "ed5ab7df-e964-4b73-88c8-14e7864c08e2",
+              "createdAt": "2026-10-22T02:16:49.000Z",
+              "updatedAt": "2026-10-22T02:16:49.000Z",
+              "uid": "35240-ed5ab7df-e964-4b73-88c8-14e7864c08e2"
+            }
+          ],
+          "id": "c3b93655-7f23-481c-87f8-f88e73927940",
+          "createdAt": "2026-10-22T02:16:49.000Z",
+          "updatedAt": "2026-10-22T02:16:49.000Z",
+          "uid": "35240-c3b93655-7f23-481c-87f8-f88e73927940"
+        }
+      ],
+      "id": "7edc2b4f-a1f9-46ec-8b54-ab5e7c4cfd78",
+      "createdAt": "2026-10-22T02:16:49.000Z",
+      "updatedAt": "2026-10-22T02:16:49.000Z",
+      "uid": "35240-7edc2b4f-a1f9-46ec-8b54-ab5e7c4cfd78"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "2954ce9b-b790-48ce-898c-15bc09abad06",
-    "name": "API Key accounts vendors API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

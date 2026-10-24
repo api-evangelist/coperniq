@@ -1,369 +1,718 @@
 {
+  "info": {
+    "_postman_id": "bc7625ef-a690-4ec6-99e4-8a47cbbc0384",
+    "name": "Reference Labels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:15:33.000Z",
+    "updatedAt": "2026-10-22T02:15:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bc7625ef-a690-4ec6-99e4-8a47cbbc0384"
+  },
   "item": [
     {
-      "id": "ca22bfb7-e17d-4fde-ae3f-56bab5fa933f",
       "name": "labels",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "c0c27d4b-d5ac-4aeb-979e-f58c962f11b3",
-          "name": "List Labels",
-          "request": {
-            "name": "List Labels",
-            "description": {
-              "content": "Lists active labels for your company. Labels can be applied to work orders (`WORK` type) or assets (`ASSET` type).\nThe company is implied by the API key.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "labels"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+          "name": "{label_id}",
+          "item": [
+            {
+              "name": "Get Label",
+              "id": "b9442374-3a51-43b3-9593-3a1022922660",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/labels/:label_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels",
+                    ":label_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d4262f68-f7e0-43b2-ac54-6c8e74ab8804",
+                      "key": "label_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Retrieve a single label by ID."
+              },
+              "response": [
                 {
-                  "disabled": false,
-                  "key": "type",
-                  "value": "<string>",
-                  "description": "Filter by label type"
+                  "id": "e6f858ac-29f8-45ae-998d-95d1b36859ab",
+                  "name": "Label retrieved successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/labels/:label_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "labels",
+                        ":label_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "label_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"color\": \"<string,null>\",\n  \"type\": \"WORK\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-22T02:15:33.000Z",
+                  "updatedAt": "2026-10-22T02:15:33.000Z",
+                  "uid": "35240-e6f858ac-29f8-45ae-998d-95d1b36859ab"
                 },
                 {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
+                  "id": "27263795-6b95-4f31-a6ae-477b99c1da80",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/labels/:label_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "labels",
+                        ":label_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "label_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:15:33.000Z",
+                  "updatedAt": "2026-10-22T02:15:33.000Z",
+                  "uid": "35240-27263795-6b95-4f31-a6ae-477b99c1da80"
                 },
                 {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
+                  "id": "e71bae5c-e71d-4f5e-bffc-e036b3405808",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/labels/:label_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "labels",
+                        ":label_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "label_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:15:33.000Z",
+                  "updatedAt": "2026-10-22T02:15:33.000Z",
+                  "uid": "35240-e71bae5c-e71d-4f5e-bffc-e036b3405808"
+                },
+                {
+                  "id": "1413121b-d76b-440e-bb49-27f220ade732",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/labels/:label_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "labels",
+                        ":label_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "label_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:15:33.000Z",
+                  "updatedAt": "2026-10-22T02:15:33.000Z",
+                  "uid": "35240-1413121b-d76b-440e-bb49-27f220ade732"
+                },
+                {
+                  "id": "47d8a2cb-541d-4e68-9233-8ca6c4cfd4ae",
+                  "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/labels/:label_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "labels",
+                        ":label_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "label_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"GRAPHQL_ERROR\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:15:33.000Z",
+                  "updatedAt": "2026-10-22T02:15:33.000Z",
+                  "uid": "35240-47d8a2cb-541d-4e68-9233-8ca6c4cfd4ae"
                 }
               ],
-              "variable": []
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-b9442374-3a51-43b3-9593-3a1022922660"
+            }
+          ],
+          "id": "79ab065e-80d5-4ae2-b989-d51bb9af9a9e",
+          "createdAt": "2026-10-22T02:15:33.000Z",
+          "updatedAt": "2026-10-22T02:15:33.000Z",
+          "uid": "35240-79ab065e-80d5-4ae2-b989-d51bb9af9a9e"
+        },
+        {
+          "name": "List Labels",
+          "id": "35adde48-5a90-4715-ab39-20ddcba4b755",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
             },
+            "method": "GET",
             "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "96d08398-da30-4352-b6f8-80f8ce9ef858",
-              "name": "List of labels",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "type",
-                      "value": "ASSET"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 3811,\n    \"name\": \"string\",\n    \"color\": \"string\",\n    \"type\": \"WORK\",\n    \"createdAt\": \"1957-02-13T19:29:05.539Z\",\n    \"updatedAt\": \"1959-07-09T22:00:01.091Z\"\n  },\n  {\n    \"id\": 4984,\n    \"name\": \"string\",\n    \"color\": \"string\",\n    \"type\": \"WORK\",\n    \"createdAt\": \"1965-09-21T02:45:56.379Z\",\n    \"updatedAt\": \"1996-01-10T04:31:52.955Z\"\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "470b2558-a63a-4a3b-a7c1-e1ccb770d813",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "type",
-                      "value": "ASSET"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0774211f-105c-4f18-bf22-661232098252",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "type",
-                      "value": "ASSET"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8e812aa3-f877-4823-81c3-6ea21cb038ce",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "type",
-                      "value": "ASSET"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "c5064dcd-3c52-4783-8101-0c581f8b3e3e",
-              "name": "Bad Gateway — downstream GraphQL service returned errors",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "type",
-                      "value": "ASSET"
-                    },
-                    {
-                      "key": "page",
-                      "value": "1"
-                    },
-                    {
-                      "key": "page_size",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Gateway",
-              "code": 502,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "8efa5245-51ee-4c31-896d-005af2097ebf",
-          "name": "Create Label",
-          "request": {
-            "name": "Create Label",
-            "description": {
-              "content": "Creates a new label for the company. Use `WORK` for work-order labels or `ASSET` for asset labels.\n",
-              "type": "text/plain"
-            },
             "url": {
-              "path": [
-                "labels"
-              ],
+              "raw": "{{baseUrl}}/labels?type=WORK&page=1&page_size=20",
               "host": [
                 "{{baseUrl}}"
               ],
-              "query": [],
-              "variable": []
+              "path": [
+                "labels"
+              ],
+              "query": [
+                {
+                  "description": "Filter by label type",
+                  "key": "type",
+                  "value": "WORK"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                }
+              ]
             },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
+            "description": "Lists active labels for your company. Labels can be applied to work orders (`WORK` type) or assets (`ASSET` type).\nThe company is implied by the API key."
+          },
+          "response": [
+            {
+              "id": "259a62b2-0ba0-4855-9db0-9289dd52c19a",
+              "name": "List of labels",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/labels?type=WORK&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by label type",
+                      "key": "type",
+                      "value": "WORK"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
               },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"color\": \"<string,null>\",\n    \"type\": \"ASSET\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"color\": \"<string,null>\",\n    \"type\": \"ASSET\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-259a62b2-0ba0-4855-9db0-9289dd52c19a"
+            },
+            {
+              "id": "5e9bc3b6-05d0-48a2-aa22-16cefb8457e7",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/labels?type=WORK&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by label type",
+                      "key": "type",
+                      "value": "WORK"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-5e9bc3b6-05d0-48a2-aa22-16cefb8457e7"
+            },
+            {
+              "id": "d2208de1-ab8e-47a6-97eb-ea478d76e8fa",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/labels?type=WORK&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by label type",
+                      "key": "type",
+                      "value": "WORK"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-d2208de1-ab8e-47a6-97eb-ea478d76e8fa"
+            },
+            {
+              "id": "9fc93a03-9b69-4bd7-a11c-395ecb311510",
+              "name": "Internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/labels?type=WORK&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by label type",
+                      "key": "type",
+                      "value": "WORK"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-9fc93a03-9b69-4bd7-a11c-395ecb311510"
+            },
+            {
+              "id": "78dc976d-f1be-4256-8694-4662224fbab4",
+              "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/labels?type=WORK&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by label type",
+                      "key": "type",
+                      "value": "WORK"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-78dc976d-f1be-4256-8694-4662224fbab4"
+            }
+          ],
+          "createdAt": "2026-10-22T02:15:33.000Z",
+          "updatedAt": "2026-10-22T02:15:33.000Z",
+          "uid": "35240-35adde48-5a90-4715-ab39-20ddcba4b755"
+        },
+        {
+          "name": "Create Label",
+          "id": "8d665d8b-018c-4623-a507-199fbddc9f44",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -373,540 +722,268 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"color\": \"<string,null>\"\n}",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ASSET\",\n  \"color\": \"<string,null>\"\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/labels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "labels"
+              ]
+            },
+            "description": "Creates a new label for the company. Use `WORK` for work-order labels or `ASSET` for asset labels."
           },
           "response": [
             {
-              "id": "3b58f771-faa3-487e-99b2-510e090e5a08",
+              "id": "29b1bc59-1386-42bd-a81a-b97b894c0f98",
               "name": "Label created successfully",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"WORK\",\n  \"color\": \"<string,null>\"\n}",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ASSET\",\n  \"color\": \"<string,null>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/labels",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ]
                 }
               },
               "status": "Created",
               "code": 201,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": 2204,\n  \"name\": \"string\",\n  \"color\": \"string\",\n  \"type\": \"ASSET\",\n  \"createdAt\": \"1955-09-09T19:18:11.297Z\",\n  \"updatedAt\": \"2024-10-26T10:14:30.693Z\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"color\": \"<string,null>\",\n  \"type\": \"WORK\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-29b1bc59-1386-42bd-a81a-b97b894c0f98"
             },
             {
-              "id": "c08a5cec-0227-445c-a818-cd4d424039f3",
+              "id": "d10bf470-6678-4bd0-a13a-4f8b07f90fcb",
               "name": "Invalid request",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"WORK\",\n  \"color\": \"<string,null>\"\n}",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ASSET\",\n  \"color\": \"<string,null>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/labels",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-d10bf470-6678-4bd0-a13a-4f8b07f90fcb"
             },
             {
-              "id": "d3e70c1c-da30-4ac2-b4a0-4ba0e44eca2e",
+              "id": "47f04774-f6d2-459e-bcfd-20af713205f2",
               "name": "Authentication failed",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"WORK\",\n  \"color\": \"<string,null>\"\n}",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ASSET\",\n  \"color\": \"<string,null>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/labels",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-47f04774-f6d2-459e-bcfd-20af713205f2"
             },
             {
-              "id": "593562c2-a635-4711-8237-a47f0680f619",
+              "id": "3c7c3294-824a-41bb-bf1a-e86d5fd74492",
               "name": "Internal server error",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"WORK\",\n  \"color\": \"<string,null>\"\n}",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"ASSET\",\n  \"color\": \"<string,null>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/labels",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "labels"
+                  ]
                 }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:15:33.000Z",
+              "updatedAt": "2026-10-22T02:15:33.000Z",
+              "uid": "35240-3c7c3294-824a-41bb-bf1a-e86d5fd74492"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "166d2cff-936c-4268-9831-b8ab804da4de",
-          "name": "Get Label",
-          "request": {
-            "name": "Get Label",
-            "description": {
-              "content": "Retrieve a single label by ID.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "labels",
-                ":labelId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "labelId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "305459c9-8eca-4ffd-821c-07175889b182",
-              "name": "Label retrieved successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels",
-                    ":labelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "labelId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 2204,\n  \"name\": \"string\",\n  \"color\": \"string\",\n  \"type\": \"ASSET\",\n  \"createdAt\": \"1955-09-09T19:18:11.297Z\",\n  \"updatedAt\": \"2024-10-26T10:14:30.693Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ee1610fd-0cc3-4a1d-bae1-c7edd1163eda",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels",
-                    ":labelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "labelId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "68d7f262-6ed9-4669-b087-11467a539c02",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels",
-                    ":labelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "labelId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "18377468-2418-4340-bb6b-e565999c1d39",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels",
-                    ":labelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "labelId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8998cda3-947c-46fe-ba60-7990f518d3d6",
-              "name": "Bad Gateway — downstream GraphQL service returned errors",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "labels",
-                    ":labelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "labelId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Gateway",
-              "code": 502,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"GRAPHQL_ERROR\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:15:33.000Z",
+          "updatedAt": "2026-10-22T02:15:33.000Z",
+          "uid": "35240-8d665d8b-018c-4623-a507-199fbddc9f44"
         }
       ],
-      "event": []
+      "id": "611d2016-2663-4c18-a98e-de26c8d632c1",
+      "createdAt": "2026-10-22T02:15:33.000Z",
+      "updatedAt": "2026-10-22T02:15:33.000Z",
+      "uid": "35240-611d2016-2663-4c18-a98e-de26c8d632c1"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "ab7e8780-fe90-4953-9c17-024d8ea6d7d5",
-    "name": "API Key accounts labels API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

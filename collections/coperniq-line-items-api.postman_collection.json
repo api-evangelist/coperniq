@@ -1,0 +1,998 @@
+{
+  "info": {
+    "_postman_id": "4ce6576e-8ed6-42bf-8204-afa432694381",
+    "name": "Reference Line Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:17:45.000Z",
+    "updatedAt": "2026-10-22T02:17:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4ce6576e-8ed6-42bf-8204-afa432694381"
+  },
+  "item": [
+    {
+      "name": "projects",
+      "item": [
+        {
+          "name": "{project_id}",
+          "item": [
+            {
+              "name": "line-items",
+              "item": [
+                {
+                  "name": "List Project Line Items",
+                  "id": "520287bb-c40b-4d01-8819-b2a7be30a6f3",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "projects",
+                        ":project_id",
+                        "line-items"
+                      ],
+                      "variable": [
+                        {
+                          "id": "8be27f38-ee91-488d-886d-4f6e8f9e7cd2",
+                          "key": "project_id",
+                          "value": "<integer>",
+                          "description": "(Required) Project identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve all line items for a project"
+                  },
+                  "response": [
+                    {
+                      "id": "f18c962e-0ad5-4b82-b4a3-3a518d8d6d0c",
+                      "name": "List of line items",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"quantity\": \"<integer>\",\n    \"description\": \"<string>\",\n    \"unitCost\": \"<double>\",\n    \"totalCost\": \"<double>\",\n    \"totalPrice\": \"<double>\",\n    \"unitPrice\": \"<double>\",\n    \"createdAt\": \"<dateTime>\",\n    \"catalogItem\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"PRODUCT\",\n      \"manufacturer\": \"<string,null>\",\n      \"sku\": \"<string,null>\",\n      \"description\": \"<string,null>\"\n    },\n    \"sectionName\": \"<string,null>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"quantity\": \"<integer>\",\n    \"description\": \"<string>\",\n    \"unitCost\": \"<double>\",\n    \"totalCost\": \"<double>\",\n    \"totalPrice\": \"<double>\",\n    \"unitPrice\": \"<double>\",\n    \"createdAt\": \"<dateTime>\",\n    \"catalogItem\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"PRODUCT\",\n      \"manufacturer\": \"<string,null>\",\n      \"sku\": \"<string,null>\",\n      \"description\": \"<string,null>\"\n    },\n    \"sectionName\": \"<string,null>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-f18c962e-0ad5-4b82-b4a3-3a518d8d6d0c"
+                    },
+                    {
+                      "id": "0dc91f7f-5860-47c0-a90e-f9d76573afe8",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-0dc91f7f-5860-47c0-a90e-f9d76573afe8"
+                    },
+                    {
+                      "id": "bca2438e-cad4-4a6b-82af-f6dd7d7d56df",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-bca2438e-cad4-4a6b-82af-f6dd7d7d56df"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:45.000Z",
+                  "updatedAt": "2026-10-22T02:17:45.000Z",
+                  "uid": "35240-520287bb-c40b-4d01-8819-b2a7be30a6f3"
+                },
+                {
+                  "name": "Replace Project Line Items",
+                  "id": "00f70917-9dc5-41c0-b843-52a3e4e74627",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "projects",
+                        ":project_id",
+                        "line-items"
+                      ],
+                      "variable": [
+                        {
+                          "id": "716d4f6b-dbfc-4d09-94a4-65e0da900933",
+                          "key": "project_id",
+                          "value": "<integer>",
+                          "description": "(Required) Project identifier"
+                        }
+                      ]
+                    },
+                    "description": "Replace all line items for a project. Send an object with `lineItems`, `sections`, or both:\n\n- **`lineItems`** `{ lineItems: [...] }` \u2014 ungrouped line items.\n- **`sections`** `{ sections: [{ name?, lineItems: [...] }] }` \u2014 line items grouped into named sections.\n- The two may be combined (ungrouped items + named sections).\n\nA `catalogItemId` may appear at most once across the flattened set.\n\n> **Deprecated:** the previous request shape is still accepted for backwards compatibility but is deprecated and will not be supported in a future version."
+                  },
+                  "response": [
+                    {
+                      "id": "15b4dfa9-e8c0-4035-a0da-770d1782111e",
+                      "name": "Updated list of line items",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"quantity\": \"<integer>\",\n    \"description\": \"<string>\",\n    \"unitCost\": \"<double>\",\n    \"totalCost\": \"<double>\",\n    \"totalPrice\": \"<double>\",\n    \"unitPrice\": \"<double>\",\n    \"createdAt\": \"<dateTime>\",\n    \"catalogItem\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"PRODUCT\",\n      \"manufacturer\": \"<string,null>\",\n      \"sku\": \"<string,null>\",\n      \"description\": \"<string,null>\"\n    },\n    \"sectionName\": \"<string,null>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"quantity\": \"<integer>\",\n    \"description\": \"<string>\",\n    \"unitCost\": \"<double>\",\n    \"totalCost\": \"<double>\",\n    \"totalPrice\": \"<double>\",\n    \"unitPrice\": \"<double>\",\n    \"createdAt\": \"<dateTime>\",\n    \"catalogItem\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"PRODUCT\",\n      \"manufacturer\": \"<string,null>\",\n      \"sku\": \"<string,null>\",\n      \"description\": \"<string,null>\"\n    },\n    \"sectionName\": \"<string,null>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-15b4dfa9-e8c0-4035-a0da-770d1782111e"
+                    },
+                    {
+                      "id": "02f9ebe9-86fb-4856-9e56-01a9e9a840ea",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-02f9ebe9-86fb-4856-9e56-01a9e9a840ea"
+                    },
+                    {
+                      "id": "7eeb2f89-b008-44f5-9164-ddf1a2cd7c91",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-7eeb2f89-b008-44f5-9164-ddf1a2cd7c91"
+                    },
+                    {
+                      "id": "e55d02ed-4b17-4ba0-a2e2-b3efcc3ba2a4",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-e55d02ed-4b17-4ba0-a2e2-b3efcc3ba2a4"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:45.000Z",
+                  "updatedAt": "2026-10-22T02:17:45.000Z",
+                  "uid": "35240-00f70917-9dc5-41c0-b843-52a3e4e74627"
+                }
+              ],
+              "id": "136f9d7a-ccc0-45dc-b2b4-70d24ef03bb8",
+              "createdAt": "2026-10-22T02:17:45.000Z",
+              "updatedAt": "2026-10-22T02:17:45.000Z",
+              "uid": "35240-136f9d7a-ccc0-45dc-b2b4-70d24ef03bb8"
+            }
+          ],
+          "id": "9fbe953f-5392-4940-8236-be38a2b64b2d",
+          "createdAt": "2026-10-22T02:17:45.000Z",
+          "updatedAt": "2026-10-22T02:17:45.000Z",
+          "uid": "35240-9fbe953f-5392-4940-8236-be38a2b64b2d"
+        }
+      ],
+      "id": "ca350804-ae36-4e09-b9d0-cc5e764b1420",
+      "createdAt": "2026-10-22T02:17:45.000Z",
+      "updatedAt": "2026-10-22T02:17:45.000Z",
+      "uid": "35240-ca350804-ae36-4e09-b9d0-cc5e764b1420"
+    },
+    {
+      "name": "work-orders",
+      "item": [
+        {
+          "name": "{work_order_id}",
+          "item": [
+            {
+              "name": "line-items",
+              "item": [
+                {
+                  "name": "Replace Work Order Line Items",
+                  "id": "6d31447f-7611-4e61-a40d-9884602195e7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/work-orders/:work_order_id/line-items",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "work-orders",
+                        ":work_order_id",
+                        "line-items"
+                      ],
+                      "variable": [
+                        {
+                          "id": "504e07cd-e027-4ad0-8db8-b018592e1ff4",
+                          "key": "work_order_id",
+                          "value": "<integer>",
+                          "description": "(Required) Work order identifier"
+                        }
+                      ]
+                    },
+                    "description": "Replaces all line items on a work order. Internally updates or creates the underlying quote linked to the task.\n\nSupported **only** for service work orders on an **account** (parent project type `ACCOUNT`). Requests for other work orders receive `400`.\n\nProvide **either** `sections` **or** `lineItems` (not both), using the same shapes as quote line items."
+                  },
+                  "response": [
+                    {
+                      "id": "501c52d5-4db9-4d36-b4a2-b90000a1406b",
+                      "name": "Updated line items (dollar amounts)",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"quantity\": \"<integer>\",\n    \"description\": \"<string,null>\",\n    \"unitCost\": \"<double>\",\n    \"totalCost\": \"<number,null-double>\",\n    \"unitPrice\": \"<double>\",\n    \"totalPrice\": \"<number,null-double>\",\n    \"sectionName\": \"<string,null>\",\n    \"catalogItem\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string,null>\",\n      \"type\": \"<string,null>\",\n      \"manufacturer\": \"<string,null>\"\n    }\n  },\n  {\n    \"id\": \"<integer>\",\n    \"quantity\": \"<integer>\",\n    \"description\": \"<string,null>\",\n    \"unitCost\": \"<double>\",\n    \"totalCost\": \"<number,null-double>\",\n    \"unitPrice\": \"<double>\",\n    \"totalPrice\": \"<number,null-double>\",\n    \"sectionName\": \"<string,null>\",\n    \"catalogItem\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string,null>\",\n      \"type\": \"<string,null>\",\n      \"manufacturer\": \"<string,null>\"\n    }\n  }\n]",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-501c52d5-4db9-4d36-b4a2-b90000a1406b"
+                    },
+                    {
+                      "id": "20e51de9-c404-424e-95e5-d4f2258edc67",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-20e51de9-c404-424e-95e5-d4f2258edc67"
+                    },
+                    {
+                      "id": "6182bb35-1355-4aa9-bc74-a40a6d92d07b",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-6182bb35-1355-4aa9-bc74-a40a6d92d07b"
+                    },
+                    {
+                      "id": "8747d9e0-cb19-47ac-b8ac-0551812b1eed",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-8747d9e0-cb19-47ac-b8ac-0551812b1eed"
+                    },
+                    {
+                      "id": "00bd6ae9-2bcd-4b7c-8b2d-194f85ab8f6a",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sections\": [\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    },\n    {\n      \"lineItems\": [\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        },\n        {\n          \"catalogItemId\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"unitCost\": \"<double>\",\n          \"unitPrice\": \"<double>\",\n          \"id\": \"<integer>\",\n          \"description\": \"<string,null>\"\n        }\n      ],\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\"\n    }\n  ],\n  \"lineItems\": [\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"catalogItemId\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unitCost\": \"<double>\",\n      \"unitPrice\": \"<double>\",\n      \"id\": \"<integer>\",\n      \"description\": \"<string,null>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/work-orders/:work_order_id/line-items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "work-orders",
+                            ":work_order_id",
+                            "line-items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "work_order_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"INTERNAL_SERVER_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:17:45.000Z",
+                      "updatedAt": "2026-10-22T02:17:45.000Z",
+                      "uid": "35240-00bd6ae9-2bcd-4b7c-8b2d-194f85ab8f6a"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:17:45.000Z",
+                  "updatedAt": "2026-10-22T02:17:45.000Z",
+                  "uid": "35240-6d31447f-7611-4e61-a40d-9884602195e7"
+                }
+              ],
+              "id": "c0a2be8a-8ec9-4364-9419-ef73e8dc360f",
+              "createdAt": "2026-10-22T02:17:45.000Z",
+              "updatedAt": "2026-10-22T02:17:45.000Z",
+              "uid": "35240-c0a2be8a-8ec9-4364-9419-ef73e8dc360f"
+            }
+          ],
+          "id": "8cccda74-d270-4dc8-a17e-76f58684bece",
+          "createdAt": "2026-10-22T02:17:45.000Z",
+          "updatedAt": "2026-10-22T02:17:45.000Z",
+          "uid": "35240-8cccda74-d270-4dc8-a17e-76f58684bece"
+        }
+      ],
+      "id": "bd69ad1d-4721-4bee-97f5-cc961933217f",
+      "createdAt": "2026-10-22T02:17:45.000Z",
+      "updatedAt": "2026-10-22T02:17:45.000Z",
+      "uid": "35240-bd69ad1d-4721-4bee-97f5-cc961933217f"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
+    }
+  ]
+}

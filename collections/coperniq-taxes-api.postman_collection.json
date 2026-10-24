@@ -1,362 +1,391 @@
 {
+  "info": {
+    "_postman_id": "4198e643-446d-4f11-b322-78ba47fb204a",
+    "name": "Reference Taxes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:16:31.000Z",
+    "updatedAt": "2026-10-22T02:16:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4198e643-446d-4f11-b322-78ba47fb204a"
+  },
   "item": [
     {
-      "id": "f35a525f-e4a6-447c-aee2-3b9ae0e8fac6",
       "name": "taxes",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "00312642-40da-435a-8206-a1ca11ff5a3f",
           "name": "List Taxes",
+          "id": "df604d8e-a49c-41b7-955b-0d7405c0d50c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "List Taxes",
-            "description": {
-              "content": "Lists tax rates configured for your company. Use these IDs when assigning taxes to quotes, invoices, and other financial documents.\nThe company is implied by the API key; `companyId` is not returned on each item.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "taxes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+            "auth": {
+              "type": "apikey",
+              "apikey": [
                 {
-                  "disabled": false,
-                  "key": "include_archived",
-                  "value": "false",
-                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned."
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
                 },
                 {
-                  "disabled": false,
-                  "key": "page",
-                  "value": "1",
-                  "description": "Page number (1-based)"
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
                 },
                 {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "20",
-                  "description": "Number of items per page (max 100)"
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
                 }
-              ],
-              "variable": []
+              ]
             },
+            "method": "GET",
             "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/taxes?include_archived=false&page=1&page_size=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "taxes"
+              ],
+              "query": [
+                {
+                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                  "key": "include_archived",
+                  "value": "false"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Lists tax rates configured for your company. Use these IDs when assigning taxes to quotes, invoices, and other financial documents.\nThe company is implied by the API key; `companyId` is not returned on each item."
           },
           "response": [
             {
-              "id": "e2306255-e569-4657-9659-15967afe0687",
+              "id": "f3c64e56-4017-49f1-a910-9969c649a4e0",
               "name": "List of company taxes (paginated)",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "taxes"
-                  ],
+                  "raw": "{{baseUrl}}/taxes?include_archived=false&page=1&page_size=20",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "taxes"
+                  ],
                   "query": [
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 3742,\n    \"name\": \"string\",\n    \"rate\": \"string\",\n    \"isArchived\": false,\n    \"createdAt\": \"1985-09-17T21:12:40.333Z\",\n    \"updatedAt\": \"1988-10-30T07:17:45.074Z\"\n  },\n  {\n    \"id\": 2925,\n    \"name\": \"string\",\n    \"rate\": \"string\",\n    \"isArchived\": true,\n    \"createdAt\": \"1999-10-21T06:03:10.577Z\",\n    \"updatedAt\": \"1959-04-07T01:34:03.498Z\"\n  }\n]",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"rate\": \"<string>\",\n    \"isArchived\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"rate\": \"<string>\",\n    \"isArchived\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:16:31.000Z",
+              "updatedAt": "2026-10-22T02:16:31.000Z",
+              "uid": "35240-f3c64e56-4017-49f1-a910-9969c649a4e0"
             },
             {
-              "id": "cdf293d1-1b3d-4bc4-b683-ebaa3691187d",
+              "id": "15ef0914-c7a9-4c67-be5c-045f3d6e77dc",
               "name": "Invalid request",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "taxes"
-                  ],
+                  "raw": "{{baseUrl}}/taxes?include_archived=false&page=1&page_size=20",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "taxes"
+                  ],
                   "query": [
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:16:31.000Z",
+              "updatedAt": "2026-10-22T02:16:31.000Z",
+              "uid": "35240-15ef0914-c7a9-4c67-be5c-045f3d6e77dc"
             },
             {
-              "id": "2d292e7c-3c85-4cc1-a7d6-4f66c8c835fb",
+              "id": "7c676a59-09c1-4bbd-8a9b-2d69ead7aacc",
               "name": "Authentication failed",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "taxes"
-                  ],
+                  "raw": "{{baseUrl}}/taxes?include_archived=false&page=1&page_size=20",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "taxes"
+                  ],
                   "query": [
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:16:31.000Z",
+              "updatedAt": "2026-10-22T02:16:31.000Z",
+              "uid": "35240-7c676a59-09c1-4bbd-8a9b-2d69ead7aacc"
             },
             {
-              "id": "dadcfa07-cca2-4164-9a71-e71ec3f69d9c",
+              "id": "7713c729-62c4-4efb-b308-1fab2d724753",
               "name": "Internal server error",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "taxes"
-                  ],
+                  "raw": "{{baseUrl}}/taxes?include_archived=false&page=1&page_size=20",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "taxes"
+                  ],
                   "query": [
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:16:31.000Z",
+              "updatedAt": "2026-10-22T02:16:31.000Z",
+              "uid": "35240-7713c729-62c4-4efb-b308-1fab2d724753"
             },
             {
-              "id": "46cebafa-ebe9-48d7-97a0-602827030104",
-              "name": "Bad Gateway — downstream GraphQL service returned errors",
+              "id": "df261f36-617f-456b-bb11-65f743393a90",
+              "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "taxes"
-                  ],
+                  "raw": "{{baseUrl}}/taxes?include_archived=false&page=1&page_size=20",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "taxes"
+                  ],
                   "query": [
                     {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
                       "key": "include_archived",
                       "value": "false"
                     },
                     {
+                      "description": "Page number (1-based)",
                       "key": "page",
                       "value": "1"
                     },
                     {
+                      "description": "Number of items per page (max 100)",
                       "key": "page_size",
                       "value": "20"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Bad Gateway",
               "code": 502,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:16:31.000Z",
+              "updatedAt": "2026-10-22T02:16:31.000Z",
+              "uid": "35240-df261f36-617f-456b-bb11-65f743393a90"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:16:31.000Z",
+          "updatedAt": "2026-10-22T02:16:31.000Z",
+          "uid": "35240-df604d8e-a49c-41b7-955b-0d7405c0d50c"
         }
       ],
-      "event": []
+      "id": "eb812d58-26ff-4c5b-b4ff-0b49636b52ed",
+      "createdAt": "2026-10-22T02:16:31.000Z",
+      "updatedAt": "2026-10-22T02:16:31.000Z",
+      "uid": "35240-eb812d58-26ff-4c5b-b4ff-0b49636b52ed"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "0d3e3d37-3ca6-4162-976a-2aee4a2d7f39",
-    "name": "API Key accounts taxes API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

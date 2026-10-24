@@ -1,1367 +1,2503 @@
 {
+  "info": {
+    "_postman_id": "8d7c27d1-08c2-41a5-9d68-ccc12e4c0a82",
+    "name": "Reference Calls API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:14:52.000Z",
+    "updatedAt": "2026-10-22T02:14:53.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8d7c27d1-08c2-41a5-9d68-ccc12e4c0a82"
+  },
   "item": [
     {
-      "id": "d3669ae2-cae3-4c80-9ab2-3d0bb0121ffb",
       "name": "calls",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "ba482935-783b-47da-b2d2-d1df34528834",
-          "name": "List Project Calls",
-          "request": {
-            "name": "List Project Calls",
-            "description": {
-              "content": "Retrieve all phone call records associated with a project",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "projects",
-                ":projectId",
-                "calls"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "projectId",
-                  "description": "(Required) Project identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "classification-options",
+          "item": [
             {
-              "id": "bed92b05-e5e1-463f-9b45-2ed0c1bd2249",
-              "name": "List of call records",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
+              "name": "List Call Classification Options",
+              "id": "7eaeeaea-606a-4b9f-9b12-ec1f9ba780dc",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
                     }
                   ]
                 },
+                "method": "GET",
                 "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
+                "url": {
+                  "raw": "{{baseUrl}}/calls/classification-options?type=DISPOSITION",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "calls",
+                    "classification-options"
+                  ],
+                  "query": [
+                    {
+                      "description": "Only return options of this type. Omit to return both.",
+                      "key": "type",
+                      "value": "DISPOSITION"
+                    }
+                  ]
+                },
+                "description": "Lists your company's call reasons and dispositions, ordered by type and then position.\nA call's `reason` and `disposition` hold an option's `name`. Options are company-defined,\nand renaming or deleting one does not change calls already logged with it."
+              },
+              "response": [
+                {
+                  "id": "d525a996-84e6-4463-809b-df79aaedaaf5",
+                  "name": "List of call classification options",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/calls/classification-options?type=DISPOSITION",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "calls",
+                        "classification-options"
+                      ],
+                      "query": [
+                        {
+                          "description": "Only return options of this type. Omit to return both.",
+                          "key": "type",
+                          "value": "DISPOSITION"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"type\": \"REASON\",\n    \"name\": \"<string>\",\n    \"position\": \"<integer>\",\n    \"description\": \"<string,null>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"type\": \"REASON\",\n    \"name\": \"<string>\",\n    \"position\": \"<integer>\",\n    \"description\": \"<string,null>\"\n  }\n]",
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-d525a996-84e6-4463-809b-df79aaedaaf5"
+                },
+                {
+                  "id": "d232ab88-a698-4185-8134-7debe61694dd",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/calls/classification-options?type=DISPOSITION",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "calls",
+                        "classification-options"
+                      ],
+                      "query": [
+                        {
+                          "description": "Only return options of this type. Omit to return both.",
+                          "key": "type",
+                          "value": "DISPOSITION"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-d232ab88-a698-4185-8134-7debe61694dd"
+                },
+                {
+                  "id": "27be8902-da51-4565-a12e-d2e7c8222d2e",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/calls/classification-options?type=DISPOSITION",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "calls",
+                        "classification-options"
+                      ],
+                      "query": [
+                        {
+                          "description": "Only return options of this type. Omit to return both.",
+                          "key": "type",
+                          "value": "DISPOSITION"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-27be8902-da51-4565-a12e-d2e7c8222d2e"
+                },
+                {
+                  "id": "259a8aa9-020e-4cc4-a91c-0e1b9f728496",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/calls/classification-options?type=DISPOSITION",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "calls",
+                        "classification-options"
+                      ],
+                      "query": [
+                        {
+                          "description": "Only return options of this type. Omit to return both.",
+                          "key": "type",
+                          "value": "DISPOSITION"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-259a8aa9-020e-4cc4-a91c-0e1b9f728496"
+                },
+                {
+                  "id": "b8dce2e3-7035-47e5-9fa5-627483133597",
+                  "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/calls/classification-options?type=DISPOSITION",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "calls",
+                        "classification-options"
+                      ],
+                      "query": [
+                        {
+                          "description": "Only return options of this type. Omit to return both.",
+                          "key": "type",
+                          "value": "DISPOSITION"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-b8dce2e3-7035-47e5-9fa5-627483133597"
+                }
+              ],
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-7eaeeaea-606a-4b9f-9b12-ec1f9ba780dc"
+            }
+          ],
+          "id": "7497df59-9baf-4b10-8e14-644f521361ad",
+          "createdAt": "2026-10-22T02:14:53.000Z",
+          "updatedAt": "2026-10-22T02:14:53.000Z",
+          "uid": "35240-7497df59-9baf-4b10-8e14-644f521361ad"
+        },
+        {
+          "name": "List Calls",
+          "id": "347e4b71-4225-4eb9-b599-e4820026f452",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/calls?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=desc&outcome=VOICEMAIL&reason=<string>&disposition=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "calls"
+              ],
+              "query": [
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_after",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_before",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Sort by creation time. Defaults to newest first.",
+                  "key": "order_by",
+                  "value": "desc"
+                },
+                {
+                  "description": "Only return calls with this outcome",
+                  "key": "outcome",
+                  "value": "VOICEMAIL"
+                },
+                {
+                  "description": "Only return calls with exactly this reason (see `GET /calls/classification-options`)",
+                  "key": "reason",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Only return calls with exactly this disposition (see `GET /calls/classification-options`)",
+                  "key": "disposition",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of calls across your whole company, including calls logged on\nprojects, opportunities and accounts. Each call has `projectId`, `opportunityId` or\n`accountId` set to the record it's logged on (all three are `null` for calls not yet\nlinked to a record).\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Date filtering (`updated_after`, `updated_before`)\n- Filtering by `outcome`, `reason` and `disposition`\n- Sorting by creation time (`order_by`, newest first by default)"
+          },
+          "response": [
+            {
+              "id": "7c4aad7b-e8bd-42c7-a70f-a6485ba34bf3",
+              "name": "List of calls",
+              "originalRequest": {
                 "method": "GET",
-                "body": {}
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/calls?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=desc&outcome=VOICEMAIL&reason=<string>&disposition=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Sort by creation time. Defaults to newest first.",
+                      "key": "order_by",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Only return calls with this outcome",
+                      "key": "outcome",
+                      "value": "VOICEMAIL"
+                    },
+                    {
+                      "description": "Only return calls with exactly this reason (see `GET /calls/classification-options`)",
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Only return calls with exactly this disposition (see `GET /calls/classification-options`)",
+                      "key": "disposition",
+                      "value": "<string>"
+                    }
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 4548,\n    \"fromNumber\": \"string\",\n    \"toNumber\": \"string\",\n    \"isInbound\": true,\n    \"createdAt\": \"2025-03-02T06:35:54.605Z\",\n    \"updatedAt\": \"2025-10-18T07:24:01.167Z\",\n    \"outcome\": \"ANSWERED\",\n    \"startTime\": \"1981-03-24T13:56:32.414Z\",\n    \"endTime\": \"2005-05-19T20:47:59.462Z\",\n    \"reason\": \"OTHER\",\n    \"disposition\": \"NO_ACTION\",\n    \"note\": \"string\",\n    \"recordingUrl\": \"string\",\n    \"transcriptUrl\": \"string\",\n    \"missedCount\": 1407\n  },\n  {\n    \"id\": 9073,\n    \"fromNumber\": \"string\",\n    \"toNumber\": \"string\",\n    \"isInbound\": false,\n    \"createdAt\": \"1967-08-23T21:20:58.583Z\",\n    \"updatedAt\": \"1987-03-09T17:03:52.540Z\",\n    \"outcome\": \"MISSED\",\n    \"startTime\": \"2023-11-03T05:29:59.977Z\",\n    \"endTime\": \"1992-12-05T10:13:57.363Z\",\n    \"reason\": \"FEEDBACK\",\n    \"disposition\": \"ISSUE_RESOLVED\",\n    \"note\": \"string\",\n    \"recordingUrl\": \"string\",\n    \"transcriptUrl\": \"string\",\n    \"missedCount\": 692\n  }\n]",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"fromNumber\": \"<string>\",\n    \"toNumber\": \"<string>\",\n    \"isInbound\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"outcome\": \"ANSWERED\",\n    \"startTime\": \"<string,null-date-time>\",\n    \"endTime\": \"<string,null-date-time>\",\n    \"reason\": \"<string,null>\",\n    \"disposition\": \"<string,null>\",\n    \"note\": \"<string,null>\",\n    \"summary\": \"<string,null>\",\n    \"transcriptText\": \"<string,null>\",\n    \"recordingUrl\": \"<string,null>\",\n    \"transcriptUrl\": \"<string,null>\",\n    \"missedCount\": \"<integer,null>\",\n    \"classificationNote\": \"<string,null>\",\n    \"resolution\": \"RESOLVED\",\n    \"projectId\": \"<integer,null>\",\n    \"opportunityId\": \"<integer,null>\",\n    \"accountId\": \"<integer,null>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"fromNumber\": \"<string>\",\n    \"toNumber\": \"<string>\",\n    \"isInbound\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"outcome\": \"VOICEMAIL\",\n    \"startTime\": \"<string,null-date-time>\",\n    \"endTime\": \"<string,null-date-time>\",\n    \"reason\": \"<string,null>\",\n    \"disposition\": \"<string,null>\",\n    \"note\": \"<string,null>\",\n    \"summary\": \"<string,null>\",\n    \"transcriptText\": \"<string,null>\",\n    \"recordingUrl\": \"<string,null>\",\n    \"transcriptUrl\": \"<string,null>\",\n    \"missedCount\": \"<integer,null>\",\n    \"classificationNote\": \"<string,null>\",\n    \"resolution\": \"RESOLVED\",\n    \"projectId\": \"<integer,null>\",\n    \"opportunityId\": \"<integer,null>\",\n    \"accountId\": \"<integer,null>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-7c4aad7b-e8bd-42c7-a70f-a6485ba34bf3"
             },
             {
-              "id": "ed71b265-ab76-4d52-9c83-4772a7a65277",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2dcc37df-4b7d-4cda-944d-36e9687e2a00",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "projectId",
-                      "description": "(Required) Project identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "6918d425-e96e-4468-ac98-d4e8e6171b91",
-          "name": "Create Project Call",
-          "request": {
-            "name": "Create Project Call",
-            "description": {
-              "content": "Create a new phone call record associated with a project",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "projects",
-                ":projectId",
-                "calls"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "projectId",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"<string>\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "2d8cf35f-d996-466f-8349-2ae97c81c1ab",
-              "name": "Call record created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 6923,\n  \"fromNumber\": \"string\",\n  \"toNumber\": \"string\",\n  \"isInbound\": true,\n  \"createdAt\": \"1952-12-23T13:10:13.548Z\",\n  \"updatedAt\": \"2008-02-24T07:33:16.091Z\",\n  \"outcome\": \"MISSED\",\n  \"startTime\": \"1992-11-19T06:02:51.745Z\",\n  \"endTime\": \"1995-02-17T11:58:33.468Z\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"OTHER\",\n  \"note\": \"string\",\n  \"recordingUrl\": \"string\",\n  \"transcriptUrl\": \"string\",\n  \"missedCount\": 3774\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1b2096df-5e7d-4f76-8eb8-886e48079a31",
+              "id": "6d3328c5-375d-47f0-81b7-8195227dcfd8",
               "name": "Invalid request",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                "url": {
+                  "raw": "{{baseUrl}}/calls?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=desc&outcome=VOICEMAIL&reason=<string>&disposition=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Sort by creation time. Defaults to newest first.",
+                      "key": "order_by",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Only return calls with this outcome",
+                      "key": "outcome",
+                      "value": "VOICEMAIL"
+                    },
+                    {
+                      "description": "Only return calls with exactly this reason (see `GET /calls/classification-options`)",
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Only return calls with exactly this disposition (see `GET /calls/classification-options`)",
+                      "key": "disposition",
+                      "value": "<string>"
                     }
-                  }
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-6d3328c5-375d-47f0-81b7-8195227dcfd8"
             },
             {
-              "id": "f2faeac6-9530-407b-b96e-684cb47d9591",
+              "id": "25a2361b-3aa8-4ca5-a1b0-8a2353c0cd8c",
               "name": "Authentication failed",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "projects",
-                    ":projectId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "projectId",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                "url": {
+                  "raw": "{{baseUrl}}/calls?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=desc&outcome=VOICEMAIL&reason=<string>&disposition=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Sort by creation time. Defaults to newest first.",
+                      "key": "order_by",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Only return calls with this outcome",
+                      "key": "outcome",
+                      "value": "VOICEMAIL"
+                    },
+                    {
+                      "description": "Only return calls with exactly this reason (see `GET /calls/classification-options`)",
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Only return calls with exactly this disposition (see `GET /calls/classification-options`)",
+                      "key": "disposition",
+                      "value": "<string>"
                     }
-                  }
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-25a2361b-3aa8-4ca5-a1b0-8a2353c0cd8c"
+            },
+            {
+              "id": "3278359d-bcdf-4750-a096-449277a02a26",
+              "name": "Internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/calls?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=desc&outcome=VOICEMAIL&reason=<string>&disposition=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Sort by creation time. Defaults to newest first.",
+                      "key": "order_by",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Only return calls with this outcome",
+                      "key": "outcome",
+                      "value": "VOICEMAIL"
+                    },
+                    {
+                      "description": "Only return calls with exactly this reason (see `GET /calls/classification-options`)",
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Only return calls with exactly this disposition (see `GET /calls/classification-options`)",
+                      "key": "disposition",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-3278359d-bcdf-4750-a096-449277a02a26"
+            },
+            {
+              "id": "4ae6cf90-66ab-491a-9141-e832c2943ac2",
+              "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/calls?page_size=20&page=1&updated_after=<date>&updated_before=<date>&order_by=desc&outcome=VOICEMAIL&reason=<string>&disposition=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Sort by creation time. Defaults to newest first.",
+                      "key": "order_by",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Only return calls with this outcome",
+                      "key": "outcome",
+                      "value": "VOICEMAIL"
+                    },
+                    {
+                      "description": "Only return calls with exactly this reason (see `GET /calls/classification-options`)",
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Only return calls with exactly this disposition (see `GET /calls/classification-options`)",
+                      "key": "disposition",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-4ae6cf90-66ab-491a-9141-e832c2943ac2"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "e5294cb1-c0dc-4f76-8730-6fff96d0eb05",
-          "name": "List Opportunity Calls",
-          "request": {
-            "name": "List Opportunity Calls",
-            "description": {
-              "content": "Retrieve all phone call records associated with an opportunity\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "opportunities",
-                ":opportunityId",
-                "calls"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "opportunityId",
-                  "description": "(Required) Opportunity identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "3ff38eb0-1be2-470d-b188-86899ced70b4",
-              "name": "List of call records",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "opportunityId",
-                      "description": "(Required) Opportunity identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 4548,\n    \"fromNumber\": \"string\",\n    \"toNumber\": \"string\",\n    \"isInbound\": true,\n    \"createdAt\": \"2025-03-02T06:35:54.605Z\",\n    \"updatedAt\": \"2025-10-18T07:24:01.167Z\",\n    \"outcome\": \"ANSWERED\",\n    \"startTime\": \"1981-03-24T13:56:32.414Z\",\n    \"endTime\": \"2005-05-19T20:47:59.462Z\",\n    \"reason\": \"OTHER\",\n    \"disposition\": \"NO_ACTION\",\n    \"note\": \"string\",\n    \"recordingUrl\": \"string\",\n    \"transcriptUrl\": \"string\",\n    \"missedCount\": 1407\n  },\n  {\n    \"id\": 9073,\n    \"fromNumber\": \"string\",\n    \"toNumber\": \"string\",\n    \"isInbound\": false,\n    \"createdAt\": \"1967-08-23T21:20:58.583Z\",\n    \"updatedAt\": \"1987-03-09T17:03:52.540Z\",\n    \"outcome\": \"MISSED\",\n    \"startTime\": \"2023-11-03T05:29:59.977Z\",\n    \"endTime\": \"1992-12-05T10:13:57.363Z\",\n    \"reason\": \"FEEDBACK\",\n    \"disposition\": \"ISSUE_RESOLVED\",\n    \"note\": \"string\",\n    \"recordingUrl\": \"string\",\n    \"transcriptUrl\": \"string\",\n    \"missedCount\": 692\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "010cc4fd-749d-4e26-9d98-267804fe551a",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "opportunityId",
-                      "description": "(Required) Opportunity identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fbbb45ed-69f9-464c-b8de-aa13fcb4576e",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "opportunityId",
-                      "description": "(Required) Opportunity identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "45dfae25-7c0d-4e26-bfe0-beb0b53339c4",
-          "name": "Create Opportunity Call",
-          "request": {
-            "name": "Create Opportunity Call",
-            "description": {
-              "content": "Create a new phone call record associated with an opportunity\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "opportunities",
-                ":opportunityId",
-                "calls"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "opportunityId",
-                  "description": "(Required) Opportunity identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"<string>\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "02e77689-3df6-44aa-99c7-1dae04308391",
-              "name": "Call record created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "opportunityId",
-                      "description": "(Required) Opportunity identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 6923,\n  \"fromNumber\": \"string\",\n  \"toNumber\": \"string\",\n  \"isInbound\": true,\n  \"createdAt\": \"1952-12-23T13:10:13.548Z\",\n  \"updatedAt\": \"2008-02-24T07:33:16.091Z\",\n  \"outcome\": \"MISSED\",\n  \"startTime\": \"1992-11-19T06:02:51.745Z\",\n  \"endTime\": \"1995-02-17T11:58:33.468Z\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"OTHER\",\n  \"note\": \"string\",\n  \"recordingUrl\": \"string\",\n  \"transcriptUrl\": \"string\",\n  \"missedCount\": 3774\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fc3a266f-0c82-4c2d-990c-8f4cdbd713f6",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "opportunityId",
-                      "description": "(Required) Opportunity identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2e7c9115-c4c0-4984-9539-d805f7dafa0b",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "opportunities",
-                    ":opportunityId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "opportunityId",
-                      "description": "(Required) Opportunity identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "57ab081d-128c-49ac-b480-b8a63a325d1c",
-          "name": "List Account Calls",
-          "request": {
-            "name": "List Account Calls",
-            "description": {
-              "content": "Retrieve all phone call records associated with an account\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId",
-                "calls"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "b51f0dba-6480-495d-857e-c4a3b7197c73",
-              "name": "List of call records",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 4548,\n    \"fromNumber\": \"string\",\n    \"toNumber\": \"string\",\n    \"isInbound\": true,\n    \"createdAt\": \"2025-03-02T06:35:54.605Z\",\n    \"updatedAt\": \"2025-10-18T07:24:01.167Z\",\n    \"outcome\": \"ANSWERED\",\n    \"startTime\": \"1981-03-24T13:56:32.414Z\",\n    \"endTime\": \"2005-05-19T20:47:59.462Z\",\n    \"reason\": \"OTHER\",\n    \"disposition\": \"NO_ACTION\",\n    \"note\": \"string\",\n    \"recordingUrl\": \"string\",\n    \"transcriptUrl\": \"string\",\n    \"missedCount\": 1407\n  },\n  {\n    \"id\": 9073,\n    \"fromNumber\": \"string\",\n    \"toNumber\": \"string\",\n    \"isInbound\": false,\n    \"createdAt\": \"1967-08-23T21:20:58.583Z\",\n    \"updatedAt\": \"1987-03-09T17:03:52.540Z\",\n    \"outcome\": \"MISSED\",\n    \"startTime\": \"2023-11-03T05:29:59.977Z\",\n    \"endTime\": \"1992-12-05T10:13:57.363Z\",\n    \"reason\": \"FEEDBACK\",\n    \"disposition\": \"ISSUE_RESOLVED\",\n    \"note\": \"string\",\n    \"recordingUrl\": \"string\",\n    \"transcriptUrl\": \"string\",\n    \"missedCount\": 692\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "c13d664e-e887-42d3-9348-9f453575468e",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a8d314f3-2192-4d42-918b-25c120a33bbf",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2f10e73d-60c5-47b1-acfc-4b463bc7d19f",
-          "name": "Create Account Call",
-          "request": {
-            "name": "Create Account Call",
-            "description": {
-              "content": "Create a new phone call record associated with an account\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId",
-                "calls"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"<string>\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "b6258dc2-9e86-4031-b8ca-4bf0456deb3a",
-              "name": "Call record created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 6923,\n  \"fromNumber\": \"string\",\n  \"toNumber\": \"string\",\n  \"isInbound\": true,\n  \"createdAt\": \"1952-12-23T13:10:13.548Z\",\n  \"updatedAt\": \"2008-02-24T07:33:16.091Z\",\n  \"outcome\": \"MISSED\",\n  \"startTime\": \"1992-11-19T06:02:51.745Z\",\n  \"endTime\": \"1995-02-17T11:58:33.468Z\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"OTHER\",\n  \"note\": \"string\",\n  \"recordingUrl\": \"string\",\n  \"transcriptUrl\": \"string\",\n  \"missedCount\": 3774\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9caa3edf-0dd5-4442-8c0f-1aa2638e8a11",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b9f3ed06-62b9-45a2-8217-4dc1209e493a",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "calls"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"SERVICE\",\n  \"disposition\": \"ESCALATION\",\n  \"outcome\": \"MISSED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"UNAUTHORIZED\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:14:53.000Z",
+          "updatedAt": "2026-10-22T02:14:53.000Z",
+          "uid": "35240-347e4b71-4225-4eb9-b599-e4820026f452"
         }
       ],
-      "event": []
+      "id": "8e0e8f4c-655b-4052-a410-1e53c35b664e",
+      "createdAt": "2026-10-22T02:14:53.000Z",
+      "updatedAt": "2026-10-22T02:14:53.000Z",
+      "uid": "35240-8e0e8f4c-655b-4052-a410-1e53c35b664e"
+    },
+    {
+      "name": "projects",
+      "item": [
+        {
+          "name": "{project_id}",
+          "item": [
+            {
+              "name": "calls",
+              "item": [
+                {
+                  "name": "List Project Calls",
+                  "id": "a7acb197-5ef0-41e6-83bb-4adc88993eb5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/projects/:project_id/calls",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "projects",
+                        ":project_id",
+                        "calls"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b9f50cbc-d041-4325-83d4-b3748070900e",
+                          "key": "project_id",
+                          "value": "<integer>",
+                          "description": "(Required) Project identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve all phone call records associated with a project"
+                  },
+                  "response": [
+                    {
+                      "id": "6dd6e59a-caf3-4e0c-992f-8b686379bd7c",
+                      "name": "List of call records",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"fromNumber\": \"<string>\",\n    \"toNumber\": \"<string>\",\n    \"isInbound\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"outcome\": \"MISSED\",\n    \"startTime\": \"<string,null-date-time>\",\n    \"endTime\": \"<string,null-date-time>\",\n    \"reason\": \"<string,null>\",\n    \"disposition\": \"<string,null>\",\n    \"note\": \"<string,null>\",\n    \"summary\": \"<string,null>\",\n    \"transcriptText\": \"<string,null>\",\n    \"recordingUrl\": \"<string,null>\",\n    \"transcriptUrl\": \"<string,null>\",\n    \"missedCount\": \"<integer,null>\",\n    \"classificationNote\": \"<string,null>\",\n    \"resolution\": \"RESOLVED\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"fromNumber\": \"<string>\",\n    \"toNumber\": \"<string>\",\n    \"isInbound\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"outcome\": \"VOICEMAIL\",\n    \"startTime\": \"<string,null-date-time>\",\n    \"endTime\": \"<string,null-date-time>\",\n    \"reason\": \"<string,null>\",\n    \"disposition\": \"<string,null>\",\n    \"note\": \"<string,null>\",\n    \"summary\": \"<string,null>\",\n    \"transcriptText\": \"<string,null>\",\n    \"recordingUrl\": \"<string,null>\",\n    \"transcriptUrl\": \"<string,null>\",\n    \"missedCount\": \"<integer,null>\",\n    \"classificationNote\": \"<string,null>\",\n    \"resolution\": \"UNRESOLVED\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-6dd6e59a-caf3-4e0c-992f-8b686379bd7c"
+                    },
+                    {
+                      "id": "1a56e02a-e049-407b-ac0d-9c91ff0bc010",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-1a56e02a-e049-407b-ac0d-9c91ff0bc010"
+                    },
+                    {
+                      "id": "b90dae61-6796-4165-bc3b-1e9faa2ae749",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-b90dae61-6796-4165-bc3b-1e9faa2ae749"
+                    },
+                    {
+                      "id": "741d0d4c-3899-40d2-a340-34f3805ac97f",
+                      "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Gateway",
+                      "code": 502,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-741d0d4c-3899-40d2-a340-34f3805ac97f"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-a7acb197-5ef0-41e6-83bb-4adc88993eb5"
+                },
+                {
+                  "name": "Create Project Call",
+                  "id": "76fd6598-360f-402c-b019-90f43f29a2c5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/projects/:project_id/calls",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "projects",
+                        ":project_id",
+                        "calls"
+                      ],
+                      "variable": [
+                        {
+                          "id": "496a82e7-be07-43ee-a62d-92c88e3f5dff",
+                          "key": "project_id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Create a new phone call record associated with a project"
+                  },
+                  "response": [
+                    {
+                      "id": "882b2d11-c9dc-43e1-a809-200e4881dc02",
+                      "name": "Call record created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"outcome\": \"VOICEMAIL\",\n  \"startTime\": \"<string,null-date-time>\",\n  \"endTime\": \"<string,null-date-time>\",\n  \"reason\": \"<string,null>\",\n  \"disposition\": \"<string,null>\",\n  \"note\": \"<string,null>\",\n  \"summary\": \"<string,null>\",\n  \"transcriptText\": \"<string,null>\",\n  \"recordingUrl\": \"<string,null>\",\n  \"transcriptUrl\": \"<string,null>\",\n  \"missedCount\": \"<integer,null>\",\n  \"classificationNote\": \"<string,null>\",\n  \"resolution\": \"RESOLVED\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-882b2d11-c9dc-43e1-a809-200e4881dc02"
+                    },
+                    {
+                      "id": "f3c128e1-411c-4d6e-b654-7dde1e9d019d",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-f3c128e1-411c-4d6e-b654-7dde1e9d019d"
+                    },
+                    {
+                      "id": "a4d2d238-4797-44dd-9655-4fdce7e6c665",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/projects/:project_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "projects",
+                            ":project_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "project_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-a4d2d238-4797-44dd-9655-4fdce7e6c665"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-76fd6598-360f-402c-b019-90f43f29a2c5"
+                }
+              ],
+              "id": "da25ba30-cb9e-40d7-ad1d-b96692f5f223",
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-da25ba30-cb9e-40d7-ad1d-b96692f5f223"
+            }
+          ],
+          "id": "0aebc147-462c-45f4-a20b-b34653c85923",
+          "createdAt": "2026-10-22T02:14:53.000Z",
+          "updatedAt": "2026-10-22T02:14:53.000Z",
+          "uid": "35240-0aebc147-462c-45f4-a20b-b34653c85923"
+        }
+      ],
+      "id": "b3f8f74b-6858-4bb3-b590-49dd28d86fff",
+      "createdAt": "2026-10-22T02:14:53.000Z",
+      "updatedAt": "2026-10-22T02:14:53.000Z",
+      "uid": "35240-b3f8f74b-6858-4bb3-b590-49dd28d86fff"
+    },
+    {
+      "name": "opportunities",
+      "item": [
+        {
+          "name": "{opportunity_id}",
+          "item": [
+            {
+              "name": "calls",
+              "item": [
+                {
+                  "name": "List Opportunity Calls",
+                  "id": "2caaee46-8bcf-4ea9-8280-90f1decc1e1c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "opportunities",
+                        ":opportunity_id",
+                        "calls"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b9b40f05-b8cc-45bb-a9b2-129c075af30f",
+                          "key": "opportunity_id",
+                          "value": "<integer>",
+                          "description": "(Required) Opportunity identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve all phone call records associated with an opportunity\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated."
+                  },
+                  "response": [
+                    {
+                      "id": "6b937b51-d975-44e3-8878-aa63881bbcaf",
+                      "name": "List of call records",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"fromNumber\": \"<string>\",\n    \"toNumber\": \"<string>\",\n    \"isInbound\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"outcome\": \"MISSED\",\n    \"startTime\": \"<string,null-date-time>\",\n    \"endTime\": \"<string,null-date-time>\",\n    \"reason\": \"<string,null>\",\n    \"disposition\": \"<string,null>\",\n    \"note\": \"<string,null>\",\n    \"summary\": \"<string,null>\",\n    \"transcriptText\": \"<string,null>\",\n    \"recordingUrl\": \"<string,null>\",\n    \"transcriptUrl\": \"<string,null>\",\n    \"missedCount\": \"<integer,null>\",\n    \"classificationNote\": \"<string,null>\",\n    \"resolution\": \"RESOLVED\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"fromNumber\": \"<string>\",\n    \"toNumber\": \"<string>\",\n    \"isInbound\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"outcome\": \"VOICEMAIL\",\n    \"startTime\": \"<string,null-date-time>\",\n    \"endTime\": \"<string,null-date-time>\",\n    \"reason\": \"<string,null>\",\n    \"disposition\": \"<string,null>\",\n    \"note\": \"<string,null>\",\n    \"summary\": \"<string,null>\",\n    \"transcriptText\": \"<string,null>\",\n    \"recordingUrl\": \"<string,null>\",\n    \"transcriptUrl\": \"<string,null>\",\n    \"missedCount\": \"<integer,null>\",\n    \"classificationNote\": \"<string,null>\",\n    \"resolution\": \"UNRESOLVED\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-6b937b51-d975-44e3-8878-aa63881bbcaf"
+                    },
+                    {
+                      "id": "d7d7769e-b703-485a-b74d-701a2aa88395",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-d7d7769e-b703-485a-b74d-701a2aa88395"
+                    },
+                    {
+                      "id": "39e0e1e9-e1ef-4ec6-90e7-0f671676c5af",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-39e0e1e9-e1ef-4ec6-90e7-0f671676c5af"
+                    },
+                    {
+                      "id": "b6d4a998-bf40-4cf2-ac19-d251f13ba48c",
+                      "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Gateway",
+                      "code": 502,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-b6d4a998-bf40-4cf2-ac19-d251f13ba48c"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-2caaee46-8bcf-4ea9-8280-90f1decc1e1c"
+                },
+                {
+                  "name": "Create Opportunity Call",
+                  "id": "94152bf7-56a1-494b-875e-5cfcd7b75ca6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "opportunities",
+                        ":opportunity_id",
+                        "calls"
+                      ],
+                      "variable": [
+                        {
+                          "id": "ab7bfe9b-af18-4f4d-978b-0c5a7a4705f3",
+                          "key": "opportunity_id",
+                          "value": "<integer>",
+                          "description": "(Required) Opportunity identifier"
+                        }
+                      ]
+                    },
+                    "description": "Create a new phone call record associated with an opportunity\n\n**Note:** The `/requests` path is an alias for `/opportunities` and will continue to work until users are individually notified and migrated."
+                  },
+                  "response": [
+                    {
+                      "id": "e08db3f5-5f7a-4d08-a312-ed43ddbb031a",
+                      "name": "Call record created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"outcome\": \"VOICEMAIL\",\n  \"startTime\": \"<string,null-date-time>\",\n  \"endTime\": \"<string,null-date-time>\",\n  \"reason\": \"<string,null>\",\n  \"disposition\": \"<string,null>\",\n  \"note\": \"<string,null>\",\n  \"summary\": \"<string,null>\",\n  \"transcriptText\": \"<string,null>\",\n  \"recordingUrl\": \"<string,null>\",\n  \"transcriptUrl\": \"<string,null>\",\n  \"missedCount\": \"<integer,null>\",\n  \"classificationNote\": \"<string,null>\",\n  \"resolution\": \"RESOLVED\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-e08db3f5-5f7a-4d08-a312-ed43ddbb031a"
+                    },
+                    {
+                      "id": "b25f2b18-7316-4da7-b0ea-312e6df79073",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-b25f2b18-7316-4da7-b0ea-312e6df79073"
+                    },
+                    {
+                      "id": "3907194a-4023-420b-bf4b-1fce70aa4e67",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/opportunities/:opportunity_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "opportunities",
+                            ":opportunity_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "opportunity_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-3907194a-4023-420b-bf4b-1fce70aa4e67"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-94152bf7-56a1-494b-875e-5cfcd7b75ca6"
+                }
+              ],
+              "id": "e58ed0ca-6261-45ef-b80b-ff0ed41cc473",
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-e58ed0ca-6261-45ef-b80b-ff0ed41cc473"
+            }
+          ],
+          "id": "644af25f-cc7a-40d9-a7b4-fa643fdfbf7e",
+          "createdAt": "2026-10-22T02:14:53.000Z",
+          "updatedAt": "2026-10-22T02:14:53.000Z",
+          "uid": "35240-644af25f-cc7a-40d9-a7b4-fa643fdfbf7e"
+        }
+      ],
+      "id": "55e4bbbf-64fe-4c54-a2a0-0e55a597babf",
+      "createdAt": "2026-10-22T02:14:53.000Z",
+      "updatedAt": "2026-10-22T02:14:53.000Z",
+      "uid": "35240-55e4bbbf-64fe-4c54-a2a0-0e55a597babf"
+    },
+    {
+      "name": "accounts",
+      "item": [
+        {
+          "name": "{account_id}",
+          "item": [
+            {
+              "name": "calls",
+              "item": [
+                {
+                  "name": "List Account Calls",
+                  "id": "b019b15b-64c0-4dbf-bd04-23ee3a505c33",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id",
+                        "calls"
+                      ],
+                      "variable": [
+                        {
+                          "id": "063f112f-ee65-4096-b568-878e04823c86",
+                          "key": "account_id",
+                          "value": "<integer>",
+                          "description": "(Required) Account identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve all phone call records associated with an account\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated."
+                  },
+                  "response": [
+                    {
+                      "id": "f52eb524-077e-4ca1-a050-4dd7ef1a015a",
+                      "name": "List of call records",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"fromNumber\": \"<string>\",\n    \"toNumber\": \"<string>\",\n    \"isInbound\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"outcome\": \"MISSED\",\n    \"startTime\": \"<string,null-date-time>\",\n    \"endTime\": \"<string,null-date-time>\",\n    \"reason\": \"<string,null>\",\n    \"disposition\": \"<string,null>\",\n    \"note\": \"<string,null>\",\n    \"summary\": \"<string,null>\",\n    \"transcriptText\": \"<string,null>\",\n    \"recordingUrl\": \"<string,null>\",\n    \"transcriptUrl\": \"<string,null>\",\n    \"missedCount\": \"<integer,null>\",\n    \"classificationNote\": \"<string,null>\",\n    \"resolution\": \"RESOLVED\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"fromNumber\": \"<string>\",\n    \"toNumber\": \"<string>\",\n    \"isInbound\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"outcome\": \"VOICEMAIL\",\n    \"startTime\": \"<string,null-date-time>\",\n    \"endTime\": \"<string,null-date-time>\",\n    \"reason\": \"<string,null>\",\n    \"disposition\": \"<string,null>\",\n    \"note\": \"<string,null>\",\n    \"summary\": \"<string,null>\",\n    \"transcriptText\": \"<string,null>\",\n    \"recordingUrl\": \"<string,null>\",\n    \"transcriptUrl\": \"<string,null>\",\n    \"missedCount\": \"<integer,null>\",\n    \"classificationNote\": \"<string,null>\",\n    \"resolution\": \"UNRESOLVED\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-f52eb524-077e-4ca1-a050-4dd7ef1a015a"
+                    },
+                    {
+                      "id": "fae6ed5e-ff6e-49b2-9d55-c3e731cbca4a",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-fae6ed5e-ff6e-49b2-9d55-c3e731cbca4a"
+                    },
+                    {
+                      "id": "0a1c49b0-957b-42b9-b5e5-c8fadac5483c",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-0a1c49b0-957b-42b9-b5e5-c8fadac5483c"
+                    },
+                    {
+                      "id": "6285c1bb-6ad2-4f0f-bb96-169443a20b0e",
+                      "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Gateway",
+                      "code": 502,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-6285c1bb-6ad2-4f0f-bb96-169443a20b0e"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-b019b15b-64c0-4dbf-bd04-23ee3a505c33"
+                },
+                {
+                  "name": "Create Account Call",
+                  "id": "81a7b633-3651-4dfc-8398-3a34e77210d9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":account_id",
+                        "calls"
+                      ],
+                      "variable": [
+                        {
+                          "id": "87837fba-cd1f-4e59-b3da-4ac4b4221221",
+                          "key": "account_id",
+                          "value": "<integer>",
+                          "description": "(Required) Account identifier"
+                        }
+                      ]
+                    },
+                    "description": "Create a new phone call record associated with an account\n\n**Note:** The `/clients` path is an alias for `/accounts` and will continue to work until users are individually notified and migrated."
+                  },
+                  "response": [
+                    {
+                      "id": "11f1fbe6-6a98-43a6-b34a-6b9005235814",
+                      "name": "Call record created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"outcome\": \"VOICEMAIL\",\n  \"startTime\": \"<string,null-date-time>\",\n  \"endTime\": \"<string,null-date-time>\",\n  \"reason\": \"<string,null>\",\n  \"disposition\": \"<string,null>\",\n  \"note\": \"<string,null>\",\n  \"summary\": \"<string,null>\",\n  \"transcriptText\": \"<string,null>\",\n  \"recordingUrl\": \"<string,null>\",\n  \"transcriptUrl\": \"<string,null>\",\n  \"missedCount\": \"<integer,null>\",\n  \"classificationNote\": \"<string,null>\",\n  \"resolution\": \"RESOLVED\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-11f1fbe6-6a98-43a6-b34a-6b9005235814"
+                    },
+                    {
+                      "id": "52c72214-00f2-4548-baec-d1fe58b961b1",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-52c72214-00f2-4548-baec-d1fe58b961b1"
+                    },
+                    {
+                      "id": "4c207955-09e3-4fa6-a5c9-d35cb7cbebcd",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromNumber\": \"<string>\",\n  \"toNumber\": \"<string>\",\n  \"isInbound\": false,\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"disposition\": \"<string>\",\n  \"outcome\": \"ANSWERED\",\n  \"note\": \"<string>\",\n  \"recordingUrl\": \"<string>\",\n  \"transcriptUrl\": \"<string>\",\n  \"missedCount\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:account_id/calls",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":account_id",
+                            "calls"
+                          ],
+                          "variable": [
+                            {
+                              "key": "account_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+                      "createdAt": "2026-10-22T02:14:53.000Z",
+                      "updatedAt": "2026-10-22T02:14:53.000Z",
+                      "uid": "35240-4c207955-09e3-4fa6-a5c9-d35cb7cbebcd"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:14:53.000Z",
+                  "updatedAt": "2026-10-22T02:14:53.000Z",
+                  "uid": "35240-81a7b633-3651-4dfc-8398-3a34e77210d9"
+                }
+              ],
+              "id": "b78cbaf6-9b02-4c6a-9784-57efb89b9352",
+              "createdAt": "2026-10-22T02:14:53.000Z",
+              "updatedAt": "2026-10-22T02:14:53.000Z",
+              "uid": "35240-b78cbaf6-9b02-4c6a-9784-57efb89b9352"
+            }
+          ],
+          "id": "f62f0ce1-04de-4a83-8a0f-250be847c6f5",
+          "createdAt": "2026-10-22T02:14:53.000Z",
+          "updatedAt": "2026-10-22T02:14:53.000Z",
+          "uid": "35240-f62f0ce1-04de-4a83-8a0f-250be847c6f5"
+        }
+      ],
+      "id": "fe79884f-29a4-4405-bd83-53f50c765c81",
+      "createdAt": "2026-10-22T02:14:53.000Z",
+      "updatedAt": "2026-10-22T02:14:53.000Z",
+      "uid": "35240-fe79884f-29a4-4405-bd83-53f50c765c81"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "e2fbeb0e-4f00-41d7-a0c9-9b53971f911c",
-    "name": "API Key accounts calls API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

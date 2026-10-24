@@ -1,143 +1,163 @@
 {
+  "info": {
+    "_postman_id": "76c8ec56-2ab8-435e-8e6f-983ffec008e7",
+    "name": "Reference Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:16:44.000Z",
+    "updatedAt": "2026-10-22T02:16:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-76c8ec56-2ab8-435e-8e6f-983ffec008e7"
+  },
   "item": [
     {
-      "id": "afb60d2d-9ac1-4990-9b45-46c2a58dbad3",
       "name": "users",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "ac4e541e-590e-4366-935f-dcc348b8464d",
           "name": "List Users",
+          "id": "1e1f7205-42ba-44e2-9c45-ca710e7b3b9f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "List Users",
-            "description": {
-              "content": "Retrieve a list of users",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "users"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+            "auth": {
+              "type": "apikey",
+              "apikey": [
                 {
-                  "disabled": false,
-                  "key": "email",
-                  "value": "<string>",
-                  "description": "Email of the user to search for"
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
                 },
                 {
-                  "disabled": false,
-                  "key": "id",
-                  "value": "<integer>",
-                  "description": "ID of the user to search for"
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
                 }
-              ],
-              "variable": []
+              ]
             },
+            "method": "GET",
             "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/users?email=<string>&id=<integer>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "description": "Email of the user to search for",
+                  "key": "email",
+                  "value": "<string>"
+                },
+                {
+                  "description": "ID of the user to search for",
+                  "key": "id",
+                  "value": "<integer>"
+                }
+              ]
+            },
+            "description": "Retrieve a list of users"
           },
           "response": [
             {
-              "id": "8c26e902-7fe9-47ab-915c-692f3b344dfd",
+              "id": "2bae6dbb-4504-4a12-b6b5-a8e768f07a0f",
               "name": "List of users",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "users"
-                  ],
+                  "raw": "{{baseUrl}}/users?email=<string>&id=<integer>",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "users"
+                  ],
                   "query": [
                     {
+                      "description": "Email of the user to search for",
                       "key": "email",
                       "value": "<string>"
                     },
                     {
+                      "description": "ID of the user to search for",
                       "key": "id",
                       "value": "<integer>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 1820,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"MlPdYLqWbW@nKgCkQvtB.dm\",\n    \"role\": {\n      \"id\": \"string\",\n      \"name\": \"string\"\n    },\n    \"phone\": \"string\"\n  },\n  {\n    \"id\": 1366,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"email\": \"h8dau@vtByRpQfRYTVoxkhkiFknfWfgqVbECkx.ddw\",\n    \"role\": {\n      \"id\": \"string\",\n      \"name\": \"string\"\n    },\n    \"phone\": \"string\"\n  }\n]",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<email>\",\n    \"role\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"phone\": \"<string>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<email>\",\n    \"role\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"phone\": \"<string>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:16:45.000Z",
+              "updatedAt": "2026-10-22T02:16:45.000Z",
+              "uid": "35240-2bae6dbb-4504-4a12-b6b5-a8e768f07a0f"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:16:45.000Z",
+          "updatedAt": "2026-10-22T02:16:45.000Z",
+          "uid": "35240-1e1f7205-42ba-44e2-9c45-ca710e7b3b9f"
         },
         {
-          "id": "ed805e38-0035-494e-b74e-7d0d77a6b2a1",
           "name": "Invite User",
+          "id": "8678219b-bbc3-475b-926a-0fa70eff0eeb",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Invite User",
-            "description": {
-              "content": "Invite a new user to the organization",
-              "type": "text/plain"
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
             },
-            "url": {
-              "path": [
-                "users"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
+            "method": "POST",
             "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -147,257 +167,304 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": null,
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"roleIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"phone\": \"<string>\"\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Invite a new user to the organization"
           },
           "response": [
             {
-              "id": "69503afb-ffcb-4a92-a4eb-ee4bc64969ac",
+              "id": "333f70fe-b7b5-44a2-860e-26fe98c414ae",
               "name": "User invited successfully",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "users"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"roleIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"phone\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
                 }
               },
               "status": "Created",
               "code": 201,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"email\": \"lPsPkF@FhMbYWEGXtBLamEGhzFqgxEJSUdKR.klj\",\n  \"status\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"email\": \"<email>\",\n  \"status\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:16:45.000Z",
+              "updatedAt": "2026-10-22T02:16:45.000Z",
+              "uid": "35240-333f70fe-b7b5-44a2-860e-26fe98c414ae"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "7153eb6b-3ba8-4471-a69c-e7cb2c5e22a2",
-          "name": "List Roles",
-          "request": {
-            "name": "List Roles",
-            "description": {
-              "content": "Retrieve available user roles",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "roles"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "7c89ad76-dfc8-45a7-8298-f37b0813fe3e",
-              "name": "List of roles",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "roles"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"active\": false\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"active\": false\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "5b28ba53-ddc9-4f37-b376-74f84ff9848c",
-          "name": "List Teams",
-          "request": {
-            "name": "List Teams",
-            "description": {
-              "content": "Retrieve available teams",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "teams"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "11b88dbe-3b24-4702-bad0-6370f6f8be85",
-              "name": "List of teams",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "teams"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 5653,\n    \"name\": \"string\",\n    \"workers\": [\n      {\n        \"id\": 473,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"z59vN4WkeBPa@LVLnHvSYooLamSAxlVsJwLeUVb.yinb\",\n        \"role\": {\n          \"id\": \"string\",\n          \"name\": \"string\"\n        },\n        \"phone\": \"string\",\n        \"isTeamLead\": true\n      },\n      {\n        \"id\": 4566,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"qHProp2@zzbQOoDwasrQjFpwBBAyIj.cft\",\n        \"role\": {\n          \"id\": \"string\",\n          \"name\": \"string\"\n        },\n        \"phone\": \"string\",\n        \"isTeamLead\": false\n      }\n    ]\n  },\n  {\n    \"id\": 564,\n    \"name\": \"string\",\n    \"workers\": [\n      {\n        \"id\": 4772,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"ObXnWeWh-RWUxp@PIAabIODrAOqqZtwXRN.wyr\",\n        \"role\": {\n          \"id\": \"string\",\n          \"name\": \"string\"\n        },\n        \"phone\": \"string\",\n        \"isTeamLead\": true\n      },\n      {\n        \"id\": 5611,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"email\": \"pzURar0kSBe@NdA.yfzo\",\n        \"role\": {\n          \"id\": \"string\",\n          \"name\": \"string\"\n        },\n        \"phone\": \"string\",\n        \"isTeamLead\": true\n      }\n    ]\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:16:45.000Z",
+          "updatedAt": "2026-10-22T02:16:45.000Z",
+          "uid": "35240-8678219b-bbc3-475b-926a-0fa70eff0eeb"
         }
       ],
-      "event": []
+      "id": "137a74a8-9f21-43a9-8fe1-4103c514d1f7",
+      "createdAt": "2026-10-22T02:16:45.000Z",
+      "updatedAt": "2026-10-22T02:16:45.000Z",
+      "uid": "35240-137a74a8-9f21-43a9-8fe1-4103c514d1f7"
+    },
+    {
+      "name": "roles",
+      "item": [
+        {
+          "name": "List Roles",
+          "id": "d88ea05f-101c-4e7f-a2a7-24eae6ff1d41",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            },
+            "description": "Retrieve available user roles"
+          },
+          "response": [
+            {
+              "id": "7b31480b-ff0d-4b01-a929-9bcd96776378",
+              "name": "List of roles",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/roles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "roles"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"active\": \"<boolean>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"active\": \"<boolean>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:16:45.000Z",
+              "updatedAt": "2026-10-22T02:16:45.000Z",
+              "uid": "35240-7b31480b-ff0d-4b01-a929-9bcd96776378"
+            }
+          ],
+          "createdAt": "2026-10-22T02:16:45.000Z",
+          "updatedAt": "2026-10-22T02:16:45.000Z",
+          "uid": "35240-d88ea05f-101c-4e7f-a2a7-24eae6ff1d41"
+        }
+      ],
+      "id": "87001379-cc4d-41c9-b677-5d14a8770a1f",
+      "createdAt": "2026-10-22T02:16:45.000Z",
+      "updatedAt": "2026-10-22T02:16:45.000Z",
+      "uid": "35240-87001379-cc4d-41c9-b677-5d14a8770a1f"
+    },
+    {
+      "name": "teams",
+      "item": [
+        {
+          "name": "List Teams",
+          "id": "90309f30-5b0f-4fe3-89cd-379f452ea5e6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "teams"
+              ]
+            },
+            "description": "Retrieve available teams"
+          },
+          "response": [
+            {
+              "id": "2c5952ce-ab09-4b44-b06d-618bf6c80837",
+              "name": "List of teams",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/teams",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "teams"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"workers\": [\n      {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<email>\",\n        \"role\": {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"phone\": \"<string>\",\n        \"isTeamLead\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<email>\",\n        \"role\": {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"phone\": \"<string>\",\n        \"isTeamLead\": \"<boolean>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"workers\": [\n      {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<email>\",\n        \"role\": {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"phone\": \"<string>\",\n        \"isTeamLead\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"email\": \"<email>\",\n        \"role\": {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"phone\": \"<string>\",\n        \"isTeamLead\": \"<boolean>\"\n      }\n    ]\n  }\n]",
+              "createdAt": "2026-10-22T02:16:45.000Z",
+              "updatedAt": "2026-10-22T02:16:45.000Z",
+              "uid": "35240-2c5952ce-ab09-4b44-b06d-618bf6c80837"
+            }
+          ],
+          "createdAt": "2026-10-22T02:16:45.000Z",
+          "updatedAt": "2026-10-22T02:16:45.000Z",
+          "uid": "35240-90309f30-5b0f-4fe3-89cd-379f452ea5e6"
+        }
+      ],
+      "id": "87ef66d6-9d3a-4994-8e84-109f3ac248b4",
+      "createdAt": "2026-10-22T02:16:45.000Z",
+      "updatedAt": "2026-10-22T02:16:45.000Z",
+      "uid": "35240-87ef66d6-9d3a-4994-8e84-109f3ac248b4"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "84bb61f3-d48e-45db-b03f-9af438dfe2ec",
-    "name": "API Key accounts users API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

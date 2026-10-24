@@ -1,126 +1,135 @@
 {
+  "info": {
+    "_postman_id": "b4c63e4f-243d-45ad-a7e0-5902f57a3705",
+    "name": "Reference Properties API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:16:05.000Z",
+    "updatedAt": "2026-10-22T02:16:06.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b4c63e4f-243d-45ad-a7e0-5902f57a3705"
+  },
   "item": [
     {
-      "id": "6d4c3428-4dd4-4743-9c22-83981607808a",
       "name": "properties",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "a4491189-4dbb-4546-bec1-2286ba7842aa",
           "name": "List Properties",
+          "id": "17673637-96ba-4ec6-b42b-729e0f34c5ec",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "List Properties",
-            "description": {
-              "content": "Retrieve list of properties organized by record type.\n\nWhen `record_type` is **omitted**, the response includes all keys: `account`, `opportunity`,\n`project`, `vendor`, and `ahj` — plus the deprecated alias keys `client` and `request`.\n\nWhen `record_type` is **provided**, the response contains only the requested key(s). Filtering\nby `account` or `client` returns both `account` and `client` (identical data); filtering by\n`opportunity` or `request` returns both `opportunity` and `request` (identical data).\n\n> **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They will continue to be returned until all users have migrated.\n\n> **AHJ:** The `ahj` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in AHJ fields are not included here — they are exposed directly on the AHJ object instead, and are not updatable via the public API.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "properties"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+            "auth": {
+              "type": "apikey",
+              "apikey": [
                 {
-                  "disabled": false,
-                  "key": "record_type",
-                  "value": "<string>",
-                  "description": "Filter by record type. Can also be supplied as a comma-separated list\n(`?record_type=project,vendor`) or repeated (`?record_type=project&record_type=vendor`)\nto request multiple types in one call.\n\nWhen omitted, the response includes every record-type key. When supplied, the response\nincludes only the requested key(s) — plus the matching deprecated alias key where\napplicable (`account` ↔ `client`, `opportunity` ↔ `request`).\n\n> **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They are still accepted as input.\n"
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
                 }
-              ],
-              "variable": []
+              ]
             },
+            "method": "GET",
             "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/properties?record_type=opportunity",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "properties"
+              ],
+              "query": [
+                {
+                  "description": "Filter by record type. Can also be supplied as a comma-separated list\n(`?record_type=project,vendor`) or repeated (`?record_type=project&record_type=vendor`)\nto request multiple types in one call.\n\nWhen omitted, the response includes every record-type key. When supplied, the response\nincludes only the requested key(s) \u2014 plus the matching deprecated alias key where\napplicable (`account` \u2194 `client`, `opportunity` \u2194 `request`).\n\n> **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They are still accepted as input.\n",
+                  "key": "record_type",
+                  "value": "opportunity"
+                }
+              ]
+            },
+            "description": "Retrieve list of properties organized by record type.\n\nWhen `record_type` is **omitted**, the response includes all keys: `account`, `opportunity`,\n`project`, `vendor`, `ahj`, and `utility` \u2014 plus the deprecated alias keys `client` and `request`.\n\nWhen `record_type` is **provided**, the response contains only the requested key(s). Filtering\nby `account` or `client` returns both `account` and `client` (identical data); filtering by\n`opportunity` or `request` returns both `opportunity` and `request` (identical data).\n\n> **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They will continue to be returned until all users have migrated.\n\n> **AHJ:** The `ahj` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in AHJ fields are not included here \u2014 they are exposed directly on the AHJ object instead, and are not updatable via the public API.\n\n> **Utility:** The `utility` key returns only customer-defined custom properties (`isCustom: true`). Standard built-in utility fields are not included here \u2014 they are exposed directly on the utility object instead, and are not updatable via the public API.\n\n> **keyName semantics:** For built-in properties (`isCustom: false`), `keyName` is the public\n> field name used on the record's create/update/read endpoints (e.g. `address`, `isActive`,\n> `createdAt`) \u2014 not the internal storage key. Use the `readOnly` flag to tell which built-in\n> fields can be sent on create/update (`readOnly: false`) versus which are system/derived\n> fields you can only read (`readOnly: true`). For custom properties, `keyName` is the key\n> used under the `custom` object, and `readOnly` is always `false`."
           },
           "response": [
             {
-              "id": "1a2c226d-0b50-493a-943a-81bc054a0e17",
+              "id": "9b30f86f-735b-451f-9a7b-c688a1e53025",
               "name": "List of properties",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "properties"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "record_type",
-                      "value": "ahj"
-                    }
-                  ],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/properties?record_type=opportunity",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by record type. Can also be supplied as a comma-separated list\n(`?record_type=project,vendor`) or repeated (`?record_type=project&record_type=vendor`)\nto request multiple types in one call.\n\nWhen omitted, the response includes every record-type key. When supplied, the response\nincludes only the requested key(s) \u2014 plus the matching deprecated alias key where\napplicable (`account` \u2194 `client`, `opportunity` \u2194 `request`).\n\n> **Note:** `client` and `request` are deprecated aliases for `account` and `opportunity` respectively. They are still accepted as input.\n",
+                      "key": "record_type",
+                      "value": "opportunity"
+                    }
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"account\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    }\n  ],\n  \"opportunity\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    }\n  ],\n  \"project\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    }\n  ],\n  \"vendor\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    }\n  ],\n  \"ahj\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": false,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": false\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    }\n  ],\n  \"client\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    }\n  ],\n  \"request\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"keyName\": \"string\",\n      \"isMultiple\": true,\n      \"options\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isCustom\": true\n    }\n  ]\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"account\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    }\n  ],\n  \"opportunity\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    }\n  ],\n  \"project\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    }\n  ],\n  \"vendor\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    }\n  ],\n  \"ahj\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    }\n  ],\n  \"client\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    }\n  ],\n  \"request\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"keyName\": \"<string>\",\n      \"isMultiple\": \"<boolean>\",\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultValue\": [\n        {\n          \"description\": \"Any type\"\n        },\n        {\n          \"description\": \"Any type\"\n        }\n      ],\n      \"isCustom\": \"<boolean>\",\n      \"readOnly\": \"<boolean>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T02:16:06.000Z",
+              "updatedAt": "2026-10-22T02:16:06.000Z",
+              "uid": "35240-9b30f86f-735b-451f-9a7b-c688a1e53025"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:16:06.000Z",
+          "updatedAt": "2026-10-22T02:16:06.000Z",
+          "uid": "35240-17673637-96ba-4ec6-b42b-729e0f34c5ec"
         }
       ],
-      "event": []
+      "id": "17a96c99-45be-41b2-bddf-2290fcad1cf0",
+      "createdAt": "2026-10-22T02:16:06.000Z",
+      "updatedAt": "2026-10-22T02:16:06.000Z",
+      "uid": "35240-17a96c99-45be-41b2-bddf-2290fcad1cf0"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "157788f8-2029-43e8-bb0c-8265f33b25e4",
-    "name": "API Key accounts properties API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

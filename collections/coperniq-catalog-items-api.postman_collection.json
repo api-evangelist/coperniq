@@ -1,0 +1,2244 @@
+{
+  "info": {
+    "_postman_id": "4110a920-1f99-4d7a-997a-8d9071d72a2a",
+    "name": "Reference Catalog Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:17:32.000Z",
+    "updatedAt": "2026-10-22T02:17:32.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4110a920-1f99-4d7a-997a-8d9071d72a2a"
+  },
+  "item": [
+    {
+      "name": "catalog-items",
+      "item": [
+        {
+          "name": "{catalog_item_id}",
+          "item": [
+            {
+              "name": "Get Catalog Item",
+              "id": "a2d7c0d8-0ac9-4f0d-86a9-5d72ae0beabc",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items",
+                    ":catalog_item_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "e4b60326-e892-4664-8527-1d3aaefe2d1a",
+                      "key": "catalog_item_id",
+                      "value": "<integer>",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific catalog item by ID."
+              },
+              "response": [
+                {
+                  "id": "cfcd72d4-87bf-4ddb-8c2e-8b564cb4990f",
+                  "name": "Catalog item details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"catalog\": \"OTHER\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"SHEATHING\",\n  \"cost\": \"<number,null-double>\",\n  \"price\": \"<number,null-double>\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"image\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"url\": \"<string>\"\n  },\n  \"isArchived\": \"<boolean,null>\",\n  \"createdById\": \"<integer>\",\n  \"createdAt\": \"<string,null-date-time>\",\n  \"updatedAt\": \"<string,null-date-time>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unit\": {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\",\n    \"label\": \"<string>\",\n    \"dimension\": \"AREA\",\n    \"isCustom\": \"<boolean>\",\n    \"isArchived\": \"<boolean>\"\n  },\n  \"measurements\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"MEASUREMENT\",\n      \"unit\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\",\n        \"label\": \"<string>\",\n        \"dimension\": \"COUNT\",\n        \"isCustom\": \"<boolean>\",\n        \"isArchived\": \"<boolean>\"\n      },\n      \"minimumValue\": \"<number,null-double>\",\n      \"formula\": {\n        \"operands\": [\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          }\n        ],\n        \"ast\": {},\n        \"sourceText\": \"<string>\"\n      },\n      \"isArchived\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"SUB_CALCULATION\",\n      \"unit\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\",\n        \"label\": \"<string>\",\n        \"dimension\": \"LENGTH\",\n        \"isCustom\": \"<boolean>\",\n        \"isArchived\": \"<boolean>\"\n      },\n      \"minimumValue\": \"<number,null-double>\",\n      \"formula\": {\n        \"operands\": [\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          }\n        ],\n        \"ast\": {},\n        \"sourceText\": \"<string>\"\n      },\n      \"isArchived\": \"<boolean>\"\n    }\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-cfcd72d4-87bf-4ddb-8c2e-8b564cb4990f"
+                },
+                {
+                  "id": "5dbb3d02-c1d2-4f1e-a1d0-102371610134",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-5dbb3d02-c1d2-4f1e-a1d0-102371610134"
+                },
+                {
+                  "id": "9de1c5f0-4dbb-4751-8473-b738f205d690",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-9de1c5f0-4dbb-4751-8473-b738f205d690"
+                },
+                {
+                  "id": "d2177e36-fe28-4ee2-9c3a-9d027e17dd51",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-d2177e36-fe28-4ee2-9c3a-9d027e17dd51"
+                },
+                {
+                  "id": "782d6b83-b67c-4e9e-b15d-ff79d04c3a76",
+                  "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-782d6b83-b67c-4e9e-b15d-ff79d04c3a76"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-a2d7c0d8-0ac9-4f0d-86a9-5d72ae0beabc"
+            },
+            {
+              "name": "Update Catalog Item",
+              "id": "0b2f2061-e56c-4c3d-9075-fd2ea7af2b73",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"SERVICE\",\n  \"name\": \"<string>\",\n  \"category\": \"CHILLER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items",
+                    ":catalog_item_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a62f541b-b184-4abc-b0de-0dad801c4efc",
+                      "key": "catalog_item_id",
+                      "value": "<integer>",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "description": "Update an existing catalog item."
+              },
+              "response": [
+                {
+                  "id": "ab12a336-9034-4cd8-9741-4e0d4ee1d595",
+                  "name": "Catalog item updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"type\": \"SERVICE\",\n  \"name\": \"<string>\",\n  \"category\": \"CHILLER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"catalog\": \"OTHER\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"SHEATHING\",\n  \"cost\": \"<number,null-double>\",\n  \"price\": \"<number,null-double>\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"image\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"url\": \"<string>\"\n  },\n  \"isArchived\": \"<boolean,null>\",\n  \"createdById\": \"<integer>\",\n  \"createdAt\": \"<string,null-date-time>\",\n  \"updatedAt\": \"<string,null-date-time>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unit\": {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\",\n    \"label\": \"<string>\",\n    \"dimension\": \"AREA\",\n    \"isCustom\": \"<boolean>\",\n    \"isArchived\": \"<boolean>\"\n  },\n  \"measurements\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"MEASUREMENT\",\n      \"unit\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\",\n        \"label\": \"<string>\",\n        \"dimension\": \"COUNT\",\n        \"isCustom\": \"<boolean>\",\n        \"isArchived\": \"<boolean>\"\n      },\n      \"minimumValue\": \"<number,null-double>\",\n      \"formula\": {\n        \"operands\": [\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          }\n        ],\n        \"ast\": {},\n        \"sourceText\": \"<string>\"\n      },\n      \"isArchived\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"SUB_CALCULATION\",\n      \"unit\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\",\n        \"label\": \"<string>\",\n        \"dimension\": \"LENGTH\",\n        \"isCustom\": \"<boolean>\",\n        \"isArchived\": \"<boolean>\"\n      },\n      \"minimumValue\": \"<number,null-double>\",\n      \"formula\": {\n        \"operands\": [\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          }\n        ],\n        \"ast\": {},\n        \"sourceText\": \"<string>\"\n      },\n      \"isArchived\": \"<boolean>\"\n    }\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-ab12a336-9034-4cd8-9741-4e0d4ee1d595"
+                },
+                {
+                  "id": "f807a500-942e-44e0-a7aa-4f43c2969960",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"type\": \"SERVICE\",\n  \"name\": \"<string>\",\n  \"category\": \"CHILLER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UPSTREAM_ERROR\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-f807a500-942e-44e0-a7aa-4f43c2969960"
+                },
+                {
+                  "id": "ed3f945c-c910-449b-abba-a9273e782d14",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"type\": \"SERVICE\",\n  \"name\": \"<string>\",\n  \"category\": \"CHILLER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UPSTREAM_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-ed3f945c-c910-449b-abba-a9273e782d14"
+                },
+                {
+                  "id": "f67902a8-cf21-4f11-871b-2ed07ad948c6",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"type\": \"SERVICE\",\n  \"name\": \"<string>\",\n  \"category\": \"CHILLER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UPSTREAM_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-f67902a8-cf21-4f11-871b-2ed07ad948c6"
+                },
+                {
+                  "id": "9a2ecdaa-5662-4b9e-8610-7e681ff74794",
+                  "name": "The catalog item was updated, but could not be read back afterwards, so the full response (including any `unit` and `measurements` links) is unavailable. The update itself did apply. If this request did not archive the item, fetch the current state with `",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"type\": \"SERVICE\",\n  \"name\": \"<string>\",\n  \"category\": \"CHILLER\",\n  \"code\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"LOW_VOLTAGE\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"UPSTREAM_ERROR\",\n  \"message\": \"<string>\",\n  \"id\": \"<integer>\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-9a2ecdaa-5662-4b9e-8610-7e681ff74794"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-0b2f2061-e56c-4c3d-9075-fd2ea7af2b73"
+            },
+            {
+              "name": "Delete Catalog Item",
+              "id": "1edd7d54-2e35-4b55-a5c1-46415b2502a5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items",
+                    ":catalog_item_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d38508d7-3bea-4629-86d4-13e69a7fb248",
+                      "key": "catalog_item_id",
+                      "value": "<integer>",
+                      "description": "(Required) Catalog item identifier"
+                    }
+                  ]
+                },
+                "description": "Archives the catalog item (soft delete). The item is marked as archived and will no longer appear in list or lookup responses, but is not permanently removed."
+              },
+              "response": [
+                {
+                  "id": "9f5df8c9-a496-4271-ac3c-a0003caad68f",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-9f5df8c9-a496-4271-ac3c-a0003caad68f"
+                },
+                {
+                  "id": "f54648a7-ffd4-453d-83ab-c8d13976c017",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-f54648a7-ffd4-453d-83ab-c8d13976c017"
+                },
+                {
+                  "id": "c2f64a24-1372-494d-a346-9de5496935b6",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-c2f64a24-1372-494d-a346-9de5496935b6"
+                },
+                {
+                  "id": "61dfcbb7-51ac-4781-8afd-e17e99483a2a",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-61dfcbb7-51ac-4781-8afd-e17e99483a2a"
+                },
+                {
+                  "id": "e319e2d5-444a-48f7-a8a4-5d0d5282567c",
+                  "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-items/:catalog_item_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-items",
+                        ":catalog_item_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_item_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-e319e2d5-444a-48f7-a8a4-5d0d5282567c"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-1edd7d54-2e35-4b55-a5c1-46415b2502a5"
+            }
+          ],
+          "id": "80b61c51-8921-4292-88a0-698c2fa9cfcd",
+          "createdAt": "2026-10-22T02:17:32.000Z",
+          "updatedAt": "2026-10-22T02:17:32.000Z",
+          "uid": "35240-80b61c51-8921-4292-88a0-698c2fa9cfcd"
+        },
+        {
+          "name": "List Catalog Items",
+          "id": "d3935da7-b0a4-4f19-8114-c4599762a400",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/catalog-items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "catalog-items"
+              ]
+            },
+            "description": "Lists catalog items (products and services)."
+          },
+          "response": [
+            {
+              "id": "3cd607cd-5c9e-4b5f-9727-eef622198e04",
+              "name": "List of catalog items",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"catalog\": \"ENVELOPE\",\n    \"type\": \"PRODUCT\",\n    \"category\": \"MAGLOCK\",\n    \"cost\": \"<number,null-double>\",\n    \"price\": \"<number,null-double>\",\n    \"manufacturer\": \"<string,null>\",\n    \"sku\": \"<string,null>\",\n    \"code\": \"<string,null>\",\n    \"description\": \"<string,null>\",\n    \"image\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"url\": \"<string>\"\n    },\n    \"isArchived\": \"<boolean,null>\",\n    \"createdById\": \"<integer>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\",\n    \"preferredVendorId\": \"<integer,null>\",\n    \"unit\": {\n      \"id\": \"<integer>\",\n      \"code\": \"<string>\",\n      \"label\": \"<string>\",\n      \"dimension\": \"LENGTH\",\n      \"isCustom\": \"<boolean>\",\n      \"isArchived\": \"<boolean>\"\n    },\n    \"measurements\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"SUB_CALCULATION\",\n        \"unit\": {\n          \"id\": \"<integer>\",\n          \"code\": \"<string>\",\n          \"label\": \"<string>\",\n          \"dimension\": \"COUNT\",\n          \"isCustom\": \"<boolean>\",\n          \"isArchived\": \"<boolean>\"\n        },\n        \"minimumValue\": \"<number,null-double>\",\n        \"formula\": {\n          \"operands\": [\n            {\n              \"name\": \"<string>\",\n              \"measurementId\": \"<integer>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"measurementId\": \"<integer>\"\n            }\n          ],\n          \"ast\": {},\n          \"sourceText\": \"<string>\"\n        },\n        \"isArchived\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"MEASUREMENT\",\n        \"unit\": {\n          \"id\": \"<integer>\",\n          \"code\": \"<string>\",\n          \"label\": \"<string>\",\n          \"dimension\": \"COUNT\",\n          \"isCustom\": \"<boolean>\",\n          \"isArchived\": \"<boolean>\"\n        },\n        \"minimumValue\": \"<number,null-double>\",\n        \"formula\": {\n          \"operands\": [\n            {\n              \"name\": \"<string>\",\n              \"measurementId\": \"<integer>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"measurementId\": \"<integer>\"\n            }\n          ],\n          \"ast\": {},\n          \"sourceText\": \"<string>\"\n        },\n        \"isArchived\": \"<boolean>\"\n      }\n    ],\n    \"coverage\": \"<number,null-double>\",\n    \"wasteFactorMode\": \"STATIC\",\n    \"wasteFactorValue\": \"<number,null-double>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"catalog\": \"LOW_VOLTAGE\",\n    \"type\": \"SERVICE\",\n    \"category\": \"GREASE_INTERCEPTOR\",\n    \"cost\": \"<number,null-double>\",\n    \"price\": \"<number,null-double>\",\n    \"manufacturer\": \"<string,null>\",\n    \"sku\": \"<string,null>\",\n    \"code\": \"<string,null>\",\n    \"description\": \"<string,null>\",\n    \"image\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"url\": \"<string>\"\n    },\n    \"isArchived\": \"<boolean,null>\",\n    \"createdById\": \"<integer>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\",\n    \"preferredVendorId\": \"<integer,null>\",\n    \"unit\": {\n      \"id\": \"<integer>\",\n      \"code\": \"<string>\",\n      \"label\": \"<string>\",\n      \"dimension\": \"COUNT\",\n      \"isCustom\": \"<boolean>\",\n      \"isArchived\": \"<boolean>\"\n    },\n    \"measurements\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"MEASUREMENT\",\n        \"unit\": {\n          \"id\": \"<integer>\",\n          \"code\": \"<string>\",\n          \"label\": \"<string>\",\n          \"dimension\": \"AREA\",\n          \"isCustom\": \"<boolean>\",\n          \"isArchived\": \"<boolean>\"\n        },\n        \"minimumValue\": \"<number,null-double>\",\n        \"formula\": {\n          \"operands\": [\n            {\n              \"name\": \"<string>\",\n              \"measurementId\": \"<integer>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"measurementId\": \"<integer>\"\n            }\n          ],\n          \"ast\": {},\n          \"sourceText\": \"<string>\"\n        },\n        \"isArchived\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"MEASUREMENT\",\n        \"unit\": {\n          \"id\": \"<integer>\",\n          \"code\": \"<string>\",\n          \"label\": \"<string>\",\n          \"dimension\": \"LENGTH\",\n          \"isCustom\": \"<boolean>\",\n          \"isArchived\": \"<boolean>\"\n        },\n        \"minimumValue\": \"<number,null-double>\",\n        \"formula\": {\n          \"operands\": [\n            {\n              \"name\": \"<string>\",\n              \"measurementId\": \"<integer>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"measurementId\": \"<integer>\"\n            }\n          ],\n          \"ast\": {},\n          \"sourceText\": \"<string>\"\n        },\n        \"isArchived\": \"<boolean>\"\n      }\n    ],\n    \"coverage\": \"<number,null-double>\",\n    \"wasteFactorMode\": \"STATIC\",\n    \"wasteFactorValue\": \"<number,null-double>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-3cd607cd-5c9e-4b5f-9727-eef622198e04"
+            },
+            {
+              "id": "763eb840-9619-40c8-9abe-04dce5209698",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-763eb840-9619-40c8-9abe-04dce5209698"
+            },
+            {
+              "id": "0688296f-2b14-4da5-9fa4-c22398115002",
+              "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items"
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-0688296f-2b14-4da5-9fa4-c22398115002"
+            }
+          ],
+          "createdAt": "2026-10-22T02:17:32.000Z",
+          "updatedAt": "2026-10-22T02:17:32.000Z",
+          "uid": "35240-d3935da7-b0a4-4f19-8114-c4599762a400"
+        },
+        {
+          "name": "Create Catalog Item",
+          "id": "398326bb-f84a-409f-bdf8-e13021818d5e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"SERVICE\",\n  \"category\": \"NETWORK_VIDEO_RECORDER\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"OTHER\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/catalog-items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "catalog-items"
+              ]
+            },
+            "description": "Create a new catalog item."
+          },
+          "response": [
+            {
+              "id": "eb69e4f7-c2a1-4afa-89d9-9e9e7d83ebba",
+              "name": "Catalog item created successfully",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"SERVICE\",\n  \"category\": \"NETWORK_VIDEO_RECORDER\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"OTHER\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"catalog\": \"OTHER\",\n  \"type\": \"PRODUCT\",\n  \"category\": \"SHEATHING\",\n  \"cost\": \"<number,null-double>\",\n  \"price\": \"<number,null-double>\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"image\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"url\": \"<string>\"\n  },\n  \"isArchived\": \"<boolean,null>\",\n  \"createdById\": \"<integer>\",\n  \"createdAt\": \"<string,null-date-time>\",\n  \"updatedAt\": \"<string,null-date-time>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unit\": {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\",\n    \"label\": \"<string>\",\n    \"dimension\": \"AREA\",\n    \"isCustom\": \"<boolean>\",\n    \"isArchived\": \"<boolean>\"\n  },\n  \"measurements\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"MEASUREMENT\",\n      \"unit\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\",\n        \"label\": \"<string>\",\n        \"dimension\": \"COUNT\",\n        \"isCustom\": \"<boolean>\",\n        \"isArchived\": \"<boolean>\"\n      },\n      \"minimumValue\": \"<number,null-double>\",\n      \"formula\": {\n        \"operands\": [\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          }\n        ],\n        \"ast\": {},\n        \"sourceText\": \"<string>\"\n      },\n      \"isArchived\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"SUB_CALCULATION\",\n      \"unit\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\",\n        \"label\": \"<string>\",\n        \"dimension\": \"LENGTH\",\n        \"isCustom\": \"<boolean>\",\n        \"isArchived\": \"<boolean>\"\n      },\n      \"minimumValue\": \"<number,null-double>\",\n      \"formula\": {\n        \"operands\": [\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"measurementId\": \"<integer>\"\n          }\n        ],\n        \"ast\": {},\n        \"sourceText\": \"<string>\"\n      },\n      \"isArchived\": \"<boolean>\"\n    }\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-eb69e4f7-c2a1-4afa-89d9-9e9e7d83ebba"
+            },
+            {
+              "id": "51cf1ef6-512b-494c-b533-a0f78084e895",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"SERVICE\",\n  \"category\": \"NETWORK_VIDEO_RECORDER\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"OTHER\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UPSTREAM_ERROR\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-51cf1ef6-512b-494c-b533-a0f78084e895"
+            },
+            {
+              "id": "faa1abc4-6d7c-462d-8482-cca36d984244",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"SERVICE\",\n  \"category\": \"NETWORK_VIDEO_RECORDER\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"OTHER\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UPSTREAM_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-faa1abc4-6d7c-462d-8482-cca36d984244"
+            },
+            {
+              "id": "2a0acc81-c637-4c2f-a1b4-4e3120aa2e8c",
+              "name": "The catalog item was created, but could not be read back afterwards, so the full response (including any `unit` and `measurements` links) is unavailable. Use the returned `id` to fetch it with `GET /catalog-items/{catalog_item_id}` \u2014 do not retry this POS",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"SERVICE\",\n  \"category\": \"NETWORK_VIDEO_RECORDER\",\n  \"cost\": \"<double>\",\n  \"price\": \"<double>\",\n  \"tradeGroup\": \"OTHER\",\n  \"manufacturer\": \"<string,null>\",\n  \"sku\": \"<string,null>\",\n  \"code\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"preferredVendorId\": \"<integer,null>\",\n  \"unitId\": \"<integer,null>\",\n  \"measurementIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"coverage\": \"<number,null-double>\",\n  \"wasteFactorMode\": \"STATIC\",\n  \"wasteFactorValue\": \"<number,null-double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-items",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-items"
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"UPSTREAM_ERROR\",\n  \"message\": \"<string>\",\n  \"id\": \"<integer>\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-2a0acc81-c637-4c2f-a1b4-4e3120aa2e8c"
+            }
+          ],
+          "createdAt": "2026-10-22T02:17:32.000Z",
+          "updatedAt": "2026-10-22T02:17:32.000Z",
+          "uid": "35240-398326bb-f84a-409f-bdf8-e13021818d5e"
+        }
+      ],
+      "id": "c680a2e6-b37f-4bbf-969c-8a5ee683af63",
+      "createdAt": "2026-10-22T02:17:32.000Z",
+      "updatedAt": "2026-10-22T02:17:32.000Z",
+      "uid": "35240-c680a2e6-b37f-4bbf-969c-8a5ee683af63"
+    },
+    {
+      "name": "catalog-categories",
+      "item": [
+        {
+          "name": "List Catalog Categories",
+          "id": "49ba4dc4-1458-4991-871e-082a917a319e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/catalog-categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "catalog-categories"
+              ]
+            },
+            "description": "Lists the valid category codes for catalog items, grouped by PRODUCT/SERVICE, along with the\navailable trade groups. Use these values to populate `category` and `tradeGroup` on\nPOST/PATCH /catalog-items."
+          },
+          "response": [
+            {
+              "id": "60ab108b-7b8c-445a-b814-668c3435779e",
+              "name": "Available catalog categories and trade groups",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-categories",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"productCategories\": [\n    {\n      \"code\": \"<string>\",\n      \"type\": \"SERVICE\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"type\": \"SERVICE\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"serviceCategories\": [\n    {\n      \"code\": \"<string>\",\n      \"type\": \"SERVICE\",\n      \"description\": \"<string,null>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"type\": \"PRODUCT\",\n      \"description\": \"<string,null>\"\n    }\n  ],\n  \"tradeGroups\": [\n    \"ENERGY\",\n    \"ELECTRICAL\"\n  ]\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-60ab108b-7b8c-445a-b814-668c3435779e"
+            },
+            {
+              "id": "4f1ac8a2-ccab-4046-85e0-ea847e7071c3",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-categories",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-categories"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-4f1ac8a2-ccab-4046-85e0-ea847e7071c3"
+            }
+          ],
+          "createdAt": "2026-10-22T02:17:32.000Z",
+          "updatedAt": "2026-10-22T02:17:32.000Z",
+          "uid": "35240-49ba4dc4-1458-4991-871e-082a917a319e"
+        }
+      ],
+      "id": "164f58ad-bc2a-4f2d-afba-b87ebe3f02cd",
+      "createdAt": "2026-10-22T02:17:32.000Z",
+      "updatedAt": "2026-10-22T02:17:32.000Z",
+      "uid": "35240-164f58ad-bc2a-4f2d-afba-b87ebe3f02cd"
+    },
+    {
+      "name": "catalog-units",
+      "item": [
+        {
+          "name": "{catalog_unit_id}",
+          "item": [
+            {
+              "name": "Get Catalog Unit",
+              "id": "819fcf52-f371-4874-86de-eebae2993330",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-units/:catalog_unit_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-units",
+                    ":catalog_unit_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d0df6f79-16c5-431f-9ce8-f14668551ace",
+                      "key": "catalog_unit_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific catalog unit by ID."
+              },
+              "response": [
+                {
+                  "id": "76eb09c0-2dd1-4c0e-9a8c-de5b7bba994e",
+                  "name": "Catalog unit details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-units/:catalog_unit_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-units",
+                        ":catalog_unit_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_unit_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"label\": \"<string>\",\n  \"dimension\": \"LENGTH\",\n  \"isCustom\": \"<boolean>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-76eb09c0-2dd1-4c0e-9a8c-de5b7bba994e"
+                },
+                {
+                  "id": "8e6db6f1-af69-4b9d-85fc-ab80b17752f8",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-units/:catalog_unit_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-units",
+                        ":catalog_unit_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_unit_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-8e6db6f1-af69-4b9d-85fc-ab80b17752f8"
+                },
+                {
+                  "id": "74a85a6a-a3b7-4cc3-bdf5-2f080c63c3fd",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-units/:catalog_unit_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-units",
+                        ":catalog_unit_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_unit_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-74a85a6a-a3b7-4cc3-bdf5-2f080c63c3fd"
+                },
+                {
+                  "id": "a3dc01c4-d192-4dc9-84dc-75b22f2f346b",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-units/:catalog_unit_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-units",
+                        ":catalog_unit_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_unit_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-a3dc01c4-d192-4dc9-84dc-75b22f2f346b"
+                },
+                {
+                  "id": "c5cdc377-fb68-45e5-87f9-52cd19e7b4ae",
+                  "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/catalog-units/:catalog_unit_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "catalog-units",
+                        ":catalog_unit_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "catalog_unit_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+                  "createdAt": "2026-10-22T02:17:32.000Z",
+                  "updatedAt": "2026-10-22T02:17:32.000Z",
+                  "uid": "35240-c5cdc377-fb68-45e5-87f9-52cd19e7b4ae"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-819fcf52-f371-4874-86de-eebae2993330"
+            }
+          ],
+          "id": "3d76ab31-bb34-4654-86e5-30522ed0c42d",
+          "createdAt": "2026-10-22T02:17:32.000Z",
+          "updatedAt": "2026-10-22T02:17:32.000Z",
+          "uid": "35240-3d76ab31-bb34-4654-86e5-30522ed0c42d"
+        },
+        {
+          "name": "List Catalog Units",
+          "id": "b0acbb27-c363-4acc-a21e-489637406a7a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/catalog-units?include_archived=false&page=1&page_size=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "catalog-units"
+              ],
+              "query": [
+                {
+                  "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                  "key": "include_archived",
+                  "value": "false"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Lists the units of measure available to your company (e.g. Each, Square Feet, Linear Feet).\nUse these IDs when setting `unitId` on a catalog item, or when linking measurements."
+          },
+          "response": [
+            {
+              "id": "3520610d-59f1-4931-90ad-f624c52055b0",
+              "name": "List of catalog units",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-units?include_archived=false&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-units"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\",\n    \"label\": \"<string>\",\n    \"dimension\": \"COUNT\",\n    \"isCustom\": \"<boolean>\",\n    \"isArchived\": \"<boolean>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\",\n    \"label\": \"<string>\",\n    \"dimension\": \"COUNT\",\n    \"isCustom\": \"<boolean>\",\n    \"isArchived\": \"<boolean>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-3520610d-59f1-4931-90ad-f624c52055b0"
+            },
+            {
+              "id": "d1891494-8c70-477a-915e-678a841ea199",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-units?include_archived=false&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-units"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-d1891494-8c70-477a-915e-678a841ea199"
+            },
+            {
+              "id": "a70b630f-4758-48ac-99a0-dee4221058ee",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-units?include_archived=false&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-units"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-a70b630f-4758-48ac-99a0-dee4221058ee"
+            },
+            {
+              "id": "e23189d0-41cd-45b5-a83f-9a48cd06edc3",
+              "name": "Bad Gateway \u2014 downstream GraphQL service returned errors",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalog-units?include_archived=false&page=1&page_size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalog-units"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to include archived (inactive) records in the response. By default only active records are returned.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"GRAPHQL_ERROR\"\n}",
+              "createdAt": "2026-10-22T02:17:32.000Z",
+              "updatedAt": "2026-10-22T02:17:32.000Z",
+              "uid": "35240-e23189d0-41cd-45b5-a83f-9a48cd06edc3"
+            }
+          ],
+          "createdAt": "2026-10-22T02:17:32.000Z",
+          "updatedAt": "2026-10-22T02:17:32.000Z",
+          "uid": "35240-b0acbb27-c363-4acc-a21e-489637406a7a"
+        }
+      ],
+      "id": "0b6e87fe-6ba4-463a-88e5-5e29f4a8b86b",
+      "createdAt": "2026-10-22T02:17:32.000Z",
+      "updatedAt": "2026-10-22T02:17:32.000Z",
+      "uid": "35240-0b6e87fe-6ba4-463a-88e5-5e29f4a8b86b"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
+    }
+  ]
+}

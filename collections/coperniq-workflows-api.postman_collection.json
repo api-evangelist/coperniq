@@ -1,314 +1,334 @@
 {
+  "info": {
+    "_postman_id": "c1534954-75f8-4a9d-9f0c-a631b4096362",
+    "name": "Reference Workflows API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:16:54.000Z",
+    "updatedAt": "2026-10-22T02:16:54.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c1534954-75f8-4a9d-9f0c-a631b4096362"
+  },
   "item": [
     {
-      "id": "9129ad0b-8868-492d-9aa6-78bb73e70278",
       "name": "workflows",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "881e6851-4b32-42ab-9056-85a52d36bc97",
-          "name": "List Workflows",
-          "request": {
-            "name": "List Workflows",
-            "description": {
-              "content": "Retrieve a paginated list of workflows.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Sorting (`order_by`, default: asc)\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "workflows"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{workflow_id}",
+          "item": [
             {
-              "id": "6ca2c406-6029-468d-8c84-e89761f2edcb",
-              "name": "List of workflows",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workflows"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+              "name": "Get Workflow",
+              "id": "ddb08011-26c6-4782-9b57-75878c380024",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
                 },
+                "method": "GET",
                 "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workflows/:workflow_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workflows",
+                    ":workflow_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "916bb788-8a07-4a26-b426-1ecf7b98a28e",
+                      "key": "workflow_id",
+                      "value": "<integer>",
+                      "description": "(Required) Workflow identifier"
+                    }
+                  ]
+                },
+                "description": "Retrieve details of a specific workflow"
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "850f79fe-d512-4713-8030-7d070c5607bc",
+                  "name": "Workflow details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workflows/:workflow_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workflows",
+                        ":workflow_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workflow_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"type\": \"PROJECT\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"avatarUrl\": \"<string,null>\"\n  },\n  \"phases\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"redSla\": \"<integer,null>\",\n      \"yellowSla\": \"<integer,null>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"redSla\": \"<integer,null>\",\n      \"yellowSla\": \"<integer,null>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:16:54.000Z",
+                  "updatedAt": "2026-10-22T02:16:54.000Z",
+                  "uid": "35240-850f79fe-d512-4713-8030-7d070c5607bc"
+                },
+                {
+                  "id": "112cf38f-37d4-4fe3-8c55-c7aa361bd66e",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workflows/:workflow_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workflows",
+                        ":workflow_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workflow_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:16:54.000Z",
+                  "updatedAt": "2026-10-22T02:16:54.000Z",
+                  "uid": "35240-112cf38f-37d4-4fe3-8c55-c7aa361bd66e"
+                },
+                {
+                  "id": "fbd5afcd-01da-4b6e-97ac-e0fee4123f1b",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workflows/:workflow_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workflows",
+                        ":workflow_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workflow_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:16:54.000Z",
+                  "updatedAt": "2026-10-22T02:16:54.000Z",
+                  "uid": "35240-fbd5afcd-01da-4b6e-97ac-e0fee4123f1b"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 5213,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"type\": \"PROJECT\",\n    \"createdAt\": \"2017-03-22T13:22:12.779Z\",\n    \"updatedAt\": \"1951-03-17T00:19:08.043Z\",\n    \"createdBy\": {\n      \"id\": 8053,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"phases\": [\n      {\n        \"id\": 3776,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"redSla\": 2835,\n        \"yellowSla\": 5181\n      },\n      {\n        \"id\": 9942,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"redSla\": 4133,\n        \"yellowSla\": 5744\n      }\n    ]\n  },\n  {\n    \"id\": 8285,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"type\": \"PROJECT\",\n    \"createdAt\": \"1977-03-16T04:30:20.932Z\",\n    \"updatedAt\": \"2021-02-27T12:00:01.605Z\",\n    \"createdBy\": {\n      \"id\": 2653,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"avatarUrl\": \"string\"\n    },\n    \"phases\": [\n      {\n        \"id\": 977,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"redSla\": 6193,\n        \"yellowSla\": 6086\n      },\n      {\n        \"id\": 7793,\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"redSla\": 8994,\n        \"yellowSla\": 4049\n      }\n    ]\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T02:16:54.000Z",
+              "updatedAt": "2026-10-22T02:16:54.000Z",
+              "uid": "35240-ddb08011-26c6-4782-9b57-75878c380024"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "3004c7bb-f9a7-4bdd-a4df-028ce0db2163",
+          "createdAt": "2026-10-22T02:16:54.000Z",
+          "updatedAt": "2026-10-22T02:16:54.000Z",
+          "uid": "35240-3004c7bb-f9a7-4bdd-a4df-028ce0db2163"
         },
         {
-          "id": "d576e658-d54e-4939-a5e7-d0aa8dcc52f8",
-          "name": "Get Workflow",
+          "name": "List Workflows",
+          "id": "5708697f-29de-4af8-ab50-36594726803e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Get Workflow",
-            "description": {
-              "content": "Retrieve details of a specific workflow",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "workflows",
-                ":workflowId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
+            "auth": {
+              "type": "apikey",
+              "apikey": [
                 {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "workflowId",
-                  "description": "(Required) Workflow identifier"
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
                 }
               ]
             },
+            "method": "GET",
             "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/workflows",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows"
+              ]
+            },
+            "description": "Retrieve a paginated list of workflows.\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Sorting (`order_by`, default: asc)"
           },
           "response": [
             {
-              "id": "ee4d65d4-176f-4a92-a60d-78c5947d2836",
-              "name": "Workflow details",
+              "id": "3f64eff0-1b08-421b-b59c-b8e345d6a3ec",
+              "name": "List of workflows",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "workflows",
-                    ":workflowId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "workflowId",
-                      "description": "(Required) Workflow identifier"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workflows",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workflows"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": 6889,\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"type\": \"PROJECT\",\n  \"createdAt\": \"1953-01-02T01:05:05.729Z\",\n  \"updatedAt\": \"1993-10-31T13:29:30.692Z\",\n  \"createdBy\": {\n    \"id\": 2870,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"avatarUrl\": \"string\"\n  },\n  \"phases\": [\n    {\n      \"id\": 7948,\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"description\": \"string\",\n      \"redSla\": 1809,\n      \"yellowSla\": 9537\n    },\n    {\n      \"id\": 7544,\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"description\": \"string\",\n      \"redSla\": 7447,\n      \"yellowSla\": 7933\n    }\n  ]\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f933ce63-32f2-423a-9072-cc019f6f8d78",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workflows",
-                    ":workflowId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "workflowId",
-                      "description": "(Required) Workflow identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "acba5d2a-fc23-419f-a415-fa0d90c2d666",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workflows",
-                    ":workflowId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "workflowId",
-                      "description": "(Required) Workflow identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"type\": \"PROJECT\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"phases\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string,null>\",\n        \"redSla\": \"<integer,null>\",\n        \"yellowSla\": \"<integer,null>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string,null>\",\n        \"redSla\": \"<integer,null>\",\n        \"yellowSla\": \"<integer,null>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string,null>\",\n    \"type\": \"PROJECT\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"avatarUrl\": \"<string,null>\"\n    },\n    \"phases\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string,null>\",\n        \"redSla\": \"<integer,null>\",\n        \"yellowSla\": \"<integer,null>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string,null>\",\n        \"redSla\": \"<integer,null>\",\n        \"yellowSla\": \"<integer,null>\"\n      }\n    ]\n  }\n]",
+              "createdAt": "2026-10-22T02:16:54.000Z",
+              "updatedAt": "2026-10-22T02:16:54.000Z",
+              "uid": "35240-3f64eff0-1b08-421b-b59c-b8e345d6a3ec"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:16:54.000Z",
+          "updatedAt": "2026-10-22T02:16:54.000Z",
+          "uid": "35240-5708697f-29de-4af8-ab50-36594726803e"
         }
       ],
-      "event": []
+      "id": "b7f44ad5-4a9e-47c4-a826-5b4c6f60ffa2",
+      "createdAt": "2026-10-22T02:16:54.000Z",
+      "updatedAt": "2026-10-22T02:16:54.000Z",
+      "uid": "35240-b7f44ad5-4a9e-47c4-a826-5b4c6f60ffa2"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "db8906bf-9e99-4cfa-9a6b-9676da285812",
-    "name": "API Key accounts workflows API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

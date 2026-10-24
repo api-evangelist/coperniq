@@ -1,1732 +1,2402 @@
 {
+  "info": {
+    "_postman_id": "91f7f838-0f68-49b3-94ca-a9f557c87007",
+    "name": "Reference Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:15:52.000Z",
+    "updatedAt": "2026-10-22T02:15:52.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-91f7f838-0f68-49b3-94ca-a9f557c87007"
+  },
   "item": [
     {
-      "id": "6f501e50-cb7d-4fea-8c7e-93c5d6b52f43",
-      "name": "payments",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "invoices",
       "item": [
         {
-          "id": "8ba28857-1509-4bd0-9dfe-567019d0402b",
-          "name": "List Invoice Payments",
-          "request": {
-            "name": "List Invoice Payments",
-            "description": {
-              "content": "Retrieve all payment records for an invoice.\n\nAmounts are returned in **dollars** (internal storage uses cents).\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "invoices",
-                ":invoiceId",
-                "payments"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "invoiceId",
-                  "description": "(Required) Invoice identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{invoice_id}",
+          "item": [
             {
-              "id": "8d977e80-e6d3-4b4a-b2d4-9242d464ccd0",
-              "name": "List of payments for the invoice",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "payments",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "{payment_id}",
+                  "item": [
+                    {
+                      "name": "Get Invoice Payment",
+                      "id": "46604ac9-5706-4312-8947-3fcbb54adcc1",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "apikey",
+                          "apikey": [
+                            {
+                              "key": "key",
+                              "value": "x-api-key",
+                              "type": "string"
+                            },
+                            {
+                              "key": "value",
+                              "value": "{{apiKey}}",
+                              "type": "string"
+                            },
+                            {
+                              "key": "in",
+                              "value": "header",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments/:payment_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments",
+                            ":payment_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "dcec8c1e-eb33-4ebe-85fb-efb7c175d25b",
+                              "key": "invoice_id",
+                              "value": "<integer>",
+                              "description": "(Required) Invoice identifier"
+                            },
+                            {
+                              "id": "7416f0e7-2ffa-4b13-ae58-ec0259e70b77",
+                              "key": "payment_id",
+                              "value": "<integer>",
+                              "description": "(Required) Payment record identifier"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve a single payment record on an invoice by payment id.\n\nCore does not expose a standalone payment-record GET; this resolves the payment from the invoice's nested payment records."
+                      },
+                      "response": [
+                        {
+                          "id": "4b7c4ebf-257c-46c0-99d5-7d6104d7d0b1",
+                          "name": "Payment details",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/invoices/:invoice_id/payments/:payment_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "invoices",
+                                ":invoice_id",
+                                "payments",
+                                ":payment_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "invoice_id"
+                                },
+                                {
+                                  "key": "payment_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<integer>\",\n  \"amount\": \"<double>\",\n  \"status\": \"<string>\",\n  \"paymentMethod\": \"KLARNA\",\n  \"invoiceNumber\": \"<integer,null>\",\n  \"paymentDate\": \"<string,null-date-time>\",\n  \"paymentReference\": \"<string,null>\",\n  \"notes\": \"<string,null>\",\n  \"isExternal\": \"<boolean,null>\",\n  \"createdAt\": \"<string,null-date-time>\",\n  \"updatedAt\": \"<string,null-date-time>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\"\n  }\n}",
+                          "createdAt": "2026-10-22T02:15:53.000Z",
+                          "updatedAt": "2026-10-22T02:15:53.000Z",
+                          "uid": "35240-4b7c4ebf-257c-46c0-99d5-7d6104d7d0b1"
+                        },
+                        {
+                          "id": "df76d04a-b522-45b1-8c4f-338b6b1552f3",
+                          "name": "Invalid request",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/invoices/:invoice_id/payments/:payment_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "invoices",
+                                ":invoice_id",
+                                "payments",
+                                ":payment_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "invoice_id"
+                                },
+                                {
+                                  "key": "payment_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T02:15:53.000Z",
+                          "updatedAt": "2026-10-22T02:15:53.000Z",
+                          "uid": "35240-df76d04a-b522-45b1-8c4f-338b6b1552f3"
+                        },
+                        {
+                          "id": "779f551b-0719-4bf1-a1af-bf9bbae0d3c1",
+                          "name": "Authentication failed",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/invoices/:invoice_id/payments/:payment_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "invoices",
+                                ":invoice_id",
+                                "payments",
+                                ":payment_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "invoice_id"
+                                },
+                                {
+                                  "key": "payment_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                          "createdAt": "2026-10-22T02:15:53.000Z",
+                          "updatedAt": "2026-10-22T02:15:53.000Z",
+                          "uid": "35240-779f551b-0719-4bf1-a1af-bf9bbae0d3c1"
+                        },
+                        {
+                          "id": "d27250ac-827b-4821-9f0e-8cf640382d20",
+                          "name": "Resource not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/invoices/:invoice_id/payments/:payment_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "invoices",
+                                ":invoice_id",
+                                "payments",
+                                ":payment_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "invoice_id"
+                                },
+                                {
+                                  "key": "payment_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                          "createdAt": "2026-10-22T02:15:53.000Z",
+                          "updatedAt": "2026-10-22T02:15:53.000Z",
+                          "uid": "35240-d27250ac-827b-4821-9f0e-8cf640382d20"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T02:15:52.000Z",
+                      "updatedAt": "2026-10-22T02:15:52.000Z",
+                      "uid": "35240-46604ac9-5706-4312-8947-3fcbb54adcc1"
+                    }
+                  ],
+                  "id": "9e977a51-2224-4140-b34a-ab70630c0dd7",
+                  "createdAt": "2026-10-22T02:15:52.000Z",
+                  "updatedAt": "2026-10-22T02:15:52.000Z",
+                  "uid": "35240-9e977a51-2224-4140-b34a-ab70630c0dd7"
+                },
+                {
+                  "name": "List Invoice Payments",
+                  "id": "abfbcf30-ae1e-4131-8092-9f157efe1b14",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "invoices",
+                        ":invoice_id",
+                        "payments"
+                      ],
+                      "variable": [
+                        {
+                          "id": "765e4d30-6502-447d-be4a-2dc7ccd1f114",
+                          "key": "invoice_id",
+                          "value": "<integer>",
+                          "description": "(Required) Invoice identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve all payment records for an invoice.\n\nAmounts are returned in **dollars** (internal storage uses cents)."
+                  },
+                  "response": [
+                    {
+                      "id": "6efc01ec-1eed-4b92-b8e7-da12288c5f6a",
+                      "name": "List of payments for the invoice",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "invoice_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"amount\": \"<double>\",\n    \"status\": \"<string>\",\n    \"paymentMethod\": \"CHECK\",\n    \"invoiceNumber\": \"<integer,null>\",\n    \"paymentDate\": \"<string,null-date-time>\",\n    \"paymentReference\": \"<string,null>\",\n    \"notes\": \"<string,null>\",\n    \"isExternal\": \"<boolean,null>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\"\n    }\n  },\n  {\n    \"id\": \"<integer>\",\n    \"amount\": \"<double>\",\n    \"status\": \"<string>\",\n    \"paymentMethod\": \"KLARNA\",\n    \"invoiceNumber\": \"<integer,null>\",\n    \"paymentDate\": \"<string,null-date-time>\",\n    \"paymentReference\": \"<string,null>\",\n    \"notes\": \"<string,null>\",\n    \"isExternal\": \"<boolean,null>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\"\n    }\n  }\n]",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-6efc01ec-1eed-4b92-b8e7-da12288c5f6a"
+                    },
+                    {
+                      "id": "af40e749-def7-4d6e-a6de-a7b07b37974b",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "invoice_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-af40e749-def7-4d6e-a6de-a7b07b37974b"
+                    },
+                    {
+                      "id": "7e4440db-8c95-4e29-9bf8-4bdac15ee41d",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "invoice_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-7e4440db-8c95-4e29-9bf8-4bdac15ee41d"
+                    },
+                    {
+                      "id": "f753f296-7c88-4c9f-8dcd-73d382b76c39",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "invoice_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-f753f296-7c88-4c9f-8dcd-73d382b76c39"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:52.000Z",
+                  "updatedAt": "2026-10-22T02:15:52.000Z",
+                  "uid": "35240-abfbcf30-ae1e-4131-8092-9f157efe1b14"
+                },
+                {
+                  "name": "Create Invoice Payment",
+                  "id": "0c0421e6-3721-421a-b2de-f5d4e93531d7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "invoices",
+                        ":invoice_id",
+                        "payments"
+                      ],
+                      "variable": [
+                        {
+                          "id": "ac62774e-7cb4-4bcd-97e1-13a9ebb42ece",
+                          "key": "invoice_id",
+                          "value": "<integer>",
+                          "description": "(Required) Invoice identifier"
+                        }
+                      ]
+                    },
+                    "description": "Record a manual payment against an invoice.\n\n**Request body**\n- `amount`: Positive number in **dollars**\n- `paymentDate`: ISO 8601 datetime string\n- `paymentMethod`: One of `CASH`, `ACH`, `CREDIT_CARD`, `KLARNA`, `AFFIRM`, `CHECK`\n- `notes` (optional)\n- `paymentReference` (optional)"
+                  },
+                  "response": [
+                    {
+                      "id": "20deffa2-2f5e-47d9-b108-f97df6205721",
+                      "name": "Payment created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "invoice_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"amount\": \"<double>\",\n  \"status\": \"<string>\",\n  \"paymentMethod\": \"KLARNA\",\n  \"invoiceNumber\": \"<integer,null>\",\n  \"paymentDate\": \"<string,null-date-time>\",\n  \"paymentReference\": \"<string,null>\",\n  \"notes\": \"<string,null>\",\n  \"isExternal\": \"<boolean,null>\",\n  \"createdAt\": \"<string,null-date-time>\",\n  \"updatedAt\": \"<string,null-date-time>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\"\n  }\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-20deffa2-2f5e-47d9-b108-f97df6205721"
+                    },
+                    {
+                      "id": "d013c6b6-6cb5-4840-b9bb-a39b126e750f",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "invoice_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-d013c6b6-6cb5-4840-b9bb-a39b126e750f"
+                    },
+                    {
+                      "id": "159dada9-533d-4d33-90aa-a00dc0174ce0",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "invoice_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-159dada9-533d-4d33-90aa-a00dc0174ce0"
+                    },
+                    {
+                      "id": "9d4a53cd-a22e-47c4-8058-cf7d7fb82e83",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/invoices/:invoice_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "invoices",
+                            ":invoice_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "invoice_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-9d4a53cd-a22e-47c4-8058-cf7d7fb82e83"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:52.000Z",
+                  "updatedAt": "2026-10-22T02:15:52.000Z",
+                  "uid": "35240-0c0421e6-3721-421a-b2de-f5d4e93531d7"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 7386,\n    \"amount\": 6164.568865892691,\n    \"status\": \"string\",\n    \"paymentMethod\": \"string\",\n    \"invoiceNumber\": 635,\n    \"paymentDate\": \"2021-05-18T18:17:21.290Z\",\n    \"paymentReference\": \"string\",\n    \"notes\": \"string\",\n    \"isExternal\": true,\n    \"createdAt\": \"1990-07-15T21:47:24.457Z\",\n    \"updatedAt\": \"1950-06-03T01:01:07.891Z\",\n    \"createdBy\": {\n      \"id\": 1675,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\"\n    }\n  },\n  {\n    \"id\": 1832,\n    \"amount\": 2720.524803701666,\n    \"status\": \"string\",\n    \"paymentMethod\": \"string\",\n    \"invoiceNumber\": 4869,\n    \"paymentDate\": \"1962-09-27T07:34:06.517Z\",\n    \"paymentReference\": \"string\",\n    \"notes\": \"string\",\n    \"isExternal\": true,\n    \"createdAt\": \"1982-07-08T00:44:50.223Z\",\n    \"updatedAt\": \"1988-04-05T00:02:06.616Z\",\n    \"createdBy\": {\n      \"id\": 8162,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\"\n    }\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8ccb039b-03ce-4efe-8155-789ee041c9b1",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d5c686e8-6afa-441a-8a8a-e55a6ac969cd",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ec03ae56-06b2-4f0e-87c2-c2597ab1fd05",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "a4eebb18-c0d4-47ff-a9fd-8762bc4ab07d",
+              "createdAt": "2026-10-22T02:15:52.000Z",
+              "updatedAt": "2026-10-22T02:15:52.000Z",
+              "uid": "35240-a4eebb18-c0d4-47ff-a9fd-8762bc4ab07d"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "519f2e17-ef27-469b-a469-57e8c3483000",
-          "name": "Create Invoice Payment",
-          "request": {
-            "name": "Create Invoice Payment",
-            "description": {
-              "content": "Record a manual payment against an invoice.\n\n**Request body**\n- `amount`: Positive number in **dollars**\n- `paymentDate`: ISO 8601 datetime string\n- `paymentMethod`: One of `CASH`, `ACH`, `CREDIT_CARD`, `KLARNA`, `AFFIRM`, `CHECK`\n- `notes` (optional)\n- `paymentReference` (optional)\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "invoices",
-                ":invoiceId",
-                "payments"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "invoiceId",
-                  "description": "(Required) Invoice identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"<string>\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "ed54bd1e-aa84-4c15-94c5-c657e41422b4",
-              "name": "Payment created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 4596,\n  \"amount\": 9471.565685266134,\n  \"status\": \"string\",\n  \"paymentMethod\": \"string\",\n  \"invoiceNumber\": 5509,\n  \"paymentDate\": \"2023-08-02T12:35:21.222Z\",\n  \"paymentReference\": \"string\",\n  \"notes\": \"string\",\n  \"isExternal\": false,\n  \"createdAt\": \"1970-07-14T08:10:42.999Z\",\n  \"updatedAt\": \"2013-10-31T06:27:41.795Z\",\n  \"createdBy\": {\n    \"id\": 1014,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f3a42ee0-d42d-4130-88cf-40a07cc4887a",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e3092631-4ac2-4b01-ab12-0b952ec650f4",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d08c0cf2-3627-4dd8-b2d5-ff018bf95e24",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "d1b32f21-57a4-4b03-90e0-0e0c92a3ee48",
-          "name": "Get Invoice Payment",
-          "request": {
-            "name": "Get Invoice Payment",
-            "description": {
-              "content": "Retrieve a single payment record on an invoice by payment id.\n\nCore does not expose a standalone payment-record GET; this resolves the payment from the invoice's nested payment records.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "invoices",
-                ":invoiceId",
-                "payments",
-                ":paymentId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "invoiceId",
-                  "description": "(Required) Invoice identifier"
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "paymentId",
-                  "description": "(Required) Payment record identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "50133af5-5cf2-4242-a95f-5a6125589788",
-              "name": "Payment details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments",
-                    ":paymentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "paymentId",
-                      "description": "(Required) Payment record identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 4596,\n  \"amount\": 9471.565685266134,\n  \"status\": \"string\",\n  \"paymentMethod\": \"string\",\n  \"invoiceNumber\": 5509,\n  \"paymentDate\": \"2023-08-02T12:35:21.222Z\",\n  \"paymentReference\": \"string\",\n  \"notes\": \"string\",\n  \"isExternal\": false,\n  \"createdAt\": \"1970-07-14T08:10:42.999Z\",\n  \"updatedAt\": \"2013-10-31T06:27:41.795Z\",\n  \"createdBy\": {\n    \"id\": 1014,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "92166fdf-83ff-43fc-ac81-9988f45ec24c",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments",
-                    ":paymentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "paymentId",
-                      "description": "(Required) Payment record identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "05bbdae2-0246-473d-816e-36618e0875a4",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments",
-                    ":paymentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "paymentId",
-                      "description": "(Required) Payment record identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "32582d28-b37a-4bf3-9730-136a37c7e27d",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "invoices",
-                    ":invoiceId",
-                    "payments",
-                    ":paymentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "invoiceId",
-                      "description": "(Required) Invoice identifier"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "paymentId",
-                      "description": "(Required) Payment record identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "0bf14d32-4a8f-4edd-abfe-819b6670b70b",
-          "name": "List Bill Payments",
-          "request": {
-            "name": "List Bill Payments",
-            "description": {
-              "content": "Retrieve all payment records for a bill.\n\nAmounts are returned in **dollars** (internal storage uses cents).\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "bills",
-                ":billId",
-                "payments"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "billId",
-                  "description": "(Required) Bill identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "d4866919-940d-4375-82fc-77cad2cc0d90",
-              "name": "List of payments for the bill",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 2934,\n    \"amount\": 5243.882916322396,\n    \"status\": \"string\",\n    \"paymentMethod\": \"string\",\n    \"billNumber\": 2832,\n    \"paymentDate\": \"1963-05-23T04:23:47.948Z\",\n    \"paymentReference\": \"string\",\n    \"notes\": \"string\",\n    \"isExternal\": false,\n    \"createdAt\": \"2019-07-02T14:25:26.999Z\",\n    \"updatedAt\": \"1955-01-31T00:33:00.524Z\",\n    \"createdBy\": {\n      \"id\": 8473,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\"\n    }\n  },\n  {\n    \"id\": 5948,\n    \"amount\": 5031.881422089282,\n    \"status\": \"string\",\n    \"paymentMethod\": \"string\",\n    \"billNumber\": 5218,\n    \"paymentDate\": \"1983-02-07T03:31:11.896Z\",\n    \"paymentReference\": \"string\",\n    \"notes\": \"string\",\n    \"isExternal\": false,\n    \"createdAt\": \"1948-09-19T12:30:48.860Z\",\n    \"updatedAt\": \"1996-12-30T01:38:14.977Z\",\n    \"createdBy\": {\n      \"id\": 7751,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\"\n    }\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "60b2b073-0414-4be9-90c2-c3d687e065fc",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b805c68c-f103-47eb-a8df-1217c4900f8c",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ca2189be-de0d-402e-ae7e-f57f0dff25ef",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "b7013a3d-6ac5-42d6-94ce-790dc7c7da80",
-          "name": "Create Bill Payment",
-          "request": {
-            "name": "Create Bill Payment",
-            "description": {
-              "content": "Record a manual payment against a bill.\n\n**Request body**\n- `amount`: Positive number in **dollars**\n- `paymentDate`: ISO 8601 datetime string\n- `paymentMethod`: One of `CASH`, `ACH`, `CREDIT_CARD`, `KLARNA`, `AFFIRM`, `CHECK`\n- `notes` (optional)\n- `paymentReference` (optional)\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "bills",
-                ":billId",
-                "payments"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "billId",
-                  "description": "(Required) Bill identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"<string>\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "9829e8c4-7a23-4922-8e4f-97f6680cbb1c",
-              "name": "Payment created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 720,\n  \"amount\": 9234.167537202564,\n  \"status\": \"string\",\n  \"paymentMethod\": \"string\",\n  \"billNumber\": 6840,\n  \"paymentDate\": \"1968-08-12T11:46:20.769Z\",\n  \"paymentReference\": \"string\",\n  \"notes\": \"string\",\n  \"isExternal\": false,\n  \"createdAt\": \"2013-03-22T16:32:25.036Z\",\n  \"updatedAt\": \"1946-10-29T13:07:24.580Z\",\n  \"createdBy\": {\n    \"id\": 5776,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f4a5086e-d28d-4fbc-bab0-808e441671ad",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "6d6a1600-08e7-4195-a677-9774adf7e18b",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f257f067-9e0f-46b7-bad3-bb4229bae2af",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "891a9386-0419-4a52-8cb0-05961504c774",
-          "name": "Get Bill Payment",
-          "request": {
-            "name": "Get Bill Payment",
-            "description": {
-              "content": "Retrieve a single payment record on a bill by payment id.\n\nCore does not expose a standalone payment-record GET; this resolves the payment from the bill's nested payment records.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "bills",
-                ":billId",
-                "payments",
-                ":paymentId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "billId",
-                  "description": "(Required) Bill identifier"
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "paymentId",
-                  "description": "(Required) Payment record identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) ",
-                "key": "x-api-key",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "6dfac632-acb1-477c-9a86-9d388ae2d1e4",
-              "name": "Payment details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments",
-                    ":paymentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "paymentId",
-                      "description": "(Required) Payment record identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 720,\n  \"amount\": 9234.167537202564,\n  \"status\": \"string\",\n  \"paymentMethod\": \"string\",\n  \"billNumber\": 6840,\n  \"paymentDate\": \"1968-08-12T11:46:20.769Z\",\n  \"paymentReference\": \"string\",\n  \"notes\": \"string\",\n  \"isExternal\": false,\n  \"createdAt\": \"2013-03-22T16:32:25.036Z\",\n  \"updatedAt\": \"1946-10-29T13:07:24.580Z\",\n  \"createdBy\": {\n    \"id\": 5776,\n    \"firstName\": \"string\",\n    \"lastName\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ec795bd3-976b-4bf5-8be8-7fb271508b5d",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments",
-                    ":paymentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "paymentId",
-                      "description": "(Required) Payment record identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3915bbe0-8202-462c-9104-50bb7aaee8a8",
-              "name": "Authentication failed",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments",
-                    ":paymentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "paymentId",
-                      "description": "(Required) Payment record identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7b3fe35d-4594-404d-9176-867da38d37dc",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "bills",
-                    ":billId",
-                    "payments",
-                    ":paymentId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "billId",
-                      "description": "(Required) Bill identifier"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "paymentId",
-                      "description": "(Required) Payment record identifier"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) ",
-                    "key": "x-api-key",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\",\n  \"code\": \"NOT_FOUND\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "6675b100-e02a-48bc-a004-243b692daa0b",
+          "createdAt": "2026-10-22T02:15:52.000Z",
+          "updatedAt": "2026-10-22T02:15:52.000Z",
+          "uid": "35240-6675b100-e02a-48bc-a004-243b692daa0b"
         }
       ],
-      "event": []
+      "id": "1027989f-7a42-4445-b916-44e49d918b9b",
+      "createdAt": "2026-10-22T02:15:52.000Z",
+      "updatedAt": "2026-10-22T02:15:52.000Z",
+      "uid": "35240-1027989f-7a42-4445-b916-44e49d918b9b"
+    },
+    {
+      "name": "bills",
+      "item": [
+        {
+          "name": "{bill_id}",
+          "item": [
+            {
+              "name": "payments",
+              "item": [
+                {
+                  "name": "{payment_id}",
+                  "item": [
+                    {
+                      "name": "Get Bill Payment",
+                      "id": "ee5453de-11a5-4f09-b456-4824f1a76b07",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "apikey",
+                          "apikey": [
+                            {
+                              "key": "key",
+                              "value": "x-api-key",
+                              "type": "string"
+                            },
+                            {
+                              "key": "value",
+                              "value": "{{apiKey}}",
+                              "type": "string"
+                            },
+                            {
+                              "key": "in",
+                              "value": "header",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments/:payment_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments",
+                            ":payment_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "aa101fe8-1998-40dd-b14e-049709535cb0",
+                              "key": "bill_id",
+                              "value": "<integer>",
+                              "description": "(Required) Bill identifier"
+                            },
+                            {
+                              "id": "5dab2cad-20d3-4d81-b28c-ed2098bb54ce",
+                              "key": "payment_id",
+                              "value": "<integer>",
+                              "description": "(Required) Payment record identifier"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve a single payment record on a bill by payment id.\n\nCore does not expose a standalone payment-record GET; this resolves the payment from the bill's nested payment records."
+                      },
+                      "response": [
+                        {
+                          "id": "d49c8952-98de-4b44-8b70-7e81f536ec8b",
+                          "name": "Payment details",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/bills/:bill_id/payments/:payment_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "bills",
+                                ":bill_id",
+                                "payments",
+                                ":payment_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bill_id"
+                                },
+                                {
+                                  "key": "payment_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<integer>\",\n  \"amount\": \"<double>\",\n  \"status\": \"<string>\",\n  \"paymentMethod\": \"AFFIRM\",\n  \"billNumber\": \"<integer,null>\",\n  \"paymentDate\": \"<string,null-date-time>\",\n  \"paymentReference\": \"<string,null>\",\n  \"notes\": \"<string,null>\",\n  \"isExternal\": \"<boolean,null>\",\n  \"createdAt\": \"<string,null-date-time>\",\n  \"updatedAt\": \"<string,null-date-time>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\"\n  }\n}",
+                          "createdAt": "2026-10-22T02:15:53.000Z",
+                          "updatedAt": "2026-10-22T02:15:53.000Z",
+                          "uid": "35240-d49c8952-98de-4b44-8b70-7e81f536ec8b"
+                        },
+                        {
+                          "id": "6b2d5344-907d-4bfe-af93-db41fda6da9c",
+                          "name": "Invalid request",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/bills/:bill_id/payments/:payment_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "bills",
+                                ":bill_id",
+                                "payments",
+                                ":payment_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bill_id"
+                                },
+                                {
+                                  "key": "payment_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T02:15:53.000Z",
+                          "updatedAt": "2026-10-22T02:15:53.000Z",
+                          "uid": "35240-6b2d5344-907d-4bfe-af93-db41fda6da9c"
+                        },
+                        {
+                          "id": "cce2b33a-c33b-427a-b499-2316aa13ace4",
+                          "name": "Authentication failed",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/bills/:bill_id/payments/:payment_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "bills",
+                                ":bill_id",
+                                "payments",
+                                ":payment_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bill_id"
+                                },
+                                {
+                                  "key": "payment_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                          "createdAt": "2026-10-22T02:15:53.000Z",
+                          "updatedAt": "2026-10-22T02:15:53.000Z",
+                          "uid": "35240-cce2b33a-c33b-427a-b499-2316aa13ace4"
+                        },
+                        {
+                          "id": "e58f29f9-f997-42aa-a155-4edfcfc3e83c",
+                          "name": "Resource not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/bills/:bill_id/payments/:payment_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "bills",
+                                ":bill_id",
+                                "payments",
+                                ":payment_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bill_id"
+                                },
+                                {
+                                  "key": "payment_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                          "createdAt": "2026-10-22T02:15:53.000Z",
+                          "updatedAt": "2026-10-22T02:15:53.000Z",
+                          "uid": "35240-e58f29f9-f997-42aa-a155-4edfcfc3e83c"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T02:15:52.000Z",
+                      "updatedAt": "2026-10-22T02:15:52.000Z",
+                      "uid": "35240-ee5453de-11a5-4f09-b456-4824f1a76b07"
+                    }
+                  ],
+                  "id": "22553362-b336-474d-a297-98298f689d1f",
+                  "createdAt": "2026-10-22T02:15:52.000Z",
+                  "updatedAt": "2026-10-22T02:15:52.000Z",
+                  "uid": "35240-22553362-b336-474d-a297-98298f689d1f"
+                },
+                {
+                  "name": "List Bill Payments",
+                  "id": "9c8f6319-5493-49a9-bce7-f9b94f2f2ea4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bills",
+                        ":bill_id",
+                        "payments"
+                      ],
+                      "variable": [
+                        {
+                          "id": "5ef309e2-5267-4b2e-bfa6-fc4321361de1",
+                          "key": "bill_id",
+                          "value": "<integer>",
+                          "description": "(Required) Bill identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve all payment records for a bill.\n\nAmounts are returned in **dollars** (internal storage uses cents)."
+                  },
+                  "response": [
+                    {
+                      "id": "a30c2a1d-e676-4fe5-bc32-0a54c51b31af",
+                      "name": "List of payments for the bill",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bill_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"amount\": \"<double>\",\n    \"status\": \"<string>\",\n    \"paymentMethod\": \"ACH\",\n    \"billNumber\": \"<integer,null>\",\n    \"paymentDate\": \"<string,null-date-time>\",\n    \"paymentReference\": \"<string,null>\",\n    \"notes\": \"<string,null>\",\n    \"isExternal\": \"<boolean,null>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\"\n    }\n  },\n  {\n    \"id\": \"<integer>\",\n    \"amount\": \"<double>\",\n    \"status\": \"<string>\",\n    \"paymentMethod\": \"KLARNA\",\n    \"billNumber\": \"<integer,null>\",\n    \"paymentDate\": \"<string,null-date-time>\",\n    \"paymentReference\": \"<string,null>\",\n    \"notes\": \"<string,null>\",\n    \"isExternal\": \"<boolean,null>\",\n    \"createdAt\": \"<string,null-date-time>\",\n    \"updatedAt\": \"<string,null-date-time>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string,null>\",\n      \"lastName\": \"<string,null>\"\n    }\n  }\n]",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-a30c2a1d-e676-4fe5-bc32-0a54c51b31af"
+                    },
+                    {
+                      "id": "2518295f-aca8-4811-b283-02111d137a66",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bill_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-2518295f-aca8-4811-b283-02111d137a66"
+                    },
+                    {
+                      "id": "be41f45c-d74d-4240-a9aa-d974bf66dfca",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bill_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-be41f45c-d74d-4240-a9aa-d974bf66dfca"
+                    },
+                    {
+                      "id": "13691015-32f4-4d0e-a148-d703c4a24bc6",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bill_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-13691015-32f4-4d0e-a148-d703c4a24bc6"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:52.000Z",
+                  "updatedAt": "2026-10-22T02:15:52.000Z",
+                  "uid": "35240-9c8f6319-5493-49a9-bce7-f9b94f2f2ea4"
+                },
+                {
+                  "name": "Create Bill Payment",
+                  "id": "51ae8591-fdab-4c57-b709-28f8a31e95f2",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "x-api-key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bills",
+                        ":bill_id",
+                        "payments"
+                      ],
+                      "variable": [
+                        {
+                          "id": "94211165-0762-482b-9eea-fb3813d12a39",
+                          "key": "bill_id",
+                          "value": "<integer>",
+                          "description": "(Required) Bill identifier"
+                        }
+                      ]
+                    },
+                    "description": "Record a manual payment against a bill.\n\n**Request body**\n- `amount`: Positive number in **dollars**\n- `paymentDate`: ISO 8601 datetime string\n- `paymentMethod`: One of `CASH`, `ACH`, `CREDIT_CARD`, `KLARNA`, `AFFIRM`, `CHECK`\n- `notes` (optional)\n- `paymentReference` (optional)"
+                  },
+                  "response": [
+                    {
+                      "id": "f9ce5a83-2a26-4f58-a772-b7188e5ecc34",
+                      "name": "Payment created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bill_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"amount\": \"<double>\",\n  \"status\": \"<string>\",\n  \"paymentMethod\": \"AFFIRM\",\n  \"billNumber\": \"<integer,null>\",\n  \"paymentDate\": \"<string,null-date-time>\",\n  \"paymentReference\": \"<string,null>\",\n  \"notes\": \"<string,null>\",\n  \"isExternal\": \"<boolean,null>\",\n  \"createdAt\": \"<string,null-date-time>\",\n  \"updatedAt\": \"<string,null-date-time>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\"\n  }\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-f9ce5a83-2a26-4f58-a772-b7188e5ecc34"
+                    },
+                    {
+                      "id": "f91b10fe-6ddb-4b0e-b01c-f9a37578f338",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bill_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-f91b10fe-6ddb-4b0e-b01c-f9a37578f338"
+                    },
+                    {
+                      "id": "0e000c9a-0142-4bf3-b39c-789f5de31128",
+                      "name": "Authentication failed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bill_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-0e000c9a-0142-4bf3-b39c-789f5de31128"
+                    },
+                    {
+                      "id": "64984207-6362-4d58-9e16-a484c4b99a49",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bills/:bill_id/payments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bills",
+                            ":bill_id",
+                            "payments"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bill_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                      "createdAt": "2026-10-22T02:15:53.000Z",
+                      "updatedAt": "2026-10-22T02:15:53.000Z",
+                      "uid": "35240-64984207-6362-4d58-9e16-a484c4b99a49"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:15:52.000Z",
+                  "updatedAt": "2026-10-22T02:15:52.000Z",
+                  "uid": "35240-51ae8591-fdab-4c57-b709-28f8a31e95f2"
+                }
+              ],
+              "id": "169444a4-416f-4066-bfed-8d192d7087db",
+              "createdAt": "2026-10-22T02:15:52.000Z",
+              "updatedAt": "2026-10-22T02:15:52.000Z",
+              "uid": "35240-169444a4-416f-4066-bfed-8d192d7087db"
+            }
+          ],
+          "id": "21a0a0cb-3a6c-4f95-9bad-79eea89e0b07",
+          "createdAt": "2026-10-22T02:15:52.000Z",
+          "updatedAt": "2026-10-22T02:15:52.000Z",
+          "uid": "35240-21a0a0cb-3a6c-4f95-9bad-79eea89e0b07"
+        }
+      ],
+      "id": "cd03d1ac-7a48-492b-be9c-4a5af20d6368",
+      "createdAt": "2026-10-22T02:15:52.000Z",
+      "updatedAt": "2026-10-22T02:15:52.000Z",
+      "uid": "35240-cd03d1ac-7a48-492b-be9c-4a5af20d6368"
+    },
+    {
+      "name": "payments",
+      "item": [
+        {
+          "name": "{payment_id}",
+          "item": [
+            {
+              "name": "Update Payment",
+              "id": "8d827eb8-2c71-4cfb-90e6-3bbbc5f1c637",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payments/:payment_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payments",
+                    ":payment_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "65abe9b4-6d32-4e01-b114-e42010383385",
+                      "key": "payment_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update an existing payment record by its own id \u2014 no invoice or bill id is required in the path.\n\nSupports partial updates of `amount`, `paymentMethod`, `paymentDate`, `notes`, and `paymentReference` \u2014 the same fields the Coperniq UI exposes when editing a logged payment.\n\nIf the payment is external (processed by Stripe), only `notes` may be updated; any other field returns a `400`.\n\nUpdating `amount` may fail with a `400` if the new total would exceed the parent invoice/bill's outstanding balance. The parent document's `amountPaid`/`status` are recalculated automatically."
+              },
+              "response": [
+                {
+                  "id": "6fd7378c-0d78-4549-8b19-2a4e17213ea1",
+                  "name": "Payment updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payments/:payment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payments",
+                        ":payment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "payment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"amount\": \"<double>\",\n  \"status\": \"<string>\",\n  \"paymentMethod\": \"KLARNA\",\n  \"invoiceNumber\": \"<integer,null>\",\n  \"paymentDate\": \"<string,null-date-time>\",\n  \"paymentReference\": \"<string,null>\",\n  \"notes\": \"<string,null>\",\n  \"isExternal\": \"<boolean,null>\",\n  \"createdAt\": \"<string,null-date-time>\",\n  \"updatedAt\": \"<string,null-date-time>\",\n  \"createdBy\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string,null>\",\n    \"lastName\": \"<string,null>\"\n  }\n}",
+                  "createdAt": "2026-10-22T02:15:53.000Z",
+                  "updatedAt": "2026-10-22T02:15:53.000Z",
+                  "uid": "35240-6fd7378c-0d78-4549-8b19-2a4e17213ea1"
+                },
+                {
+                  "id": "2adfe78f-319d-4c4e-9d19-23be203aaa70",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payments/:payment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payments",
+                        ":payment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "payment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:15:53.000Z",
+                  "updatedAt": "2026-10-22T02:15:53.000Z",
+                  "uid": "35240-2adfe78f-319d-4c4e-9d19-23be203aaa70"
+                },
+                {
+                  "id": "13e7744e-80cb-49ea-b779-dd0403f3f5c9",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payments/:payment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payments",
+                        ":payment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "payment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:53.000Z",
+                  "updatedAt": "2026-10-22T02:15:53.000Z",
+                  "uid": "35240-13e7744e-80cb-49ea-b779-dd0403f3f5c9"
+                },
+                {
+                  "id": "7756695e-07bb-40fb-928e-60d5fed775d0",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": \"<double>\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDate\": \"<dateTime>\",\n  \"notes\": \"<string>\",\n  \"paymentReference\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payments/:payment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payments",
+                        ":payment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "payment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:53.000Z",
+                  "updatedAt": "2026-10-22T02:15:53.000Z",
+                  "uid": "35240-7756695e-07bb-40fb-928e-60d5fed775d0"
+                }
+              ],
+              "createdAt": "2026-10-22T02:15:52.000Z",
+              "updatedAt": "2026-10-22T02:15:52.000Z",
+              "uid": "35240-8d827eb8-2c71-4cfb-90e6-3bbbc5f1c637"
+            },
+            {
+              "name": "Delete Payment",
+              "id": "4411be12-35bb-436b-914f-541bd864e32b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payments/:payment_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payments",
+                    ":payment_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "b00daae3-f20a-4f3b-9f88-35c5e152c1bb",
+                      "key": "payment_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Delete a payment record by its own id \u2014 no invoice or bill id is required in the path.\n\nExternal payments (processed by Stripe) cannot be deleted \u2014 use a refund instead. Deleting a payment recalculates the parent invoice/bill's `amountPaid`/`status` automatically."
+              },
+              "response": [
+                {
+                  "id": "b36237e4-bf73-420b-8983-c09dd0689900",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payments/:payment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payments",
+                        ":payment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "payment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:15:53.000Z",
+                  "updatedAt": "2026-10-22T02:15:53.000Z",
+                  "uid": "35240-b36237e4-bf73-420b-8983-c09dd0689900"
+                },
+                {
+                  "id": "9d0b209d-49a2-4eed-a0fa-0b1709e216a6",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payments/:payment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payments",
+                        ":payment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "payment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:15:53.000Z",
+                  "updatedAt": "2026-10-22T02:15:53.000Z",
+                  "uid": "35240-9d0b209d-49a2-4eed-a0fa-0b1709e216a6"
+                },
+                {
+                  "id": "06550741-8f70-464b-936d-79d175173717",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payments/:payment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payments",
+                        ":payment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "payment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:53.000Z",
+                  "updatedAt": "2026-10-22T02:15:53.000Z",
+                  "uid": "35240-06550741-8f70-464b-936d-79d175173717"
+                },
+                {
+                  "id": "120c6a7f-5be2-41de-b746-9bc4c52c06a2",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payments/:payment_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payments",
+                        ":payment_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "payment_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:15:53.000Z",
+                  "updatedAt": "2026-10-22T02:15:53.000Z",
+                  "uid": "35240-120c6a7f-5be2-41de-b746-9bc4c52c06a2"
+                }
+              ],
+              "createdAt": "2026-10-22T02:15:52.000Z",
+              "updatedAt": "2026-10-22T02:15:52.000Z",
+              "uid": "35240-4411be12-35bb-436b-914f-541bd864e32b"
+            }
+          ],
+          "id": "3f7148a6-1ba5-4d31-924a-fff30100cf60",
+          "createdAt": "2026-10-22T02:15:52.000Z",
+          "updatedAt": "2026-10-22T02:15:52.000Z",
+          "uid": "35240-3f7148a6-1ba5-4d31-924a-fff30100cf60"
+        }
+      ],
+      "id": "8a817aee-8a35-4b67-89d1-a4f88093f67e",
+      "createdAt": "2026-10-22T02:15:52.000Z",
+      "updatedAt": "2026-10-22T02:15:52.000Z",
+      "uid": "35240-8a817aee-8a35-4b67-89d1-a4f88093f67e"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.coperniq.io/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "2fde0ef0-7855-437c-a34c-f707b8d75990",
-    "name": "API Key accounts payments API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

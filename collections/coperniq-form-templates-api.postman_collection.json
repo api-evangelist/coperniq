@@ -1,0 +1,767 @@
+{
+  "info": {
+    "_postman_id": "8f9de18c-4ba1-415f-b71c-1fcabdd14e0f",
+    "name": "Reference Form Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:17:38.000Z",
+    "updatedAt": "2026-10-22T02:17:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8f9de18c-4ba1-415f-b71c-1fcabdd14e0f"
+  },
+  "item": [
+    {
+      "name": "form-templates",
+      "item": [
+        {
+          "name": "{form_template_id}",
+          "item": [
+            {
+              "name": "Get Form Template",
+              "id": "99e6563a-8049-4b8f-8f03-3daa47302423",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "form-templates",
+                    ":form_template_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a6bb09f8-38fe-46ce-b02e-a8592318196f",
+                      "key": "form_template_id",
+                      "value": "<integer>",
+                      "description": "(Required) Form template identifier"
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific form template by ID, including its full field layout."
+              },
+              "response": [
+                {
+                  "id": "8d8ac04b-dc1f-4307-af43-ea11a60256ac",
+                  "name": "Form template details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "form-templates",
+                        ":form_template_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "form_template_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"assignee\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  \"assigneeProperty\": \"<string,null>\",\n  \"collaborators\": [\n    {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"email\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"email\": \"<string>\"\n    }\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"labels\": [\n    {\n      \"id\": \"<integer>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    }\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\",\n  \"formLayouts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"type\": \"GROUP\",\n      \"columnId\": \"<integer,null>\",\n      \"column\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\",\n        \"multiple\": \"<boolean>\",\n        \"isRequired\": \"<boolean>\",\n        \"isReadOnly\": \"<boolean>\"\n      },\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        }\n      ],\n      \"fields\": [\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"type\": \"COLUMN\",\n      \"columnId\": \"<integer,null>\",\n      \"column\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\",\n        \"multiple\": \"<boolean>\",\n        \"isRequired\": \"<boolean>\",\n        \"isReadOnly\": \"<boolean>\"\n      },\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        }\n      ],\n      \"fields\": [\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:17:39.000Z",
+                  "updatedAt": "2026-10-22T02:17:39.000Z",
+                  "uid": "35240-8d8ac04b-dc1f-4307-af43-ea11a60256ac"
+                },
+                {
+                  "id": "ab73fcd2-3755-4b00-89ee-0de89aed8c63",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "form-templates",
+                        ":form_template_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "form_template_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:39.000Z",
+                  "updatedAt": "2026-10-22T02:17:39.000Z",
+                  "uid": "35240-ab73fcd2-3755-4b00-89ee-0de89aed8c63"
+                },
+                {
+                  "id": "b7bfebea-6a17-4d6e-9ac4-710329ca7690",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "form-templates",
+                        ":form_template_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "form_template_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:17:39.000Z",
+                  "updatedAt": "2026-10-22T02:17:39.000Z",
+                  "uid": "35240-b7bfebea-6a17-4d6e-9ac4-710329ca7690"
+                },
+                {
+                  "id": "f78e7c4f-140d-45f5-9174-286741b6cf67",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "form-templates",
+                        ":form_template_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "form_template_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:17:39.000Z",
+                  "updatedAt": "2026-10-22T02:17:39.000Z",
+                  "uid": "35240-f78e7c4f-140d-45f5-9174-286741b6cf67"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:39.000Z",
+              "updatedAt": "2026-10-22T02:17:39.000Z",
+              "uid": "35240-99e6563a-8049-4b8f-8f03-3daa47302423"
+            },
+            {
+              "name": "Update Form Template",
+              "id": "38d7d5d3-889a-4bb5-9f34-aece4bdc0595",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "form-templates",
+                    ":form_template_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "9970693a-8a10-46f6-8636-09475dd99780",
+                      "key": "form_template_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update an existing form template. All fields are optional \u2014 only provided fields are updated. `formLayouts` is optional \u2014 omit it to leave the existing layout untouched.\n\n**formLayouts replacement:** When provided, the `formLayouts` array **fully replaces** all layout groups and their fields on the template. Position is determined by array order.\n\n**IDs are not stable across updates.** Every update internally deletes all existing layout rows and inserts new ones, so every group and field receives a new auto-generated ID after each PATCH. The IDs returned in a GET response are only valid until the next PATCH. Do not store or rely on layout IDs across updates.\n\n**Using `id` in the request:** You can pass `{ \"id\": }` for a group or field to reference its current data without repeating all attributes \u2014 the API will look up the existing name, type, isRequired, etc. and carry them forward. This is a convenience shortcut for the current request only; the ID will be different in the response.\n\n**Assignee (mutually exclusive \u2014 use at most one):**\n- `assigneeId` \u2014 assign a specific user by ID.\n- `assigneeProperty` \u2014 assign by project property key: `OWNER`, `SALES_REP`, `PROJECT_MANAGER`, `CREATED_BY`, or a custom PERSON property `keyName`.\n- `assigneeTeamId` \u2014 assign a team: the team lead becomes the assignee and all other team members are added as collaborators.\n\n**Collaborators:**\n- `collaborators` \u2014 replaces the list of direct user collaborator IDs.\n- `collaboratorProperties` \u2014 replaces the list of property-based collaborators. Each value is a standard key (`OWNER`, `SALES_REP`, `PROJECT_MANAGER`, `CREATED_BY`) or a custom PERSON property `keyName`.\n- `collaboratorTeamIds` \u2014 team IDs whose members are resolved to user IDs and merged (deduplicated) into collaborators alongside any direct `collaborators` and members from `assigneeTeamId`."
+              },
+              "response": [
+                {
+                  "id": "b4b94ab4-9562-488d-abfd-6f0233643372",
+                  "name": "Form template updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "form-templates",
+                        ":form_template_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "form_template_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"assignee\": {\n    \"id\": \"<integer>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  \"assigneeProperty\": \"<string,null>\",\n  \"collaborators\": [\n    {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"email\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"email\": \"<string>\"\n    }\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"labels\": [\n    {\n      \"id\": \"<integer>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    }\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\",\n  \"formLayouts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"type\": \"GROUP\",\n      \"columnId\": \"<integer,null>\",\n      \"column\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\",\n        \"multiple\": \"<boolean>\",\n        \"isRequired\": \"<boolean>\",\n        \"isReadOnly\": \"<boolean>\"\n      },\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        }\n      ],\n      \"fields\": [\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"type\": \"COLUMN\",\n      \"columnId\": \"<integer,null>\",\n      \"column\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\",\n        \"multiple\": \"<boolean>\",\n        \"isRequired\": \"<boolean>\",\n        \"isReadOnly\": \"<boolean>\"\n      },\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        }\n      ],\n      \"fields\": [\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"name\": \"<string,null>\",\n          \"type\": \"COLUMN\",\n          \"columnId\": \"<integer,null>\",\n          \"column\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\",\n            \"multiple\": \"<boolean>\",\n            \"isRequired\": \"<boolean>\",\n            \"isReadOnly\": \"<boolean>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:17:39.000Z",
+                  "updatedAt": "2026-10-22T02:17:39.000Z",
+                  "uid": "35240-b4b94ab4-9562-488d-abfd-6f0233643372"
+                },
+                {
+                  "id": "d7414b66-042c-4e97-8d9b-6993160b84da",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "form-templates",
+                        ":form_template_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "form_template_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:39.000Z",
+                  "updatedAt": "2026-10-22T02:17:39.000Z",
+                  "uid": "35240-d7414b66-042c-4e97-8d9b-6993160b84da"
+                },
+                {
+                  "id": "007ca284-1bd1-446f-865f-5f87e594f605",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "form-templates",
+                        ":form_template_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "form_template_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:17:39.000Z",
+                  "updatedAt": "2026-10-22T02:17:39.000Z",
+                  "uid": "35240-007ca284-1bd1-446f-865f-5f87e594f605"
+                },
+                {
+                  "id": "2edb4cbd-01e7-4435-9d24-b91051ad3887",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"formLayouts\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"DROPDOWN\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string,null>\",\n      \"properties\": [\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"projectPropertyKey\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"FILE\",\n          \"isRequired\": \"<boolean>\",\n          \"isReadOnly\": \"<boolean>\",\n          \"multiple\": \"<boolean>\",\n          \"notes\": \"<string,null>\",\n          \"options\": {},\n          \"referenceFileIds\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"assigneeId\": \"<integer,null>\",\n  \"assigneeProperty\": \"<string,null>\",\n  \"assigneeTeamId\": \"<integer,null>\",\n  \"collaborators\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"collaboratorProperties\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"collaboratorTeamIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"labels\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"dueDateXDaysAfter\": \"<integer,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/form-templates/:form_template_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "form-templates",
+                        ":form_template_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "form_template_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:17:39.000Z",
+                  "updatedAt": "2026-10-22T02:17:39.000Z",
+                  "uid": "35240-2edb4cbd-01e7-4435-9d24-b91051ad3887"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:39.000Z",
+              "updatedAt": "2026-10-22T02:17:39.000Z",
+              "uid": "35240-38d7d5d3-889a-4bb5-9f34-aece4bdc0595"
+            }
+          ],
+          "id": "99cbc34e-524e-4e24-94f6-2112ec0b8c35",
+          "createdAt": "2026-10-22T02:17:39.000Z",
+          "updatedAt": "2026-10-22T02:17:39.000Z",
+          "uid": "35240-99cbc34e-524e-4e24-94f6-2112ec0b8c35"
+        },
+        {
+          "name": "List Form Templates",
+          "id": "4e152135-fa9f-42e9-8571-a510aeb37817",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/form-templates?includeArchived=false",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "form-templates"
+              ],
+              "query": [
+                {
+                  "description": "Include archived form templates in results",
+                  "key": "includeArchived",
+                  "value": "false"
+                }
+              ]
+            },
+            "description": "Retrieve all form templates for the company. Form templates are reusable form definitions\nthat define the layout, fields, assignees, and labels for forms created on projects/workflows."
+          },
+          "response": [
+            {
+              "id": "d01bddbf-0d27-43bb-9065-a84cfb7d9e5f",
+              "name": "List of form templates",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/form-templates?includeArchived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "form-templates"
+                  ],
+                  "query": [
+                    {
+                      "description": "Include archived form templates in results",
+                      "key": "includeArchived",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"fileId\": \"<integer,null>\",\n    \"isArchived\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"email\": \"<string>\"\n    },\n    \"parentWorkOrderTemplateId\": \"<integer,null>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"fileId\": \"<integer,null>\",\n    \"isArchived\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"createdBy\": {\n      \"id\": \"<integer>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"email\": \"<string>\"\n    },\n    \"parentWorkOrderTemplateId\": \"<integer,null>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:17:39.000Z",
+              "updatedAt": "2026-10-22T02:17:39.000Z",
+              "uid": "35240-d01bddbf-0d27-43bb-9065-a84cfb7d9e5f"
+            },
+            {
+              "id": "bb39ab04-f2ae-4b5e-a34d-67b54df77aba",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/form-templates?includeArchived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "form-templates"
+                  ],
+                  "query": [
+                    {
+                      "description": "Include archived form templates in results",
+                      "key": "includeArchived",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"UNAUTHORIZED\"\n}",
+              "createdAt": "2026-10-22T02:17:39.000Z",
+              "updatedAt": "2026-10-22T02:17:39.000Z",
+              "uid": "35240-bb39ab04-f2ae-4b5e-a34d-67b54df77aba"
+            }
+          ],
+          "createdAt": "2026-10-22T02:17:39.000Z",
+          "updatedAt": "2026-10-22T02:17:39.000Z",
+          "uid": "35240-4e152135-fa9f-42e9-8571-a510aeb37817"
+        }
+      ],
+      "id": "5fe2648f-7f88-46ac-995d-256950e19f6f",
+      "createdAt": "2026-10-22T02:17:39.000Z",
+      "updatedAt": "2026-10-22T02:17:39.000Z",
+      "uid": "35240-5fe2648f-7f88-46ac-995d-256950e19f6f"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
+    }
+  ]
+}

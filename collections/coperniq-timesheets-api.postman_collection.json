@@ -1,0 +1,1796 @@
+{
+  "info": {
+    "_postman_id": "8cfee356-40de-4ce3-b5c8-6961eec3f3ef",
+    "name": "Reference Timesheets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:17:17.000Z",
+    "updatedAt": "2026-10-22T02:17:17.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8cfee356-40de-4ce3-b5c8-6961eec3f3ef"
+  },
+  "item": [
+    {
+      "name": "timesheets",
+      "item": [
+        {
+          "name": "{timesheet_id}",
+          "item": [
+            {
+              "name": "Get Timesheet",
+              "id": "4d13b4e8-bda0-4787-878e-ad0217fbe567",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets/:timesheet_id?include_archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets",
+                    ":timesheet_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Return the timesheet even if it has been archived.",
+                      "key": "include_archived",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "a56eb711-865a-411b-be92-7b1f5dc75088",
+                      "key": "timesheet_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific timesheet by ID. Returns 404 if archived unless `include_archived=true` is passed."
+              },
+              "response": [
+                {
+                  "id": "bca5c336-fb0b-4baa-b913-01f56ab02d39",
+                  "name": "Timesheet details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Return the timesheet even if it has been archived.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"type\": \"TRAVEL\",\n  \"status\": \"PROCESSED\",\n  \"startDate\": \"<string,null-date-time>\",\n  \"endDate\": \"<string,null-date-time>\",\n  \"distance\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean,null>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"projectId\": \"<integer,null>\",\n  \"accountId\": \"<integer,null>\",\n  \"opportunityId\": \"<integer,null>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\",\n  \"updatedBy\": \"<integer,null>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"laborTotalCost\": \"<number,null-double>\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-bca5c336-fb0b-4baa-b913-01f56ab02d39"
+                },
+                {
+                  "id": "97bf6f60-0c25-47c6-975e-92c13d7e7281",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Return the timesheet even if it has been archived.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-97bf6f60-0c25-47c6-975e-92c13d7e7281"
+                },
+                {
+                  "id": "b11a5681-3d6c-4fef-a8cf-8b98252d6adc",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Return the timesheet even if it has been archived.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-b11a5681-3d6c-4fef-a8cf-8b98252d6adc"
+                },
+                {
+                  "id": "260697a2-b432-4f8e-a2d2-6cd2688897f6",
+                  "name": "Bad gateway \u2014 an upstream service request failed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id?include_archived=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Return the timesheet even if it has been archived.",
+                          "key": "include_archived",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-260697a2-b432-4f8e-a2d2-6cd2688897f6"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-4d13b4e8-bda0-4787-878e-ad0217fbe567"
+            },
+            {
+              "name": "Update Timesheet",
+              "id": "d51fc34f-b555-499a-8c71-354a08583a75",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets",
+                    ":timesheet_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "c89e3726-cadf-49a1-8732-46c55b194890",
+                      "key": "timesheet_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Update a timesheet's fields, and/or archive or unarchive it.\n\nSet `isArchived` to `true`/`false` to archive/unarchive the timesheet; this is applied independently of any other fields present in the same request."
+              },
+              "response": [
+                {
+                  "id": "4c9d9efd-8d27-4965-b7d2-5fc31526c347",
+                  "name": "Timesheet updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"type\": \"TRAVEL\",\n  \"status\": \"PROCESSED\",\n  \"startDate\": \"<string,null-date-time>\",\n  \"endDate\": \"<string,null-date-time>\",\n  \"distance\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean,null>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"projectId\": \"<integer,null>\",\n  \"accountId\": \"<integer,null>\",\n  \"opportunityId\": \"<integer,null>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\",\n  \"updatedBy\": \"<integer,null>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"laborTotalCost\": \"<number,null-double>\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-4c9d9efd-8d27-4965-b7d2-5fc31526c347"
+                },
+                {
+                  "id": "9b384243-645b-46a9-849d-791d9ec3f0e1",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-9b384243-645b-46a9-849d-791d9ec3f0e1"
+                },
+                {
+                  "id": "f1171ef7-2eb7-4b03-9f15-498e3edb6b0f",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-f1171ef7-2eb7-4b03-9f15-498e3edb6b0f"
+                },
+                {
+                  "id": "ecf51b24-3ccb-41be-9caa-753b15500af1",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-ecf51b24-3ccb-41be-9caa-753b15500af1"
+                },
+                {
+                  "id": "6aaf1ca8-d0ea-437a-9b53-bc815097f834",
+                  "name": "Bad gateway \u2014 an upstream service request failed",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-6aaf1ca8-d0ea-437a-9b53-bc815097f834"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-d51fc34f-b555-499a-8c71-354a08583a75"
+            },
+            {
+              "name": "Delete Timesheet",
+              "id": "fa59a174-6886-428e-b505-743cd638c6d0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "x-api-key",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets",
+                    ":timesheet_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ec14203a-1d61-42a1-bd93-933dbae3bc19",
+                      "key": "timesheet_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Delete a timesheet (time entry) by ID."
+              },
+              "response": [
+                {
+                  "id": "22182f29-69b3-4971-a6e5-ad490487b778",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-22182f29-69b3-4971-a6e5-ad490487b778"
+                },
+                {
+                  "id": "48281cba-a6d4-4c18-b013-dbcf0c80764c",
+                  "name": "Authentication failed",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-48281cba-a6d4-4c18-b013-dbcf0c80764c"
+                },
+                {
+                  "id": "308a1cfe-42a7-4d85-9763-04405678970f",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/timesheets/:timesheet_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "timesheets",
+                        ":timesheet_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "timesheet_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"NOT_FOUND\"\n}",
+                  "createdAt": "2026-10-22T02:17:18.000Z",
+                  "updatedAt": "2026-10-22T02:17:18.000Z",
+                  "uid": "35240-308a1cfe-42a7-4d85-9763-04405678970f"
+                }
+              ],
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-fa59a174-6886-428e-b505-743cd638c6d0"
+            }
+          ],
+          "id": "4dd5eaa2-1b90-4025-a48e-d8bcc11f8ecd",
+          "createdAt": "2026-10-22T02:17:18.000Z",
+          "updatedAt": "2026-10-22T02:17:18.000Z",
+          "uid": "35240-4dd5eaa2-1b90-4025-a48e-d8bcc11f8ecd"
+        },
+        {
+          "name": "List Timesheets",
+          "id": "36d3de62-b1fb-4913-bfa0-12c96a7cf0fb",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/timesheets?page_size=20&page=1&order_by=asc&project_id=<integer>&account_id=<integer>&opportunity_id=<integer>&work_order_id=<integer>&user_id=<integer>&type=WORKING&status=PROCESSED&include_archived=false&start_date=<dateTime>&end_date=<dateTime>&updated_after=<date>&updated_before=<date>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "timesheets"
+              ],
+              "query": [
+                {
+                  "description": "Number of items per page (max 100)",
+                  "key": "page_size",
+                  "value": "20"
+                },
+                {
+                  "description": "Page number (1-based)",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Sort order for results",
+                  "key": "order_by",
+                  "value": "asc"
+                },
+                {
+                  "description": "Filter by project ID. Alias of account_id/opportunity_id.",
+                  "key": "project_id",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Filter by account ID. Alias of project_id/opportunity_id.",
+                  "key": "account_id",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Filter by opportunity ID. Alias of project_id/account_id.",
+                  "key": "opportunity_id",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Filter by work order ID.",
+                  "key": "work_order_id",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Filter by the worker the time entry is logged for.",
+                  "key": "user_id",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Filter by time entry type.",
+                  "key": "type",
+                  "value": "WORKING"
+                },
+                {
+                  "description": "Filter by processing status.",
+                  "key": "status",
+                  "value": "PROCESSED"
+                },
+                {
+                  "description": "Include archived timesheets in the results.",
+                  "key": "include_archived",
+                  "value": "false"
+                },
+                {
+                  "description": "Only return timesheets whose start time is at or after this timestamp.",
+                  "key": "start_date",
+                  "value": "<dateTime>"
+                },
+                {
+                  "description": "Only return timesheets whose end time is at or before this timestamp.",
+                  "key": "end_date",
+                  "value": "<dateTime>"
+                },
+                {
+                  "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_after",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                  "key": "updated_before",
+                  "value": "<date>"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of timesheets (time entries).\n\nSupports:\n- Pagination (`page_size`, `page`)\n- Sorting by last updated (`order_by`, default: desc)\n- Filter by `project_id` / `account_id` / `opportunity_id` (aliases \u2014 projects, accounts, and opportunities share the same underlying record), `work_order_id`, `user_id`, and `type`\n- Filter by the entry's own date range (`start_date`, `end_date`) or by last-updated time (`updated_after`, `updated_before`)\n\nArchived timesheets are excluded unless `include_archived=true` is passed."
+          },
+          "response": [
+            {
+              "id": "8ea01306-d881-4e56-9031-8b93749c76e5",
+              "name": "List of timesheets",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets?page_size=20&page=1&order_by=asc&project_id=<integer>&account_id=<integer>&opportunity_id=<integer>&work_order_id=<integer>&user_id=<integer>&type=WORKING&status=PROCESSED&include_archived=false&start_date=<dateTime>&end_date=<dateTime>&updated_after=<date>&updated_before=<date>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Filter by project ID. Alias of account_id/opportunity_id.",
+                      "key": "project_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by account ID. Alias of project_id/opportunity_id.",
+                      "key": "account_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by opportunity ID. Alias of project_id/account_id.",
+                      "key": "opportunity_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by work order ID.",
+                      "key": "work_order_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by the worker the time entry is logged for.",
+                      "key": "user_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by time entry type.",
+                      "key": "type",
+                      "value": "WORKING"
+                    },
+                    {
+                      "description": "Filter by processing status.",
+                      "key": "status",
+                      "value": "PROCESSED"
+                    },
+                    {
+                      "description": "Include archived timesheets in the results.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Only return timesheets whose start time is at or after this timestamp.",
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Only return timesheets whose end time is at or before this timestamp.",
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"type\": \"WORKING\",\n    \"status\": \"FAILED\",\n    \"startDate\": \"<string,null-date-time>\",\n    \"endDate\": \"<string,null-date-time>\",\n    \"distance\": \"<number,null-double>\",\n    \"note\": \"<string,null>\",\n    \"isArchived\": \"<boolean,null>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"projectId\": \"<integer,null>\",\n    \"accountId\": \"<integer,null>\",\n    \"opportunityId\": \"<integer,null>\",\n    \"workOrderId\": \"<integer,null>\",\n    \"targetUserId\": \"<integer,null>\",\n    \"createdBy\": \"<integer,null>\",\n    \"updatedBy\": \"<integer,null>\",\n    \"laborHourlyRate\": \"<number,null-double>\",\n    \"laborTotalCost\": \"<number,null-double>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"type\": \"WORKING\",\n    \"status\": \"PROCESSED\",\n    \"startDate\": \"<string,null-date-time>\",\n    \"endDate\": \"<string,null-date-time>\",\n    \"distance\": \"<number,null-double>\",\n    \"note\": \"<string,null>\",\n    \"isArchived\": \"<boolean,null>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"projectId\": \"<integer,null>\",\n    \"accountId\": \"<integer,null>\",\n    \"opportunityId\": \"<integer,null>\",\n    \"workOrderId\": \"<integer,null>\",\n    \"targetUserId\": \"<integer,null>\",\n    \"createdBy\": \"<integer,null>\",\n    \"updatedBy\": \"<integer,null>\",\n    \"laborHourlyRate\": \"<number,null-double>\",\n    \"laborTotalCost\": \"<number,null-double>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-8ea01306-d881-4e56-9031-8b93749c76e5"
+            },
+            {
+              "id": "e468aea8-50fb-40b1-bce7-91c19d294a64",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets?page_size=20&page=1&order_by=asc&project_id=<integer>&account_id=<integer>&opportunity_id=<integer>&work_order_id=<integer>&user_id=<integer>&type=WORKING&status=PROCESSED&include_archived=false&start_date=<dateTime>&end_date=<dateTime>&updated_after=<date>&updated_before=<date>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Filter by project ID. Alias of account_id/opportunity_id.",
+                      "key": "project_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by account ID. Alias of project_id/opportunity_id.",
+                      "key": "account_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by opportunity ID. Alias of project_id/account_id.",
+                      "key": "opportunity_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by work order ID.",
+                      "key": "work_order_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by the worker the time entry is logged for.",
+                      "key": "user_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by time entry type.",
+                      "key": "type",
+                      "value": "WORKING"
+                    },
+                    {
+                      "description": "Filter by processing status.",
+                      "key": "status",
+                      "value": "PROCESSED"
+                    },
+                    {
+                      "description": "Include archived timesheets in the results.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Only return timesheets whose start time is at or after this timestamp.",
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Only return timesheets whose end time is at or before this timestamp.",
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-e468aea8-50fb-40b1-bce7-91c19d294a64"
+            },
+            {
+              "id": "bb500054-760c-46eb-ac25-d9a8c6ad53ab",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets?page_size=20&page=1&order_by=asc&project_id=<integer>&account_id=<integer>&opportunity_id=<integer>&work_order_id=<integer>&user_id=<integer>&type=WORKING&status=PROCESSED&include_archived=false&start_date=<dateTime>&end_date=<dateTime>&updated_after=<date>&updated_before=<date>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Filter by project ID. Alias of account_id/opportunity_id.",
+                      "key": "project_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by account ID. Alias of project_id/opportunity_id.",
+                      "key": "account_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by opportunity ID. Alias of project_id/account_id.",
+                      "key": "opportunity_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by work order ID.",
+                      "key": "work_order_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by the worker the time entry is logged for.",
+                      "key": "user_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by time entry type.",
+                      "key": "type",
+                      "value": "WORKING"
+                    },
+                    {
+                      "description": "Filter by processing status.",
+                      "key": "status",
+                      "value": "PROCESSED"
+                    },
+                    {
+                      "description": "Include archived timesheets in the results.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Only return timesheets whose start time is at or after this timestamp.",
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Only return timesheets whose end time is at or before this timestamp.",
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-bb500054-760c-46eb-ac25-d9a8c6ad53ab"
+            },
+            {
+              "id": "5b43445f-108f-4a4f-8ee1-aca39745ceee",
+              "name": "Bad gateway \u2014 an upstream service request failed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets?page_size=20&page=1&order_by=asc&project_id=<integer>&account_id=<integer>&opportunity_id=<integer>&work_order_id=<integer>&user_id=<integer>&type=WORKING&status=PROCESSED&include_archived=false&start_date=<dateTime>&end_date=<dateTime>&updated_after=<date>&updated_before=<date>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items per page (max 100)",
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Page number (1-based)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Sort order for results",
+                      "key": "order_by",
+                      "value": "asc"
+                    },
+                    {
+                      "description": "Filter by project ID. Alias of account_id/opportunity_id.",
+                      "key": "project_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by account ID. Alias of project_id/opportunity_id.",
+                      "key": "account_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by opportunity ID. Alias of project_id/account_id.",
+                      "key": "opportunity_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by work order ID.",
+                      "key": "work_order_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by the worker the time entry is logged for.",
+                      "key": "user_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by time entry type.",
+                      "key": "type",
+                      "value": "WORKING"
+                    },
+                    {
+                      "description": "Filter by processing status.",
+                      "key": "status",
+                      "value": "PROCESSED"
+                    },
+                    {
+                      "description": "Include archived timesheets in the results.",
+                      "key": "include_archived",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Only return timesheets whose start time is at or after this timestamp.",
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Only return timesheets whose end time is at or before this timestamp.",
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter items updated after this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_after",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter items updated before this timestamp (ISO 8601). Also matches records whose custom property values changed within the window.",
+                      "key": "updated_before",
+                      "value": "<date>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-5b43445f-108f-4a4f-8ee1-aca39745ceee"
+            }
+          ],
+          "createdAt": "2026-10-22T02:17:18.000Z",
+          "updatedAt": "2026-10-22T02:17:18.000Z",
+          "uid": "35240-36d3de62-b1fb-4913-bfa0-12c96a7cf0fb"
+        },
+        {
+          "name": "Create Timesheet",
+          "id": "5abfc18e-98d9-4216-a976-e9b5e3264b40",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetUserId\": \"<integer>\",\n  \"type\": \"WORKING\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/timesheets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "timesheets"
+              ]
+            },
+            "description": "Create a new timesheet (time entry) for a worker on a project, account, or opportunity (and optionally a work order)."
+          },
+          "response": [
+            {
+              "id": "e1b56acb-d89a-4e9b-93e1-d2613853e4ca",
+              "name": "Timesheet created successfully",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUserId\": \"<integer>\",\n  \"type\": \"WORKING\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<integer>\",\n  \"type\": \"TRAVEL\",\n  \"status\": \"PROCESSED\",\n  \"startDate\": \"<string,null-date-time>\",\n  \"endDate\": \"<string,null-date-time>\",\n  \"distance\": \"<number,null-double>\",\n  \"note\": \"<string,null>\",\n  \"isArchived\": \"<boolean,null>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"projectId\": \"<integer,null>\",\n  \"accountId\": \"<integer,null>\",\n  \"opportunityId\": \"<integer,null>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"targetUserId\": \"<integer,null>\",\n  \"createdBy\": \"<integer,null>\",\n  \"updatedBy\": \"<integer,null>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"laborTotalCost\": \"<number,null-double>\"\n}",
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-e1b56acb-d89a-4e9b-93e1-d2613853e4ca"
+            },
+            {
+              "id": "8cae94c3-cb96-440a-9819-6b591623e52d",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUserId\": \"<integer>\",\n  \"type\": \"WORKING\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\",\n  \"field\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-8cae94c3-cb96-440a-9819-6b591623e52d"
+            },
+            {
+              "id": "0d25e44a-943e-45e6-8ccc-f6b5513d4698",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUserId\": \"<integer>\",\n  \"type\": \"WORKING\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-0d25e44a-943e-45e6-8ccc-f6b5513d4698"
+            },
+            {
+              "id": "24433b22-01e7-497f-9cf0-c774e9053a0f",
+              "name": "Bad gateway \u2014 an upstream service request failed",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUserId\": \"<integer>\",\n  \"type\": \"WORKING\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"projectId\": \"<integer>\",\n  \"accountId\": \"<integer>\",\n  \"opportunityId\": \"<integer>\",\n  \"workOrderId\": \"<integer,null>\",\n  \"distance\": \"<number,null-double>\",\n  \"laborHourlyRate\": \"<number,null-double>\",\n  \"note\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/timesheets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "timesheets"
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"BAD_GATEWAY\"\n}",
+              "createdAt": "2026-10-22T02:17:18.000Z",
+              "updatedAt": "2026-10-22T02:17:18.000Z",
+              "uid": "35240-24433b22-01e7-497f-9cf0-c774e9053a0f"
+            }
+          ],
+          "createdAt": "2026-10-22T02:17:18.000Z",
+          "updatedAt": "2026-10-22T02:17:18.000Z",
+          "uid": "35240-5abfc18e-98d9-4216-a976-e9b5e3264b40"
+        }
+      ],
+      "id": "3faa68f1-eed0-4d92-bf47-629206c912b3",
+      "createdAt": "2026-10-22T02:17:18.000Z",
+      "updatedAt": "2026-10-22T02:17:18.000Z",
+      "uid": "35240-3faa68f1-eed0-4d92-bf47-629206c912b3"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.coperniq.io/v1"
+    }
+  ]
+}
